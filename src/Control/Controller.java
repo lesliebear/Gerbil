@@ -11,8 +11,9 @@ import Model.Game;
 /*Sends stuff to Model*/
 public class Controller {
 
-	LinkedList<Block> instructionBlocks = new LinkedList<Block>();
+	ArrayList<Block> instructionBlocks = new ArrayList<Block>(); //the main instructions block on higher level
 	ArrayList<Function> functions = new ArrayList<Function>();
+	//user created functions
 
 	public Game createGame(String name){
 		return null;
@@ -41,7 +42,7 @@ public class Controller {
 		return false;
 	}
 	
-	public boolean isthereWall(int x, int y){
+	public boolean isthereWallAhead(int x, int y){
 		return false;
 	}
 	
@@ -59,7 +60,7 @@ public class Controller {
 	}
 	
 	/*Movement stuff*/
-	
+	//
 	public boolean pathclearofWalls(LinkedList<Block> instructions){
 		return false;
 	}
