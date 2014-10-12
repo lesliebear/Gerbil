@@ -7,6 +7,7 @@ import Model.Block;
 import Model.Function;
 import Model.Game;
 
+
 /*Sends stuff to Model*/
 public class Controller {
 
