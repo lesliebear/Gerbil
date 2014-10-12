@@ -6,12 +6,13 @@ public class Grid {
 	char[][] grid = new char[16][16];
 	
 	public Grid(){
-		while(!hasValidPath()){
+		while(!hasValidPath(grid)){
 			randomGrid();
 		}
 	}
 	
 	public char[][] randomGrid(){
+		return grid;
 	}
 	
 	/**
