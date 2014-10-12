@@ -10,3 +10,5 @@ public class Block {
 	/*Blocks may have other blocks within them, if selected for deletion, all internal should be deleted too*/
 	LinkedList<Block> nestedBlocks = new LinkedList<Block>();
 }
+
+
