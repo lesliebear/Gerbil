@@ -42,4 +42,8 @@ public class Backend implements Serializable {
 	public void setGameList(ArrayList<Game> games){
 		this.games = games;
 	}
+	
+	
+	
+	
 }
