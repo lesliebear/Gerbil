@@ -274,6 +274,7 @@ public class Controller {
 	 * @return false/true; false if the Gerbil orientation was not changed, true otherwise
 	 */
 	public boolean turnLeft(){
+		//Will need to change gerbil orientation from Gerbil.java
 		return false;
 	}
 	
@@ -284,6 +285,7 @@ public class Controller {
 	 * @return
 	 */
 	public boolean eat(int x, int y){
+		//will need grid from Grid.java
 		return false;
 	}
 }
