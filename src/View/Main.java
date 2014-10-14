@@ -1,13 +1,13 @@
 package View;
 
 /**
- * Main program
+ * Main program.
  *
  */
 public class Main {
 
 	/**
-	 * Main method
+	 * Main method.
 	 * @param args
 	 */
 	public static void main(String[] args) {
@@ -15,7 +15,7 @@ public class Main {
 	}
 	
 	/**
-	 * Creates all screens necessary for the program
+	 * Creates all screens necessary for the program.
 	 */
 	public void CreateAllScreens() {
 		
