@@ -36,8 +36,5 @@ public class Function {
 	public ArrayList<Block> getInstruction(){
 		return null;
 	}
-	
-	
-
 }
 
