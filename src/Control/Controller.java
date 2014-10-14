@@ -19,13 +19,20 @@ public class Controller {
 	/**Holds the list of built in functions = eat Apple, eat pear, eat pumpking, move, turn left*/
 	ArrayList<Function> builtIn;
 	//Note eat fruit must be for that fruit only!! else error popup.
-
+	/** Singleton instance of controller */
+	private static Controller controller;
 	
 	/**
-	 * Sets up controller to have built in functions as well. 
+	 * Constructor
 	 */
-	public Controller(){
-		createBuiltIn();
+	private Controller(){
+		
+	}
+	
+	/** Returns singleton instance of controller */
+	public static Controller getInstance() {
+		 
+		return controller;
 	}
 	
 	/**
