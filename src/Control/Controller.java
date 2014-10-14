@@ -9,14 +9,31 @@ import Model.Game;
 
 /**
  * Controller class will make all necessary modifications to data in order to send it to the control. 
- * It will concern itself with the data of one user and one game at any given point, provided by the Backend.
+ * It will concern itself with the data of one user and one game at any given point, provided
+ *  by the Backend.
  */
 public class Controller {
 
-	ArrayList<Block> instructionBlocks = new ArrayList<Block>(); //the main instructions block on higher level
-	ArrayList<Function> functions = new ArrayList<Function>();
-	//user created functions
+	/**Holds the current game being played */
+	Game gamePlaying;
+	/**Holds the list of built in functions = eat Apple, eat pear, eat pumpking, move, turn left*/
+	ArrayList<Function> builtIn;
+	//Note eat fruit must be for that fruit only!! else error popup.
 
+	
+	/**
+	 * Sets up controller to have built in functions as well. 
+	 */
+	public Controller(){
+		createBuiltIn();
+	}
+	
+	/**
+	 * Creates and stores the builtIn functions in the controller
+	 */
+	public void createBuiltIn(){
+	}
+	
 	/**
 	 * Creates a new Game object
 	 * 
@@ -58,7 +75,8 @@ public class Controller {
 
 	
 	/**
-	 * Will edit a block at a given index/position selected by the user with a newly provided instruction 
+	 * Will edit a block at a given index/position selected by the user with a newly 
+	 * provided instruction 
 	 * 
 	 * @param pos  index/position of block to be edited by user
 	 * @param instruction new instruction to be placed in block
@@ -195,7 +213,6 @@ public class Controller {
 	
 	/**
 	 * Will add a function to the function list
-	 * 
 	 * @param functionToAdd function to be added to function list
 	 */
 	public void addFunction(Function functionToAdd){
@@ -205,7 +222,7 @@ public class Controller {
 	
 	/**
 	 * Will delete a function a user has selected for deletion
-	 * 
+	 * @param g Game to delete the function from
 	 * @param name User selected function to delete
 	 * @return false/true, false if deletion could not be performed, true if deletion performed
 	 */
@@ -226,9 +243,9 @@ public class Controller {
 	}
 	
 	/**
-	 * Will return an alphabetically sorted ArrayList of strings
+	 * Will return an alphabetically sorted ArrayList of strings for the drop down menu items
 	 * 
-	 * @param toSort ArrayList of strings to be sorted
+	 * @param toSort ArrayList of strings to be sorted for the menu items
 	 * @return Alphabetically sorted araryList of strings upon success, null upon failure
 	 */
 	public ArrayList<String> sortAlphabetical(ArrayList<String> toSort){
