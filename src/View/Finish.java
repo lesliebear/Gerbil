@@ -6,16 +6,15 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 /**
- * This class creates a GUI for the Instruction Screen (Help screen)
- *
+ * This class creates a GUI for the Finish Screen
  */
-public class Instructions {
+public class Finish implements Screen {
 
 	/**
 	 * Constructor that creates all necessary GUI components
 	 * 
 	 */
-	public Instructions() {
+	public Finish() {
 		 
 	}
 
@@ -89,4 +88,3 @@ public class Instructions {
 		}	
 	}
 }
-

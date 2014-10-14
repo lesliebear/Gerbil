@@ -6,16 +6,16 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 /**
- * This class creates a GUI for the Instruction Screen (Help screen)
+ * This class creates a GUI for the Confirmation screen
  *
  */
-public class Instructions {
+public class Confirm implements Screen {
 
 	/**
 	 * Constructor that creates all necessary GUI components
 	 * 
 	 */
-	public Instructions() {
+	public Confirm() {
 		 
 	}
 
@@ -48,7 +48,7 @@ public class Instructions {
 	 *
 	 */
 	class ButtonEvent implements ActionListener {
-		
+
 		public void actionPerformed(ActionEvent arg0) {
 			
 		}
@@ -89,4 +89,3 @@ public class Instructions {
 		}	
 	}
 }
-

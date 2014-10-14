@@ -1,11 +1,24 @@
 package View;
 
+/**
+ * Main program
+ *
+ */
 public class Main {
 
+	/**
+	 * Main method
+	 * @param args
+	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	
 	}
-
+	
+	/**
+	 * Creates all screens necessary for the program
+	 */
+	public void CreateAllScreens() {
+		
+	}
 }
 
