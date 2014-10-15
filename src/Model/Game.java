@@ -22,6 +22,7 @@ public class Game {
 	/**Name of the game that user designates when saving*/
 	String name =""; 
 	
+	
 
 	/**
 	 * Constructor to create the game 
