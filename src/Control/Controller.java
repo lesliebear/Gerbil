@@ -22,6 +22,7 @@ public class Controller {
 	/** Singleton instance of controller */
 	private static Controller controller;
 	
+	
 	/**
 	 * Constructor
 	 */
@@ -33,6 +34,11 @@ public class Controller {
 	public static Controller getInstance() {
 		 
 		return controller;
+	}
+	
+	/**Creates and initializes built in functions*/
+	public void initBuiltIn (){
+		
 	}
 	
 	/**
