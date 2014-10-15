@@ -4,7 +4,7 @@ package View;
  * This class creates a GUI for the Play screen.
  *
  */
-public class Play {
+public class Play implements Screen{
 
 	/**
 	 * Constructor that creates all necessary GUI components.

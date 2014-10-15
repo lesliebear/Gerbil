@@ -4,7 +4,7 @@ package View;
  * This class creates a GUI for the Instruction Screen (Help screen).
  *
  */
-public class Instructions {
+public class Instructions implements Screen{
 
 	/**
 	 * Constructor that creates all necessary GUI components.

@@ -4,7 +4,7 @@ package View;
  * This class creates a GUI for the PlayOptions screen.
  *
  */
-public class PlayOptions {
+public class PlayOptions implements Screen{
 
 	/**
 	 * Constructor that creates all necessary GUI components.

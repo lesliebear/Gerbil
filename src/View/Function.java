@@ -4,7 +4,7 @@ package View;
  * This class creates a GUI for the Function Screen.
  *
  */
-public class Function {
+public class Function implements Screen{
 
 	/**
 	 * Constructor that creates all necessary GUI components.
