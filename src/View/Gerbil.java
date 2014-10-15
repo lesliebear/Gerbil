@@ -4,7 +4,7 @@ package View;
  * This class creates a GUI for the Gerbil Screen (Opening Screen).
  *
  */
-public class Gerbil {
+public class Gerbil implements Screen{
 
 	/**
 	 * Constructor that creates all necessary GUI components.
