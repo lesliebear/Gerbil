@@ -1,20 +1,30 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * User class that holds information about the users including the games they have played, saved or made
  *
  */
-public class User {
+public class User implements Serializable{
 	/**The username of the user that identifies the user*/
-	String userName;
+	private String userName;
 	/**The password user uses to log in*/
-	String password;
+	private String password;
 	
 	/**Array List that holds games of the user */
-	ArrayList<Game> games = new ArrayList<Game>();
+	private ArrayList<Game> games = new ArrayList<Game>();
 	
+	/**
+	 * Constructor to create a user object
+	 * @param uN Username entered by the user
+	 * @param pass Password for the user account
+	 */
+	public User(String uN, String pass){
+		this.userName=uN;
+		this.password=pass;
+	}
 
 	/**
 	 * Gets the user name of the user
@@ -24,6 +34,13 @@ public class User {
 		return userName;
 	}
 	
+	/**
+	 * Gets the passwrod of the user. This is for troubleshooting only!!!!
+	 * @return The password of the user 
+	 * */
+	public String getPassword(){
+		return this.password;
+	}
 	/**
 	 * Adds a game to the arraylist of the games for the user 
 	 * @param g The game object to add to the array list of games in user. 
