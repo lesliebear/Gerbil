@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * A game consists of an obstacle course through which the the user must
  * navigate the avatar to get to the goal of the water drinking area. 
  * In the Fancy features, the User can create the obstacle course 
+ * @author Amulya
  */
 public class Game implements Serializable{
 	/**User written code for which each node shows up as a block of code in the GUI*/

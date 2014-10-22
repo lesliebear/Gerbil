@@ -15,7 +15,7 @@ import java.io.Serializable;
  * case as to not lose data for the fruit's location
  * 
  * We will use bottom left as starting point so it is 0,0!!
- * 
+ * @author Amulya
  * */
 public class Grid implements Serializable{
 	
@@ -36,6 +36,17 @@ public class Grid implements Serializable{
 		while(!hasValidPath(grid)){
 			randomGrid();
 		}
+	}
+	/**
+	 * Only need to convert Y values (row values), X values (column numbers) are already good
+	 * Takes an integer and converts it from the norm we use as 0,0 being bottom left 
+	 * to an integer that works with java's array which has 0,0 at top left
+	 * @param i Integer to convert 
+	 * @return Integer converted to work with java's arrays
+	 */
+	private int ConvertY(int i){
+		return 0;
+		//17-i-1?
 	}
 	
 	/**
