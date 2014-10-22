@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Backend implements Serializable {
 
 	/**Array List that holds games of the user */
-	ArrayList<Game> games = new ArrayList<Game>();
+	private ArrayList<Game> games = new ArrayList<Game>();
 	
 	
 	/**

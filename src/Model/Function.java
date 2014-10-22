@@ -1,11 +1,15 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Function class to hold user created functions
+ * Cannot edit functions. can only create and use them. If 
+ * a function is deleted, then we parse the code to see if the function
+ * deleted will be used. 
  */
-public class Function {
+public class Function implements Serializable{
 	/**Name of the funcion*/
 	String name;
 	/**Instructions in the function/body of the function */

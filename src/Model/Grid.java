@@ -1,24 +1,30 @@
 package Model;
 
+import java.io.Serializable;
+
 /**
  * The Grid class that holds the information about how the grid looks by using characters to represent
  * location of fruit and gerbil. The default location of avatar is bottom left and 
  * water can (the goal) is top right. 
  * 
  * Index of characters on grid:
- * k = Pumpkin, g for Gerbil, p for pear, a for apple, w for Wall, t 
+ * k = Pumpkin, p for pear, a for apple, w for Wall, t 
  * 
  * Gerbil object already has it's own locations but if Gerbil does step
  * on a square with fruit, the character for the fruit will become upper 
  * case as to not lose data for the fruit's location
  * 
+ * We will use bottom left as starting point so it is 0,0!!
+ * 
  * */
-public class Grid {
+public class Grid implements Serializable{
 	
 	/**
 	 * 17x17 grid size because the outer edges will have walls  
+	 * Grid does not have gerbil location = gerbil object has the locaiton info.
 	 */
-	char[][] grid = new char[16][16];
+	private char[][] grid = new char[16][16];
+
 	
 	/**
 	 * Creates a random grid that can still be completed (i.e. no walls blocking path 
@@ -40,6 +46,8 @@ public class Grid {
 	 */
 	public char[][] randomGrid(){
 		return grid;
+		//MAKE SURE THAT WHEN CREATING GRID = the bottom left is 0,0 so where gerbil starts is 
+		//at 0,0 so nothing else should be there!!!
 	}
 	
 	/**
