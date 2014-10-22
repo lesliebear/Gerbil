@@ -3,6 +3,12 @@ package Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Block holds instructions which are the strings of the information user enters for 
+ * the gerbil to do
+ * @author Amulya
+ *
+ */
 public class Block implements Serializable{
 	/**Id of the block*/
 	private int id; 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * exits the program but does not wish to loose his/her work.
  * In the fancy system, users would be the arraylist<user> 
  * since each user's games would be stored in their object.
- * 
+ * @author Amulya
  * */
 public class Backend implements Serializable {
 
