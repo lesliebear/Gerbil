@@ -31,6 +31,12 @@ public class Grid implements Serializable{
 	 * of gerbil from all sides) for standard version 
 	 * In Fancy, we will have the user built screen that will allow user to 
 	 * customize and build the grid.
+	 * 
+	 * 
+	 * @assumes random grid needs to be created
+	 * @exception none
+	 * @postcondition creates a grid we can access and can still play
+	 * 
 	 */
 	public Grid(){
 		while(!hasValidPath(grid)){
@@ -41,6 +47,12 @@ public class Grid implements Serializable{
 	 * Only need to convert Y values (row values), X values (column numbers) are already good
 	 * Takes an integer and converts it from the norm we use as 0,0 being bottom left 
 	 * to an integer that works with java's array which has 0,0 at top left
+	 * 
+	 * 
+	 * @assumes We need to access Y coordinates in grid but using Y values from the Play Screen. 
+	 * @exception none
+	 * @postcondition returns a converted Y value with 0,0 at top left rather than bottom left. 
+	 * 
 	 * @param i Integer to convert 
 	 * @return Integer converted to work with java's arrays
 	 */
@@ -53,6 +65,11 @@ public class Grid implements Serializable{
 	 * Creates a random grid while trying to make sure the grid is playble (i.e. no walls 
 	 * completely surround or obstruct path of gerbil from start to end)
 	 * Also places food on grid
+	 * 
+	 * @assumes random grid is needed
+	 * @exception none
+	 * @postcondition returns randomized grid with food and walls and water placed and water can at top left
+	 * 
 	 * @return character array of grid with food and walls placed on it. 
 	 */
 	public char[][] randomGrid(){
@@ -63,6 +80,11 @@ public class Grid implements Serializable{
 	
 	/**
 	 * Get's gerbil's x coordinate
+	 * 
+	 * @assumes valid X coordinate 
+	 * @exception none
+	 * @postcondition returns x coordinate of gerbil.
+	 * 
 	 * @return integer for gerbil's x coordinate = column
 	 */
 	public int getGerbilX(){
@@ -71,6 +93,11 @@ public class Grid implements Serializable{
 	
 	/**
 	 * Get's gerbil's y coordinate
+	 *
+	 * @assumes valid Y coordinate
+	 * @exception none
+	 * @postcondition returns y coordinate of gerbil
+	 * 
 	 * @return integer for gerbil's y coordinate = row
 	 */
 	public int getGerbilY(){
@@ -79,6 +106,12 @@ public class Grid implements Serializable{
 	
 	/**
 	 * Get's the contents of grid's x and y location
+	 * 
+	 * 
+	 * @assumes assumes valid square content according to characters that can go on grid
+	 * @exception none
+	 * @postcondition returns character that is valid
+	 * 
 	 * @param x the column specified
 	 * @param y the row specified
 	 * @return the character at the location if special, else returns " "
@@ -92,6 +125,11 @@ public class Grid implements Serializable{
 	 * Checks if grid created in randomGrid is valid. ie. valid path exists
 	 * from start to finish of course. The course has to have a path from start to finish
 	 * to be completable. 
+	 * 
+	 * @assumes assumes grid has been made but we don't know if it is playable
+	 * @exception none
+	 * @postcondition grid is playable so validated as such
+	 * 
 	 * @return True if the grid created does have a runnable/completable course, else false
 	 */
 	public boolean hasValidPath(char[][] grid){
@@ -100,6 +138,11 @@ public class Grid implements Serializable{
 
 	/**
 	 * Prints the grid
+	 * 
+	 * 
+	 * @assumes debugging reasons
+	 * @exception none
+	 * @postcondition nothing
 	 */
 	public void printGrid(){
 		

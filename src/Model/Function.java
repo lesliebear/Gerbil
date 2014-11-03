@@ -18,6 +18,11 @@ public class Function implements Serializable{
 	
 	/**
 	 * Creates the user created function
+	 * 
+	 * @assumes valid name and blocks of instructions. name must be verified to not exist
+	 * @exception none
+	 * @postcondition creates function object that has code.
+	 * 
 	 * @param name Name of the function
 	 * @param instruction Instructions in the function so the function body
 	 */
@@ -28,6 +33,11 @@ public class Function implements Serializable{
 	
 	/**
 	 * Gets the name of the function that the user gave to create it
+	 * 
+	 * @assumes name of function exists
+	 * @exception none
+	 * @postcondition returns function name that is unique
+	 * 
 	 * @return Name of the function
 	 */
 	public String getName(){
@@ -36,10 +46,15 @@ public class Function implements Serializable{
 	
 	/**
 	 * Gets the instructions/body of the function
+	 * 
+	 * @assumes blocks of instructions exist
+	 * @exception none
+	 * @postcondition Retrieves arraylist of blocks that are called instruction
+	 * 
 	 * @return Body of the function so the instructions ArrayList<Blocks>
 	 */
 	public ArrayList<Block> getInstruction(){
-		return null;
+		return instruction;
 	}
 }
 

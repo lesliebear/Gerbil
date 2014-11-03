@@ -18,6 +18,11 @@ public class User implements Serializable{
 	
 	/**
 	 * Constructor to create a user object
+	 * 
+	 * @assumes We have checked that same named user does not exist
+	 * @exception none
+	 * @postcondition creates a new user with a password
+	 * 
 	 * @param uN Username entered by the user
 	 * @param pass Password for the user account
 	 */
@@ -28,6 +33,11 @@ public class User implements Serializable{
 
 	/**
 	 * Gets the user name of the user
+	 * 
+	 * @assumes userName exists
+	 * @exception none
+	 * @postcondition Retrieves user name
+	 * 
 	 * @return The user name of the user
 	 */
 	public String getUserName(){
@@ -35,7 +45,12 @@ public class User implements Serializable{
 	}
 	
 	/**
-	 * Gets the passwrod of the user. This is for troubleshooting only!!!!
+	 * Gets the password of the user. This is for troubleshooting only!!!!
+	 * 
+	 * @assumes Programmer is testing program
+	 * @exception none
+	 * @postcondition returns valuable information so hopefully handled well
+	 * 
 	 * @return The password of the user 
 	 * */
 	public String getPassword(){
@@ -43,6 +58,11 @@ public class User implements Serializable{
 	}
 	/**
 	 * Adds a game to the arraylist of the games for the user 
+	 * 
+	 * @assumes Game object already created and initiallized properly
+	 * @exception none
+	 * @postcondition Adds to the user's game list
+	 * 
 	 * @param g The game object to add to the array list of games in user. 
 	 * @return True if successfully added, else false
 	 */
@@ -53,6 +73,12 @@ public class User implements Serializable{
 	
 	/**
 	 * Deletes a game from the arraylist of the games for the user 
+	 * 
+	 * @assumes checked for valid name of game provided
+	 * @exception none
+	 * @postcondition Removes game from user's game list properly
+	 * 
+	 * 
 	 * @param in_name Name for the game given by the user. 
 	 * @return True if successfully deleted, else false
 	 */
@@ -64,6 +90,11 @@ public class User implements Serializable{
 	/**
 	 * Gets the game from the arraylist of user's games based on the name the user gave for the game
 	 * when he/she saved the game. 
+	 * 
+	 * @assumes Game with that name has been verified to exist. 
+	 * @exception none
+	 * @postcondition retrieves game with that name
+	 * 
 	 * @param in_name Name of the game the user gave when he/she saved the game
 	 * @return The game the user had saved before if it exists, else return null 
 	 */
@@ -73,6 +104,11 @@ public class User implements Serializable{
 	
 	/**
 	 * Returns the games arraylist
+	 * 
+	 * @assumes Assumes games list of user exists
+	 * @exception none
+	 * @postcondition Retrieves user's games list
+	 * 
 	 * @return The array list stored in user that has all the games. 
 	 */
 	public ArrayList<Game> getGameList(){

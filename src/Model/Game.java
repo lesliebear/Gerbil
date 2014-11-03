@@ -27,6 +27,11 @@ public class Game implements Serializable{
 
 	/**
 	 * Constructor to create the game 
+	 * 
+	 * @assumes assumes name has been varified to be unique
+	 * @exception none
+	 * @postcondition creates a unique (due to name) game object 
+	 * 
 	 * @param name The name of the game
 	 */
 	Game(String name){
@@ -41,6 +46,11 @@ public class Game implements Serializable{
 
 	/**
 	 * Gets the gerbil object
+	 * 
+	 * @assumes assumes gerbil object exists
+	 * @exception none
+	 * @postcondition returns gerbil object that has been instantiated.
+	 * 
 	 * @return The gerbil object for the game
 	 */
 	public Gerbil getGerbil(){
@@ -48,6 +58,11 @@ public class Game implements Serializable{
 	}
 	/**
 	 * Gets the ArrayList of user written code that shows up in the GUI
+	 * 
+	 * @assumes assumes blocks arraylist object exists
+	 * @exception none
+	 * @postcondition returns blocks arraylist object that has been instantiated.
+	 * 
 	 * @return The Arraylist of user written code in GUI
 	 */
 	public ArrayList<Block> getBlocks(){
@@ -55,6 +70,11 @@ public class Game implements Serializable{
 	}
 	/**
 	 * Gets the Grid object of the game
+	 * 
+	 * @assumes assumes grid object exists
+	 * @exception none
+	 * @postcondition returns grid object that has been instantiated.
+	 * 
 	 * @return The Grid with fruit, water can, and wall placements
 	 */
 	public Grid getGrid(){
@@ -62,6 +82,11 @@ public class Game implements Serializable{
 	}
 	/**
 	 * Gets the name of the game
+	 * 
+	 * @assumes assumes unique name exists
+	 * @exception none
+	 * @postcondition returns unique name that has been instantiated.
+	 * 
 	 * @return Name of the name as entered by the user
 	 */
 	public String getName(){
@@ -69,6 +94,11 @@ public class Game implements Serializable{
 	}
 	/**
 	 * Gets the user defined functions arraylist 
+	 * 
+	 * @assumes assumes user can create functions
+	 * @exception none
+	 * @postcondition returns user created functions
+	 * 
 	 * @return User defined functions arraylist
 	 */
 	public ArrayList<Function> getfunction(){

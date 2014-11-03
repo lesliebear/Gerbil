@@ -10,8 +10,6 @@ import java.util.ArrayList;
  *
  */
 public class Block implements Serializable{
-	/**Id of the block*/
-	private int id; 
 	/**Instructions list in the block*/
 	private ArrayList<String> instructions; //all instructions are strings.
 	
@@ -20,18 +18,14 @@ public class Block implements Serializable{
 	/**Nested instructions go in this adjacency list*/
 	private ArrayList<Block> nestedBlocks = new ArrayList<Block>();
 	//the nested blocks is for the adjacency => if statements or nested info uses!!!
-	
-	/**
-	 * Gets the id number of the block. 
-	 * 
-	 * @return the id number of the block
-	 */
-	public int getId(){
-		return id;
-	}
+
 	
 	/**
 	 * Gets the arraylist of instructions for the block
+	 * @assumes assumes Instructions array exists
+	 * @exception none
+	 * @postcondition returns arraylist of instructions
+	 * 
 	 * @return ArrayList of instructions for the block. 
 	 */
 	public ArrayList<String> getInstruction(){
@@ -41,6 +35,11 @@ public class Block implements Serializable{
 	/**
 	 * Gets the arraylist of nested blocks. This structure is useful 
 	 * for the loop structure and the conditional statements
+	 * 
+	 * @assumes nested Blocks exist
+	 * @exception none
+	 * @postcondition returns nested blocks
+	 * 
 	 * @return ArrayList of blocks which are for nesting other blocks inside a block.
 	 */
 	public ArrayList<Block> getNestedBlocks(){
