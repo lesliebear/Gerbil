@@ -91,9 +91,5 @@ public class Gerbil implements Serializable{
 	public void setFrontY(int i){
 		this.frontY= i;
 	}
-
-
-	
-
 }
 
