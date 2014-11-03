@@ -23,6 +23,7 @@ public class Block implements Serializable{
 	
 	/**
 	 * Gets the id number of the block. 
+	 * 
 	 * @return the id number of the block
 	 */
 	public int getId(){
