@@ -493,4 +493,55 @@ public class Controller {
 		//will need grid from Grid.java
 		return false;
 	}
+	
+
+	/**
+	 * This method will delete a given game
+	 * @param gameName Name of the game to delete
+	 * @return True if deletion is successful, otherwise False
+	 */
+	public boolean deleteGame(String gameName) {
+		
+		return false;
+	}
+	
+	/**
+	 * This method will load a given game
+	 * @param gameName Name of the game to load
+	 * @return True if loading is successful, otherwise False
+	 */
+	public boolean loadGame(String gameName) {
+		
+		return false;
+	}
+	
+	/**
+	 * Save current game
+	 * @param gameName Name of the game to save
+	 * @return True if save is successful, otherwise False 
+	 */
+	public boolean saveGame(String gameName) {
+		
+		return false;
+	}
+	
+	/**
+	 * This method will return a list of instructions of the current game
+	 * @return List of instructions
+	 */
+	public ArrayList<Block> getInstructions() {
+		
+		return null;
+	}
+	
+	/**
+	 * This method will add a function to current block
+	 * @param function
+	 * @return True if add is successful, otherwise False
+	 */
+	public boolean addFunctionToBlock(Function function, Block block) {
+		
+		 return false;
+	}
+
 }
