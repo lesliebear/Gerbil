@@ -22,6 +22,7 @@ public class Block implements Serializable{
 	
 	/**
 	 * Gets the arraylist of instructions for the block
+	 *
 	 * @assumes assumes Instructions array exists
 	 * @exception none
 	 * @postcondition returns arraylist of instructions
