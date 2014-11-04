@@ -100,11 +100,7 @@ public class Controller {
 		return false;
 		
 		//Will not call any other functions/classes
-		
-		if(name not in system)
-			return true 
-			else
-				return false
+
 		
 	}
 	
@@ -123,12 +119,7 @@ public class Controller {
 		
 		//Will not call other functions/classes
 		
-		at position i
-			if instruction block at i is syntactically valid
-				return true
-				else
-					return false
-		
+
 	}
 
 	
@@ -149,16 +140,7 @@ public class Controller {
 		
 		//Will call parseBlock - must reparse the block to see if valid change has been made
 		
-		at position i
-			if block at i != null
-				edit block instructions
-				
-				if(call parseBlock(i))
-					return true
-					else 
-					return false
-					else
-						return false
+
 	}	
 		
 
@@ -178,13 +160,6 @@ public class Controller {
 		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
 		//Question: should we have something that asks them if they want to delete even if the code will become invalid ?
 		
-		ArrayList<Block> blocks = gamePlaying.getBlocks(); 
-		
-		if blocks is not empty
-			get block at position i 
-				delete block at i 
-				else
-					return false
 		
 	}
 
@@ -204,14 +179,7 @@ public class Controller {
 		//Will call the Block.java class to initialize a new block
 		return false;
 		
-		get list of blocks	
-		position i 
-		for list of blocks, find position i
-			if(insert new Block at i)	
-				return true
-				else
-					return false
-			
+
 	}
 	
 	
@@ -230,14 +198,7 @@ public class Controller {
 		
 		//Will call searchForBlock to find block of the given id
 		return false;
-		get block by id
-		edit Block instructions
-		
-		if(parseBlock)
-			return true
-			else 
-				return false
-		
+
 		
 	}
 	
@@ -256,15 +217,7 @@ public class Controller {
 		//Will not call any other function/class
 		
 		return null;
-		
-		get list of block
-		int i = 0; 
-		while block_id[i] != provided id
-			
-			if block id = provided id
-				return block
-			
-			i++
+
 			
 		
 	}

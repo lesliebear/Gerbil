@@ -117,7 +117,7 @@ public class Game implements Serializable{
 	 * @param functionToAdd function to be added to Functions list
 	 */
 	public boolean addFunction(Function functionToAdd){
-		
+		return false;
 	}
 	
 	
@@ -132,7 +132,7 @@ public class Game implements Serializable{
 	 * @return true if successful deletion, false otherwise
 	 */
 	public boolean deleteFunction(String functionToDelete){
-		
+		return false;
 	}
 	
 }
