@@ -105,7 +105,35 @@ public class Game implements Serializable{
 		return functions;
 	}
 	
-	public 
+	/**
+	 * Adds a function to the functions list
+	 * 
+	 * @assumes Function is valid function
+	 * @exception none
+	 * @postcondition Adds function to function list
+	 * 
+	 * @return boolean: true if successful add, false otherwise
+	 * 
+	 * @param functionToAdd function to be added to Functions list
+	 */
+	public boolean addFunction(Function functionToAdd){
+		
+	}
+	
+	
+	/**
+	 * Deletes a function from the functions list
+	 * 
+	 * @assumes Function exists within the function list
+	 * @exception none
+	 * @postcondition Deletes function
+	 * 
+	 * @param functionToDelete function to be deleted
+	 * @return true if successful deletion, false otherwise
+	 */
+	public boolean deleteFunction(String functionToDelete){
+		
+	}
 	
 }
 
