@@ -105,7 +105,5 @@ public class Game implements Serializable{
 		return functions;
 	}
 	
-	public 
-	
 }
 

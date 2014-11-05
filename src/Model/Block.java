@@ -29,7 +29,7 @@ public class Block implements Serializable{
 	 * 
 	 * @return ArrayList of instructions for the block. 
 	 */
-	public ArrayList<String> getInstruction(){
+	public ArrayList<String> getInstructionsList(){
 		return this.instructions;
 	}
 	

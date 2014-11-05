@@ -18,14 +18,14 @@ import java.io.Serializable;
  * @author Amulya
  * */
 public class Grid implements Serializable{
-	
+
 	/**
 	 * 17x17 grid size because the outer edges will have walls  
 	 * Grid does not have gerbil location = gerbil object has the locaiton info.
 	 */
 	private char[][] grid = new char[16][16];
 
-	
+
 	/**
 	 * Creates a random grid that can still be completed (i.e. no walls blocking path 
 	 * of gerbil from all sides) for standard version 
@@ -40,6 +40,11 @@ public class Grid implements Serializable{
 	 */
 	public Grid(){
 		while(!hasValidPath(grid)){
+			for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
+				for (int j = 0; j<grid[0].length;j++){
+					grid[i][j] = '0';
+				}
+			}
 			randomGrid();
 		}
 	}
@@ -57,10 +62,9 @@ public class Grid implements Serializable{
 	 * @return Integer converted to work with java's arrays
 	 */
 	private int ConvertY(int i){
-		return 0;
-		//17-i-1?
+		return 17-1-i;
 	}
-	
+
 	/**
 	 * Creates a random grid while trying to make sure the grid is playble (i.e. no walls 
 	 * completely surround or obstruct path of gerbil from start to end)
@@ -73,37 +77,28 @@ public class Grid implements Serializable{
 	 * @return character array of grid with food and walls placed on it. 
 	 */
 	public char[][] randomGrid(){
+		for (int b = 0; b <this.grid.length-2; b++){//put in 15 walls as obstacles 
+			int R = (int)(Math.random()*(this.grid.length-1)) + 1;  //gets random row number between 1 and the number of rows-1
+		 	int S = (int)(Math.random()*(this.grid[0].length-1)) + 1;  // gets random col number between 1 and the number of columns-1
+		 	if (this.grid[R][S]!='w'){ //if it is not b then make it b.
+		 		this.grid[R][S]='w';
+		 	}
+		 	else{
+		 		b--; //do not increment b without placing the total walls needed!
+		 	}
+		}
+		grid = placeFruitsRandomly();
 		return grid;
+		
+		
 		//MAKE SURE THAT WHEN CREATING GRID = the bottom left is 0,0 so where gerbil starts is 
 		//at 0,0 so nothing else should be there!!!
 	}
 	
-	/**
-	 * Get's gerbil's x coordinate
-	 * 
-	 * @assumes valid X coordinate 
-	 * @exception none
-	 * @postcondition returns x coordinate of gerbil.
-	 * 
-	 * @return integer for gerbil's x coordinate = column
-	 */
-	public int getGerbilX(){
-		return 0;
+	public char[][] placeFruitsRandomly(){
+		return grid;
 	}
-	
-	/**
-	 * Get's gerbil's y coordinate
-	 *
-	 * @assumes valid Y coordinate
-	 * @exception none
-	 * @postcondition returns y coordinate of gerbil
-	 * 
-	 * @return integer for gerbil's y coordinate = row
-	 */
-	public int getGerbilY(){
-		return 0;
-	}
-	
+
 	/**
 	 * Get's the contents of grid's x and y location
 	 * 
@@ -117,10 +112,10 @@ public class Grid implements Serializable{
 	 * @return the character at the location if special, else returns " "
 	 */
 	public char getSquareContent(int x, int y){
-		return 'a';
+		return this.grid[y][x]; //y is row and x is column!
 	}
-	
-	
+
+
 	/**
 	 * Checks if grid created in randomGrid is valid. ie. valid path exists
 	 * from start to finish of course. The course has to have a path from start to finish
@@ -145,7 +140,13 @@ public class Grid implements Serializable{
 	 * @postcondition nothing
 	 */
 	public void printGrid(){
-		
-	}
+		for (int i =0; i<this.grid.length;i++){
+			for (int j = 0; j<this.grid[0].length;j++){
+				System.out.print(this.grid[i][j]+" "); //prints out row in one line
+			}
+			System.out.println(); //new line for new row. 
+		}
+	}//close print board
+
 }
 

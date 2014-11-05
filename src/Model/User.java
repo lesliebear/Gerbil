@@ -83,7 +83,13 @@ public class User implements Serializable{
 	 * @return True if successfully deleted, else false
 	 */
 	public boolean deleteGame(String in_name){
-		return true;
+		for(int i = 0; i<games.size();i++){
+			if((games.get(i).getName().compareTo(in_name))==0){
+				this.games.remove(i);
+				return true;
+			}
+		}
+		return false;
 		
 	}
 	
@@ -99,6 +105,11 @@ public class User implements Serializable{
 	 * @return The game the user had saved before if it exists, else return null 
 	 */
 	public Game getGame(String in_name){
+		for (Game g: this.games){
+			if((g.getName().compareTo(in_name))==0){
+				return g;
+			}
+		}
 		return null;
 	}
 	
