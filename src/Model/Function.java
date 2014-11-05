@@ -41,7 +41,7 @@ public class Function implements Serializable{
 	 * @return Name of the function
 	 */
 	public String getName(){
-		return null;
+		return this.name;
 	}
 	
 	/**

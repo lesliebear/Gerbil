@@ -28,7 +28,7 @@ public class Gerbil implements Serializable{
 	
 	/**
 	 * Constructor for the object. The gerbil starts off in the bottom left corner of grid 
-	 * and facing upwards. 
+	 * and facing upwards. ^
 	 * 
 	 * 
 	 * @assumes assumes one gerbil object only for a grid
