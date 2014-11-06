@@ -3,7 +3,6 @@ package Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-
 /**
  * Game class that holds all the information for a game. 
  * Games can be saved for users and they can be loaded to continue to be played. 
@@ -24,7 +23,6 @@ public class Game implements Serializable{
 	/**Name of the game that user designates when saving*/
 	private String name =""; 
 	
-
 	/**
 	 * Constructor to create the game 
 	 * 
@@ -34,15 +32,13 @@ public class Game implements Serializable{
 	 * 
 	 * @param name The name of the game
 	 */
-	Game(String name){
+	public Game(String name){
 		this.name=name;
 		this.gerbil= new Gerbil();
 		this.grid = new Grid();
 		this.functions= new ArrayList<Function>();
-		this.blocks= new ArrayList<Block>();
-		
+		this.blocks= new ArrayList<Block>();	
 	}
-	
 
 	/**
 	 * Gets the gerbil object
@@ -56,6 +52,7 @@ public class Game implements Serializable{
 	public Gerbil getGerbil(){
 		return gerbil;
 	}
+	
 	/**
 	 * Gets the ArrayList of user written code that shows up in the GUI
 	 * 
@@ -68,6 +65,7 @@ public class Game implements Serializable{
 	public ArrayList<Block> getBlocks(){
 		return blocks;
 	}
+	
 	/**
 	 * Gets the Grid object of the game
 	 * 
@@ -80,6 +78,7 @@ public class Game implements Serializable{
 	public Grid getGrid(){
 		return grid;
 	}
+	
 	/**
 	 * Gets the name of the game
 	 * 
@@ -92,6 +91,7 @@ public class Game implements Serializable{
 	public String getName(){
 		return name;
 	}
+	
 	/**
 	 * Gets the user defined functions arraylist 
 	 * 

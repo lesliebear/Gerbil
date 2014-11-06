@@ -8,23 +8,20 @@ import java.io.Serializable;
  * water can (the goal) is top right. 
  * 
  * Index of characters on grid:
- * k = Pumpkin, p for pear, a for apple, w for Wall, t 
+ * k = Pumpkin, p for pear, a for apple, w for Wall, t for water container
  * 
  * Gerbil object already has it's own locations but if Gerbil does step
  * on a square with fruit, the character for the fruit will become upper 
  * case as to not lose data for the fruit's location
  * 
- * We will use bottom left as starting point so it is 0,0!!
+ * Note: In Java, for 2d Arrays (0,0) is in the top left of array.
  * @author Amulya
  * */
 public class Grid implements Serializable{
 
-	/**
-	 * 17x17 grid size because the outer edges will have walls  
-	 * Grid does not have gerbil location = gerbil object has the locaiton info.
-	 */
-	private char[][] grid = new char[16][16];
-
+	/**17x17 grid size because the outer edges will have walls  
+	 * Grid does not have gerbil location = gerbil object has the location info.*/
+	private char[][] grid;
 
 	/**
 	 * Creates a random grid that can still be completed (i.e. no walls blocking path 
@@ -39,30 +36,57 @@ public class Grid implements Serializable{
 	 * 
 	 */
 	public Grid(){
-		while(!hasValidPath(grid)){
+		grid = new char[17][17];
+		initGrid();
+	}
+
+	/**
+	 * Initializes the grid field in this class by making sure the grid is playable
+	 * meaning the gerbil has ways to get to every fruit and water can. 
+	 * 
+	 * @assumes grid object has been created but is empty
+	 * @exception none
+	 * @postcondition populates the grid object with walls, fruits, and water can placed
+	 * in random location with a valid path to them making the grid playable
+	 * 
+	 */
+	public void initGrid(){
+		do{//walls all around
 			for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
-				for (int j = 0; j<grid[0].length;j++){
-					grid[i][j] = '0';
+				for (int j = 0; j<grid[0].length;j++){ 
+					if((j==0)||(j==this.grid[0].length-1) || (i==0)||(i==this.grid.length-1)){
+						grid[i][j]='w'; //wall surrounds entire grid. 
+					}
+					grid[i][j] = '0'; //empty grid area.
 				}
 			}
-			randomGrid();
-		}
+			randomGrid(); //places walls and fruit
+			grid[1][this.grid[0].length-2]='t'; //place water can
+		}while((!hasValidPath(this.grid.length-2,1)) //start from bottom left corner = gerbil location 
+				&& (!fruitsHaveValidPath())); //reach all fruit 
 	}
+	
 	/**
-	 * Only need to convert Y values (row values), X values (column numbers) are already good
-	 * Takes an integer and converts it from the norm we use as 0,0 being bottom left 
-	 * to an integer that works with java's array which has 0,0 at top left
+	 * Ensures that the grid has valid fruit placement with fruit in locations reachable by Gerbil
 	 * 
-	 * 
-	 * @assumes We need to access Y coordinates in grid but using Y values from the Play Screen. 
+	 * @assumes Fruit locations have not been validated and might be surrounded by walls
+	 * making it not possible for the Gerbil to reach
 	 * @exception none
-	 * @postcondition returns a converted Y value with 0,0 at top left rather than bottom left. 
+	 * @postcondition validates or invalidates graph if fruit cannot be reached.
 	 * 
-	 * @param i Integer to convert 
-	 * @return Integer converted to work with java's arrays
+	 * @return True if all fruits can be reached by Gerbil else false.
 	 */
-	private int ConvertY(int i){
-		return 17-1-i;
+	public boolean fruitsHaveValidPath(){
+		for (int i = 1; i<this.grid.length-2; i++){
+			for (int j = 1; j<this.grid[0].length-2;j++){
+				if((grid[i][j]!='0') && (grid[i][j]!='t') && (grid[i][j]!='w')){
+					if(!getToFruit(this.grid.length-2,1,i,j, grid[i][j])){
+						return false;
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -70,52 +94,94 @@ public class Grid implements Serializable{
 	 * completely surround or obstruct path of gerbil from start to end)
 	 * Also places food on grid
 	 * 
-	 * @assumes random grid is needed
+	 * @assumes random grid is needed and just changes the field
 	 * @exception none
 	 * @postcondition returns randomized grid with food and walls and water placed and water can at top left
-	 * 
-	 * @return character array of grid with food and walls placed on it. 
 	 */
-	public char[][] randomGrid(){
-		for (int b = 0; b <this.grid.length-2; b++){//put in 15 walls as obstacles 
-			int R = (int)(Math.random()*(this.grid.length-1)) + 1;  //gets random row number between 1 and the number of rows-1
-		 	int S = (int)(Math.random()*(this.grid[0].length-1)) + 1;  // gets random col number between 1 and the number of columns-1
-		 	if (this.grid[R][S]!='w'){ //if it is not b then make it b.
-		 		this.grid[R][S]='w';
-		 	}
-		 	else{
-		 		b--; //do not increment b without placing the total walls needed!
-		 	}
+	public void randomGrid(){
+		for (int b = 0; b <2*(this.grid.length-2); b++){//put in 30 walls as obstacles 
+			int R = (int)(Math.random()*(this.grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
+			int S = (int)(Math.random()*(this.grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
+			if (((R!=this.grid[0].length-2)&&(S!=0) &&(R!=1) && (S!=this.grid.length-2)) && (this.grid[R][S]=='0')){ 
+				//if empty and not in location of water can or gerbil
+				this.grid[R][S]='w';
+			} 
+			else{
+				b--; //do not increment b without placing the total walls needed!
+			}
 		}
-		grid = placeFruitsRandomly();
-		return grid;
-		
-		
-		//MAKE SURE THAT WHEN CREATING GRID = the bottom left is 0,0 so where gerbil starts is 
-		//at 0,0 so nothing else should be there!!!
+		placeFruitsRandomly('k');//pumpkin
+		placeFruitsRandomly('p'); //pear
+		placeFruitsRandomly('a'); //apple
 	}
-	
-	public char[][] placeFruitsRandomly(){
-		return grid;
+
+	/**
+	 * Places Fruit represented by character c onto the grid location that are empty. 
+	 * The number of fruit is (2 * grid row that can be accessed by avatar )/ 3)
+	 * 
+	 * @assumes Valid character is entered and there are empty locations on grid
+	 * @exception none
+	 * @postcondition grid now has fruits placed onto it with character c representing the fruit
+	 * @param c The character representing the fruit to place onto the grid.
+	 */
+	public void placeFruitsRandomly(char c){
+		for (int b = 0; b <(2*(this.grid.length-2))/3; b++){//put in grid to eat and floor due to integer division
+			int R = (int)(Math.random()*(this.grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
+			int S = (int)(Math.random()*(this.grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
+			if (this.grid[R][S]=='0'){ //if it is empty, add the fruit
+				this.grid[R][S]=c;
+			}
+			else{
+				b--; //do not increment b without placing the total fruit needed!
+			}
+		}
 	}
 
 	/**
 	 * Get's the contents of grid's x and y location
 	 * 
-	 * 
 	 * @assumes assumes valid square content according to characters that can go on grid
 	 * @exception none
 	 * @postcondition returns character that is valid
 	 * 
-	 * @param x the column specified
 	 * @param y the row specified
+	 * @param x the column specified
 	 * @return the character at the location if special, else returns " "
 	 */
-	public char getSquareContent(int x, int y){
+	public char getSquareContent(int y, int x){
 		return this.grid[y][x]; //y is row and x is column!
 	}
 
+	/**
+	 * Tests if all fruit are reachable else it would be not a valid program
+	 * 
+	 * @param Y The row to check in
+	 * @param X The column to check in
+	 * @param goalY The row to reach
+	 * @param goalX The column to reach
+	 * @return check if we reach the location of the fruit. 
+	 */
+	public boolean getToFruit(int Y, int X, int goalY, int goalX, int c){
+		if ((Y==goalY) && (X == goalX) && (grid[Y][X]==c)){ //location o the fruit
+			return true;
+		}else if ((Y<1) || (X<1)|| (Y>this.grid.length-2) || (X >this.grid[0].length-2)){ //make sure within bounds of grid
+			return false; 
+		}else if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
+			return false;
+		}else{
+			getToFruit(Y-1,X,goalY,goalX,c); //4 normal spots...not corners
+			getToFruit(Y,X-1,goalY,goalX,c);
+			getToFruit(Y+1,X,goalY,goalX,c);
+			getToFruit(Y,X+1,goalY,goalX,c);
 
+			getToFruit(Y+1,X+1,goalY,goalX,c); //corners
+			getToFruit(Y-1,X-1,goalY,goalX,c);
+			getToFruit(Y+1,X-1,goalY,goalX,c);
+			getToFruit(Y-1,X+1,goalY,goalX,c);
+			return false; //could not get to fruit by now => false
+		}
+	}
+	
 	/**
 	 * Checks if grid created in randomGrid is valid. ie. valid path exists
 	 * from start to finish of course. The course has to have a path from start to finish
@@ -125,15 +191,36 @@ public class Grid implements Serializable{
 	 * @exception none
 	 * @postcondition grid is playable so validated as such
 	 * 
+	 * @param Y The Row to check 
+	 * @param X The Column to check
 	 * @return True if the grid created does have a runnable/completable course, else false
 	 */
-	public boolean hasValidPath(char[][] grid){
-		return false;
+	public boolean hasValidPath(int Y, int X){
+		if((Y==1) && (X==this.grid[0].length-2) ){//get to water container so has valid path
+			return true;
+		}
+		else if ((Y<1) || (X<1)|| (Y>this.grid.length-2) || (X >this.grid[0].length-2)){ //make sure within bounds of grid
+			return false; 
+		}
+		else if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
+			return false;
+		}
+		else {
+			hasValidPath(Y-1,X); //4 normal spots...not corners
+			hasValidPath(Y,X-1);
+			hasValidPath(Y+1,X);
+			hasValidPath(Y,X+1);
+
+			hasValidPath(Y+1,X+1); //corners
+			hasValidPath(Y-1,X-1);
+			hasValidPath(Y+1,X-1);
+			hasValidPath(Y-1,X+1);
+			return false; //could not get to water container by now => false
+		}
 	}
 
 	/**
-	 * Prints the grid
-	 * 
+	 * Prints the grid 
 	 * 
 	 * @assumes debugging reasons
 	 * @exception none

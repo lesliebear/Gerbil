@@ -8,22 +8,13 @@ import java.io.Serializable;
  * */
 public class Gerbil implements Serializable{
 	
-	/**
-	 * The column in front of the gerbil (used to help find the direction gerbil is facing)
-	 */
+	/**The column in front of the gerbil (used to help find the direction gerbil is facing)*/
 	private int frontX;  //use this to compare with currX and currY to figure out which direciton gerbil is facing
-	/**
-	 * The row in front of the gerbil (used to help find the direction gerbil is facing)
-	 */
+	/**The row in front of the gerbil (used to help find the direction gerbil is facing)*/
 	private int frontY;
-	
-	/**
-	 * The column of the gerbil (used to help find the location and direction gerbil is facing)
-	 */
+	/**The column of the gerbil (used to help find the location and direction gerbil is facing)*/
 	private int currX; 
-	/**
-	 * The row of the gerbil (used to help find the location and direction gerbil is facing)
-	 */
+	/**The row of the gerbil (used to help find the location and direction gerbil is facing)*/
 	private int currY;
 	
 	/**
@@ -37,10 +28,10 @@ public class Gerbil implements Serializable{
 	 * 
 	 */
 	public Gerbil(){
-		this.frontX = 0;
+		this.frontX = 14;
 		this.frontY=1;
-		this.currX=0;
-		this.currY=0;
+		this.currX=15;
+		this.currY=1;
 	}
 	
 	/**
@@ -50,23 +41,24 @@ public class Gerbil implements Serializable{
 	 * @exception none
 	 * @postcondition returns x location that is valid
 	 * 
-	 * 
-	 * @return X value of Gerbil's location
+	 * @return X value of Gerbil's location = column of gerbil
 	 */
 	public int getX(){
 		return currX;
 	}
+	
 	/**Gets the current Y value of Gerbil
 	 *  
 	 * @assumes assumes in range of valid values
 	 * @exception none
 	 * @postcondition returns y location that is valid
 	 * 
-	 * @return Y value of Gerbil's Location
+	 * @return Y value of Gerbil's Location = row of gerbil
 	 */
 	public int getY(){
 		return currY;
 	}
+	
 	/**Gets the block in front of gerbil's X value 
 	 * 
 	 * @assumes assumes in range of valid values
@@ -78,6 +70,7 @@ public class Gerbil implements Serializable{
 	public int getFrontX(){
 		return frontX;
 	}
+	
 	/**Gets the block in front of gerbil's Y value
 	 * 	 
 	 * @assumes assumes in range of valid values
@@ -102,6 +95,7 @@ public class Gerbil implements Serializable{
 	public void setX(int i){
 		this.currX= i;
 	}
+	
 	/**
 	 * Sets Gerbil's Y location
 	 * 
@@ -113,6 +107,7 @@ public class Gerbil implements Serializable{
 	public void setY(int i){
 		this.currY= i;
 	}
+	
 	/**
 	 * Sets Gerbil's front block's X value
 	 * 
@@ -126,6 +121,7 @@ public class Gerbil implements Serializable{
 	public void setFrontX(int i){
 		this.frontX= i;
 	}
+	
 	/**
 	 * Sets Gerbil's front block's Y value
 	 * 
@@ -138,5 +134,6 @@ public class Gerbil implements Serializable{
 	public void setFrontY(int i){
 		this.frontY= i;
 	}
+	
 }
 

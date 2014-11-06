@@ -12,7 +12,6 @@ public class User implements Serializable{
 	private String userName;
 	/**The password user uses to log in*/
 	private String password;
-	
 	/**Array List that holds games of the user */
 	private ArrayList<Game> games = new ArrayList<Game>();
 	
@@ -56,6 +55,7 @@ public class User implements Serializable{
 	public String getPassword(){
 		return this.password;
 	}
+	
 	/**
 	 * Adds a game to the arraylist of the games for the user 
 	 * 

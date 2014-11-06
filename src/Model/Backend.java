@@ -21,15 +21,9 @@ import java.util.ArrayList;
  * */
 public class Backend implements Serializable {
 
-	/**
-	 * Directory in which user data file is stored
-	 */
+	/**Directory in which user data file is stored*/
 	public static final String storeDir = "data"; 
-
-
-	/**
-	 * File to store user data
-	 */
+	/**File to store user data*/
 	public static final String storeFile = "games.dat"; 
 	/**Array List that holds games of the user */
 	private ArrayList<Game> games = new ArrayList<Game>();
@@ -60,10 +54,9 @@ public class Backend implements Serializable {
 	 * @param in_name Name for the game given by the user. 
 	 * @return True if successfully deleted, else false
 	 */
-	public boolean deleteGame(String in_name){
+	public boolean deleteGame(String name){
 		for (int i = 0; i<games.size();i++){
-			Game g = games.get(i);
-			if (g.getName().compareTo(in_name)==0){
+			if (games.get(i).getName().compareTo(name)==0){
 				this.games.remove(i);
 				return true;
 			}
@@ -120,7 +113,7 @@ public class Backend implements Serializable {
 			oos = new ObjectOutputStream(new FileOutputStream(storeFile));
 			oos.writeObject(games);
 			return true;
-		} catch (FileNotFoundException e) {return false;} catch (IOException e) {return false;}
+		} catch (Exception e) {return false;} 
 		//This does create file if not found in that location!
 	}
 
@@ -135,9 +128,9 @@ public class Backend implements Serializable {
 	 * @param in_name Name of the game the user gave when he/she saved the game
 	 * @return The game the user had saved before if it exists, else return null 
 	 */
-	public Game getGame(String in_name){
+	public Game getGame(String name){
 		for(Game g: this.games){
-			if((g.getName().compareTo(in_name))==0){
+			if((g.getName().compareTo(name))==0){
 				return g;
 			}
 		}
@@ -174,7 +167,6 @@ public class Backend implements Serializable {
 
 	/**Array List that holds games of the user */
 	ArrayList<User> users = new ArrayList<User>();
-
 
 	/**
 	 * Adds a user to the arraylist of the users(in Fancy)
@@ -225,8 +217,7 @@ public class Backend implements Serializable {
 	 * @throws ClassNotFoundException If error encountered with class not found
 	 */
 	@SuppressWarnings({ "resource", "unchecked" })
-	public boolean loadSavedUsers()throws IOException, ClassNotFoundException {
-		
+	public boolean loadSavedUsers()throws IOException, ClassNotFoundException {		
 		ObjectInputStream ois;
 		try {
 			ois = new ObjectInputStream(new FileInputStream(storeFile));
@@ -240,11 +231,8 @@ public class Backend implements Serializable {
 			this.deleteUser("FileEmpty");//delete added user
 			this.saveUsers();//save the empty list
 		}
-		return false;
-
-		//creates arraylist of users to store here in backend.	
+		return false;	
 	}
-
 
 	/**
 	 * Saves the users array list from backend to a serialized file (in Fancy)
@@ -310,6 +298,5 @@ public class Backend implements Serializable {
 	public void setUsersList(ArrayList<User> u){
 		this.users= u;
 	}
-
 
 }
