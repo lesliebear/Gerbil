@@ -12,6 +12,7 @@ import Model.Game;
 import Model.User;
 import Model.Gerbil;
 
+
 /**
  * Controller class will make all necessary modifications to data in order to send it to the control. 
  * It will concern itself with the data of one user and one game at any given point, provided
