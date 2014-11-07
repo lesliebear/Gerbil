@@ -35,7 +35,7 @@ public class Game implements Serializable{
 	public Game(String name){
 		this.name=name;
 		this.gerbil= new Gerbil();
-		this.grid = new Grid();
+		this.grid = new Grid(17,17);
 		this.functions= new ArrayList<Function>();
 		this.blocks= new ArrayList<Block>();	
 	}
