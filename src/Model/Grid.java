@@ -22,6 +22,8 @@ public class Grid implements Serializable{
 	/**17x17 grid size because the outer edges will have walls  
 	 * Grid does not have gerbil location = gerbil object has the location info.*/
 	private char[][] grid;
+	int rows;
+	int cols;
 
 	/**
 	 * Creates a random grid that can still be completed (i.e. no walls blocking path 
@@ -35,8 +37,9 @@ public class Grid implements Serializable{
 	 * @postcondition creates a grid we can access and can still play
 	 * 
 	 */
-	public Grid(){
-		grid = new char[17][17];
+	public Grid(int rows, int cols){	
+		
+		grid = new char[rows][cols];
 		initGrid();
 	}
 
@@ -51,21 +54,26 @@ public class Grid implements Serializable{
 	 * 
 	 */
 	public void initGrid(){
-		do{//walls all around
+	//	do{//put walls all around and init 0s = empty grid area.
 			for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
 				for (int j = 0; j<grid[0].length;j++){ 
 					if((j==0)||(j==this.grid[0].length-1) || (i==0)||(i==this.grid.length-1)){
 						grid[i][j]='w'; //wall surrounds entire grid. 
+					}else{
+						grid[i][j] = '0'; //empty grid area.
 					}
-					grid[i][j] = '0'; //empty grid area.
 				}
 			}
+			
 			randomGrid(); //places walls and fruit
 			grid[1][this.grid[0].length-2]='t'; //place water can
-		}while((!hasValidPath(this.grid.length-2,1)) //start from bottom left corner = gerbil location 
-				&& (!fruitsHaveValidPath())); //reach all fruit 
+			this.printGrid();
+			System.out.println("Valid Grid: "+hasValidPath(this.grid.length-2,1));
+		//}while((hasValidPath(this.grid.length-2,1))==false //start from bottom left corner = gerbil location 
+				//&& (!fruitsHaveValidPath())); //reach all fruit
+		
 	}
-	
+
 	/**
 	 * Ensures that the grid has valid fruit placement with fruit in locations reachable by Gerbil
 	 * 
@@ -102,7 +110,7 @@ public class Grid implements Serializable{
 		for (int b = 0; b <2*(this.grid.length-2); b++){//put in 30 walls as obstacles 
 			int R = (int)(Math.random()*(this.grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(this.grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
-			if (((R!=this.grid[0].length-2)&&(S!=0) &&(R!=1) && (S!=this.grid.length-2)) && (this.grid[R][S]=='0')){ 
+			if (((R!=this.grid[0].length-2)&&(S!=1) &&(R!=1) && (S!=this.grid.length-2)) && (this.grid[R][S]=='0')){ 
 				//if empty and not in location of water can or gerbil
 				this.grid[R][S]='w';
 			} 
@@ -128,7 +136,7 @@ public class Grid implements Serializable{
 		for (int b = 0; b <(2*(this.grid.length-2))/3; b++){//put in grid to eat and floor due to integer division
 			int R = (int)(Math.random()*(this.grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(this.grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
-			if (this.grid[R][S]=='0'){ //if it is empty, add the fruit
+			if ((this.grid[R][S]=='0')&&(R!=1)&&(S!=this.grid[0].length-2)){ //if it is empty, add the fruit
 				this.grid[R][S]=c;
 			}
 			else{
@@ -169,19 +177,19 @@ public class Grid implements Serializable{
 		}else if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
 			return false;
 		}else{
-			getToFruit(Y-1,X,goalY,goalX,c); //4 normal spots...not corners
-			getToFruit(Y,X-1,goalY,goalX,c);
-			getToFruit(Y+1,X,goalY,goalX,c);
-			getToFruit(Y,X+1,goalY,goalX,c);
-
-			getToFruit(Y+1,X+1,goalY,goalX,c); //corners
-			getToFruit(Y-1,X-1,goalY,goalX,c);
-			getToFruit(Y+1,X-1,goalY,goalX,c);
-			getToFruit(Y-1,X+1,goalY,goalX,c);
-			return false; //could not get to fruit by now => false
+			 //4 normal spots...not corners
+			return (getToFruit(Y-1,X,goalY,goalX,c) ||
+			getToFruit(Y,X-1,goalY,goalX,c) ||
+			getToFruit(Y+1,X,goalY,goalX,c) ||
+			getToFruit(Y,X+1,goalY,goalX,c) ||
+			//corners
+			getToFruit(Y+1,X+1,goalY,goalX,c) ||
+			getToFruit(Y-1,X-1,goalY,goalX,c) ||
+			getToFruit(Y+1,X-1,goalY,goalX,c) ||
+			getToFruit(Y-1,X+1,goalY,goalX,c));
 		}
 	}
-	
+
 	/**
 	 * Checks if grid created in randomGrid is valid. ie. valid path exists
 	 * from start to finish of course. The course has to have a path from start to finish
@@ -206,16 +214,17 @@ public class Grid implements Serializable{
 			return false;
 		}
 		else {
-			hasValidPath(Y-1,X); //4 normal spots...not corners
-			hasValidPath(Y,X-1);
-			hasValidPath(Y+1,X);
-			hasValidPath(Y,X+1);
-
-			hasValidPath(Y+1,X+1); //corners
-			hasValidPath(Y-1,X-1);
-			hasValidPath(Y+1,X-1);
-			hasValidPath(Y-1,X+1);
-			return false; //could not get to water container by now => false
+			//4 normal spots...not corners
+			return (hasValidPath(Y-1,X) || 
+			hasValidPath(Y,X-1) ||
+			hasValidPath(Y+1,X) ||
+			hasValidPath(Y,X+1) ||
+			 //corners
+			hasValidPath(Y+1,X+1) ||
+			hasValidPath(Y-1,X-1) ||
+			hasValidPath(Y+1,X-1) ||
+			hasValidPath(Y-1,X+1));
+			 
 		}
 	}
 
