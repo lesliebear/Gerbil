@@ -15,7 +15,7 @@ public class Main {
 		//Backend bk = new Backend();
 		//System.out.println(bk.saveGames());
 		
-		Grid g = new Grid(17,17);		
+		Grid g = new Grid();		
 	}
 
 	/**
