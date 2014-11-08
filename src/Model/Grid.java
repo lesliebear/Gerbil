@@ -22,8 +22,7 @@ public class Grid implements Serializable{
 	/**17x17 grid size because the outer edges will have walls  
 	 * Grid does not have gerbil location = gerbil object has the location info.*/
 	private char[][] grid;
-	int rows;
-	int cols;
+	private boolean validPath = false;
 
 	/**
 	 * Creates a random grid that can still be completed (i.e. no walls blocking path 
@@ -37,9 +36,9 @@ public class Grid implements Serializable{
 	 * @postcondition creates a grid we can access and can still play
 	 * 
 	 */
-	public Grid(int rows, int cols){	
+	public Grid(){	
 		
-		grid = new char[rows][cols];
+		grid = new char[17][17];
 		initGrid();
 	}
 
@@ -57,7 +56,7 @@ public class Grid implements Serializable{
 	//	do{//put walls all around and init 0s = empty grid area.
 			for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
 				for (int j = 0; j<grid[0].length;j++){ 
-					if((j==0)||(j==this.grid[0].length-1) || (i==0)||(i==this.grid.length-1)){
+					if((j==0)||(j==grid[0].length-1) || (i==0)||(i==grid.length-1)){
 						grid[i][j]='w'; //wall surrounds entire grid. 
 					}else{
 						grid[i][j] = '0'; //empty grid area.
@@ -67,8 +66,9 @@ public class Grid implements Serializable{
 			
 			randomGrid(); //places walls and fruit
 			grid[1][this.grid[0].length-2]='t'; //place water can
-			this.printGrid();
-			System.out.println("Valid Grid: "+hasValidPath(this.grid.length-2,1));
+			printGrid();
+			hasValidPath(grid.length - 2, 1);
+			System.out.println("Valid Grid: " + validPath);
 		//}while((hasValidPath(this.grid.length-2,1))==false //start from bottom left corner = gerbil location 
 				//&& (!fruitsHaveValidPath())); //reach all fruit
 		
@@ -108,9 +108,9 @@ public class Grid implements Serializable{
 	 */
 	public void randomGrid(){
 		for (int b = 0; b <2*(this.grid.length-2); b++){//put in 30 walls as obstacles 
-			int R = (int)(Math.random()*(this.grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
-			int S = (int)(Math.random()*(this.grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
-			if (((R!=this.grid[0].length-2)&&(S!=1) &&(R!=1) && (S!=this.grid.length-2)) && (this.grid[R][S]=='0')){ 
+			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
+			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
+			if (((R!=grid[0].length-2)&&(S!=1) &&(R!=1) && (S!=grid.length-2)) && (grid[R][S]=='0')){ 
 				//if empty and not in location of water can or gerbil
 				this.grid[R][S]='w';
 			} 
@@ -133,14 +133,15 @@ public class Grid implements Serializable{
 	 * @param c The character representing the fruit to place onto the grid.
 	 */
 	public void placeFruitsRandomly(char c){
-		for (int b = 0; b <(2*(this.grid.length-2))/3; b++){//put in grid to eat and floor due to integer division
-			int R = (int)(Math.random()*(this.grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
-			int S = (int)(Math.random()*(this.grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
-			if ((this.grid[R][S]=='0')&&(R!=1)&&(S!=this.grid[0].length-2)){ //if it is empty, add the fruit
-				this.grid[R][S]=c;
-			}
-			else{
-				b--; //do not increment b without placing the total fruit needed!
+		
+		double numberOfFruit = ((grid.length - 2.0) * (grid[0].length - 2.0) * (30.0 / 225.0)) / 3.0;
+		int count = 0;
+		while(count != (int)numberOfFruit){
+			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
+			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
+			if (grid[R][S]=='0'){ //if it is empty, add the fruit
+				grid[R][S]=c;
+				count++;
 			}
 		}
 	}
@@ -203,28 +204,23 @@ public class Grid implements Serializable{
 	 * @param X The Column to check
 	 * @return True if the grid created does have a runnable/completable course, else false
 	 */
-	public boolean hasValidPath(int Y, int X){
-		if((Y==1) && (X==this.grid[0].length-2) ){//get to water container so has valid path
-			return true;
+	public void hasValidPath(int Y, int X){
+			
+		if ((Y<0) || (X<0)|| (Y>grid.length-1) || (X >grid[0].length-1)){ //make sure within bounds of grid
+			return; 
 		}
-		else if ((Y<1) || (X<1)|| (Y>this.grid.length-2) || (X >this.grid[0].length-2)){ //make sure within bounds of grid
-			return false; 
+		else if((grid[Y][X] == 't') ){//get to water container so has valid path
+			validPath = true;
+			return;
 		}
 		else if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
-			return false;
+			return;
 		}
 		else {
 			//4 normal spots...not corners
-			return (hasValidPath(Y-1,X) || 
-			hasValidPath(Y,X-1) ||
-			hasValidPath(Y+1,X) ||
-			hasValidPath(Y,X+1) ||
-			 //corners
-			hasValidPath(Y+1,X+1) ||
-			hasValidPath(Y-1,X-1) ||
-			hasValidPath(Y+1,X-1) ||
-			hasValidPath(Y-1,X+1));
-			 
+			hasValidPath(Y-1,X);  
+			hasValidPath(Y,X+1);
+			hasValidPath(Y-1,X+1); 
 		}
 	}
 
