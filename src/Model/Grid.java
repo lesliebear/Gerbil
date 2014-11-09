@@ -1,6 +1,9 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.HashMap;
+
+import Model.Grid.Node;
 
 /**
  * The Grid class that holds the information about how the grid looks by using characters to represent
@@ -22,7 +25,7 @@ public class Grid implements Serializable{
 	/**17x17 grid size because the outer edges will have walls  
 	 * Grid does not have gerbil location = gerbil object has the location info.*/
 	private char[][] grid;
-	
+	HashMap<Double,Node> visited = new HashMap<Double, Node>();
 
 	/**
 	 * Creates a random grid that can still be completed (i.e. no walls blocking path 
@@ -37,7 +40,7 @@ public class Grid implements Serializable{
 	 * 
 	 */
 	public Grid(int rows, int columns){	
-		
+
 		grid = new char[rows][columns];
 		initGrid();
 	}
@@ -53,30 +56,30 @@ public class Grid implements Serializable{
 	 * 
 	 */
 	public void initGrid(){
-		do{//put walls all around and init 0s = empty grid area.
-			for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
-				for (int j = 0; j<grid[0].length;j++){ 
-					if((j==0)||(j==grid[0].length-1) || (i==0)||(i==grid.length-1)){
-						grid[i][j]='w'; //wall surrounds entire grid. 
-					}else{
-						grid[i][j] = '0'; //empty grid area.
-					}
+		//	do{//put walls all around and init 0s = empty grid area.
+		for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
+			for (int j = 0; j<grid[0].length;j++){ 
+				if((j==0)||(j==grid[0].length-1) || (i==0)||(i==grid.length-1)){
+					grid[i][j]='w'; //wall surrounds entire grid. 
+				}else{
+					grid[i][j] = '0'; //empty grid area.
 				}
 			}
-			grid[1][1]='a';
-			grid[2][1]='w';
-			grid[2][2]='w';
-			grid[1][2]='w';
-			
-			
-			randomGrid(); //places walls and fruit
-			grid[1][this.grid[0].length-2]='t'; //place water can
-			printGrid();
-			System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
-			System.out.println("Valid Fruit locations: " + fruitsHaveValidPath());
-		}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
-				&& (!fruitsHaveValidPath())); //reach all fruit
-		
+		}
+	//	grid[1][1]='a';
+		//grid[2][1]='w';
+		//grid[2][2]='w';
+		//grid[1][2]='w';
+
+
+		randomGrid(); //places walls and fruit
+		grid[1][this.grid[0].length-2]='t'; //place water can
+		printGrid();
+		System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
+		System.out.println("Valid Fruit locations: " + fruitsHaveValidPath());
+		//	}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
+		//		&& (!fruitsHaveValidPath())); //reach all fruit
+
 	}
 
 	/**
@@ -138,7 +141,7 @@ public class Grid implements Serializable{
 	 * @param c The character representing the fruit to place onto the grid.
 	 */
 	public void placeFruitsRandomly(char c){
-		
+
 		int numberOfFruit = (int)((2.0*(this.grid.length-2.0)/3.0));
 		int count = 0;
 		while(count != numberOfFruit){
@@ -178,19 +181,23 @@ public class Grid implements Serializable{
 	public boolean getToFruit(int Y, int X, int goalY, int goalX, int c){
 		if ((Y==goalY) && (X == goalX) && (grid[Y][X]==c)){ //location o the fruit
 			return true;
-		}else if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
+		}
+		else if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
+			return false;
+		}else if(visited.get((double)Y/(double)X)!=null){
 			return false;
 		}else{
-			 //4 normal spots...not corners
+			visited.put(((double)Y/(double)X), new Node(Y,X));
+			//4 normal spots...not corners
 			return (getToFruit(Y-1,X,goalY,goalX,c) ||
-			getToFruit(Y,X-1,goalY,goalX,c) ||
-			getToFruit(Y+1,X,goalY,goalX,c) ||
-			getToFruit(Y,X+1,goalY,goalX,c) ||
-			//corners
-			getToFruit(Y+1,X+1,goalY,goalX,c) ||
-			getToFruit(Y-1,X-1,goalY,goalX,c) ||
-			getToFruit(Y+1,X-1,goalY,goalX,c) ||
-			getToFruit(Y-1,X+1,goalY,goalX,c));
+					getToFruit(Y,X-1,goalY,goalX,c) ||
+					getToFruit(Y+1,X,goalY,goalX,c) ||
+					getToFruit(Y,X+1,goalY,goalX,c) ||
+					//corners
+					getToFruit(Y+1,X+1,goalY,goalX,c) ||
+					getToFruit(Y-1,X-1,goalY,goalX,c) ||
+					getToFruit(Y+1,X-1,goalY,goalX,c) ||
+					getToFruit(Y-1,X+1,goalY,goalX,c));
 		}
 	}
 
@@ -216,8 +223,8 @@ public class Grid implements Serializable{
 		}
 		else {
 			return hasValidPath(Y-1,X) ||  
-			hasValidPath(Y+1,X+1) ||
-			hasValidPath(Y,X+1); 
+					hasValidPath(Y+1,X+1) ||
+					hasValidPath(Y,X+1); 
 		}
 	}
 
@@ -236,6 +243,14 @@ public class Grid implements Serializable{
 			System.out.println(); //new line for new row. 
 		}
 	}//close print board
+
+	public class Node {
+		int row, col;
+		public Node(int row, int col){
+			this.row = row;
+			this.col=col;
+		}
+	}
 
 }
 
