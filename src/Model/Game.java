@@ -11,6 +11,10 @@ import java.util.ArrayList;
  * In the Fancy features, the User can create the obstacle course 
  * @author Amulya
  */
+/**
+ * @author Amulya
+ *
+ */
 public class Game implements Serializable{
 	/**User written code for which each node shows up as a block of code in the GUI*/
 	private ArrayList<Block> blocks; 
@@ -34,10 +38,26 @@ public class Game implements Serializable{
 	 */
 	public Game(String name){
 		this.name=name;
-		this.gerbil= new Gerbil();
-		this.grid = new Grid(17,17);
 		this.functions= new ArrayList<Function>();
 		this.blocks= new ArrayList<Block>();	
+	}
+	
+	/**
+	 * Sets the grid in Game
+	 * 
+	 * @param grid The grid object created in controller
+	 */
+	public void setGrid(Grid grid){
+		this.grid=grid;
+	}
+	
+	/**
+	 * Sets the gerbil in Game
+	 * 
+	 * @param gerb The Gerbil created in controller
+	 */
+	public void setGerbil(Gerbil gerb){
+		this.gerbil=gerb;
 	}
 
 	/**
