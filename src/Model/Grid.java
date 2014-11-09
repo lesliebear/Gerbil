@@ -36,9 +36,9 @@ public class Grid implements Serializable{
 	 * @postcondition creates a grid we can access and can still play
 	 * 
 	 */
-	public Grid(){	
+	public Grid(int rows, int columns){	
 		
-		grid = new char[17][17];
+		grid = new char[rows][columns];
 		initGrid();
 	}
 
@@ -53,7 +53,7 @@ public class Grid implements Serializable{
 	 * 
 	 */
 	public void initGrid(){
-	//	do{//put walls all around and init 0s = empty grid area.
+		do{//put walls all around and init 0s = empty grid area.
 			for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
 				for (int j = 0; j<grid[0].length;j++){ 
 					if((j==0)||(j==grid[0].length-1) || (i==0)||(i==grid.length-1)){
@@ -63,16 +63,19 @@ public class Grid implements Serializable{
 					}
 				}
 			}
+			grid[1][1]='a';
+			grid[2][1]='w';
+			grid[2][2]='w';
+			grid[1][2]='w';
+			
 			
 			randomGrid(); //places walls and fruit
 			grid[1][this.grid[0].length-2]='t'; //place water can
-			/*grid[1][14] = 'w';
-			grid[2][14] = 'w';
-			grid[2][15] = 'w';*/
 			printGrid();
 			System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
-		//}while((hasValidPath(this.grid.length-2,1))==false //start from bottom left corner = gerbil location 
-				//&& (!fruitsHaveValidPath())); //reach all fruit
+			System.out.println("Valid Fruit locations: " + fruitsHaveValidPath());
+		}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
+				&& (!fruitsHaveValidPath())); //reach all fruit
 		
 	}
 
@@ -136,9 +139,9 @@ public class Grid implements Serializable{
 	 */
 	public void placeFruitsRandomly(char c){
 		
-		double numberOfFruit = ((grid.length - 2.0) * (grid[0].length - 2.0) * (30.0 / 225.0)) / 3.0;
+		int numberOfFruit = (int)((2.0*(this.grid.length-2.0)/3.0));
 		int count = 0;
-		while(count != (int)numberOfFruit){
+		while(count != numberOfFruit){
 			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
 			if (grid[R][S]=='0'){ //if it is empty, add the fruit
@@ -175,8 +178,6 @@ public class Grid implements Serializable{
 	public boolean getToFruit(int Y, int X, int goalY, int goalX, int c){
 		if ((Y==goalY) && (X == goalX) && (grid[Y][X]==c)){ //location o the fruit
 			return true;
-		}else if ((Y<1) || (X<1)|| (Y>this.grid.length-2) || (X >this.grid[0].length-2)){ //make sure within bounds of grid
-			return false; 
 		}else if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
 			return false;
 		}else{
@@ -207,10 +208,6 @@ public class Grid implements Serializable{
 	 * @return True if the grid created does have a runnable/completable course, else false
 	 */
 	public boolean hasValidPath(int Y, int X){
-			
-		//if ((Y < 0) || (X < 0)|| (Y > grid.length - 1) || (X > grid[0].length - 1)){ //make sure within bounds of grid
-			//return false; 
-		//}
 		if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
 			return false;
 		}
@@ -219,8 +216,8 @@ public class Grid implements Serializable{
 		}
 		else {
 			return hasValidPath(Y-1,X) ||  
-			hasValidPath(Y,X+1) ||
-			hasValidPath(Y-1,X+1); 
+			hasValidPath(Y+1,X+1) ||
+			hasValidPath(Y,X+1); 
 		}
 	}
 
