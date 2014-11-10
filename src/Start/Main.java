@@ -1,4 +1,5 @@
 package Start;
+import Control.Controller;
 import Model.*;
 
 /**
@@ -14,6 +15,7 @@ public class Main {
 	public static void main(String[] args) {
 		//Backend bk = new Backend();
 		//System.out.println(bk.saveGames());
+		Controller c = Controller.getInstance();
 		
 		Grid g = new Grid(17,17);		
 	}
