@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import Model.Grid.Node;
@@ -27,6 +28,7 @@ public class Grid implements Serializable{
 	private char[][] grid;
 	HashMap<Double,Node> visited;
 	HashMap<Double,Node> visitWater = new HashMap<Double, Node>();
+	ArrayList<Node> fruitLocTest = new ArrayList<Node>();
 
 	/**
 	 * Creates a random grid that can still be completed (i.e. no walls blocking path 
