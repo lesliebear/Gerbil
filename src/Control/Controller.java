@@ -25,8 +25,6 @@ public class Controller {
 	/**Holds the list of built in functions = eat Apple, eat pear, eat pumpking, move, turn left*/
 	ArrayList<Function> builtIn;
 	//Note eat fruit must be for that fruit only!! else error popup.
-	/** Singleton instance of controller */
-	private static Controller controller;
 	
 	private Main main = new Main(); //Instance of main screen
 	
@@ -63,10 +61,6 @@ public class Controller {
 	 *  @postcondition creates an instance of Controller iff it has not already been created
 	 *  
 	 *  */
-	public static Controller getInstance() {
-		 
-		return controller;
-	}
 	
 	/**Creates and initializes built in functions
 	 * 

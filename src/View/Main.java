@@ -52,13 +52,17 @@ public class Main implements Screen {
 	 */
 	public void createScreen() {
 
+		panel.setLayout(null);
+		panel.add(play);
+		play.setLocation(300, 400);
 		//frame.getContentPane().setLayout(null);
-		frame.add(play);
+	
 		//play.setLocation(300, 400);
 		frame.add(panel);
-		frame.setSize(new Dimension(1024, 768));
+		frame.setSize(new Dimension(1024, 668));
 		frame.setVisible(true);
 		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 	}
 
 	/**
