@@ -1,11 +1,12 @@
 package Start;
+import Control.*;
 import Model.*;
 
 /**
  * Main program.
  *
  */
-public class Main {
+public class StartGerbil {
 
 	/**
 	 * Main method.

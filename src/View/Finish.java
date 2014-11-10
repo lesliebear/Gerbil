@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 /**
  * This class creates a GUI for the Finish Screen.
  */
-public class Finish implements Screen {
+public class Finish extends Screen {
 
 	/**
 	 * Constructor that creates all necessary GUI components.
@@ -19,7 +19,7 @@ public class Finish implements Screen {
 	 * Creates the screen by putting the GUI components together.
 	 * 
 	 */
-	public void CreateScreen() {	
+	public void createScreen() {	
 		
 	}
 

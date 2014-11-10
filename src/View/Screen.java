@@ -2,32 +2,35 @@ package View;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.JFrame;
+
 /**
- * Interface that includes 3 methods: CreateScreen, show, and hide. All must be implemented before being called.
+ * Abstract class that includes 4 methods: createScreen, show, hide, addEventListeners. All must be implemented.
  *
  */
-public interface Screen {
+@SuppressWarnings("serial")
+public abstract class Screen extends JFrame {
 
 	/**
 	 * Method to be implemented: Creates the screen.
 	 * 
 	 */
-	public void CreateScreen();
+	public abstract void createScreen();
 	
 	/**
 	 * Method to be implemented: Shows the screen.
 	 * 
 	 */
-	public void show();
-	
+	public abstract void show();
+		
 	/**
 	 * Method to be implemented: Hides the screen.
 	 * 
 	 */
-	public void hide();
+	public abstract void hide();
 	
 	/**
 	 * Method to add event handlers
 	 */
-	public void addEventListeners(ActionListener listener);
+	public abstract void addEventListeners(ActionListener listener);
 }
