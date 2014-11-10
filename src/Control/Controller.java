@@ -45,10 +45,10 @@ public class Controller {
 		
 		main.addEventListeners(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(e.getSource() == main.button1) {
+				if(e.getSource() == main.play) {
 					//Here is when an event is fired up. It maybe or may not call one of the methods below depend on the button pressed.
 				}
-				else if(e.getSource() == main.button2) {
+				else if(e.getSource() == main.instructions) {
 					//Here is when an event is fired up. It maybe or may not call one of the methods below depend on the button pressed.
 				}
 			}
