@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
  * This class create the GUI for Delete Function Screen.
  *
  */
-public class DeleteFunction extends Screen{
+public class DeleteFunction implements Screen{
 
 	/**
 	 * Constructor that creates all necessary GUI components.
