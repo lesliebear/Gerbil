@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
  * This class creates a GUI for the Confirmation screen.
  *
  */
-public class Confirm extends Screen {
+public class Confirm implements Screen {
 
 	/**
 	 * Constructor that creates all necessary GUI components.

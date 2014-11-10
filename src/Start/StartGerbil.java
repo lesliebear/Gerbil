@@ -1,6 +1,7 @@
 package Start;
 import Control.*;
 import Model.*;
+import View.*;
 
 /**
  * Main program.
@@ -16,7 +17,8 @@ public class StartGerbil {
 		//Backend bk = new Backend();
 		//System.out.println(bk.saveGames());
 		
-		Grid g = new Grid(17,17);		
+		//Grid g = new Grid(17,17);		
+		Main main = new Main();
 	}
 
 	/**

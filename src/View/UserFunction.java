@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
  * This class creates a GUI for the Function Screen.
  *
  */
-public class UserFunction extends Screen{
+public class UserFunction implements Screen{
 
 	/**
 	 * Constructor that creates all necessary GUI components.

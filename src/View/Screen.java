@@ -9,7 +9,7 @@ import javax.swing.JFrame;
  *
  */
 @SuppressWarnings("serial")
-public abstract class Screen extends JFrame {
+public interface  Screen {
 
 	/**
 	 * Method to be implemented: Creates the screen.
