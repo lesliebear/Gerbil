@@ -105,13 +105,15 @@ public class Controller {
 	 * @return newly created and instantiated Game object
 	 */
 	public Game createGame(String name){
+		/**
 		if(validGameName(name)){
 			Game newgame= new Game(name);
 			
 		}else{
 			//error??? what to do for error...
 		}
-		
+		*/
+		return null;
 		
 		//Will call validGameName to check if valid game name
 		//Will utilize Game.java constructor
@@ -167,13 +169,13 @@ public class Controller {
 		return false;
 		
 		//Will not call other functions/classes
-		
+		/**
 		at position i
 			if instruction block at i is syntactically valid
 				return true
 				else
 					return false
-		
+		*/
 	}
 
 	
@@ -191,7 +193,6 @@ public class Controller {
 	 */
 	public boolean editBlock(int pos, String instruction){
 		ArrayList<Block> blocklist= gamePlaying.getBlocks();
-		blocklist.get(pos).
 		//need to add setInstructions in Block Class
 		
 		if(!parseBlock(pos)){
@@ -199,7 +200,7 @@ public class Controller {
 		}
 		
 		//Will call parseBlock - must reparse the block to see if valid change has been made
-		
+		/**
 		at position i
 			if block at i != null
 				edit block instructions
@@ -210,6 +211,8 @@ public class Controller {
 					return false
 					else
 						return false
+		*/
+		return false;
 	}	
 		
 
@@ -229,14 +232,14 @@ public class Controller {
 		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
 		//Question: should we have something that asks them if they want to delete even if the code will become invalid ?
 		
-		ArrayList<Block> blocks = gamePlaying.getBlocks(); 
-		
+	//	ArrayList<Block> blocks = gamePlaying.getBlocks(); 
+		/**
 		if blocks is not empty
 			get block at position i 
 				delete block at i 
 				else
 					return false
-		
+		*/
 	}
 
 	/**
@@ -254,7 +257,7 @@ public class Controller {
 		
 		//Will call the Block.java class to initialize a new block
 		return false;
-		
+		/**
 		get list of blocks	
 		position i 
 		for list of blocks, find position i
@@ -262,7 +265,7 @@ public class Controller {
 				return true
 				else
 					return false
-			
+		*/	
 	}
 	
 	
@@ -281,6 +284,7 @@ public class Controller {
 		
 		//Will call searchForBlock to find block of the given id
 		return false;
+		/**
 		get block by id
 		edit Block instructions
 		
@@ -288,7 +292,7 @@ public class Controller {
 			return true
 			else 
 				return false
-		
+		*/
 		
 	}
 	
@@ -307,7 +311,7 @@ public class Controller {
 		//Will not call any other function/class
 		
 		return null;
-		
+		/**
 		get list of block
 		int i = 0; 
 		while block_id[i] != provided id
@@ -316,7 +320,7 @@ public class Controller {
 				return block
 			
 			i++
-			
+		*/	
 		
 	}
 	
