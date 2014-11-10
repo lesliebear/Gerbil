@@ -1,5 +1,7 @@
 package View;
 
+import java.awt.event.ActionListener;
+
 /**
  * This screen creates a GUI for the Conditional Screen. 
  *
@@ -36,5 +38,10 @@ public class Conditionals implements Screen {
 	 */
 	public void hide() {
 	
+	}
+
+	public void addEventListeners(ActionListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 }

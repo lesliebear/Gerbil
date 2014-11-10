@@ -1,5 +1,7 @@
 package View;
 
+import java.awt.event.ActionListener;
+
 /**
  * This class create the GUI for Delete Function Screen.
  *
@@ -36,5 +38,10 @@ public class DeleteFunction implements Screen{
 	 */
 	public void hide() {
 	
+	}
+
+	public void addEventListeners(ActionListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 }

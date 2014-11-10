@@ -1,5 +1,7 @@
 package Control;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,7 +13,7 @@ import Model.Function;
 import Model.Game;
 import Model.User;
 import Model.Gerbil;
-
+import View.*;
 
 /**
  * Controller class will make all necessary modifications to data in order to send it to the control. 
@@ -29,6 +31,8 @@ public class Controller {
 	/** Singleton instance of controller */
 	private static Controller controller;
 	
+	private Main main = new Main(); //Instance of main screen
+	
 	
 /**assumes, returns, exceptions**/
 	
@@ -37,8 +41,23 @@ public class Controller {
 	 */
 	private Controller(){
 		builtIn= new ArrayList<Function>();
+		addEventListeners();
 	}
 	
+	public void addEventListeners() {
+		
+		main.addEventListeners(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(e.getSource() == main.button1) {
+					//Here is when an event is fired up. It maybe or may not call one of the methods below depend on the button pressed.
+				}
+				else if(e.getSource() == main.button2) {
+					//Here is when an event is fired up. It maybe or may not call one of the methods below depend on the button pressed.
+				}
+			}
+		});
+		
+	}
 	/** Returns singleton instance of controller
 	 * 
 	 *  @assumes nothing
