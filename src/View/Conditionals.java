@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
  * This screen creates a GUI for the Conditional Screen. 
  *
  */
-public class Conditionals implements Screen {
+public class Conditionals extends Screen {
 
 	/**
 	 * Constructor that creates all necessary GUI components.
@@ -20,7 +20,7 @@ public class Conditionals implements Screen {
 	 * Creates the screen by putting the GUI components together.
 	 * 
 	 */
-	public void CreateScreen() {	
+	public void createScreen() {	
 		
 	}
 

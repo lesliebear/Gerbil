@@ -2,11 +2,15 @@ package View;
 
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+
 /**
  * This class creates a GUI for the Gerbil Screen (Opening Screen).
  *
  */
-public class Main implements Screen{
+public class Main extends Screen{
+	
+	public JButton button1, button2;
 
 	/**
 	 * Constructor that creates all necessary GUI components.
@@ -20,7 +24,7 @@ public class Main implements Screen{
 	 * Creates the screen by putting the GUI components together.
 	 * 
 	 */
-	public void CreateScreen() {	
+	public void createScreen() {	
 		
 	}
 
