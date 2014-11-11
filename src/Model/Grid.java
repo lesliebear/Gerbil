@@ -60,30 +60,32 @@ public class Grid implements Serializable{
 	 */
 	public void initGrid(){
 		//do{//put walls all around and init 0s = empty grid area.
-			for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
-				for (int j = 0; j<grid[0].length;j++){ 
-					if((j==0)||(j==grid[0].length-1) || (i==0)||(i==grid.length-1)){
-						grid[i][j]='w'; //wall surrounds entire grid. 
-					}else{
-						grid[i][j] = '0'; //empty grid area.
-					}
+		for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
+			for (int j = 0; j<grid[0].length;j++){ 
+				if((j==0)||(j==grid[0].length-1) || (i==0)||(i==grid.length-1)){
+					grid[i][j]='w'; //wall surrounds entire grid. 
+				}else{
+					grid[i][j] = '0'; //empty grid area.
 				}
 			}
-			//	grid[1][1]='a';
-			//grid[2][1]='w';
-			//grid[2][2]='w';
-			//grid[1][2]='w';
+		}
+		//	grid[1][1]='a';
+		//grid[2][1]='w';
+		//grid[2][2]='w';
+		//grid[1][2]='w';
+		//	grid[1][13]='w';
+		//grid[3][15]='w';
+		//grid[3][14]='w';
+		//grid[3][13]='w';
+		//grid[2][13]='w';
 
 
-			randomGrid(); //places walls and fruit
-			grid[1][14] = 'w';
-			grid[2][14] = 'w';
-			grid[2][15] = 'w';
-			grid[1][this.grid[0].length-2]='t'; //place water can
-			printGrid();
-		//	System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
-			System.out.println("Valid Fruit locations: " + fruitsHaveValidPath());
-	//	}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
+		randomGrid(); //places walls and fruit
+		grid[1][this.grid[0].length-2]='t'; //place water can
+		printGrid();
+		//System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
+		System.out.println("Valid Fruit locations: " + fruitsHaveValidPath());
+		//	}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
 		//		&& (!fruitsHaveValidPath())); //reach all fruit
 
 	}
@@ -99,17 +101,14 @@ public class Grid implements Serializable{
 	 * @return True if all fruits can be reached by Gerbil else false.
 	 */
 	public boolean fruitsHaveValidPath(){
-		for (int i = 1; i<this.grid.length-1; i++){
-			for (int j = 1; j<this.grid[0].length-1;j++){
-				if((this.getSquareContent(i, j)!='0') && (this.getSquareContent(i, j)!='t') && (this.getSquareContent(i, j)!='w')){
-					visited = new HashMap<Double, Node>();
-					if(!getToFruit(this.grid.length-2,1,i,j, this.getSquareContent(i, j))){
-						System.out.println("location it fails: "+i+" , "+j);
-						return false;
-					}
-				}
+		for (Node n: fruitLocTest){
+			if((getToFruitUpRight(grid.length-2,1,n.row,n.col, getSquareContent(n.row, n.col))&&
+					getToFruitDownLeft(grid.length-2,1,n.row,n.col,getSquareContent(n.row, n.col))==false)){
+				System.out.println("location it fails: "+n.row+" , "+n.col);
+				return false;
 			}
 		}
+
 		return true;
 	}
 
@@ -157,6 +156,7 @@ public class Grid implements Serializable{
 			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
 			if (((R!=1)&&(S!=this.grid[0].length-2))&&((R!=this.grid.length-2) && (S!= 1)) && (grid[R][S]=='0')){ //if it is empty, add the fruit
 				grid[R][S]=c;
+				this.fruitLocTest.add(new Node(R,S));
 				count++;
 			}
 		}
@@ -186,26 +186,36 @@ public class Grid implements Serializable{
 	 * @param goalX The column to reach
 	 * @return check if we reach the location of the fruit. 
 	 */
-	public boolean getToFruit(int Y, int X, int goalY, int goalX, char c){
+	public boolean getToFruitUpRight(int Y, int X, int goalY, int goalX, char c){
 		if ((Y==goalY) && (X == goalX) && (this.getSquareContent(Y, X)==c)){ //location o the fruit
 			return true;
 		}else if (this.getSquareContent(Y, X)=='w'){ //wall so cannot move more in that direction
-			visited.put(((double)Y/(double)X), new Node(Y,X));
-			return false;
-		}else if(visited.get((double)Y/(double)X)!=null){
 			return false;
 		}else{
-			visited.put(((double)Y/(double)X), new Node(Y,X));
 			//4 normal spots...not corners
-			return (getToFruit(Y-1,X,goalY,goalX,c) ||
-					getToFruit(Y,X-1,goalY,goalX,c) ||
-					getToFruit(Y+1,X,goalY,goalX,c) ||
-					getToFruit(Y,X+1,goalY,goalX,c));
-					//corners = cannot go there so comment out!
-					//getToFruit(Y+1,X+1,goalY,goalX,c) ||
-					//getToFruit(Y-1,X-1,goalY,goalX,c) ||
-					//getToFruit(Y+1,X-1,goalY,goalX,c) ||
-					//getToFruit(Y-1,X+1,goalY,goalX,c));
+			return (getToFruitUpRight(Y-1,X,goalY,goalX,c) ||
+					getToFruitUpRight(Y,X+1,goalY,goalX,c));
+		}
+	}
+
+	/**
+	 * Tests if all fruit are reachable else it would be not a valid program
+	 * 
+	 * @param Y The row to check in
+	 * @param X The column to check in
+	 * @param goalY The row to reach
+	 * @param goalX The column to reach
+	 * @return check if we reach the location of the fruit. 
+	 */
+	public boolean getToFruitDownLeft(int Y, int X, int goalY, int goalX, char c){
+		if ((Y==goalY) && (X == goalX) && (this.getSquareContent(Y, X)==c)){ //location o the fruit
+			return true;
+		}else if (this.getSquareContent(Y, X)=='w'){ //wall so cannot move more in that direction
+			return false;
+		}else{
+			//4 normal spots...not corners
+			return (getToFruitDownLeft(Y,X-1,goalY,goalX,c) ||
+					getToFruitDownLeft(Y+1,X,goalY,goalX,c));
 		}
 	}
 
