@@ -2,9 +2,11 @@ package View;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -14,7 +16,7 @@ import javax.swing.JPanel;
  * This class creates a GUI for the Gerbil Screen (Opening Screen).
  *
  */
-public class Main implements Screen {
+public class Main extends Screen {
 
 	public JButton play, instructions, exit;
 	private JPanel panel;
@@ -40,7 +42,7 @@ public class Main implements Screen {
 		panel = new JPanel() {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
-				g.drawImage(image, 0, 0, null);
+				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			}
 		};
 		createScreen();
@@ -50,14 +52,11 @@ public class Main implements Screen {
 	 * Creates the screen by putting the GUI components together.
 	 * 
 	 */
-	public void createScreen() {
+	protected void createScreen() {
 
-		panel.setLayout(null);
+		panel.setLayout(new GridBagLayout());
 		panel.add(play);
-		play.setLocation(300, 400);
-		//frame.getContentPane().setLayout(null);
-	
-		//play.setLocation(300, 400);
+		play.setLocation(0, 0);
 		frame.add(panel);
 		frame.setSize(new Dimension(1024, 668));
 		frame.setVisible(true);

@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
  * This class creates a GUI for the Instruction Screen (Help screen).
  *
  */
-public class Instructions implements Screen{
+public class Instructions extends Screen{
 
 	/**
 	 * Constructor that creates all necessary GUI components.
@@ -20,10 +20,12 @@ public class Instructions implements Screen{
 	 * Creates the screen by putting the GUI components together.
 	 * 
 	 */
-	public void createScreen() {	
+	
+	protected void createScreen() {
+		// TODO Auto-generated method stub
 		
 	}
-
+	
 	/**
 	 * Shows the screen.
 	 * 
@@ -44,4 +46,6 @@ public class Instructions implements Screen{
 		// TODO Auto-generated method stub
 		
 	}
+
+
 }

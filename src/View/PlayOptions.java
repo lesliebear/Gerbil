@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
  * This class creates a GUI for the PlayOptions screen.
  *
  */
-public class PlayOptions implements Screen{
+public class PlayOptions extends Screen{
 
 	/**
 	 * Constructor that creates all necessary GUI components.
@@ -20,7 +20,7 @@ public class PlayOptions implements Screen{
 	 * Creates the screen by putting the GUI components together.
 	 * 
 	 */
-	public void createScreen() {	
+	protected void createScreen() {	
 		
 	}
 

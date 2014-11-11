@@ -9,13 +9,13 @@ import javax.swing.JFrame;
  *
  */
 @SuppressWarnings("serial")
-public interface  Screen {
+public abstract class Screen {
 
 	/**
 	 * Method to be implemented: Creates the screen.
 	 * 
 	 */
-	public abstract void createScreen();
+	protected abstract void createScreen();
 	
 	/**
 	 * Method to be implemented: Shows the screen.
