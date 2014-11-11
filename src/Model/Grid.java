@@ -3,6 +3,7 @@ package Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import Model.Grid.Node;
 
@@ -27,7 +28,7 @@ public class Grid implements Serializable{
 	 * Grid does not have gerbil location = gerbil object has the location info.*/
 	private char[][] grid;
 	HashMap<Double,Node> visited;
-	HashMap<Double,Node> visitWater = new HashMap<Double, Node>();
+	HashMap<String,Node> fruitCoordinates = new HashMap<String, Node>(); // made this
 	ArrayList<Node> fruitLocTest = new ArrayList<Node>();
 
 	/**
@@ -81,10 +82,26 @@ public class Grid implements Serializable{
 
 
 		randomGrid(); //places walls and fruit
+		int size;
+		size = fruitCoordinates.size();
 		grid[1][this.grid[0].length-2]='t'; //place water can
+		
+		grid[1][1] = 'k';	//
+		grid[2][1] = 'w';	//
+		grid[1][2] = 'w';	//
+		fruitCoordinates.remove(Integer.toString(1) + Integer.toString(1));	//
+		fruitCoordinates.put(Integer.toString(1) + Integer.toString(1), new Node(1, 1)); //
 		printGrid();
-		//System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
-		System.out.println("Valid Fruit locations: " + fruitsHaveValidPath());
+		System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
+		checkFruitsTopRight(grid.length - 2, 1);
+		checkFruitsDownLeft(1, grid[0].length - 2);
+		size = fruitCoordinates.size();
+		if(size == 0) {
+			System.out.println("Fruits have valid paths");
+		}
+		else {
+			System.out.println("At least one fruit does not have valid path");
+		}
 		//	}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
 		//		&& (!fruitsHaveValidPath())); //reach all fruit
 
@@ -149,14 +166,14 @@ public class Grid implements Serializable{
 	 */
 	public void placeFruitsRandomly(char c){
 
-		int numberOfFruit = (int)((2.0*(this.grid.length-2.0)/3.0));
+		int numberOfFruit = 10;//(int)((2.0*(this.grid.length-2.0)/3.0));
 		int count = 0;
 		while(count != numberOfFruit){
 			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
-			if (((R!=1)&&(S!=this.grid[0].length-2))&&((R!=this.grid.length-2) && (S!= 1)) && (grid[R][S]=='0')){ //if it is empty, add the fruit
+			if (grid[R][S]=='0'){ //if it is empty, add the fruit
 				grid[R][S]=c;
-				this.fruitLocTest.add(new Node(R,S));
+				fruitCoordinates.put(Integer.toString(R) + Integer.toString(S), new Node(R,S));
 				count++;
 			}
 		}
@@ -219,6 +236,35 @@ public class Grid implements Serializable{
 		}
 	}
 
+	/* Did this */
+	public void checkFruitsTopRight(int Y, int X) {
+		
+		if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
+			return;
+		}
+		else {
+			if(grid[Y][X] == 'k' || grid[Y][X] == 'p' || grid[Y][X] == 'a') {//get to water container so has valid path
+				fruitCoordinates.remove(Integer.toString(Y) + Integer.toString(X));
+			}
+			checkFruitsTopRight(Y-1,X);  
+			checkFruitsTopRight(Y,X+1); 
+		}
+	}
+	
+	/* Did this */
+	public void checkFruitsDownLeft(int Y, int X) {
+		
+		if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
+			return;
+		}
+		else {
+			if(grid[Y][X] == 'k' || grid[Y][X] == 'p' || grid[Y][X] == 'a') {//get to water container so has valid path
+				fruitCoordinates.remove(Integer.toString(Y) + Integer.toString(X));
+			}
+			checkFruitsDownLeft(Y+1,X);  
+			checkFruitsDownLeft(Y,X-1); 
+		}
+	}
 	/**
 	 * Checks if grid created in randomGrid is valid. ie. valid path exists
 	 * from start to finish of course. The course has to have a path from start to finish
@@ -234,20 +280,13 @@ public class Grid implements Serializable{
 	 */
 	public boolean hasValidPath(int Y, int X){
 		if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
-			visitWater.put(((double)Y/(double)X), new Node(Y,X));
 			return false;
 		}
 		else if((this.getSquareContent(Y, X) == 't') ){//get to water container so has valid path
 			return true;
-		}
-		else if(visitWater.get((double)Y/(double)X)!=null){
-			return false;
 		}else {
-			visitWater.put(((double)Y/(double)X), new Node(Y,X));
 			return hasValidPath(Y-1,X) ||  
 					//hasValidPath(Y+1,X+1) ||
-					hasValidPath(Y+1,X)||
-					hasValidPath(Y,X-1)||
 					hasValidPath(Y,X+1); 
 		}
 	}
