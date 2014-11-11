@@ -78,7 +78,7 @@ public class Grid implements Serializable{
 			randomGrid(); //places walls and fruit
 			grid[1][this.grid[0].length-2]='t'; //place water can
 			printGrid();
-		//	System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
+			System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
 			System.out.println("Valid Fruit locations: " + fruitsHaveValidPath());
 	//	}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
 		//		&& (!fruitsHaveValidPath())); //reach all fruit
