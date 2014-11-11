@@ -76,6 +76,9 @@ public class Grid implements Serializable{
 
 
 			randomGrid(); //places walls and fruit
+			grid[1][14] = 'w';
+			grid[2][14] = 'w';
+			grid[2][15] = 'w';
 			grid[1][this.grid[0].length-2]='t'; //place water can
 			printGrid();
 		//	System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
