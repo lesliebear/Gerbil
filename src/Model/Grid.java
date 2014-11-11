@@ -71,18 +71,6 @@ public class Grid implements Serializable{
 				}
 			}
 		}
-		//	grid[1][1]='a';
-		//grid[2][1]='w';
-		//grid[2][2]='w';
-		//grid[1][2]='w';
-		//	grid[1][13]='w';
-		//grid[3][15]='w';
-		//grid[3][14]='w';
-		//grid[3][13]='w';
-		//grid[2][13]='w';
-
-
-		
 		randomGrid(); //places walls and fruit
 		printGrid();
 		System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
@@ -229,22 +217,6 @@ public class Grid implements Serializable{
 			//4 normal spots...not corners
 			return (getToFruitDownLeft(Y,X-1,goalY,goalX,c) ||
 					getToFruitDownLeft(Y+1,X,goalY,goalX,c));
-		}
-	}
-
-	/* Did this */
-	public void checkFruitsTopRight(int Y, int X) {
-		
-		if (grid[Y][X]=='w'){ //wall so cannot move more in that direction
-			return;
-		}
-		else {
-			if(grid[Y][X] == 'k' || grid[Y][X] == 'p' || grid[Y][X] == 'a') {//get to water container so has valid path
-				grid[Y][X] = 'c';
-				fruitCoordinates.remove(Integer.toString(Y) + Integer.toString(X));
-			}
-			checkFruitsTopRight(Y-1,X);  
-			checkFruitsTopRight(Y,X+1); 
 		}
 	}
 	
