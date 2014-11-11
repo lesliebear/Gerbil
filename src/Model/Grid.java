@@ -86,11 +86,13 @@ public class Grid implements Serializable{
 		size = fruitCoordinates.size();
 		grid[1][this.grid[0].length-2]='t'; //place water can
 		
-		grid[1][1] = 'k';	//
-		grid[2][1] = 'w';	//
+		grid[2][1] = 'k';	//
+		grid[1][1] = 'w';	//
 		grid[1][2] = 'w';	//
-		fruitCoordinates.remove(Integer.toString(1) + Integer.toString(1));	//
-		fruitCoordinates.put(Integer.toString(1) + Integer.toString(1), new Node(1, 1)); //
+		grid[3][1] = 'w';
+		grid[3][2] = 'w';
+		fruitCoordinates.remove(Integer.toString(2) + Integer.toString(1));	//
+		fruitCoordinates.put(Integer.toString(2) + Integer.toString(1), new Node(2, 1)); //
 		printGrid();
 		System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
 		checkFruitsTopRight(grid.length - 2, 1);
@@ -102,6 +104,7 @@ public class Grid implements Serializable{
 		else {
 			System.out.println("At least one fruit does not have valid path");
 		}
+		printGrid();
 		//	}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
 		//		&& (!fruitsHaveValidPath())); //reach all fruit
 
@@ -166,9 +169,9 @@ public class Grid implements Serializable{
 	 */
 	public void placeFruitsRandomly(char c){
 
-		int numberOfFruit = 10;//(int)((2.0*(this.grid.length-2.0)/3.0));
+		int numberOfFruit = (int)((2.0*(this.grid.length-2.0)/3.0));
 		int count = 0;
-		while(count != numberOfFruit){
+		while(count < numberOfFruit){
 			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
 			if (grid[R][S]=='0'){ //if it is empty, add the fruit
@@ -244,6 +247,7 @@ public class Grid implements Serializable{
 		}
 		else {
 			if(grid[Y][X] == 'k' || grid[Y][X] == 'p' || grid[Y][X] == 'a') {//get to water container so has valid path
+				grid[Y][X] = 'c';
 				fruitCoordinates.remove(Integer.toString(Y) + Integer.toString(X));
 			}
 			checkFruitsTopRight(Y-1,X);  
@@ -259,6 +263,7 @@ public class Grid implements Serializable{
 		}
 		else {
 			if(grid[Y][X] == 'k' || grid[Y][X] == 'p' || grid[Y][X] == 'a') {//get to water container so has valid path
+				grid[Y][X] = 'c';
 				fruitCoordinates.remove(Integer.toString(Y) + Integer.toString(X));
 			}
 			checkFruitsDownLeft(Y+1,X);  
