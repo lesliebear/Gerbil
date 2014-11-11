@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
@@ -8,6 +9,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,7 +22,7 @@ import javax.swing.JPanel;
 public class Main extends Screen {
 
 	public JButton play, instructions, exit;
-	private JPanel panel;
+	private JPanel panel, buttonPanel;
 	private BufferedImage image;
 	private JFrame frame;
 
@@ -45,6 +48,9 @@ public class Main extends Screen {
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			}
 		};
+		
+		buttonPanel = new JPanel();
+	
 		createScreen();
 	}
 
@@ -54,13 +60,28 @@ public class Main extends Screen {
 	 */
 	protected void createScreen() {
 
-		panel.setLayout(new GridBagLayout());
-		panel.add(play);
-		play.setLocation(0, 0);
+		Dimension dimension = new Dimension(1024, 668);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+		buttonPanel.add(play);
+		buttonPanel.add(Box.createRigidArea(new Dimension(50,0)));
+		buttonPanel.add(instructions);
+		buttonPanel.add(Box.createRigidArea(new Dimension(50,0)));
+		buttonPanel.add(exit);
+		buttonPanel.add(Box.createRigidArea(new Dimension(50,0)));
+		panel.add(Box.createRigidArea(new Dimension(0,500)));
+		panel.add(buttonPanel);
+		play.setPreferredSize(new Dimension(125,85));
+		play.setFont(new Font(null, Font.BOLD,20));
+		instructions.setPreferredSize(new Dimension(125,65));
+		instructions.setFont(new Font(null, Font.BOLD,20));
+		exit.setPreferredSize(new Dimension(125,65));
+		exit.setFont(new Font(null, Font.BOLD,20));
+
 		frame.add(panel);
-		frame.setSize(new Dimension(1024, 668));
+		frame.setSize(dimension);
+		frame.setMinimumSize(dimension);
 		frame.setVisible(true);
-		frame.setResizable(false);
 		frame.setLocationRelativeTo(null);
 	}
 
