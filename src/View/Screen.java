@@ -30,6 +30,16 @@ public abstract class Screen {
 	public abstract void hide();
 	
 	/**
+	 * Method to disable screen
+	 */
+	public abstract void enable();
+	
+	/**
+	 * Method to disable screen
+	 */
+	public abstract void disable();
+	
+	/**
 	 * Method to add event handlers
 	 */
 	public abstract void addEventListeners(ActionListener listener);
