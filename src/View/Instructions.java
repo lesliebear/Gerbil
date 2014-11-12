@@ -42,10 +42,24 @@ public class Instructions extends Screen{
 	
 	}
 
+	/**
+	 * Enable the screen
+	 */
+	public void enable() {
+		
+		
+	}
+
+	/**
+	 * Disable to screen
+	 */
+	public void disable() {
+
+		
+	}
+	
 	public void addEventListeners(ActionListener listener) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
 }
