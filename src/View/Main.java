@@ -1,5 +1,6 @@
 package View;
  
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -9,15 +10,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
+import java.awt.Stroke;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
-
-
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
@@ -54,6 +52,7 @@ public class Main extends Screen {
 				g2d.setColor(Color.WHITE);
 				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
 				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
 				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
 				FontRenderContext frc = new FontRenderContext(null, false, false);
 				Rectangle2D r = getFont().getStringBounds(getText(), frc);
@@ -73,6 +72,7 @@ public class Main extends Screen {
 				g2d.setColor(Color.WHITE);
 				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
 				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
 				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
 				FontRenderContext frc = new FontRenderContext(null, false, false);
 				Rectangle2D r = getFont().getStringBounds(getText(), frc);
@@ -92,6 +92,7 @@ public class Main extends Screen {
 				g2d.setColor(Color.WHITE);
 				g2d.fillRoundRect(0, 0, getWidth(),getHeight(), 18, 18);
 				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
 				g2d.drawRoundRect(0, 0, getWidth()-1,getHeight()-1, 18, 18);
 				FontRenderContext frc = new FontRenderContext(null, false, false);
 				Rectangle2D r = getFont().getStringBounds(getText(), frc);
