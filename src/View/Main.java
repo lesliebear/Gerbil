@@ -52,14 +52,14 @@ public class Main extends Screen {
 				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 				super.paint(g);
 				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0,0,getWidth(),getHeight(),18,18);
+				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
 				g2d.setColor(Color.BLACK);
-				g2d.drawRoundRect(0,0,getWidth()-1,getHeight()-1,18,18);
+				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
 				FontRenderContext frc = new FontRenderContext(null, false, false);
 				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth()-r.getWidth()) / 2;
-				float yMargin = (float)(getHeight()-getFont().getSize()) / 2;
-				g2d.drawString(getText(),xMargin, (float)getFont().getSize()+yMargin);
+				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
+				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
 			}
 		};
 		instructions = new JButton("Instructions") {
@@ -71,14 +71,14 @@ public class Main extends Screen {
 				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 				super.paint(g);
 				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0,0,getWidth(),getHeight(),18,18);
+				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
 				g2d.setColor(Color.BLACK);
-				g2d.drawRoundRect(0,0,getWidth()-1,getHeight()-1,18,18);
+				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
 				FontRenderContext frc = new FontRenderContext(null, false, false);
 				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth()-r.getWidth()) / 2;
-				float yMargin = (float)(getHeight()-getFont().getSize()) / 2;
-				g2d.drawString(getText(),xMargin, (float)getFont().getSize()+yMargin);
+				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
+				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
 			}
 		};
 		exit = new JButton("Exit") {
@@ -90,14 +90,14 @@ public class Main extends Screen {
 				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 				super.paint(g);
 				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0,0,getWidth(),getHeight(),18,18);
+				g2d.fillRoundRect(0, 0, getWidth(),getHeight(), 18, 18);
 				g2d.setColor(Color.BLACK);
-				g2d.drawRoundRect(0,0,getWidth()-1,getHeight()-1,18,18);
+				g2d.drawRoundRect(0, 0, getWidth()-1,getHeight()-1, 18, 18);
 				FontRenderContext frc = new FontRenderContext(null, false, false);
 				Rectangle2D r = getFont().getStringBounds(getText(), frc);
 				float xMargin = (float)(getWidth()-r.getWidth()) / 2;
 				float yMargin = (float)(getHeight()-getFont().getSize()) / 2;
-				g2d.drawString(getText(),xMargin, (float)getFont().getSize()+yMargin);
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
 			}
 		}; 
 		try {
@@ -194,15 +194,8 @@ public class Main extends Screen {
 	 */
 	public void addEventListeners(ActionListener listener) {
 		
-		play.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent arg0) {
-				System.out.println("It works");
-				
-			}
-			
-		});
-		//instructions.addActionListener(listener);
-		//exit.addActionListener(listener);
+		play.addActionListener(listener);
+		instructions.addActionListener(listener);
+		exit.addActionListener(listener);
 	}
 }
