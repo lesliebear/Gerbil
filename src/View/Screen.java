@@ -30,17 +30,17 @@ public abstract class Screen {
 	public abstract void hide();
 	
 	/**
-	 * Method to disable screen
+	 * Method to be implemented: Enable screen
 	 */
 	public abstract void enable();
 	
 	/**
-	 * Method to disable screen
+	 * Method to be implemented:  Disable screen
 	 */
 	public abstract void disable();
 	
 	/**
-	 * Method to add event handlers
+	 * Method to be implemented: Add event listener
 	 */
 	public abstract void addEventListeners(ActionListener listener);
 }
