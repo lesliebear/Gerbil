@@ -2,12 +2,20 @@ package View;
  
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+
 /**
  * This class creates a GUI for the Instruction Screen (Help screen).
  *
  */
 public class Instructions extends Screen{
 
+	JFrame frame;
+	JButton ok;
+	JTextArea gamePlayText, LoadSaveText;
+	
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 * 
@@ -32,6 +40,7 @@ public class Instructions extends Screen{
 	 */
 	public void show() {
 	
+		frame.setVisible(true);;
 	}
 	
 	/**
@@ -40,6 +49,7 @@ public class Instructions extends Screen{
 	 */
 	public void hide() {
 	
+		frame.setVisible(false);
 	}
 
 	/**
@@ -47,7 +57,7 @@ public class Instructions extends Screen{
 	 */
 	public void enable() {
 		
-		
+		frame.setEnabled(true);
 	}
 
 	/**
@@ -55,11 +65,11 @@ public class Instructions extends Screen{
 	 */
 	public void disable() {
 
-		
+		frame.setEnabled(false);
 	}
 	
 	public void addEventListeners(ActionListener listener) {
-		// TODO Auto-generated method stub
 		
+		ok.addActionListener(listener);
 	}
 }
