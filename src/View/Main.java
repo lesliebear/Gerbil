@@ -52,7 +52,6 @@ public class Main extends Screen {
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			}
 		};
-		//buttonPanel = new JPanel();
 		createScreen();
 	}
 
@@ -62,37 +61,27 @@ public class Main extends Screen {
 	 */
 	protected void createScreen() {
 
-		//buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
-	
-		//buttonPanel.setOpaque(false);
-		play.setSize(new Dimension(100,100));
-		play.setMinimumSize(new Dimension(100,100));
-		play.setMaximumSize(play.getSize());
+		Dimension dimension = new Dimension(1024, 668);
+		Dimension buttonDimension = new Dimension(100,100);
+		play.setSize(buttonDimension);
+		play.setMinimumSize(buttonDimension);
 		play.setFont(new Font(null, Font.BOLD,20));
-		instructions.setSize(new Dimension(100,100));
-		instructions.setMinimumSize(new Dimension(100,100));
-		instructions.setMaximumSize(instructions.getSize());
+		instructions.setSize(buttonDimension);
+		instructions.setMinimumSize(buttonDimension);
 		instructions.setFont(new Font(null, Font.BOLD,20));
-		exit.setSize(new Dimension(100,100));
-		exit.setMinimumSize(new Dimension(100,100));
-		exit.setMaximumSize(exit.getSize());
+		exit.setSize(buttonDimension);
+		exit.setMinimumSize(buttonDimension);
 		exit.setFont(new Font(null, Font.BOLD,20));
-		/*buttonPanel.add(play);
-		buttonPanel.add(Box.createRigidArea(new Dimension (50, 0)));
-		buttonPanel.add(instructions);
-		buttonPanel.add(Box.createRigidArea(new Dimension (50, 0)));
-		buttonPanel.add(exit);
-		buttonPanel.add(Box.createRigidArea(new Dimension (50, 0)));*/
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(450,70,0,0);
+		c.insets = new Insets(450,25,0,70);
 		c.fill = GridBagConstraints.NONE;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.ipady = 40;
 		c.ipadx = 20;
 		panel.add(play, c);
-		Dimension dimension = new Dimension(1024, 668);
+		
 		c.gridx = 1;
 		c.gridy = 0;
 		c.ipady = 40;
@@ -102,7 +91,6 @@ public class Main extends Screen {
 		c.ipady = 40;
 		c.ipadx = 20;
 		panel.add(exit, c);
-		
 		frame.add(panel);
 		frame.setSize(dimension);
 		frame.setMinimumSize(dimension);
