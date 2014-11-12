@@ -119,13 +119,9 @@ public class Main extends Screen {
 	 */
 	protected void createScreen() {
 		
-		addEventListeners(null);
 		Dimension dimension = new Dimension(1024, 668);
 		instructions.setFont(new Font(null, Font.BOLD,20));
-		play.setBackground(Color.WHITE);
-		play.setFont(new Font(null, Font.BOLD,20));
-		instructions.setBackground(Color.WHITE);	
-		exit.setBackground(Color.WHITE);
+		play.setFont(new Font(null, Font.BOLD,20));	
 		exit.setFont(new Font(null, Font.BOLD,20));
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -149,9 +145,9 @@ public class Main extends Screen {
 		frame.add(panel);
 		frame.setSize(dimension);
 		frame.setMinimumSize(dimension);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
 
 	/**
