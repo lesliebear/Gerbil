@@ -10,13 +10,11 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.awt.Stroke;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -104,7 +102,7 @@ public class Main extends Screen {
 		try {
 			image = ImageIO.read(new File("10619975_10204553653617548_7614187758233835955_o.jpg"));
 		} catch (Exception ex) {
-			System.out.println("coudln't load image");
+			System.out.println("Couldn't load image");
 		}
 		panel = new JPanel() {
 			protected void paintComponent(Graphics g) {
