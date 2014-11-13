@@ -118,7 +118,7 @@ public class PlayOptions extends Screen{
 	 */
 	protected void createScreen() {	
 		
-		Dimension dimension = new Dimension(1024, 668);
+		Dimension dimension = new Dimension(1024, 768);
 		loadGame.setFont(new Font(null, Font.BOLD,20));
 		newGame.setFont(new Font(null, Font.BOLD,20));
 		back.setFont(new Font(null, Font.BOLD,20));	
