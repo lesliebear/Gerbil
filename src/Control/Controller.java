@@ -25,6 +25,7 @@ public class Controller {
 	//Note eat fruit must be for that fruit only!! else error popup.
 	Main main;
 	PlayOptions playOptions;
+	Instructions instructions;
 	
 /**assumes, returns, exceptions**/
 	
@@ -33,9 +34,10 @@ public class Controller {
 	 */
 	public Controller() {
 		
-		main = new Main();
-		playOptions = new PlayOptions();
-		initEventHandlers();
+		instructions = new Instructions();
+		//main = new Main();
+		//playOptions = new PlayOptions();
+		//initEventHandlers();
 	}
 	
 	/**Creates and initializes built in functions
