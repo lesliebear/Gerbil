@@ -32,6 +32,7 @@ public class Controller {
 	 * Constructor
 	 */
 	public Controller() {
+		
 		main = new Main();
 		playOptions = new PlayOptions();
 		initEventHandlers();
@@ -58,6 +59,9 @@ public class Controller {
 		addPlayOptionsEventHandlers();
 	}
 	
+	/**
+	 * Add event handlers for the Main screen
+	 */
 	private void addMainEventHandlers() {
 		
 		main.addPlayEventHandler(new ActionListener() {
@@ -78,6 +82,9 @@ public class Controller {
 		});
 	}
 	
+	/**
+	 * Add event handlers for the PlayOptions screen
+	 */
 	private void addPlayOptionsEventHandlers() {
 		
 		playOptions.addLoadGameEventHandler(new ActionListener() {
