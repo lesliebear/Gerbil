@@ -18,7 +18,8 @@ public class StartGerbil {
 		//System.out.println(bk.saveGames());
 		//Main main = new Main();
 		//Grid g = new Grid(17,17);		
-		PlayOptions po = new PlayOptions();
+		//PlayOptions po = new PlayOptions();
+		Controller controller = new Controller();
 	}
 
 	/**

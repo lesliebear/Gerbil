@@ -29,7 +29,7 @@ public class PlayOptions extends Screen{
 	private JFrame frame;
 	private JPanel panel;
 	private BufferedImage image;
-	public JButton loadGame, newGame;
+	public JButton loadGame, newGame, back;
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 * 
@@ -38,7 +38,7 @@ public class PlayOptions extends Screen{
 	public PlayOptions() {
 		 
 		frame = new JFrame("Options");
-		loadGame = new JButton("Load") {
+		loadGame = new JButton("Load Game") {
 			public void paint(Graphics g) {
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
@@ -78,7 +78,26 @@ public class PlayOptions extends Screen{
 				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
 			}
 		};
-		
+		back  = new JButton("Back") {
+			public void paint(Graphics g) {
+				this.setContentAreaFilled(false);
+				this.setBorderPainted(false);
+				Graphics2D g2d = (Graphics2D)g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				super.paint(g);
+				g2d.setColor(Color.WHITE);
+				g2d.fillRoundRect(0, 0, getWidth(),getHeight(), 18, 18);
+				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
+				g2d.drawRoundRect(0, 0, getWidth()-1,getHeight()-1, 18, 18);
+				FontRenderContext frc = new FontRenderContext(null, false, false);
+				Rectangle2D r = getFont().getStringBounds(getText(), frc);
+				float xMargin = (float)(getWidth()-r.getWidth()) / 2;
+				float yMargin = (float)(getHeight()-getFont().getSize()) / 2;
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
+			}
+		};
 		try {
 			image = ImageIO.read(new File("1960811_10204553653977557_1367600592125664392_o.jpg"));
 		} catch (Exception ex) {
@@ -101,28 +120,33 @@ public class PlayOptions extends Screen{
 		
 		Dimension dimension = new Dimension(1024, 668);
 		loadGame.setFont(new Font(null, Font.BOLD,20));
-		newGame.setFont(new Font(null, Font.BOLD,20));	
+		newGame.setFont(new Font(null, Font.BOLD,20));
+		back.setFont(new Font(null, Font.BOLD,20));	
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		c.insets = new Insets(90,0,30,0);
+		c.insets = new Insets(90,0,0,0);
 		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.ipady = 40;
 		c.ipadx = 70;
 		panel.add(loadGame, c);
-		c.insets = new Insets(100,0,0,0);
 		c.gridx = 0;
 		c.gridy = 1;
 		c.ipady = 40;
 		c.ipadx = 10;
 		panel.add(newGame, c);
+		c.gridx = 0;
+		c.gridy = 2;
+		c.ipady = 40;
+		c.ipadx = 10;
+		panel.add(back, c);
 		frame.add(panel);
 		frame.setSize(dimension);
 		frame.setMinimumSize(dimension);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		frame.setVisible(false);
 	}
 
 	/**
@@ -167,5 +191,6 @@ public class PlayOptions extends Screen{
 
 		loadGame.addActionListener(listener);
 		newGame.addActionListener(listener);
+		back.addActionListener(listener);
 	}
 }
