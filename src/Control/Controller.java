@@ -1,16 +1,11 @@
 package Control;
- 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
 
-import Model.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
+import Model.Block;
 import Model.Function;
-import View.*;
+import Model.Game;
 
 /**
  * Controller class will make all necessary modifications to data in order to send it to the control. 
@@ -18,16 +13,14 @@ import View.*;
  *  by the Backend.
  */
 public class Controller {
-	/**Holds the current user */
-	User userPlaying;
+
 	/**Holds the current game being played */
 	Game gamePlaying;
 	/**Holds the list of built in functions = eat Apple, eat pear, eat pumpking, move, turn left*/
 	ArrayList<Function> builtIn;
 	//Note eat fruit must be for that fruit only!! else error popup.
-	
-	private Main main = new Main(); //Instance of main screen
-	
+	/** Singleton instance of controller */
+	private static Controller controller;
 	
 /**assumes, returns, exceptions**/
 	
@@ -35,24 +28,8 @@ public class Controller {
 	 * Constructor
 	 */
 	private Controller(){
-		builtIn= new ArrayList<Function>();
-		addEventListeners();
 	}
 	
-	public void addEventListeners() {
-		
-		main.addEventListeners(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(e.getSource() == main.play) {
-					//Here is when an event is fired up. It maybe or may not call one of the methods below depend on the button pressed.
-				}
-				else if(e.getSource() == main.instructions) {
-					//Here is when an event is fired up. It maybe or may not call one of the methods below depend on the button pressed.
-				}
-			}
-		});
-		
-	}
 	/** Returns singleton instance of controller
 	 * 
 	 *  @assumes nothing
@@ -61,6 +38,10 @@ public class Controller {
 	 *  @postcondition creates an instance of Controller iff it has not already been created
 	 *  
 	 *  */
+	public static Controller getInstance() {
+		 
+		return controller;
+	}
 	
 	/**Creates and initializes built in functions
 	 * 
@@ -71,7 +52,6 @@ public class Controller {
 	 * 
 	 * */
 	public void initBuiltIn (){
-		
 		
 	}
 	
@@ -85,7 +65,6 @@ public class Controller {
 	 * 
 	 */
 	public void createBuiltIn(){
-		
 	}
 	
 	/**
@@ -99,14 +78,6 @@ public class Controller {
 	 * @return newly created and instantiated Game object
 	 */
 	public Game createGame(String name){
-		/**
-		if(validGameName(name)){
-			Game newgame= new Game(name);
-			
-		}else{
-			//error??? what to do for error...
-		}
-		*/
 		return null;
 		
 		//Will call validGameName to check if valid game name
@@ -126,20 +97,10 @@ public class Controller {
 	 * @return false/true; false if invalid game name, true if valid game name
 	 */
 	public boolean validGameName(String name){
-		for(int i=0; i<name.length(); i++){
-			char c= name.charAt(i);
-			if(!Character.isLetterOrDigit(c)){
-				return false;
-			}
-		}
-		ArrayList<Game> gamelist= userPlaying.getGameList();
-		for(int j=0; j<gamelist.size();j++){
-			if(gamelist.get(j).getName().equals(name)){
-				return false;
-			}
-		}
-				
-		return true;
+		return false;
+		
+		//Will not call any other functions/classes
+
 		
 	}
 	
@@ -154,22 +115,11 @@ public class Controller {
  	 * @return false/true; false if parsing fails, true if parsing succeeds
  	 */
  	public boolean parseBlock(int pos){
- 		ArrayList<Block> blocklist= gamePlaying.getBlocks();
- 		Block block= blocklist.get(pos);
- 		
- 		
- 		
- 		
 		return false;
 		
 		//Will not call other functions/classes
-		/**
-		at position i
-			if instruction block at i is syntactically valid
-				return true
-				else
-					return false
-		*/
+		
+
 	}
 
 	
@@ -186,27 +136,11 @@ public class Controller {
 	 * @return
 	 */
 	public boolean editBlock(int pos, String instruction){
-		ArrayList<Block> blocklist= gamePlaying.getBlocks();
-		//need to add setInstructions in Block Class
-		
-		if(!parseBlock(pos)){
-			//ERROR 
-		}
+		return false;
 		
 		//Will call parseBlock - must reparse the block to see if valid change has been made
-		/**
-		at position i
-			if block at i != null
-				edit block instructions
-				
-				if(call parseBlock(i))
-					return true
-					else 
-					return false
-					else
-						return false
-		*/
-		return false;
+		
+
 	}	
 		
 
@@ -226,14 +160,7 @@ public class Controller {
 		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
 		//Question: should we have something that asks them if they want to delete even if the code will become invalid ?
 		
-	//	ArrayList<Block> blocks = gamePlaying.getBlocks(); 
-		/**
-		if blocks is not empty
-			get block at position i 
-				delete block at i 
-				else
-					return false
-		*/
+		
 	}
 
 	/**
@@ -251,15 +178,8 @@ public class Controller {
 		
 		//Will call the Block.java class to initialize a new block
 		return false;
-		/**
-		get list of blocks	
-		position i 
-		for list of blocks, find position i
-			if(insert new Block at i)	
-				return true
-				else
-					return false
-		*/	
+		
+
 	}
 	
 	
@@ -278,15 +198,7 @@ public class Controller {
 		
 		//Will call searchForBlock to find block of the given id
 		return false;
-		/**
-		get block by id
-		edit Block instructions
-		
-		if(parseBlock)
-			return true
-			else 
-				return false
-		*/
+
 		
 	}
 	
@@ -305,16 +217,8 @@ public class Controller {
 		//Will not call any other function/class
 		
 		return null;
-		/**
-		get list of block
-		int i = 0; 
-		while block_id[i] != provided id
+
 			
-			if block id = provided id
-				return block
-			
-			i++
-		*/	
 		
 	}
 	
@@ -332,11 +236,6 @@ public class Controller {
 	 * @return false/true; false if there is no food in the given (x,y) coordinates, true if there is food in the selected coordinates
 	 */
 	public boolean isthereFood(int x, int y){
-		if(gamePlaying.getGrid().getSquareContent(x, y)=='k'
-				|| gamePlaying.getGrid().getSquareContent(x, y)=='p'
-				|| gamePlaying.getGrid().getSquareContent(x, y)=='a'){
-			return true;
-		}
 		
 		//Will not call any other function/class
 		return false;
@@ -354,9 +253,8 @@ public class Controller {
 	 * @return false/true; false if there is no wall in the given (x,y) coordinates, true if there is a wall in the selected coordinates
 	 */
 	public boolean isthereWallAhead(int x, int y){
-		if(gamePlaying.getGrid().getSquareContent(x, y)=='w'){
-			return true;
-		}
+		
+		//Will not call any other function/class
 		
 		return false;
 	}
@@ -391,18 +289,12 @@ public class Controller {
 	 * @param name User provided function name, must be unique/valid
 	 * @return newly instantiated Function object
 	 */
-	public Function createFunction(String name,ArrayList<Block> instruction){
-		if(!validFunctionName(name)){
-			//ERROR
-			return null;
-		}
-		Function newfunction= new Function(name,instruction);
-		return newfunction;
-		
+	public Function createFunction(String name){
 		
 		//Will call Function.java class constructor
 		//Will call validFunctionName
-
+		
+		return null;
 	}
 
 	/**
@@ -416,20 +308,8 @@ public class Controller {
 	 * @return false/true; false if the function name is not unique && valid, true if unique && valid
 	 */
 	public boolean validFunctionName(String name){
-		for(int i=0; i<name.length(); i++){
-			char c= name.charAt(i);
-			if(!Character.isLetterOrDigit(c)){
-				return false;
-			}
-		}
-		ArrayList<Function> functionlist= gamePlaying.getfunction();
-		for(int j=0; j<functionlist.size();j++){
-			if(functionlist.get(j).getName().equals(name)){
-				return false;
-			}
-		}
-				
-		return true;
+		//Will not call any functions/classes
+		return false;
 	}
 	
 	
@@ -446,7 +326,7 @@ public class Controller {
 	public void addFunction(Function functionToAdd){
 		//Will not call any functions/classes
 		
-		gamePlaying.getfunction().add(functionToAdd);
+		gamePlaying.addFunction(functionToAdd);
 		
 	}
 	
@@ -464,15 +344,6 @@ public class Controller {
 	 */
 	public boolean deleteFunction(String name){
 		//Will not call any functions/classes
-		
-		ArrayList<Function> functionlist= gamePlaying.getfunction();
-		for(int i=0; i<functionlist.size(); i++){
-			if(functionlist.get(i).getName().equals(name)){
-				functionlist.remove(i);
-				return true;
-			}
-		}
-		
 		return false;
 	}
 	
@@ -487,13 +358,8 @@ public class Controller {
 	 * @return ArrayList of strings with all functions that have been created in the program
 	 */
 	public ArrayList<String> getFunctions(){
-		ArrayList<String> functionnames= new ArrayList<String>();
-		for(int i=0; i<gamePlaying.getfunction().size(); i++){
-			functionnames.add(gamePlaying.getfunction().get(i).getName());
-		}
-		
-		ArrayList<String> functionlist= sortAlphabetical(functionnames);
-		return functionlist;
+		//Will not call any other function/class
+		return null;
 	}
 	
 	/**
@@ -507,24 +373,8 @@ public class Controller {
 	 * @return Alphabetically sorted araryList of strings upon success, null upon failure
 	 */
 	public ArrayList<String> sortAlphabetical(ArrayList<String> toSort){
-		Comparator<String> ALPHABETICAL_ORDER = new Comparator<String>() {
-		    public int compare(String str1, String str2) {
-		        int res = String.CASE_INSENSITIVE_ORDER.compare(str1, str2);
-		        if (res == 0) {
-		            res = str1.compareTo(str2);
-		        }
-		        return res;
-		    }
-		};
-		
-		List<String> list = new ArrayList();
-		for(int i=0; i<toSort.size(); i++){
-			list.add(toSort.get(i));
-		}
-		
-		Collections.sort(list, ALPHABETICAL_ORDER);
-
-		return (ArrayList<String>) list;
+		//Will not call any functions/classes
+		return null;
 	}
 	
 	/*Movement stuff*/
@@ -554,21 +404,16 @@ public class Controller {
 	 * @exception none
 	 * @postcondition Makes move iff move is valid
 	 * 
+	 * @param oldX Current X position of gerbil
+	 * @param oldY Current Y positionof gerbil
 	 * @param newX New X position of gerbil
 	 * @param newY New Y position of gerbil
-	 * @return false/true; false if the move was unsuccessful, trueif the move was successful 
+	 * @return false/true; false if the move was successful, trueif the move was not successful 
 	 */
-	public boolean makeMove(int newX, int newY){
-		if(gamePlaying.getGrid().getSquareContent(newX,	newY)!='0'){
-			return false;
-		}
-		gamePlaying.getGerbil().setX(newX);
-		gamePlaying.getGerbil().setY(newY);
-		return true;
-		
+	public boolean makeMove(int oldX, int oldY, int newX, int newY){
 		//Will need grid from Grid.java
 		//ASSUMES that the move being made is CORRECT
-		
+		return false;
 	}
 	
 	
