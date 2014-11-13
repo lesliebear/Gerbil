@@ -1,10 +1,12 @@
 package View;
+ 
+import java.awt.event.ActionListener;
 
 /**
  * This class create the GUI for Delete Function Screen.
  *
  */
-public class DeleteFunction implements Screen{
+public class DeleteFunction extends Screen{
 
 	/**
 	 * Constructor that creates all necessary GUI components.
@@ -18,7 +20,7 @@ public class DeleteFunction implements Screen{
 	 * Creates the screen by putting the GUI components together.
 	 * 
 	 */
-	public void CreateScreen() {	
+	protected void createScreen() {	
 		
 	}
 
@@ -36,5 +38,10 @@ public class DeleteFunction implements Screen{
 	 */
 	public void hide() {
 	
+	}
+
+	public void addEventListeners(ActionListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 }
