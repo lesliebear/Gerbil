@@ -1,5 +1,5 @@
 package Model;
-
+ 
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -7,19 +7,16 @@ import java.util.ArrayList;
  * Block holds instructions which are the strings of the information user enters for 
  * the gerbil to do
  * @author Amulya
- *
  */
 public class Block implements Serializable{
 	/**Instructions list in the block*/
 	private ArrayList<String> instructions; //all instructions are strings.
-	
-	/*Blocks may have other blocks within them, if selected for deletion, 
+	/*Note: Blocks may have other blocks within them, if selected for deletion,
 	 * all internal should be deleted too*/
 	/**Nested instructions go in this adjacency list*/
 	private ArrayList<Block> nestedBlocks = new ArrayList<Block>();
 	//the nested blocks is for the adjacency => if statements or nested info uses!!!
 
-	
 	/**
 	 * Gets the arraylist of instructions for the block
 	 *
@@ -29,7 +26,7 @@ public class Block implements Serializable{
 	 * 
 	 * @return ArrayList of instructions for the block. 
 	 */
-	public ArrayList<String> getInstruction(){
+	public ArrayList<String> getInstructionsList(){
 		return this.instructions;
 	}
 	

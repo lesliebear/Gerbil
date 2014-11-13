@@ -1,16 +1,18 @@
 package View;
+ 
+import java.awt.event.ActionListener;
 
 /**
  * This class creates a GUI for the Function Screen.
  *
  */
-public class Function implements Screen{
+public class UserFunction extends Screen{
 
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 * 
 	 */
-	public Function() {
+	public UserFunction() {
 		 
 	}
 
@@ -18,7 +20,7 @@ public class Function implements Screen{
 	 * Creates the screen by putting the GUI components together.
 	 * 
 	 */
-	public void CreateScreen() {	
+	protected void createScreen() {	
 		
 	}
 
@@ -36,5 +38,10 @@ public class Function implements Screen{
 	 */
 	public void hide() {
 	
+	}
+
+	public void addEventListeners(ActionListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 }

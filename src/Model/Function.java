@@ -1,5 +1,5 @@
 package Model;
-
+ 
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * @author Amulya
  */
 public class Function implements Serializable{
+	
 	/**Name of the funcion*/
 	String name;
 	/**Instructions in the function/body of the function */
@@ -41,7 +42,7 @@ public class Function implements Serializable{
 	 * @return Name of the function
 	 */
 	public String getName(){
-		return null;
+		return this.name;
 	}
 	
 	/**
