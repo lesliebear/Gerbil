@@ -297,6 +297,4 @@ public class Grid implements Serializable{
 			this.col=col;
 		}
 	}
-
 }
-

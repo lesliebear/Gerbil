@@ -119,7 +119,7 @@ public class Main extends Screen {
 	 */
 	protected void createScreen() {
 		
-		Dimension dimension = new Dimension(1024, 668);
+		Dimension dimension = new Dimension(1024, 768);
 		instructions.setFont(new Font(null, Font.BOLD,20));
 		play.setFont(new Font(null, Font.BOLD,20));	
 		exit.setFont(new Font(null, Font.BOLD,20));
