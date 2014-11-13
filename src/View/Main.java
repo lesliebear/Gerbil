@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  */
 public class Main extends Screen {
 
-	public JButton play, instructions, exit;
+	private JButton play, instructions, exit;
 	private JPanel panel;
 	private BufferedImage image;
 	private JFrame frame;
@@ -185,12 +185,29 @@ public class Main extends Screen {
 	}
 	
 	/**
-	 * Add event listeners
+	 * Adds event handler for play button
+	 * @param listener Event listener
 	 */
-	public void addEventListeners(ActionListener listener) {
+	public void addPlayEventHandler(ActionListener listener) {
 		
 		play.addActionListener(listener);
+	}
+	
+	/**
+	 * Adds event listener for instructions button
+	 * @param listener Event listener
+	 */
+	public void addInstructionsEventHandler(ActionListener listener) {
+		
 		instructions.addActionListener(listener);
+	}
+	
+	/**
+	 * Adds event handler for exit button
+	 * @param listener Even Listener
+	 */
+	public void addExitEventHandler(ActionListener listener) {
+		
 		exit.addActionListener(listener);
 	}
 }

@@ -52,36 +52,48 @@ public class Controller {
 	/**
 	 * Sets up event handlers for each screen
 	 */
-	public void initEventHandlers() {
+	private void initEventHandlers() {
 		
-		main.addEventListeners(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object o = e.getSource();
-				if(o == main.play) {
-					playOptions.show();
-					main.hide();
-					
-				}
-				else if(o == main.instructions) {
-					
-				}
-				else {
-					
-				}
+		addMainEventHandlers();
+		addPlayOptionsEventHandlers();
+	}
+	
+	private void addMainEventHandlers() {
+		
+		main.addPlayEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				playOptions.show();
+				main.hide();
 			}
 		});
-		playOptions.addEventListeners(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Object o = e.getSource();
-				if(o == playOptions.loadGame) {
-				}
-				else if(o == playOptions.newGame) {
+		main.addInstructionsEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}
+		});
+		main.addExitEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 					
-				}
-				else {
-					main.show();
-					playOptions.hide();
-				}
+			}
+		});
+	}
+	
+	private void addPlayOptionsEventHandlers() {
+		
+		playOptions.addLoadGameEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		playOptions.addNewGameEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		playOptions.addBackEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				main.show();
+				playOptions.hide();
 			}
 		});
 	}
