@@ -1,6 +1,24 @@
 package View;
  
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * This class creates a GUI for the PlayOptions screen.
@@ -8,12 +26,71 @@ import java.awt.event.ActionListener;
  */
 public class PlayOptions extends Screen{
 
+	private JFrame frame;
+	private JPanel panel;
+	private BufferedImage image;
+	public JButton loadGame, newGame;
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 * 
 	 */
+	@SuppressWarnings("serial")
 	public PlayOptions() {
 		 
+		frame = new JFrame("Options");
+		loadGame = new JButton("Load") {
+			public void paint(Graphics g) {
+				this.setContentAreaFilled(false);
+				this.setBorderPainted(false);
+				Graphics2D g2d = (Graphics2D)g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				super.paint(g);
+				g2d.setColor(Color.WHITE);
+				g2d.fillRoundRect(0, 0, getWidth(),getHeight(), 18, 18);
+				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
+				g2d.drawRoundRect(0, 0, getWidth()-1,getHeight()-1, 18, 18);
+				FontRenderContext frc = new FontRenderContext(null, false, false);
+				Rectangle2D r = getFont().getStringBounds(getText(), frc);
+				float xMargin = (float)(getWidth()-r.getWidth()) / 2;
+				float yMargin = (float)(getHeight()-getFont().getSize()) / 2;
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
+			}
+		};
+		newGame = new JButton("New Game") {
+			public void paint(Graphics g) {
+				this.setContentAreaFilled(false);
+				this.setBorderPainted(false);
+				Graphics2D g2d = (Graphics2D)g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				super.paint(g);
+				g2d.setColor(Color.WHITE);
+				g2d.fillRoundRect(0, 0, getWidth(),getHeight(), 18, 18);
+				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
+				g2d.drawRoundRect(0, 0, getWidth()-1,getHeight()-1, 18, 18);
+				FontRenderContext frc = new FontRenderContext(null, false, false);
+				Rectangle2D r = getFont().getStringBounds(getText(), frc);
+				float xMargin = (float)(getWidth()-r.getWidth()) / 2;
+				float yMargin = (float)(getHeight()-getFont().getSize()) / 2;
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
+			}
+		};
+		
+		try {
+			image = ImageIO.read(new File("1960811_10204553653977557_1367600592125664392_o.jpg"));
+		} catch (Exception ex) {
+			System.out.println("Couldn't load image");
+		}
+		panel = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+			}
+		};
+		createScreen();
 	}
 
 	/**
@@ -22,6 +99,30 @@ public class PlayOptions extends Screen{
 	 */
 	protected void createScreen() {	
 		
+		Dimension dimension = new Dimension(1024, 668);
+		loadGame.setFont(new Font(null, Font.BOLD,20));
+		newGame.setFont(new Font(null, Font.BOLD,20));	
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(90,0,30,0);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.ipady = 40;
+		c.ipadx = 70;
+		panel.add(loadGame, c);
+		c.insets = new Insets(100,0,0,0);
+		c.gridx = 0;
+		c.gridy = 1;
+		c.ipady = 40;
+		c.ipadx = 10;
+		panel.add(newGame, c);
+		frame.add(panel);
+		frame.setSize(dimension);
+		frame.setMinimumSize(dimension);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
 
 	/**
@@ -30,6 +131,7 @@ public class PlayOptions extends Screen{
 	 */
 	public void show() {
 	
+		frame.setVisible(true);
 	}
 	
 	/**
@@ -38,10 +140,32 @@ public class PlayOptions extends Screen{
 	 */
 	public void hide() {
 	
+		frame.setVisible(false);
+	}
+	
+	/**
+	 * Enable the screen
+	 */
+	public void enable() {
+		
+		frame.setEnabled(true);
 	}
 
-	public void addEventListeners(ActionListener listener) {
-		// TODO Auto-generated method stub
+
+	/**
+	 * Disable the screen
+	 */
+	public void disable() {
 		
+		frame.setEnabled(false);
+	}
+	
+	/**
+	 * Add event listeners
+	 */
+	public void addEventListeners(ActionListener listener) {
+
+		loadGame.addActionListener(listener);
+		newGame.addActionListener(listener);
 	}
 }
