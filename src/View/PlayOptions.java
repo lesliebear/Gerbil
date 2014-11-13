@@ -134,12 +134,10 @@ public class PlayOptions extends Screen{
 		c.gridx = 0;
 		c.gridy = 1;
 		c.ipady = 40;
-		c.ipadx = 10;
 		panel.add(newGame, c);
 		c.gridx = 0;
 		c.gridy = 2;
 		c.ipady = 40;
-		c.ipadx = 10;
 		panel.add(back, c);
 		frame.add(panel);
 		frame.setSize(dimension);
