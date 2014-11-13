@@ -29,7 +29,7 @@ public class PlayOptions extends Screen{
 	private JFrame frame;
 	private JPanel panel;
 	private BufferedImage image;
-	public JButton loadGame, newGame, back;
+	private JButton loadGame, newGame, back;
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 * 
@@ -173,7 +173,6 @@ public class PlayOptions extends Screen{
 		frame.setEnabled(true);
 	}
 
-
 	/**
 	 * Disable the screen
 	 */
@@ -183,12 +182,29 @@ public class PlayOptions extends Screen{
 	}
 	
 	/**
-	 * Add event listeners
+	 * Adds event handler for loadGame button 
+	 * @param listener Event listener
 	 */
-	public void addEventListeners(ActionListener listener) {
-
+	public void addLoadGameEventHandler(ActionListener listener) {
+		
 		loadGame.addActionListener(listener);
+	}
+	
+	/**
+	 * Adds event handler for newGame button
+	 * @param listener Event listener
+	 */
+	public void addNewGameEventHandler(ActionListener listener) {
+		
 		newGame.addActionListener(listener);
+	}
+	
+	/**
+	 * Adds event handler for back button 
+	 * @param listener Event listener
+	 */
+	public void addBackEventHandler(ActionListener listener) {
+	
 		back.addActionListener(listener);
 	}
 }
