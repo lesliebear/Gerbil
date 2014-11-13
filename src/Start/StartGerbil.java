@@ -16,7 +16,8 @@ public class StartGerbil {
 	public static void main(String[] args) {
 		//Backend bk = new Backend();
 		//System.out.println(bk.saveGames());
-		Main main = new Main();
+		//Main main = new Main();
+		Conditionals conditionals = new Conditionals("if");
 		//Grid g = new Grid(17,17);		
 	}
 

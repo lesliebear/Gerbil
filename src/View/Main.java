@@ -37,7 +37,7 @@ public class Main extends Screen {
 	 */
 	@SuppressWarnings("serial")
 	public Main() {
-
+		
 		frame = new JFrame("Gerbil");
 		play = new JButton("Play") {
 			public void paint(Graphics g) {
