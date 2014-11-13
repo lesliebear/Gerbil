@@ -1,5 +1,9 @@
 package Control;
 
+import View.*;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -19,28 +23,18 @@ public class Controller {
 	/**Holds the list of built in functions = eat Apple, eat pear, eat pumpking, move, turn left*/
 	ArrayList<Function> builtIn;
 	//Note eat fruit must be for that fruit only!! else error popup.
-	/** Singleton instance of controller */
-	private static Controller controller;
+	Main main;
+	PlayOptions playOptions;
 	
 /**assumes, returns, exceptions**/
 	
 	/**
 	 * Constructor
 	 */
-	private Controller(){
-	}
-	
-	/** Returns singleton instance of controller
-	 * 
-	 *  @assumes nothing
-	 *  @return single instance of the Controller
-	 *  @exception none
-	 *  @postcondition creates an instance of Controller iff it has not already been created
-	 *  
-	 *  */
-	public static Controller getInstance() {
-		 
-		return controller;
+	public Controller() {
+		main = new Main();
+		playOptions = new PlayOptions();
+		initEventHandlers();
 	}
 	
 	/**Creates and initializes built in functions
@@ -53,6 +47,43 @@ public class Controller {
 	 * */
 	public void initBuiltIn (){
 		
+	}
+	
+	/**
+	 * Sets up event handlers for each screen
+	 */
+	public void initEventHandlers() {
+		
+		main.addEventListeners(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Object o = e.getSource();
+				if(o == main.play) {
+					playOptions.show();
+					main.hide();
+					
+				}
+				else if(o == main.instructions) {
+					
+				}
+				else {
+					
+				}
+			}
+		});
+		playOptions.addEventListeners(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Object o = e.getSource();
+				if(o == playOptions.loadGame) {
+				}
+				else if(o == playOptions.newGame) {
+					
+				}
+				else {
+					main.show();
+					playOptions.hide();
+				}
+			}
+		});
 	}
 	
 	/**
