@@ -76,7 +76,9 @@ public class Instructions extends Screen{
 		            super.paint(g);
 		        }
 		};
-		//gamePlayText.setPreferredSize(new Dimension(500,500));
+		gamePlayText.setEditable(true);
+		gamePlayText.setLineWrap(true);
+		//gamePlayText.setPreferredSize(new Dimension(200,375));
 		//gamePlayText.setOpaque(false);
 		
 		loadSaveText = new JTextArea();
@@ -97,6 +99,7 @@ public class Instructions extends Screen{
 		            super.paint(g);
 			}
 		};
+
 		gpScrollPane.setVerticalScrollBar(scrollBar);
 		
 		lsScrollPane = new JScrollPane(loadSaveText);
@@ -121,11 +124,8 @@ public class Instructions extends Screen{
 	
 	protected void createScreen() {
 		
-		// gpScrollPane.getViewport().setOpaque(false);
 		gpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		//gamePlayText.setMaximumSize(new Dimension(500,500));
 		gpScrollPane.setPreferredSize(new Dimension(300,375));
-		//gpScrollPane.setMaximumSize(new Dimension(500,500));
 	    gpScrollPane.setBorder(null);
 		//frame.setOpacity((float)0.5);
 		Dimension dimension = new Dimension(1024, 768);
