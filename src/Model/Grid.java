@@ -72,7 +72,14 @@ public class Grid implements Serializable{
 			}
 		}
 		randomGrid(); //places walls and fruit
+		grid[1][1]='p';
+		fruitCoordinates.remove(Integer.toString(1)+Integer.toString(1));
+		fruitCoordinates.put(Integer.toString(1) + Integer.toString(1), new Node(1,1));
+		grid[1][2] = 'w';
+		grid[2][1]='w';
+		grid[2][2]='w';
 		printGrid();
+		
 		System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
 		resetVisited();
 		checkValidFruits(grid.length-2, 1);
@@ -297,6 +304,4 @@ public class Grid implements Serializable{
 			this.col=col;
 		}
 	}
-
 }
-

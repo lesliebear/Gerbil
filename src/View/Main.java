@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  */
 public class Main extends Screen {
 
-	public JButton play, instructions, exit;
+	private JButton play, instructions, exit;
 	private JPanel panel;
 	private BufferedImage image;
 	private JFrame frame;
@@ -119,11 +119,11 @@ public class Main extends Screen {
 	 */
 	protected void createScreen() {
 		
-		Dimension dimension = new Dimension(1024, 668);
+		Dimension dimension = new Dimension(1024, 768);
 		instructions.setFont(new Font(null, Font.BOLD,20));
 		play.setFont(new Font(null, Font.BOLD,20));	
 		exit.setFont(new Font(null, Font.BOLD,20));
-		panel.setLayout(new GridBagLayout());
+		//panel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.insets = new Insets(450,25,0,70);
 		c.fill = GridBagConstraints.BOTH;
@@ -131,17 +131,17 @@ public class Main extends Screen {
 		c.gridy = 0;
 		c.ipady = 40;
 		c.ipadx = 70;
-		panel.add(play, c);
+		//panel.add(play, c);
 		c.gridx = 1;
 		c.gridy = 0;
 		c.ipady = 40;
 		c.ipadx = 10;
-		panel.add(instructions, c);
+		//panel.add(instructions, c);
 		c.gridx = 2;
 		c.gridy = 0;
 		c.ipady = 40;
 		c.ipadx = 85;
-		panel.add(exit, c);
+		//panel.add(exit, c);
 		frame.add(panel);
 		frame.setSize(dimension);
 		frame.setMinimumSize(dimension);
@@ -185,12 +185,29 @@ public class Main extends Screen {
 	}
 	
 	/**
-	 * Add event listeners
+	 * Adds event handler for play button
+	 * @param listener Event listener
 	 */
-	public void addEventListeners(ActionListener listener) {
+	public void addPlayEventHandler(ActionListener listener) {
 		
 		play.addActionListener(listener);
+	}
+	
+	/**
+	 * Adds event listener for instructions button
+	 * @param listener Event listener
+	 */
+	public void addInstructionsEventHandler(ActionListener listener) {
+		
 		instructions.addActionListener(listener);
+	}
+	
+	/**
+	 * Adds event handler for exit button
+	 * @param listener Even Listener
+	 */
+	public void addExitEventHandler(ActionListener listener) {
+		
 		exit.addActionListener(listener);
 	}
 }

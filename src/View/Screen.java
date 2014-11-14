@@ -39,8 +39,4 @@ public abstract class Screen {
 	 */
 	public abstract void disable();
 	
-	/**
-	 * Method to be implemented: Add event listener
-	 */
-	public abstract void addEventListeners(ActionListener listener);
 }

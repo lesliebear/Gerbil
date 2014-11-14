@@ -1,9 +1,22 @@
 package View;
  
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -12,16 +25,58 @@ import javax.swing.JTextArea;
  */
 public class Instructions extends Screen{
 
-	JFrame frame;
-	JButton ok;
-	JTextArea gamePlayText, LoadSaveText;
+	private JFrame frame;
+	private JPanel panel;
+	private JButton back;
+	private BufferedImage image;
+	private JTextArea gamePlayText, loadSaveText;
+	private JScrollPane gpScrollPane, lsScrollPane;
 	
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 * 
 	 */
+	@SuppressWarnings("serial")
 	public Instructions() {
 		 
+		frame = new JFrame("Instructions");
+		back = new JButton("Back") {
+			public void paint(Graphics g) {
+				this.setContentAreaFilled(false);
+				this.setBorderPainted(false);
+				Graphics2D g2d = (Graphics2D)g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				super.paint(g);
+				g2d.setColor(Color.WHITE);
+				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
+				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
+				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
+				FontRenderContext frc = new FontRenderContext(null, false, false);
+				Rectangle2D r = getFont().getStringBounds(getText(), frc);
+				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
+				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
+			}
+		};
+		gamePlayText = new JTextArea();
+		loadSaveText = new JTextArea();
+		gpScrollPane = new JScrollPane(gamePlayText);
+		
+		lsScrollPane = new JScrollPane(loadSaveText);
+		try {
+			image = ImageIO.read(new File("instruct.jpg"));
+		} catch (Exception ex) {
+			System.out.println("Couldn't load image");
+		}
+		panel = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+			}
+		};
+		createScreen();
 	}
 
 	/**
@@ -30,8 +85,21 @@ public class Instructions extends Screen{
 	 */
 	
 	protected void createScreen() {
-		// TODO Auto-generated method stub
 		
+		gpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		//gamePlayText.setMaximumSize(new Dimension(500,500));
+		gpScrollPane.setPreferredSize(new Dimension(300,375));
+		//gpScrollPane.setMaximumSize(new Dimension(500,500));
+		gpScrollPane.getViewport().setOpaque(false);
+	    gpScrollPane.setBorder(null);
+		panel.add(gpScrollPane);
+		Dimension dimension = new Dimension(1024, 768);
+		frame.add(panel);
+		frame.setSize(dimension);
+		frame.setMinimumSize(dimension);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
 	
 	/**
@@ -68,8 +136,4 @@ public class Instructions extends Screen{
 		frame.setEnabled(false);
 	}
 	
-	public void addEventListeners(ActionListener listener) {
-		
-		ok.addActionListener(listener);
-	}
 }
