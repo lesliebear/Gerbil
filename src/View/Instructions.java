@@ -9,7 +9,6 @@ import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
-import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,7 +17,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -64,44 +62,32 @@ public class Instructions extends Screen{
 			}
 		};
 		gamePlayText = new JTextArea() {
-		       public void paint(Graphics g) {
-		    	   setOpaque(false);
-		            g.setColor(new Color(128, 128, 128, 110));
-		            Insets insets = getInsets();
-		            int x = insets.left;
-		            int y = insets.top;
-		            int width = getWidth() - (insets.left + insets.right);
-		            int height = getHeight() - (insets.top + insets.bottom);
-		            g.fillRect(x, y, width, height);
-		            super.paint(g);
-		        }
-		};
-		gamePlayText.setEditable(true);
-		gamePlayText.setLineWrap(true);
-		//gamePlayText.setPreferredSize(new Dimension(200,375));
-		//gamePlayText.setOpaque(false);
-		
-		loadSaveText = new JTextArea();
-		gpScrollPane = new JScrollPane(gamePlayText);
-		gpScrollPane.setOpaque(false);
-		gpScrollPane.getViewport().setOpaque(false);
-
-		JScrollBar scrollBar = new JScrollBar() {
 			public void paint(Graphics g) {
-				   setOpaque(false);
-		            g.setColor(new Color(128, 128, 128, 110));
-		            Insets insets = getInsets();
-		            int x = insets.left;
-		            int y = insets.top;
-		            int width = getWidth() - (insets.left + insets.right);
-		            int height = getHeight() - (insets.top + insets.bottom);
-		            g.fillRect(x, y, width, height);
-		            super.paint(g);
+				setOpaque(false);
+				g.setColor(new Color(128, 128, 128, 110));
+				Insets insets = getInsets();
+				int x = insets.left;
+				int y = insets.top;
+				int width = getWidth() - (insets.left + insets.right);
+				int height = getHeight() - (insets.top + insets.bottom);
+				g.fillRect(x, y, width, height);
+				super.paint(g);
 			}
 		};
-
-		gpScrollPane.setVerticalScrollBar(scrollBar);
-		
+		loadSaveText = new JTextArea() {
+			public void paint(Graphics g) {
+				setOpaque(false);
+				g.setColor(new Color(128, 128, 128, 110));
+				Insets insets = getInsets();
+				int x = insets.left;
+				int y = insets.top;
+				int width = getWidth() - (insets.left + insets.right);
+				int height = getHeight() - (insets.top + insets.bottom);
+				g.fillRect(x, y, width, height);
+				super.paint(g);
+			}
+		};
+		gpScrollPane = new JScrollPane(gamePlayText);	
 		lsScrollPane = new JScrollPane(loadSaveText);
 		try {
 			image = ImageIO.read(new File("instruct.jpg"));
@@ -121,14 +107,24 @@ public class Instructions extends Screen{
 	 * Creates the screen by putting the GUI components together.
 	 * 
 	 */
-	
 	protected void createScreen() {
-		
-		gpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		gpScrollPane.setPreferredSize(new Dimension(300,375));
-	    gpScrollPane.setBorder(null);
-		//frame.setOpacity((float)0.5);
+		Dimension textAreaDimension = new Dimension(300,375);
 		Dimension dimension = new Dimension(1024, 768);
+		gamePlayText.setEditable(true);
+		gamePlayText.setLineWrap(true);
+		gpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		gpScrollPane.setPreferredSize(textAreaDimension);
+		gpScrollPane.setOpaque(false);
+		gpScrollPane.getViewport().setOpaque(false);
+	    gpScrollPane.setBorder(null);
+	    loadSaveText.setEditable(true);
+		loadSaveText.setLineWrap(true);
+	    lsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		lsScrollPane.setPreferredSize(textAreaDimension);
+		lsScrollPane.setOpaque(false);
+		lsScrollPane.getViewport().setOpaque(false);
+	    lsScrollPane.setBorder(null);
+		
 		panel.add(gpScrollPane);
 		frame.add(panel);
 		frame.setSize(dimension);
@@ -172,4 +168,8 @@ public class Instructions extends Screen{
 		frame.setEnabled(false);
 	}
 	
+	public void addBackEventHandler(ActionListener listener) {
+		
+		back.addActionListener(listener);
+	}
 }
