@@ -207,16 +207,4 @@ public class PlayOptions extends Screen{
 	
 		back.addActionListener(listener);
 	}
-
-	@Override
-	public void enable() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void disable() {
-		// TODO Auto-generated method stub
-		
-	}
 }

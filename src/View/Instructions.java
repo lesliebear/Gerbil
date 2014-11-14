@@ -5,9 +5,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
+import java.awt.geom.Area;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,6 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
@@ -60,9 +63,41 @@ public class Instructions extends Screen{
 				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
 			}
 		};
-		gamePlayText = new JTextArea();
+		gamePlayText = new JTextArea() {
+		       public void paint(Graphics g) {
+		    	   setOpaque(false);
+		            g.setColor(new Color(128, 128, 128, 110));
+		            Insets insets = getInsets();
+		            int x = insets.left;
+		            int y = insets.top;
+		            int width = getWidth() - (insets.left + insets.right);
+		            int height = getHeight() - (insets.top + insets.bottom);
+		            g.fillRect(x, y, width, height);
+		            super.paint(g);
+		        }
+		};
+		//gamePlayText.setPreferredSize(new Dimension(500,500));
+		//gamePlayText.setOpaque(false);
+		
 		loadSaveText = new JTextArea();
 		gpScrollPane = new JScrollPane(gamePlayText);
+		gpScrollPane.setOpaque(false);
+		gpScrollPane.getViewport().setOpaque(false);
+
+		JScrollBar scrollBar = new JScrollBar() {
+			public void paint(Graphics g) {
+				   setOpaque(false);
+		            g.setColor(new Color(128, 128, 128, 110));
+		            Insets insets = getInsets();
+		            int x = insets.left;
+		            int y = insets.top;
+		            int width = getWidth() - (insets.left + insets.right);
+		            int height = getHeight() - (insets.top + insets.bottom);
+		            g.fillRect(x, y, width, height);
+		            super.paint(g);
+			}
+		};
+		gpScrollPane.setVerticalScrollBar(scrollBar);
 		
 		lsScrollPane = new JScrollPane(loadSaveText);
 		try {
@@ -86,14 +121,15 @@ public class Instructions extends Screen{
 	
 	protected void createScreen() {
 		
+		// gpScrollPane.getViewport().setOpaque(false);
 		gpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		//gamePlayText.setMaximumSize(new Dimension(500,500));
 		gpScrollPane.setPreferredSize(new Dimension(300,375));
 		//gpScrollPane.setMaximumSize(new Dimension(500,500));
-		gpScrollPane.getViewport().setOpaque(false);
 	    gpScrollPane.setBorder(null);
-		panel.add(gpScrollPane);
+		//frame.setOpacity((float)0.5);
 		Dimension dimension = new Dimension(1024, 768);
+		panel.add(gpScrollPane);
 		frame.add(panel);
 		frame.setSize(dimension);
 		frame.setMinimumSize(dimension);
