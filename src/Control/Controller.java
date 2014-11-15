@@ -13,6 +13,7 @@ import java.util.List;
 import Model.Block;
 import Model.Function;
 import Model.Game;
+import Model.Grid;
 import Model.User;
 import Model.Gerbil;
 
@@ -544,7 +545,7 @@ public class Controller {
 	 * @return false/true; false if the move was unsuccessful, true if the move was successful 
 	 */
 	public boolean makeMove(int newX, int newY){
-		if(gamePlaying.getGrid().getSquareContent(newX, newY)!='0'){
+		if(gamePlaying.getGrid().getSquareContent(newY, newX)!='0'){
 			return false;
 		}
 		gamePlaying.getGerbil().setX(newX);
@@ -567,7 +568,33 @@ public class Controller {
 	 * @return false/true; false if the Gerbil orientation was not changed, true otherwise
 	 */
 	public boolean turnLeft(){
-		//Will need to change gerbil orientation from Gerbil.java
+		//create pointer to gerbil
+		Gerbil gerbil= gamePlaying.getGerbil();
+		//determine if gerbil is facing north --> will face west
+		if(gerbil.getFrontX()==gerbil.getX() && gerbil.getFrontY()==gerbil.getY()+1){
+			gerbil.setFrontX(gerbil.getX()-1);
+			gerbil.setFrontY(gerbil.getY());
+			return true;
+		}
+		//determine if gerbil is facing south --> will face east
+		if(gerbil.getFrontX()==gerbil.getX() && gerbil.getFrontY()==gerbil.getY()-1){
+			gerbil.setFrontX(gerbil.getX()+1);
+			gerbil.setFrontY(gerbil.getY());
+			return true;
+		}
+		//determine if gerbil is facing east --> will face north
+		if(gerbil.getFrontX()==gerbil.getX()+1 && gerbil.getFrontY()==gerbil.getY()){
+			gerbil.setFrontX(gerbil.getX());
+			gerbil.setFrontY(gerbil.getY()+1);
+			return true;
+		}
+		//determine if gerbil is facing west --> will face south
+		if(gerbil.getFrontX()==gerbil.getX()-1 && gerbil.getFrontY()==gerbil.getY()){
+			gerbil.setFrontX(gerbil.getX());
+			gerbil.setFrontY(gerbil.getY()-1);
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -583,6 +610,16 @@ public class Controller {
 	 * @return
 	 */
 	public boolean eat(int x, int y){
+		//create pointer to grid
+		Grid grid= gamePlaying.getGrid();
+		if(grid.getSquareContent(y, x)=='k'
+				|| grid.getSquareContent(y, x)=='p'
+				|| grid.getSquareContent(y, x)=='a'){
+			//NOT SURE HOW TO DELETE FRUIT FROM HASHMAP/ARRAYLIST
+			//ALSO NOT SURE HOW TO CHANGE GRID CELL VALUE..
+			makeMove(y,x);
+			return true;
+		}
 		//will need grid from Grid.java
 		return false;
 	}
@@ -594,6 +631,13 @@ public class Controller {
 	 * @return True if deletion is successful, otherwise False
 	 */
 	public boolean deleteGame(String gameName) {
+		ArrayList<Game> gamelist= userPlaying.getGameList();
+		for(int i=0; i<gamelist.size();i++){
+			if(gamelist.get(i).getName().equals(gameName)){
+				gamelist.remove(i);
+				return true;
+			}
+		}
 		
 		return false;
 	}
