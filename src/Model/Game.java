@@ -34,7 +34,7 @@ public class Game implements Serializable{
 	 * 
 	 * @param name The name of the game
 	 */
-	Game(String name){
+	public Game(String name){
 		this.name=name;
 		this.gerbil= new Gerbil();
 		this.grid = new Grid(17,17);
