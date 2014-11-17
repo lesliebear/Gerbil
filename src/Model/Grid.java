@@ -1,11 +1,7 @@
 package Model;
- 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-import Model.Grid.Node;
+import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * The Grid class that holds the information about how the grid looks by using characters to represent
@@ -24,20 +20,22 @@ import Model.Grid.Node;
  * */
 public class Grid implements Serializable{
 
+	/**Serial Version UID to stop the error we get. = used during deserialization to verify */
+	private static final long serialVersionUID = 1L;
 	/**17x17 grid size because the outer edges will have walls  
 	 * Grid does not have gerbil location = gerbil object has the location info.*/
 	private char[][] grid;
+	/**Temporary grid to help see if fruit are reachable */
 	private int[][] visited;
-	HashMap<String,Node> fruitCoordinates = new HashMap<String, Node>(); // made this
-	ArrayList<Node> fruitLocTest = new ArrayList<Node>();
+	/**Holds the fruit location to verify if fruits are reachable or not */
+	HashMap<String,Node> fruitCoordinates = new HashMap<String, Node>(); 
 
 	/**
 	 * Creates a random grid that can still be completed (i.e. no walls blocking path 
 	 * of gerbil from all sides) for standard version 
 	 * In Fancy, we will have the user built screen that will allow user to 
 	 * customize and build the grid.
-	 * 
-	 * 
+	 *  
 	 * @assumes random grid needs to be created
 	 * @exception none
 	 * @postcondition creates a grid we can access and can still play
@@ -72,14 +70,14 @@ public class Grid implements Serializable{
 			}
 		}
 		randomGrid(); //places walls and fruit
-		grid[1][1]='p';
-		fruitCoordinates.remove(Integer.toString(1)+Integer.toString(1));
-		fruitCoordinates.put(Integer.toString(1) + Integer.toString(1), new Node(1,1));
-		grid[1][2] = 'w';
-		grid[2][1]='w';
-		grid[2][2]='w';
+		//grid[1][1]='p';
+		//fruitCoordinates.remove(Integer.toString(1)+Integer.toString(1));
+		//fruitCoordinates.put(Integer.toString(1) + Integer.toString(1), new Node(1,1));
+		//grid[1][2] = 'w';
+		//grid[2][1]='w';
+		//	grid[2][2]='w';
 		printGrid();
-		
+
 		System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
 		resetVisited();
 		checkValidFruits(grid.length-2, 1);
@@ -88,33 +86,10 @@ public class Grid implements Serializable{
 		} else {
 			System.out.println("At least one fruit have invalid path.");
 		}
-		printGrid();
-		
-		//	}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
-		//		&& (!fruitsHaveValidPath())); //reach all fruit
 
-	}
+		//}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
+		//	&& (fruitCoordinates.size()!=0)); //reach all fruit
 
-	/**
-	 * Ensures that the grid has valid fruit placement with fruit in locations reachable by Gerbil
-	 * 
-	 * @assumes Fruit locations have not been validated and might be surrounded by walls
-	 * making it not possible for the Gerbil to reach
-	 * @exception none
-	 * @postcondition validates or invalidates graph if fruit cannot be reached.
-	 * 
-	 * @return True if all fruits can be reached by Gerbil else false.
-	 */
-	public boolean fruitsHaveValidPath(){
-		for (Node n: fruitLocTest){
-			if((getToFruitUpRight(grid.length-2,1,n.row,n.col, getSquareContent(n.row, n.col))&&
-					getToFruitDownLeft(grid.length-2,1,n.row,n.col,getSquareContent(n.row, n.col))==false)){
-				System.out.println("location it fails: "+n.row+" , "+n.col);
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	/**
@@ -127,13 +102,12 @@ public class Grid implements Serializable{
 	 * @postcondition returns randomized grid with food and walls and water placed and water can at top left
 	 */
 	public void randomGrid(){
-		
+
 		grid[1][this.grid[0].length-2]='t'; //place water can
-		grid[grid.length -2][1] = 'g';
 		for (int b = 0; b <2*(this.grid.length-2); b++){//put in 30 walls as obstacles 
 			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
-			if (((R!=grid[0].length-2)&&(S!=1) &&(R!=1) && (S!=grid.length-2)) && (grid[R][S]=='0') && (grid[R][S] != 't') && (grid[R][S] != 'g')){ 
+			if (((R!=grid[0].length-2)&&(S!=1)) && (grid[R][S]=='0') && (grid[R][S] != 't')){ 
 				//if empty and not in location of water can or gerbil
 				this.grid[R][S]='w';
 			} 
@@ -186,57 +160,24 @@ public class Grid implements Serializable{
 	}
 
 	/**
-	 * Tests if all fruit are reachable else it would be not a valid program
+	 * Checks if the fruit locations are all reachable using the visited grid and the fruit coordinates storage
 	 * 
-	 * @param Y The row to check in
-	 * @param X The column to check in
-	 * @param goalY The row to reach
-	 * @param goalX The column to reach
-	 * @return check if we reach the location of the fruit. 
-	 */
-	public boolean getToFruitUpRight(int Y, int X, int goalY, int goalX, char c){
-		if ((Y==goalY) && (X == goalX) && (this.getSquareContent(Y, X)==c)){ //location o the fruit
-			return true;
-		}else if (this.getSquareContent(Y, X)=='w'){ //wall so cannot move more in that direction
-			return false;
-		}else{
-			//4 normal spots...not corners
-			return (getToFruitUpRight(Y-1,X,goalY,goalX,c) ||
-					getToFruitUpRight(Y,X+1,goalY,goalX,c));
-		}
-	}
-
-	/**
-	 * Tests if all fruit are reachable else it would be not a valid program
+	 * @assumes Fruits have been placed but not validated if they can be reached by Avatar's starting position or not
+	 * @exception none
+	 * @postcondition If they can be reached fruit coordinates will not have any nodes else it will not be empty
 	 * 
-	 * @param Y The row to check in
-	 * @param X The column to check in
-	 * @param goalY The row to reach
-	 * @param goalX The column to reach
-	 * @return check if we reach the location of the fruit. 
+	 * @param Y The row where we start at (Avatar's row)
+	 * @param X The column where we start at (Avatar's column)
+	 * 
 	 */
-	public boolean getToFruitDownLeft(int Y, int X, int goalY, int goalX, char c){
-		if ((Y==goalY) && (X == goalX) && (this.getSquareContent(Y, X)==c)){ //location o the fruit
-			return true;
-		}else if (this.getSquareContent(Y, X)=='w'){ //wall so cannot move more in that direction
-			return false;
-		}else{
-			//4 normal spots...not corners
-			return (getToFruitDownLeft(Y,X-1,goalY,goalX,c) ||
-					getToFruitDownLeft(Y+1,X,goalY,goalX,c));
-		}
-	}
-	
-	/* Did this */
 	public void checkValidFruits(int Y, int X) {
-		
+
 		if (grid[Y][X]=='w' || visited[Y][X] == 1){ //wall so cannot move more in that direction
 			return;
 		}
 		else {
 			visited[Y][X] = 1;
 			if(grid[Y][X] == 'k' || grid[Y][X] == 'p' || grid[Y][X] == 'a') {//get to water container so has valid path
-				grid[Y][X] = 'c';
 				fruitCoordinates.remove(Integer.toString(Y) + Integer.toString(X));
 			}
 			checkValidFruits(Y+1,X);  
@@ -286,10 +227,16 @@ public class Grid implements Serializable{
 			}
 			System.out.println(); //new line for new row. 
 		}
-	}//close print board
-	
+	}
+
+	/**
+	 * Resets the visited grid to 0 so we can use it again for fruit reachability checking
+	 * @assumes Visited Array was used and modified to not be 0 at all locations
+	 * @exception none
+	 * @postcondition Visited array is empty
+	 */
 	private void resetVisited() {
-		
+
 		for (int i = 0; i < visited.length; i++) {
 			for(int j = 0; j < grid[0].length; j++) {
 				visited[i][j] = 0;
@@ -297,8 +244,23 @@ public class Grid implements Serializable{
 		}
 	}
 
-	public class Node {
+	/**
+	 * Node Class to track the row and column information for the fruits
+	 * This is used to check if fruit are all reachable. 
+	 * @author Amulya
+	 *
+	 */
+	private class Node {
 		int row, col;
+		/**
+		 * Constructor for a Node
+		 * @param row Row that a fruit is in
+		 * @param col Column that a fruit is in
+		 * 
+		 * @assumes Node object needs to be created
+		 * @exception none
+		 * @postcondition creates a node object that we can use
+		 */
 		public Node(int row, int col){
 			this.row = row;
 			this.col=col;
