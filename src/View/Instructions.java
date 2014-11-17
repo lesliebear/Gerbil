@@ -12,13 +12,18 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.awt.Rectangle;
 
+import javax.swing.JComponent;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.plaf.ScrollPaneUI;
+import javax.swing.plaf.basic.BasicScrollBarUI;
 
 /**
  * This class creates a GUI for the Instruction Screen (Help screen).
@@ -100,6 +105,20 @@ public class Instructions extends Screen{
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			}
 		};
+		JScrollBar sb = new JScrollBar() {
+			public void paintComponent(Graphics g) {
+				setOpaque(false);
+				g.setColor(new Color(128, 128, 128, 110));
+				Insets insets = getInsets();
+				int x = insets.left;
+				int y = insets.top;
+				int width = getWidth() - (insets.left + insets.right);
+				int height = getHeight() - (insets.top + insets.bottom);
+				g.fillRect(x, y, width, height);
+				super.paintComponent(g);
+			}
+		};
+		gpScrollPane.setVerticalScrollBar(sb);
 		createScreen();
 	}
 
@@ -108,6 +127,7 @@ public class Instructions extends Screen{
 	 * 
 	 */
 	protected void createScreen() {
+		
 		Dimension textAreaDimension = new Dimension(300,375);
 		Dimension dimension = new Dimension(1024, 768);
 		gamePlayText.setEditable(true);
