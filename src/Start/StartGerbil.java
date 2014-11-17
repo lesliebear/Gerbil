@@ -17,9 +17,9 @@ public class StartGerbil {
 		//Backend bk = new Backend();
 		//System.out.println(bk.saveGames());
 		//Main main = new Main();
-		Controller controller = new Controller();
+		//Controller controller = new Controller();
 		//Conditionals conditionals = new Conditionals("if");
-		//Grid g = new Grid(17,17);		
+		Grid g = new Grid(17,17);		
 	}
 
 	/**
