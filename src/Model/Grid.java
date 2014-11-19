@@ -3,6 +3,7 @@ package Model;
 import java.io.Serializable;
 import java.util.HashMap;
 
+
 /**
  * The Grid class that holds the information about how the grid looks by using characters to represent
  * location of fruit and gerbil. The default location of avatar is bottom left and 
