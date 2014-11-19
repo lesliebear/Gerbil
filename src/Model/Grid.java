@@ -69,11 +69,49 @@ public class Grid implements Serializable{
 				}
 			}
 		}
-		randomGrid(); //places walls and fruit
+		//randomGrid(); //places walls and fruit
 		//grid[1][1]='p';
 		//fruitCoordinates.remove(Integer.toString(1)+Integer.toString(1));
 		//fruitCoordinates.put(Integer.toString(1) + Integer.toString(1), new Node(1,1));
 		//grid[1][2] = 'w';
+		 grid[1][this.grid[0].length-2]='t'; //place water can
+		 grid[12][2]='a';
+	//	 fruitCoordinates.remove(Integer.toString(12)+Integer.toString(2));
+		 fruitCoordinates.put(Integer.toString(12)+Integer.toString(2),new Node(12,2));
+		 grid[7][4]='w';
+		 grid[7][6]='w';
+		 grid[8][4]='w';
+		 grid[8][6]='w';
+		 grid[8][7]='w';
+		 grid[8][8]='w';
+		 grid[9][4]='w';
+		 grid[9][8]='w';
+		 grid[10][4]='w';
+		 grid[10][5]='w';
+		 grid[10][6]='w';
+		 grid[10][8]='w';
+		 grid[11][1]='w';
+		 grid[11][2]='w';
+		 grid[11][3]='w';
+		 grid[11][6]='w';
+		 grid[11][8]='w';
+		 grid[12][1]='w';
+		 grid[12][3]='w';
+		 grid[12][4]='w';
+		 grid[12][5]='w';
+		 grid[12][6]='w';
+		 grid[12][8]='w';
+		 grid[13][1]='w';
+		 grid[13][8]='w';
+		 grid[14][1]='w';
+		 grid[14][2]='w';
+		 grid[14][3]='w';
+		 grid[14][4]='w';
+		 grid[14][5]='w';
+		 grid[14][6]='w';
+		 grid[14][7]='w';
+		 grid[14][8]='w';
+		 
 		//grid[2][1]='w';
 		//	grid[2][2]='w';
 		printGrid();
@@ -250,7 +288,7 @@ public class Grid implements Serializable{
 	 * @author Amulya
 	 *
 	 */
-	private class Node {
+	public class Node {
 		int row, col;
 		/**
 		 * Constructor for a Node
