@@ -60,7 +60,7 @@ public class Grid implements Serializable{
 	 * 
 	 */
 	public void initGrid(){
-		//do{//put walls all around and init 0s = empty grid area.
+		do{//put walls all around and init 0s = empty grid area.
 		for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
 			for (int j = 0; j<grid[0].length;j++){ 
 				if((j==0)||(j==grid[0].length-1) || (i==0)||(i==grid.length-1)){
@@ -70,64 +70,12 @@ public class Grid implements Serializable{
 				}
 			}
 		}
-		//randomGrid(); //places walls and fruit
-		//grid[1][1]='p';
-		//fruitCoordinates.remove(Integer.toString(1)+Integer.toString(1));
-		//fruitCoordinates.put(Integer.toString(1) + Integer.toString(1), new Node(1,1));
-		//grid[1][2] = 'w';
-		 grid[1][this.grid[0].length-2]='t'; //place water can
-		 grid[12][2]='a';
-	//	 fruitCoordinates.remove(Integer.toString(12)+Integer.toString(2));
-		 fruitCoordinates.put(Integer.toString(12)+Integer.toString(2),new Node(12,2));
-		 grid[7][4]='w';
-		 grid[7][6]='w';
-		 grid[8][4]='w';
-		 grid[8][6]='w';
-		 grid[8][7]='w';
-		 grid[8][8]='w';
-		 grid[9][4]='w';
-		 grid[9][8]='w';
-		 grid[10][4]='w';
-		 grid[10][5]='w';
-		 grid[10][6]='w';
-		 grid[10][8]='w';
-		 grid[11][1]='w';
-		 grid[11][2]='w';
-		 grid[11][3]='w';
-		 grid[11][6]='w';
-		 grid[11][8]='w';
-		 grid[12][1]='w';
-		 grid[12][3]='w';
-		 grid[12][4]='w';
-		 grid[12][5]='w';
-		 grid[12][6]='w';
-		 grid[12][8]='w';
-		 grid[13][1]='w';
-		 grid[13][8]='w';
-		 grid[14][1]='w';
-		 grid[14][2]='w';
-		 grid[14][3]='w';
-		 grid[14][4]='w';
-		 grid[14][5]='w';
-		 grid[14][6]='w';
-		 grid[14][7]='w';
-		 grid[14][8]='w';
-		 
-		//grid[2][1]='w';
-		//	grid[2][2]='w';
+		randomGrid(); //places walls and fruit
 		printGrid();
-
-		System.out.println("Valid Grid: " + hasValidPath(grid.length-2, 1));
 		resetVisited();
 		checkValidFruits(grid.length-2, 1);
-		if(fruitCoordinates.size() == 0) {
-			System.out.println("All Fruits have valid path.");
-		} else {
-			System.out.println("At least one fruit have invalid path.");
-		}
-
-		//}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
-		//	&& (fruitCoordinates.size()!=0)); //reach all fruit
+		}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
+			&& (fruitCoordinates.size()!=0)); //reach all fruit
 
 	}
 
@@ -146,7 +94,7 @@ public class Grid implements Serializable{
 		for (int b = 0; b <2*(this.grid.length-2); b++){//put in 30 walls as obstacles 
 			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
-			if (((R!=grid[0].length-2)&&(S!=1)) && (grid[R][S]=='0') && (grid[R][S] != 't')){ 
+			if (((R!=grid[0].length-2)&&(S!=1)) && (grid[R][S]=='0')){ 
 				//if empty and not in location of water can or gerbil
 				this.grid[R][S]='w';
 			} 
@@ -175,7 +123,7 @@ public class Grid implements Serializable{
 		while(count < numberOfFruit){
 			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
-			if (grid[R][S]=='0'){ //if it is empty, add the fruit
+			if (((R!=grid[0].length-2)&&(S!=1))&&(grid[R][S]=='0')){ //if it is empty, add the fruit
 				grid[R][S]=c;
 				fruitCoordinates.put(Integer.toString(R) + Integer.toString(S), new Node(R,S));
 				count++;

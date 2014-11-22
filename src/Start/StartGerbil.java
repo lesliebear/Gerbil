@@ -14,12 +14,13 @@ public class StartGerbil {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		//Backend bk = new Backend();
+		Backend bk = new Backend();
+		Game g = new Game("Yay");
 		//System.out.println(bk.saveGames());
 		//Main main = new Main();
 		//Controller controller = new Controller();
 		//Conditionals conditionals = new Conditionals("if");
-		Grid g = new Grid(17,17);		
+		//Grid g = new Grid(17,17);		
 	}
 
 	/**
