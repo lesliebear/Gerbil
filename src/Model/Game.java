@@ -108,7 +108,7 @@ public class Game implements Serializable{
 	/**
 	 * Adds a function to the functions list
 	 * 
-	 * @assumes Function is valid function
+	 * @assumes Function is valid function so name not already in array list is checked
 	 * @exception none
 	 * @postcondition Adds function to function list
 	 * 
@@ -117,6 +117,7 @@ public class Game implements Serializable{
 	 * @param functionToAdd function to be added to Functions list
 	 */
 	public boolean addFunction(Function functionToAdd){
+		this.functions.add(functionToAdd);
 		return false;
 	}
 	
@@ -131,7 +132,13 @@ public class Game implements Serializable{
 	 * @param functionToDelete function to be deleted
 	 * @return true if successful deletion, false otherwise
 	 */
-	public boolean deleteFunction(String functionToDelete){
+	public boolean deleteFunction(String funcNameToDelete){
+		for (int i = 0; i<this.functions.size();i++){
+			if (functions.get(i).name.equals(funcNameToDelete)){
+				functions.remove(i);
+				return true;
+			}
+		}
 		return false;
 	}
 	
