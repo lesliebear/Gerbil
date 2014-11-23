@@ -71,7 +71,7 @@ public class Grid implements Serializable{
 			}
 		}
 		randomGrid(); //places walls and fruit
-		printGrid();
+		//printGrid();
 		resetVisited();
 		checkValidFruits(grid.length-2, 1);
 		}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
