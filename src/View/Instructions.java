@@ -160,7 +160,7 @@ public class Instructions extends Screen{
 	 */
 	public void show() {
 	
-		frame.setVisible(true);;
+		frame.setVisible(true);
 	}
 	
 	/**

@@ -34,6 +34,7 @@ public class Controller {
 	Main main;
 	PlayOptions playOptions;
 	Instructions instructions;
+	Play play;
 	
 /**assumes, returns, exceptions**/
 	
@@ -115,6 +116,92 @@ public class Controller {
 		});
 	}
 	
+	
+	
+	/**
+	 * Add event handlers for the Play screen
+	 */
+	private void addPlayEventHandlers() {
+		/**Button Listeners**/
+		play.addMenuEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		
+		play.addPlayEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+
+		play.addStopEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		
+		play.addInsertEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		
+		play.addEditEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		
+		play.addDeleteEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		
+		play.addClearAllEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		
+		play.addSaveEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		
+		play.addCreateFunctionEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		
+		/**Code List**/
+		
+		//MISSING
+		
+		/**JComboBoxes**/
+		
+		play.addConditionalsListSelectionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		
+		play.addGivenFunctionsListSelectionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+		
+		play.addUserFunctionsListSelectionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}	
+		});
+	}
+	 
 	/**
 	 * Creates and stores the builtIn functions in the controller
 	 * 

@@ -25,12 +25,8 @@ public class SavedGames extends JFrame{
 	static int vgap;
 	
 	
-	public SavedGames(int rowsIn, int colsIn, int hgapIn, int vgapIn){
-		this.rows = rowsIn;
-		this.cols = colsIn;
-		this.hgap = hgapIn;
-		this.vgap = vgapIn;
-		
+	public SavedGames(){
+
 		savedGames = this; 
 		
 		createScreen(rows,cols,hgap,vgap);

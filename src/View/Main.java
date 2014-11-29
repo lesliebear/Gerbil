@@ -59,6 +59,7 @@ public class Main extends Screen {
 				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
 			}
 		};
+		
 		instructions = new JButton("Instructions") {
 			public void paint(Graphics g) {
 				this.setContentAreaFilled(false);
@@ -79,6 +80,7 @@ public class Main extends Screen {
 				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
 			}
 		};
+		
 		exit = new JButton("Exit") {
 			public void paint(Graphics g) {
 				this.setContentAreaFilled(false);
@@ -99,17 +101,20 @@ public class Main extends Screen {
 				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
 			}
 		}; 
+		
 		try {
 			image = ImageIO.read(new File("10619975_10204553653617548_7614187758233835955_o.jpg"));
 		} catch (Exception ex) {
 			System.out.println("Couldn't load image");
 		}
+		
 		panel = new JPanel() {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			}
 		};
+		
 		createScreen();
 	}
 
