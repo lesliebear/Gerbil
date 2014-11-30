@@ -18,8 +18,10 @@ public class StartGerbil {
 		//Backend bk = new Backend();
 		//System.out.println(bk.saveGames());
 		//Main main = new Main();
-		//Conditionals conditionals = new Conditionals("If");
-		Play play = new Play();
+		Conditionals conditionals = new Conditionals("If");
+		//Conditionals c = new Conditionals("If");
+		//DeleteFunction del = new DeleteFunction();
+		//Main main = new Main();
 		//Grid g = new Grid(17,17);		
 	}
 
