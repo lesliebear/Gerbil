@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * User class that holds information about the users including the games they have played, saved or made
  *@author Amulya
  */
+@SuppressWarnings("serial")
 public class User implements Serializable{
 	/**The username of the user that identifies the user*/
 	private String userName;
