@@ -57,10 +57,10 @@ public class Conditionals {
 	JComboBox userDefinedFunctions; /*get from control*/ 
 	
 	/**Left side panel: labels, buttons, other**/
-	JLabel ifL = new JLabel("if :");
-	JLabel elseL= new JLabel("else :");
-	JLabel elseifL= new JLabel("else if :");
-	JLabel whileL = new JLabel("while :");
+	JLabel ifL = new JLabel("If :");
+	JLabel elseL= new JLabel("Else :");
+	JLabel elseifL= new JLabel("Else if :");
+	JLabel whileL = new JLabel("While :");
 	JLabel bodyL = new JLabel("Body :");
 	 
 	JButton okB;
@@ -72,7 +72,7 @@ public class Conditionals {
 	private static JScrollPane scrollpane;
 	
 	/** Repeat stuff **/
-	JLabel repeatL= new JLabel("repeat"); 
+	JLabel repeatL= new JLabel("Repeat"); 
 	String[] nums = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"};
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -419,23 +419,23 @@ public class Conditionals {
 		gc.gridx = 0;
 		gc.gridy = 0;
 		
-		if(type.equals("if")){
+		if(type.equals("If")){
 			ifL.setFont(new Font("Serif", Font.BOLD, 35));
 			leftPanel.add(ifL, gc);
 	
-		}else if(type.equals("else")){
+		}else if(type.equals("Else")){
 			elseL.setFont(new Font("Serif", Font.BOLD, 35));
 			leftPanel.add(elseL, gc);
 			
-		}else if(type.equals("elseIf")){
+		}else if(type.equals("Else if")){
 			elseifL.setFont(new Font("Serif", Font.BOLD, 35));
 			leftPanel.add(elseifL, gc);
 			
-		}else if(type.equals("while")){
+		}else if(type.equals("While")){
 			whileL.setFont(new Font("Serif", Font.BOLD, 35));
 			leftPanel.add(whileL, gc);
 			
-		}else if(type.equals("repeat")){
+		}else if(type.equals("Repeat")){
 			repeatL.setFont(new Font("Serif", Font.BOLD, 35));
 			leftPanel.add(repeatL, gc);
 		
@@ -492,7 +492,7 @@ public class Conditionals {
 	 * Creates the screen by putting the GUI components together.
 	 */
 	protected static void createAndShowGUI() { 
-		conditionals = new Conditionals("While");
+		conditionals = new Conditionals("Repeat");
 		JFrame frame = new JFrame("If");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -522,6 +522,4 @@ public class Conditionals {
 	public JComponent getRightComponent(){
 		return rightPanel;
 	}
-	
-	
 }
