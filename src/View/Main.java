@@ -30,6 +30,7 @@ public class Main extends Screen {
 	private JPanel panel;
 	private BufferedImage image;
 	private JFrame frame;
+	private static Main main;
 
 	/**
 	 * Constructor that creates all necessary GUI components.
@@ -37,7 +38,6 @@ public class Main extends Screen {
 	 */
 	@SuppressWarnings("serial")
 	public Main() {
-		
 		frame = new JFrame("Gerbil");
 		play = new JButton("Play") {
 			public void paint(Graphics g) {
@@ -101,20 +101,17 @@ public class Main extends Screen {
 				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
 			}
 		}; 
-		
 		try {
 			image = ImageIO.read(new File("10619975_10204553653617548_7614187758233835955_o.jpg"));
 		} catch (Exception ex) {
-			System.out.println("Couldn't load image");
+			System.out.println("Could not load image");
 		}
-		
 		panel = new JPanel() {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			}
 		};
-		
 		createScreen();
 	}
 

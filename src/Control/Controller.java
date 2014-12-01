@@ -58,7 +58,6 @@ public class Controller {
 		Play.setNewGrid(grid.getGrid());
 		Play play = new Play();
 		
-		//main = new Main();
 		//playOptions = new PlayOptions();
 		//initEventHandlers();
 	}
