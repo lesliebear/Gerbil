@@ -70,6 +70,7 @@ public class DeleteFunction extends Screen{
 		
 		done = new JButton("Done") {
 			public void paint(Graphics g) {
+				done.setFont(new Font(null, Font.PLAIN, 30)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -90,6 +91,7 @@ public class DeleteFunction extends Screen{
 		};
 		delete  = new JButton("Delete") {
 			public void paint(Graphics g) {
+				delete.setFont(new Font(null, Font.PLAIN, 30)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -119,7 +121,7 @@ public class DeleteFunction extends Screen{
 		GridBagConstraints c = new GridBagConstraints();
 		functionsList.setPreferredSize(new Dimension(250,50));
 		functionsList.setFont(new Font(null, Font.BOLD, 28));
-		functionsLabel.setForeground(Color.YELLOW);
+		functionsLabel.setForeground(Color.WHITE);
 		functionsLabel.setFont(new Font(null, Font.BOLD, 48));
 		done.setFont(new Font(null, Font.BOLD,20));
 		delete.setFont(new Font(null, Font.BOLD,20));	
