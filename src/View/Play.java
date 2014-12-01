@@ -39,6 +39,7 @@ public class Play extends Screen{
 	private static JPanel gridPanel = new JPanel();
 	private static JPanel lowerPanel = new JPanel();
 	
+	
 	/**Upper Panel Components**/
 	private static JButton menuB;
 	private static JButton playB;
@@ -50,7 +51,7 @@ public class Play extends Screen{
 	private static JButton saveB;
 	
 	/**Left Panel Components**/
-	private static JList codeList;
+	private static JList playcodeList;
 	private static JScrollPane scrollpane;
 	
 	/**Grid Panel components**/
@@ -274,8 +275,8 @@ public class Play extends Screen{
 		        "Birthday Card List", "High School", "Country", "Continent",
 		        "End", "............................INSERT NEW............................" };
 		
-		codeList = new JList(placeholder);
-		scrollpane = new JScrollPane(codeList);
+		playcodeList = new JList(placeholder);
+		scrollpane = new JScrollPane(playcodeList);
 		
 		leftPanel.setLayout(new BorderLayout());
 		leftPanel.add(scrollpane, BorderLayout.CENTER);

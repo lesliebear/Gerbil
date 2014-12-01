@@ -1,14 +1,17 @@
 package View;
  
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
@@ -18,20 +21,15 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 /**
  * This screen creates a GUI for the Conditional Screen. 
  */
 public class Conditionals {
 	public static Conditionals conditionalsScreen;
-	
-	/** Repeat stuff **/
-	JLabel repeatL= new JLabel("Repeat"); 
-	String[] nums = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"};
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	JComboBox repeatNumTimes = new JComboBox(nums);
 
 	/**Type of conditional frame**/
 	static String type;
@@ -41,9 +39,10 @@ public class Conditionals {
 	/**LHS and RHS panels**/
 	static JPanel leftPanel = new JPanel(); 
 	static JPanel rightPanel = new JPanel();
+	static JPanel listPanel = new JPanel();
 	
 	/**Right side panel: labels, buttons, other**/
-	JLabel conditionalsL = new JLabel("Conditionals"); 
+	JLabel conditionalsL = new JLabel("Conditional Statements"); 	
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
 	JLabel userDefinedL = new JLabel("User Defined Functions");
 	
@@ -60,16 +59,26 @@ public class Conditionals {
 	JComboBox userDefinedFunctions; /*get from control*/ 
 	
 	/**Left side panel: labels, buttons, other**/
-	JLabel ifL = new JLabel("If:");
-	JLabel elseL= new JLabel("Else:");
-	JLabel elseifL= new JLabel("Else if:");
-	JLabel whileL = new JLabel("While:");
-	JLabel valueL = new JLabel("Value");
-	
+	JLabel ifL = new JLabel("If :");
+	JLabel elseL= new JLabel("Else :");
+	JLabel elseifL= new JLabel("Else if :");
+	JLabel whileL = new JLabel("While :");
+	JLabel valueL = new JLabel("Value ");
+	 
 	JButton okB;
 	JButton cancelB; 
 	
 	JComboBox conditionalDropdown; /*get from control*/ 
+	
+	private static JList conditionalscodeList;
+	private static JScrollPane scrollpane;
+	
+	/** Repeat stuff **/
+	JLabel repeatL= new JLabel("Repeat"); 
+	String[] nums = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"};
+	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	JComboBox repeatNumTimes = new JComboBox(nums);
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -304,12 +313,26 @@ public class Conditionals {
 	
 	public void setRightComponents(){
 		rightPanel.setLayout(new GridBagLayout());
+		rightPanel.setOpaque(true);
 		GridBagConstraints gc = new GridBagConstraints();
 		
 		Dimension size= rightPanel.getPreferredSize();
-		size.width =600;
-		size.height = 500;
+		size.width =200;
+		size.height = 600;
 		rightPanel.setPreferredSize(size);
+		
+		/*Setting the Font types*/
+		conditionalsL.setFont(new Font("Serif", Font.BOLD, 18)); 
+		givenFunctionsL.setFont(new Font("Serif", Font.BOLD, 18)); 
+		userDefinedL.setFont(new Font("Serif", Font.BOLD, 18));
+		
+		String[] drop = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"}; // EDIT : should come from somewhere else
+		userDefinedFunctions = new JComboBox(drop);
+		
+		//top, left, botton, right <- insets
+		gc.insets = new Insets(10,0,10,5);
+	      
+		//gc.anchor = GridBagConstraints.WEST;
 		
 		gc.gridx = 0;
 		gc.gridy = 1; 
@@ -355,60 +378,109 @@ public class Conditionals {
 		gc.gridy = 11;
 		rightPanel.add(userDefinedL, gc);
 		
-		/*gc.gridx = 0;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.gridx = 0;
 		gc.gridy = 12;
 		rightPanel.add(userDefinedFunctions, gc); //placeholder */
 	}
 	
+	public void setJListComponents(){
+		Dimension size= listPanel.getPreferredSize();
+		size.width =1000;
+		size.height = 5000;
+		listPanel.setPreferredSize(size);
+		listPanel.setSize(new Dimension(500,500));
+		
+		// EDIT: this should be called from somewhere else...
+		String placeholder[] = { "Begin", "Office", "Extended Family",
+		        "Company (US)", "Company (World)", "Team", "Will",
+		        "Birthday Card List", "High School", "Country", "Continent",
+		        "End", "............................INSERT NEW............................" };
+		
+		
+		conditionalscodeList = new JList(placeholder);
+		scrollpane = new JScrollPane(conditionalscodeList);
+		
+		listPanel.setLayout(new BorderLayout());
+		listPanel.add(scrollpane, BorderLayout.CENTER);
+	}
+	
 	public void setLeftComponents(){
 		leftPanel.setLayout(new GridBagLayout());
+		leftPanel.setOpaque(true);
 		GridBagConstraints gc = new GridBagConstraints();
 		
 		Dimension size= leftPanel.getPreferredSize();
 		size.width =600;
 		size.height = 500;
 		leftPanel.setPreferredSize(size);
-	
-		System.out.println(type);
+		
+		/*Creating Code List*/
+		setJListComponents();
+		
+		/*Setting Font*/
+		ifL.setFont(new Font("Serif", Font.BOLD, 25)); 
+		
+		String[] drop = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"}; // EDIT : should come from somewhere else
+		conditionalDropdown = new JComboBox(drop);
+		
+		gc.gridx = 0;
+		gc.gridy = 0;
 		
 		if(type.equals("If")){
-			gc.gridx = 0;
-			gc.gridy = 2; 
-			
+		 
 			leftPanel.add(ifL, gc);
+		 
 		}else if(type.equals("Else")){
-			gc.gridx = 0;
-			gc.gridy = 2;  
-			
+		
 			leftPanel.add(elseL, gc);
+			
 		}else if(type.equals("Else if")){
-			gc.gridx = 0;
-			gc.gridy = 2; 
-			
+		
 			leftPanel.add(elseifL, gc);
-		}else if(type.equals("While")){
-			gc.gridx = 0;
-			gc.gridy = 2;  
 			
+		}else if(type.equals("While")){
+		
 			leftPanel.add(whileL, gc);
+			
+		}else if(type.equals("Repeat")){
+		
+			leftPanel.add(repeatL, gc);
+		
+			gc.gridx = 0; 
+			gc.gridy=1;  
+			leftPanel.add(repeatNumTimes, gc);
 		}
 		
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.gridwidth = 2;
 		gc.gridx = 1; 
-		gc.gridy=2; 
+		gc.gridy=0; 
+		leftPanel.add(conditionalDropdown, gc);
 		
-		leftPanel.add(repeatNumTimes, gc);
+		gc.fill = GridBagConstraints.NONE;
 		
-		
+		gc.gridwidth = 1;
 		gc.gridx = 0; 
 		gc.gridy=1; 
-		
 		leftPanel.add(valueL, gc);
 		
-		/*ADD: make span two cols*/
+		gc.fill = GridBagConstraints.BOTH;
+		gc.gridwidth = 2;
 		gc.gridx = 1; 
 		gc.gridy=1; 
+		leftPanel.add(listPanel, gc);
 		
-		leftPanel.add(repeatNumTimes, gc);
+		gc.fill = GridBagConstraints.NONE;
+		
+		gc.gridwidth = 1;
+		gc.gridx = 1; 
+		gc.gridy=2; 
+		leftPanel.add(okB, gc);
+		
+		gc.gridx = 2; 
+		gc.gridy=2; 
+		leftPanel.add(cancelB, gc);
 	}
 
 	/**
@@ -434,6 +506,7 @@ public class Conditionals {
 		c.add(rightPanel, gc);
 		
 		frame.pack();
+		frame.setResizable(false);
 		frame.setVisible(true);
 	}
 
