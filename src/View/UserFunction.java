@@ -2,13 +2,22 @@ package View;
  
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -25,11 +34,15 @@ public class UserFunction extends Screen{
 
 	private JFrame frame;
 	private JPanel panel;
+	private JLabel[][] gridPanel;
 	private JButton If, elseIf, Else, While, repeat, turnLeft, eat, move, ok, cancel;
 	private JList list;
 	private JLabel begin, end, funtion, value, condStatements, givenFunctions;
 	private JTextField textField;
 	private JComboBox userFunctions;
+	private ImageIcon imageIcon;
+	private BufferedImage image;
+
 	
 	
 	/**
@@ -38,6 +51,32 @@ public class UserFunction extends Screen{
 	 */
 	public UserFunction() {
 		 
+		frame = new JFrame();
+		If = new JButton("Test");
+		If.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			
+				 try {
+			            image = ImageIO.read(new File("EditButton_Play.png"));
+			        } catch (Exception ex) {
+			            ex.printStackTrace();
+			        }
+				 gridPanel[0][0].setIcon(new ImageIcon(image.getScaledInstance(67, 67, image.SCALE_SMOOTH)));
+			}
+			
+		});
+		panel = new JPanel();
+		gridPanel = new JLabel[15][15];
+		  try {
+	            image = ImageIO.read(new File("DeleteButton_Play.png"));
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+		imageIcon = new ImageIcon("DeleteButton_Play.png");
+		createScreen();
+		
 	}
 
 	/**
@@ -45,225 +84,38 @@ public class UserFunction extends Screen{
 	 * 
 	 */
 	protected void createScreen() {	
-		
+		Dimension dimension = new Dimension(1005,1005);
+		//panel.setSize(dimension);
+		//panel.setMinimumSize(dimension);
+		//panel.setPreferredSize(dimension);
+		panel.setLayout(new GridLayout(15,16));
+		GridBagConstraints c = new GridBagConstraints();
+		c.fill = GridBagConstraints.BOTH;
+		for(int i = 0; i < 15; i++) {
+			for(int j = 0; j < 15; j++) {
+				gridPanel[i][j] = new JLabel();
+				gridPanel[i][j].setSize(new Dimension(67,67));
+				//image.getScaledInstance(30, 30, image.SCALE_SMOOTH);
+				gridPanel[i][j].setIcon(new ImageIcon(image.getScaledInstance(67, 67, image.SCALE_SMOOTH)));
+				panel.add(gridPanel[i][j]);
+			}
+		}
+		panel.add(If);
+		frame.add(panel);
+		frame.setSize(dimension);
+		frame.setMinimumSize(dimension);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
 	
-	private void createButtons(){
-		/**Right side panel**/
-		If= new JButton("If"){
-			public void paint(Graphics g) {
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-		
-		Else= new JButton("Else"){
-			public void paint(Graphics g) {
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-		elseIf= new JButton("Else if"){
-			public void paint(Graphics g) {
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-		While = new JButton("While"){
-			public void paint(Graphics g) {
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-		repeat= new JButton("Repeat"){
-			public void paint(Graphics g) {
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-
-		move= new JButton("Move Ahead"){
-			public void paint(Graphics g) {
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-		
-		turnLeft= new JButton("Turn Left"){
-			public void paint(Graphics g) {
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-		
-		eat = new JButton("Eat"){
-			public void paint(Graphics g) {
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-
-		/**Left side panel**/
-		ok = new JButton("OK"){
-			public void paint(Graphics g) {
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-		
-		cancel = new JButton("Cancel"){
-			public void paint(Graphics g) {
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		}; 
-	}
 	/**
 	 * Shows the screen.
 	 * 
 	 */
 	public void show() {
 	
+		
 	}
 	
 	/**
@@ -284,5 +136,28 @@ public class UserFunction extends Screen{
 	public void disable() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	class GridLabel extends JLabel {
+		
+		private BufferedImage image;
+
+	    public GridLabel() {
+	    	
+	        try {
+	            image = ImageIO.read(new File("DeleteButton_Play.png"));
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    public void repaintComponent(BufferedImage image) {
+	    	this.image = image;
+	    	paintComponent(this.getGraphics());
+	    }
+	    @Override
+	    protected void paintComponent(Graphics g) {
+	        super.paintComponent(g);
+	        g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+	    }
 	}
 }
