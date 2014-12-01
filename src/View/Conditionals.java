@@ -61,7 +61,7 @@ public class Conditionals {
 	JLabel elseL= new JLabel("Else :");
 	JLabel elseifL= new JLabel("Else if :");
 	JLabel whileL = new JLabel("While :");
-	JLabel bodyL = new JLabel("Body ");
+	JLabel bodyL = new JLabel("Body :");
 	 
 	JButton okB;
 	JButton cancelB; 
@@ -338,7 +338,7 @@ public class Conditionals {
 		userDefinedFunctions = new JComboBox(drop);
 		
 		//top, left, botton, right <- insets
-		gc.insets = new Insets(10,0,10,5);
+		gc.insets = new Insets(5,0,10,5);
 	      
 		//gc.anchor = GridBagConstraints.WEST;
 		
@@ -402,8 +402,8 @@ public class Conditionals {
 		size.height = 600;
 		leftPanel.setPreferredSize(size);
 		
-		ifL.setFont(new Font("Serif", Font.BOLD, 30));
-		bodyL.setFont(new Font("Serif", Font.BOLD, 18));
+		ifL.setFont(new Font("Serif", Font.BOLD, 35));
+		bodyL.setFont(new Font("Serif", Font.BOLD, 20));
 		
 		// EDIT: this should be called from somewhere else...
 		String placeholder[] = { "Begin",
@@ -478,10 +478,14 @@ public class Conditionals {
 		gc.gridwidth = 1;
 		gc.gridx = 1; 
 		gc.gridy=2; 
+		gc.ipady = 20;
+		gc.ipadx = 20;
 		leftPanel.add(okB, gc);
 		
 		gc.gridx = 2; 
 		gc.gridy=2; 
+		gc.ipady =20;
+		gc.ipadx = 20;
 		leftPanel.add(cancelB, gc);
 	}
 
