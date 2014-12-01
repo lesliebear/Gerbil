@@ -13,6 +13,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
@@ -58,7 +59,7 @@ public class Play extends Screen{
 	private static JScrollPane scrollpane;
 	
 	/**Grid Panel components**/
-	
+	private static JLabel[][] gridBoxes;
 	
 	/**Lower Panel Components**/
 	private static JButton createFunctionB;
@@ -69,17 +70,17 @@ public class Play extends Screen{
 	private static JLabel conditionalStatementsL;
 	private static JLabel givenFunctionsL;
 	private static JLabel userDefinedFunctionsL;
-	private static JLabel[][] gridBoxes;
+	
+	/** Gerbil grid representation */
 	private static char[][] grid;
 	
-	
+	/** Image icons of all the necesary pictures */
 	private static ImageIcon imageApple, imagePear, imageGrass, imagePumpkin, imageWall, imageGerbil;
+	
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 */
 	public Play() {
-	
-		 
 		try {
 			imageApple = new ImageIcon(ImageIO.read(new File("apple icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));
 	        imagePear = new ImageIcon(ImageIO.read(new File("pear icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
@@ -92,11 +93,9 @@ public class Play extends Screen{
 	            ex.printStackTrace();
 	    }
 		createAndShowGUI();
-		
 	}
 	
 	public static void setNewGrid(char[][] newGrid) {
-		
 		grid = newGrid;
 	}
 
@@ -325,13 +324,13 @@ public class Play extends Screen{
 					case'a':gridBoxes[i][j].setIcon(imageApple);
 							break;
 					case'k':gridBoxes[i][j].setIcon(imagePumpkin);
-					break;
+							break;
 					case'p':gridBoxes[i][j].setIcon(imagePear);
-					break;
+							break;
 					case'g':gridBoxes[i][j].setIcon(imageGerbil);
-					break;
+							break;
 					case'0':gridBoxes[i][j].setIcon(imageGrass);
-					break;
+							break;
 				}
 				gridPanel.add(gridBoxes[i][j]);
 			}
