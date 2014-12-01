@@ -1,46 +1,93 @@
 package Model;
  
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Block holds instructions which are the strings of the information user enters for 
  * the gerbil to do
+ * Note: the following is the type ennumeration
+ * Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), ‘e’,’c’} 
  * @author Amulya
  */
+@SuppressWarnings("serial")
 public class Block implements Serializable{
-	/**Instructions list in the block*/
-	private ArrayList<String> instructions; //all instructions are strings.
-	/*Note: Blocks may have other blocks within them, if selected for deletion,
-	 * all internal should be deleted too*/
-	/**Nested instructions go in this adjacency list*/
-	private ArrayList<Block> nestedBlocks = new ArrayList<Block>();
-	//the nested blocks is for the adjacency => if statements or nested info uses!!!
+	/**Nested instructions go in this adjacency hashmap*/
+	HashMap<Integer, Block> nestedBlocks;
+	String conditional;
+	/**Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), ‘e’,’c’} to find type 
+	 * Basically tells u what the block corresponsds to*/
+	int type; 
+	/**What line in the main screen does this block begin at */
+	int lineBegin;
+	/**What line in the main screen does this block end at*/
+	int lineEnd;
+	/**Pointer to the parent block in which this block is nested in = makes it easier to go to upper levels */
+	Block parent;
 
 	/**
-	 * Gets the arraylist of instructions for the block
+	 * Gets the line number where this block began at
 	 *
-	 * @assumes assumes Instructions array exists
+	 * @assumes assumes block was properly created
 	 * @exception none
-	 * @postcondition returns arraylist of instructions
+	 * @postcondition none
 	 * 
-	 * @return ArrayList of instructions for the block. 
+	 * @return Beginning line of block in main screen 
 	 */
-	public ArrayList<String> getInstructionsList(){
-		return this.instructions;
+	public int getlineBegin(){
+		return lineBegin;
 	}
 	
 	/**
-	 * Gets the arraylist of nested blocks. This structure is useful 
+	 * Gets the line number where this block ends at
+	 *
+	 * @assumes assumes block was properly created
+	 * @exception none
+	 * @postcondition none
+	 * 
+	 * @return Ending line of block in main screen 
+	 */
+	public int getlineEnd(){
+		return lineEnd;
+	}
+	
+	/**
+	 * Gets the block's type based on innumeration
+	 *
+	 * @assumes assumes block was properly created
+	 * @exception none
+	 * @postcondition none
+	 * 
+	 * @return Type of the block based on block
+	 */
+	public int getType(){
+		return type;
+	}
+	
+	/**
+	 * Gets the conditional
+	 *
+	 * @assumes assumes block was properly created
+	 * @exception none
+	 * @postcondition none
+	 * 
+	 * @return Conditional, if any, associated with this block
+	 */
+	public String getCond(){
+		return conditional;
+	}
+	
+	/**
+	 * Gets the hashmap of nested blocks. This structure is useful 
 	 * for the loop structure and the conditional statements
 	 * 
 	 * @assumes nested Blocks exist
 	 * @exception none
 	 * @postcondition returns nested blocks
 	 * 
-	 * @return ArrayList of blocks which are for nesting other blocks inside a block.
+	 * @return Hashmap of blocks which are for nesting other blocks inside a block.
 	 */
-	public ArrayList<Block> getNestedBlocks(){
+	public HashMap<Integer,Block> getNestedBlocks(){
 		return this.nestedBlocks;
 	}
 }

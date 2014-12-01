@@ -6,6 +6,7 @@ import java.io.Serializable;
  * The Gerbil Avatar object that stores the information about where the Gerbil is located
  * @author Amulya
  * */
+@SuppressWarnings("serial")
 public class Gerbil implements Serializable{
 	
 	/**The column in front of the gerbil (used to help find the direction gerbil is facing)*/

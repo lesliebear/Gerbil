@@ -1,7 +1,7 @@
 package Model;
  
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Function class to hold user created functions
@@ -10,12 +10,13 @@ import java.util.ArrayList;
  * deleted will be used. 
  * @author Amulya
  */
+@SuppressWarnings("serial")
 public class Function implements Serializable{
 	
 	/**Name of the funcion*/
 	String name;
-	/**Instructions in the function/body of the function */
-	ArrayList<Block> instruction;
+	/**Instructions in the function/body of the function in form of Hashmap of blocks*/
+	HashMap<Integer,Block> blockInstructions;
 	
 	/**
 	 * Creates the user created function
@@ -27,9 +28,8 @@ public class Function implements Serializable{
 	 * @param name Name of the function
 	 * @param instruction Instructions in the function so the function body
 	 */
-	public Function(String name, ArrayList<Block> instruction){
+	public Function(String name){
 		this.name=name;
-		this.instruction=instruction;
 	}
 	
 	/**
@@ -46,16 +46,16 @@ public class Function implements Serializable{
 	}
 	
 	/**
-	 * Gets the instructions/body of the function
+	 * Gets the instructions/body of the function in form of Hashmap of blocks
 	 * 
 	 * @assumes blocks of instructions exist
 	 * @exception none
-	 * @postcondition Retrieves arraylist of blocks that are called instruction
+	 * @postcondition Retrieves Hashmap of blocks that are are the instructions blocks
 	 * 
-	 * @return Body of the function so the instructions ArrayList<Blocks>
+	 * @return Body of the function so the instructions Hashmap in form of blocks 
 	 */
-	public ArrayList<Block> getInstruction(){
-		return instruction;
+	public HashMap<Integer,Block> getBlockInstructions(){
+		return this.blockInstructions;
 	}
 }
 

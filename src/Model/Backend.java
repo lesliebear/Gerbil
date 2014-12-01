@@ -19,6 +19,7 @@ import java.util.ArrayList;
  * since each user's games would be stored in their object.
  * @author Amulya
  * */
+@SuppressWarnings("serial")
 public class Backend implements Serializable {
 
 	/**Directory in which user data file is stored*/
