@@ -174,6 +174,17 @@ public class Grid implements Serializable{
 		}
 	}
 	/**
+	 * removes fruit from Y and X coordinates/sets cell to '0'
+	 * @assumes Fruit exists on specified Y and X coordinate
+	 * @exception none
+	 * @param Y The row where fruit to be removed is located
+	 * @param X The column where fruit to be removed is located
+	 */
+	public void removeFruit(int Y, int X){
+		grid[Y][X]='0';
+		return;
+	}
+	/**
 	 * Checks if grid created in randomGrid is valid. ie. valid path exists
 	 * from start to finish of course. The course has to have a path from start to finish
 	 * to be completable. 
