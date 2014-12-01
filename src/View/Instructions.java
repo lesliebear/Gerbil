@@ -178,7 +178,7 @@ public class Instructions extends Screen{
 		lsScrollPane.getViewport().setOpaque(false);
 	    lsScrollPane.setBorder(null);
 		
-		panel.add(gpScrollPane);
+		//panel.add(gpScrollPane);
 		frame.add(panel);
 		frame.setSize(dimension);
 		frame.setMinimumSize(dimension);

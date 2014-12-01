@@ -29,7 +29,7 @@ public class Grid implements Serializable{
 	/**Temporary grid to help see if fruit are reachable */
 	private int[][] visited;
 	/**Holds the fruit location to verify if fruits are reachable or not */
-	HashMap<String,Node> fruitCoordinates = new HashMap<String, Node>(); 
+	HashMap<String,Character> fruitCoordinates = new HashMap<String, Character>(); 
 
 	/**
 	 * Creates a random grid that can still be completed (i.e. no walls blocking path 
@@ -43,7 +43,6 @@ public class Grid implements Serializable{
 	 * 
 	 */
 	public Grid(int rows, int columns){	
-
 		grid = new char[rows][columns];
 		visited = new int[rows][columns];
 		initGrid();
@@ -60,24 +59,22 @@ public class Grid implements Serializable{
 	 * in random location with a valid path to them making the grid playable
 	 * 
 	 */
-	public void initGrid(){
+	private void initGrid(){
 		do{//put walls all around and init 0s = empty grid area.
-		for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
-			for (int j = 0; j<grid[0].length;j++){ 
-				if((j==0)||(j==grid[0].length-1) || (i==0)||(i==grid.length-1)){
-					grid[i][j]='w'; //wall surrounds entire grid. 
-				}else{
-					grid[i][j] = '0'; //empty grid area.
+			for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
+				for (int j = 0; j<grid[0].length;j++){ 
+					if((j==0)||(j==grid[0].length-1) || (i==0)||(i==grid.length-1)){
+						grid[i][j]='w'; //wall surrounds entire grid. 
+					}else{
+						grid[i][j] = '0'; //empty grid area.
+					}
 				}
 			}
-		}
-		randomGrid(); //places walls and fruit
-		//printGrid();
-		resetVisited();
-		checkValidFruits(grid.length-2, 1);
+			randomGrid(); //places walls and fruit
+			resetVisited();
+			checkValidFruits(grid.length-2, 1);
 		}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
 			&& (fruitCoordinates.size()!=0)); //reach all fruit
-
 	}
 
 	/**
@@ -89,16 +86,15 @@ public class Grid implements Serializable{
 	 * @exception none
 	 * @postcondition returns randomized grid with food and walls and water placed and water can at top left
 	 */
-	public void randomGrid(){
-
-		grid[1][this.grid[0].length-2]='t'; //place water can
+	private void randomGrid(){
+		grid[1][grid[0].length-2]='t'; //place water can
 		grid[grid.length - 2][1] ='g';
-		for (int b = 0; b <2*(this.grid.length-2); b++){//put in 30 walls as obstacles 
+		for (int b = 0; b <2*(grid.length-2); b++){//put in 30 walls as obstacles 
 			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
 			if ((grid[R][S]=='0')){ 
 				//if empty and not in location of water can or gerbil
-				this.grid[R][S]='w';
+				grid[R][S]='w';
 			} 
 			else{
 				b--; //do not increment b without placing the total walls needed!
@@ -118,16 +114,15 @@ public class Grid implements Serializable{
 	 * @postcondition grid now has fruits placed onto it with character c representing the fruit
 	 * @param c The character representing the fruit to place onto the grid.
 	 */
-	public void placeFruitsRandomly(char c){
-
-		int numberOfFruit = (int)((2.0*(this.grid.length-2.0)/3.0));
+	private void placeFruitsRandomly(char c){
+		int numberOfFruit = (int)((2.0*(grid.length-2.0)/3.0));
 		int count = 0;
 		while(count < numberOfFruit){
 			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
-			if (((R!=grid[0].length-2)&&(S!=1))&&(grid[R][S]=='0')){ //if it is empty, add the fruit
+			if (grid[R][S]=='0'){ //if it is empty, add the fruit
 				grid[R][S]=c;
-				fruitCoordinates.put(Integer.toString(R) + Integer.toString(S), new Node(R,S));
+				fruitCoordinates.put(Integer.toString(R) + Integer.toString(S), c);
 				count++;
 			}
 		}
@@ -145,7 +140,7 @@ public class Grid implements Serializable{
 	 * @return the character at the location if special, else returns " "
 	 */
 	public char getSquareContent(int y, int x){
-		return this.grid[y][x]; //y is row and x is column!
+		return grid[y][x]; //y is row and x is column!
 	}
 
 	/**
@@ -159,8 +154,7 @@ public class Grid implements Serializable{
 	 * @param X The column where we start at (Avatar's column)
 	 * 
 	 */
-	public void checkValidFruits(int Y, int X) {
-
+	private void checkValidFruits(int Y, int X) {
 		if (grid[Y][X]=='w' || visited[Y][X] == 1){ //wall so cannot move more in that direction
 			return;
 		}
@@ -184,7 +178,6 @@ public class Grid implements Serializable{
 	 */
 	public void removeFruit(int Y, int X){
 		grid[Y][X]='0';
-		return;
 	}
 	/**
 	 * Checks if grid created in randomGrid is valid. ie. valid path exists
@@ -199,10 +192,10 @@ public class Grid implements Serializable{
 	 * @param X The Column to check
 	 * @return True if the grid created does have a runnable/completable course, else false
 	 */
-	public boolean hasValidPath(int Y, int X){
+	private boolean hasValidPath(int Y, int X){
 		if (grid[Y][X]=='w' || visited[Y][X] == 1) { //wall so cannot move more in that direction
 			return false;
-		}else if((this.getSquareContent(Y, X) == 't')) {//get to water container so has valid path
+		}else if(grid[Y][X] == 't') {//get to water container so has valid path
 			return true;
 		}else {
 			visited[Y][X] = 1;
@@ -220,10 +213,10 @@ public class Grid implements Serializable{
 	 * @exception none
 	 * @postcondition nothing
 	 */
-	public void printGrid(){
-		for (int i =0; i<this.grid.length;i++){
-			for (int j = 0; j<this.grid[0].length;j++){
-				System.out.print(this.grid[i][j]+" "); //prints out row in one line
+	private void printGrid(){
+		for (int i =0; i<grid.length;i++){
+			for (int j = 0; j<grid[0].length;j++){
+				System.out.print(grid[i][j]+" "); //prints out row in one line
 			}
 			System.out.println(); //new line for new row. 
 		}
@@ -236,7 +229,6 @@ public class Grid implements Serializable{
 	 * @postcondition Visited array is empty
 	 */
 	private void resetVisited() {
-
 		for (int i = 0; i < visited.length; i++) {
 			for(int j = 0; j < grid[0].length; j++) {
 				visited[i][j] = 0;
@@ -244,31 +236,11 @@ public class Grid implements Serializable{
 		}
 	}
 	
-	public char[][] getGrid() {
-		
-		return grid;
-	}
-
 	/**
-	 * Node Class to track the row and column information for the fruits
-	 * This is used to check if fruit are all reachable. 
-	 * @author Amulya
-	 *
+	 * Returns Grid to caller
+	 * @return Grid 
 	 */
-	public class Node {
-		int row, col;
-		/**
-		 * Constructor for a Node
-		 * @param row Row that a fruit is in
-		 * @param col Column that a fruit is in
-		 * 
-		 * @assumes Node object needs to be created
-		 * @exception none
-		 * @postcondition creates a node object that we can use
-		 */
-		public Node(int row, int col){
-			this.row = row;
-			this.col=col;
-		}
+	public char[][] getGrid() {
+		return grid;
 	}
 }
