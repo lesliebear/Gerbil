@@ -558,7 +558,6 @@ public class Controller {
 		return false;
 	}
 	
-	
 	/**
 	 * Will change the position of the gerbil to a new (x,y) location
 	 * 
