@@ -9,13 +9,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -66,12 +69,35 @@ public class Play extends Screen{
 	private static JLabel conditionalStatementsL;
 	private static JLabel givenFunctionsL;
 	private static JLabel userDefinedFunctionsL;
+	private static JLabel[][] gridBoxes;
+	private static char[][] grid;
 	
+	
+	private static ImageIcon imageApple, imagePear, imageGrass, imagePumpkin, imageWall, imageGerbil;
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 */
 	public Play() {
+	
+		 
+		try {
+			imageApple = new ImageIcon(ImageIO.read(new File("apple icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));
+	        imagePear = new ImageIcon(ImageIO.read(new File("pear icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageGrass = new ImageIcon(ImageIO.read(new File("grass icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imagePumpkin = new ImageIcon(ImageIO.read(new File("pumpkin.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageWall = new ImageIcon(ImageIO.read(new File("wall icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageGerbil = new ImageIcon(ImageIO.read(new File("gerbil icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	            
+	    } catch (Exception ex) {
+	            ex.printStackTrace();
+	    }
 		createAndShowGUI();
+		
+	}
+	
+	public static void setNewGrid(char[][] newGrid) {
+		
+		grid = newGrid;
 	}
 
 	/**
@@ -284,13 +310,32 @@ public class Play extends Screen{
 	}
 	
 	public static void setGridComponents(){
-		gridPanel.setLayout(new GridBagLayout());
-		GridBagConstraints gc = new GridBagConstraints();
-		
+		gridPanel.setLayout(new GridLayout(grid.length, grid[0].length));	
 		Dimension size= gridPanel.getPreferredSize();
-		size.width =625;
-		size.height = 500;
+		size.width =630;
+		size.height = 510;
 		gridPanel.setPreferredSize(size);
+		gridBoxes = new JLabel[grid.length][grid[0].length];
+		for(int i = 0; i < grid.length; i++) {
+			for(int j = 0; j < grid[0].length; j++) {
+				gridBoxes[i][j] = new JLabel();
+				switch(grid[i][j]) {
+					case'w':gridBoxes[i][j].setIcon(imageWall);
+							break;
+					case'a':gridBoxes[i][j].setIcon(imageApple);
+							break;
+					case'k':gridBoxes[i][j].setIcon(imagePumpkin);
+					break;
+					case'p':gridBoxes[i][j].setIcon(imagePear);
+					break;
+					case'g':gridBoxes[i][j].setIcon(imageGerbil);
+					break;
+					case'0':gridBoxes[i][j].setIcon(imageGrass);
+					break;
+				}
+				gridPanel.add(gridBoxes[i][j]);
+			}
+		}
 	}
 	
 	public static void setLowerComponents(){
