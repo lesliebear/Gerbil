@@ -1,7 +1,6 @@
 package Model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -13,6 +12,7 @@ import java.util.HashMap;
  * In the Fancy features, the User can create the obstacle course 
  * @author Amulya
  */
+@SuppressWarnings("serial")
 public class Game implements Serializable{
 	/**User written code for which each node shows up as a block of code in the GUI*/
 	private HashMap<Integer,Block> blocks; 
