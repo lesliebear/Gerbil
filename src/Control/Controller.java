@@ -83,13 +83,8 @@ public class Controller {
 		builtIn.add(moveAhead);
 		builtIn.add(eat);
 		builtIn.add(turnLeft);
-		
-		
-		
 	}
 	
-
-	 
 	/**
 	 * Creates and stores the builtIn functions in the controller
 	 * 
@@ -119,15 +114,14 @@ public class Controller {
 			Game newgame= new Game(name);
 			return newgame;		
 		}else{
-			//error??? what to do for error...
+			//error??? what to do for error.../////////////////////////////////////////////
+			//Error: Cannot create Game because game name exists
 			return null;
 		}
 		
 		//Will call validGameName to check if valid game name
 		//Will utilize Game.java constructor
 	}
-	
-	
 	
 	/**
 	 * Determines whether or not game name provided is unique and contains valid characters
