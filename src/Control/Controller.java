@@ -58,6 +58,7 @@ public class Controller {
 		Play.setNewGrid(grid.getGrid());
 		Play play = new Play();
 		DeleteFunction df = new DeleteFunction();
+		Main main = new Main();
 		//playOptions = new PlayOptions();
 		//initEventHandlers();
 	}
