@@ -32,7 +32,7 @@ public class Backend implements Serializable {
 	/**
 	 * Adds a game to the arraylist of the games for the single user (in kernel/standard)
 	 * 
-	 * @assumes Game to be added is unique
+	 * @assumes Game name to be added is unique
 	 * @exception none
 	 * @postcondition Adds game to games list
 	 * 
@@ -40,6 +40,11 @@ public class Backend implements Serializable {
 	 * @return True if successfully added, else false
 	 */
 	public boolean addGame(Game g){
+		for (Game game: this.games){
+			if (game.getName().equals(g.getName())){
+				return false;
+			}
+		}
 		games.add(g);
 		return true;
 	}
@@ -180,6 +185,11 @@ public class Backend implements Serializable {
 	 * @return True if successful, else false
 	 */
 	public boolean addUser(User u){
+		for (User user: this.users){
+			if(user.getUserName().equals(u.getUserName())){
+				return false;
+			}
+		}
 		users.add(u);
 		return true;
 	}
