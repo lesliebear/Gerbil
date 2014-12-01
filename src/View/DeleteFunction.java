@@ -142,7 +142,7 @@ public class DeleteFunction extends Screen{
 		c.ipadx = 75;
 		buttonPanel.add(done,c);
 		panel.setLayout(new GridBagLayout());
-		c.insets = new Insets(0,25,45,0);
+		c.insets = new Insets(0,65,45,0);
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(functionsLabel,c);
