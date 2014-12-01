@@ -2,6 +2,7 @@ package Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 /**
@@ -14,11 +15,11 @@ import java.util.ArrayList;
  */
 public class Game implements Serializable{
 	/**User written code for which each node shows up as a block of code in the GUI*/
-	private ArrayList<Block> blocks; 
+	private HashMap<Integer,Block> blocks; 
 	/**Grid user is playing on for this game*/
 	private Grid grid; 
 	/**User created functions for this game that appear in drop down list for user to select*/
-	private ArrayList<Function> functions; 
+	private HashMap<Integer,Function> functions; 
 	/**Gerbil object to give gerbil's position*/
 	private Gerbil gerbil; 
 	/**Name of the game that user designates when saving*/
@@ -38,8 +39,8 @@ public class Game implements Serializable{
 		this.name=name;
 		this.gerbil= new Gerbil();
 		this.grid = new Grid(17,17);
-		this.functions= new ArrayList<Function>();
-		this.blocks= new ArrayList<Block>();
+		this.functions= new HashMap<Integer,Function>();
+		this.blocks= new HashMap<Integer,Block>();
 		
 	}
 	
@@ -65,7 +66,7 @@ public class Game implements Serializable{
 	 * 
 	 * @return The Arraylist of user written code in GUI
 	 */
-	public ArrayList<Block> getBlocks(){
+	public HashMap<Integer,Block> getBlocks(){
 		return blocks;
 	}
 	/**
@@ -101,7 +102,7 @@ public class Game implements Serializable{
 	 * 
 	 * @return User defined functions arraylist
 	 */
-	public ArrayList<Function> getfunction(){
+	public HashMap<Integer,Function> getfunction(){
 		return functions;
 	}
 	
@@ -117,26 +118,30 @@ public class Game implements Serializable{
 	 * @param functionToAdd function to be added to Functions list
 	 */
 	public boolean addFunction(Function functionToAdd){
-		this.functions.add(functionToAdd);
-		return false;
+		for (Function f: this.functions.values()){
+			if (f.name.equals(functionToAdd.name)){
+				return false;
+			}
+		}
+		this.functions.put(this.functions.keySet().size(),functionToAdd);//means index 0 +
+		return true;
 	}
 	
 	
 	/**
 	 * Deletes a function from the functions list
 	 * 
-	 * @assumes Function exists within the function list
+	 * @assumes Function with the parameter name exists within the function list
 	 * @exception none
 	 * @postcondition Deletes function
 	 * 
-	 * @param functionToDelete function to be deleted
+	 * @param functionToDelete name of function to be deleted
 	 * @return true if successful deletion, false otherwise
 	 */
 	public boolean deleteFunction(String funcNameToDelete){
-		for (int i = 0; i<this.functions.size();i++){
-			if (functions.get(i).name.equals(funcNameToDelete)){
-				functions.remove(i);
-				return true;
+		for (Function f: this.functions.values()){
+			if (f.name.equals(funcNameToDelete)){
+				this.functions.remove(f);
 			}
 		}
 		return false;
