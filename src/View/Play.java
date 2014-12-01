@@ -74,7 +74,7 @@ public class Play extends Screen{
 	/** Gerbil grid representation */
 	private static char[][] grid;
 	
-	/** Image icons of all the necesary pictures */
+	/** Image icons of all the necessary pictures */
 	private static ImageIcon imageApple, imagePear, imageGrass, imagePumpkin, imageWall, imageGerbil;
 	
 	/**
