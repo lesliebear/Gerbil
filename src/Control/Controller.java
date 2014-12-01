@@ -7,9 +7,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 
+import Model.Backend;
 import Model.Block;
 import Model.Function;
 import Model.Game;
@@ -34,7 +37,11 @@ public class Controller {
 	Main main;
 	PlayOptions playOptions;
 	Instructions instructions;
+
+	Backend backend= new Backend();
+
 	Play play;
+
 	
 /**assumes, returns, exceptions**/
 	
@@ -279,7 +286,7 @@ public class Controller {
  	 * @return false/true; false if parsing fails, true if parsing succeeds
  	 */
  	public boolean parseBlock(int pos){
- 		ArrayList<Block> blocklist= gamePlaying.getBlocks();
+ 		HashMap<Integer,Block> blocklist= gamePlaying.getBlocks();
  		Block block= blocklist.get(pos);
  		
  		
@@ -304,7 +311,7 @@ public class Controller {
 	 * @return
 	 */
 	public void editBlock(int pos, String instruction){
-		ArrayList<Block> blocklist= gamePlaying.getBlocks();
+		HashMap<Integer,Block> blocklist= gamePlaying.getBlocks();
 		blocklist.get(pos);
 		//need to add setInstructions in Block Class
 		
@@ -454,6 +461,10 @@ public class Controller {
 		
 		//Will not call any other function/class
 		
+		if(gamePlaying.getGrid().getSquareContent(y, x)=='t'){
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -498,12 +509,13 @@ public class Controller {
 				return false;
 			}
 		}
-		ArrayList<Function> functionlist= gamePlaying.getfunction();
-		for(int j=0; j<functionlist.size();j++){
-			if(functionlist.get(j).getName().equals(name)){
+		HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
+		for(Entry<Integer, Function> entry: functionlist.entrySet()){
+			if(entry.getValue().getName().equals(name)){
 				return false;
 			}
 		}
+
 		return true;
 	}
 	
@@ -539,13 +551,14 @@ public class Controller {
 	 */
 	public boolean deleteFunction(String name){
 		//Will not call any functions/classes
-		ArrayList<Function> functionlist= gamePlaying.getfunction();
-		for(int i=0; i<functionlist.size();i++){
-			if(functionlist.get(i).getName().equals(name)){
-				functionlist.remove(i);
+		HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
+		for(Entry<Integer,Function> entry: functionlist.entrySet()){
+			if(entry.getValue().getName().equals(name)){
+				functionlist.remove(entry.getKey());
 				return true;
 			}
 		}
+		
 		return false;
 	}
 	
@@ -559,16 +572,26 @@ public class Controller {
 	 * 
 	 * @return ArrayList of strings with all functions that have been created in the program
 	 */
-	public ArrayList<String> getFunctions(){
+	public ArrayList<Function> getFunctions(){
 		
 		ArrayList<String> functionnames= new ArrayList<String>();
-		
-		for(int i=0; i<gamePlaying.getfunction().size();i++){
-			functionnames.add(gamePlaying.getfunction().get(i).getName());
+		HashMap<Integer,Function>list=gamePlaying.getfunction();
+		for(Entry<Integer,Function> entry: list.entrySet()){
+			functionnames.add(entry.getValue().getName());
 		}
 		
 		ArrayList<String> functionlist= sortAlphabetical(functionnames);
-		return functionlist;
+		ArrayList<Function>functions= new ArrayList<Function>();
+		
+		for(int i=0; i<functionlist.size(); i++){
+			for(Entry<Integer,Function> entry: list.entrySet()){
+				if(entry.getValue().getName().equals(functionlist.get(i))){
+					functions.add(entry.getValue());
+				}
+			}
+		}
+		
+		return functions;
 	}
 	
 	/**
@@ -614,7 +637,6 @@ public class Controller {
 	 * 						true if there is a wall in the path of instructions to be executed
 	 */
 	public boolean pathclearofWalls(LinkedList<Block> instructions){
-		
 		//Will use grid from Grid.java
 		return false;
 	}
@@ -702,8 +724,8 @@ public class Controller {
 		if(grid.getSquareContent(y, x)=='k'
 				|| grid.getSquareContent(y, x)=='p'
 				|| grid.getSquareContent(y, x)=='a'){
-			//NOT SURE HOW TO DELETE FRUIT FROM HASHMAP/ARRAYLIST
-			//ALSO NOT SURE HOW TO CHANGE GRID CELL VALUE..
+
+			grid.removeFruit(y, x);
 			makeMove(y,x);
 			return true;
 		}
@@ -735,18 +757,18 @@ public class Controller {
 	 * @return True if loading is successful, otherwise False
 	 */
 	public boolean loadGame(String gameName) {
-		
-		return false;
+		this.gamePlaying= backend.getGame(gameName);
+		backend.deleteGame(gameName);
+		return true;
 	}
 	
 	/**
 	 * Save current game
-	 * @param gameName Name of the game to save
 	 * @return True if save is successful, otherwise False 
 	 */
-	public boolean saveGame(String gameName) {
-		
-		return false;
+	public boolean saveGame() {
+		backend.addGame(this.gamePlaying);
+		return true;
 	}
 	
 	/**
@@ -754,8 +776,14 @@ public class Controller {
 	 * @return List of instructions
 	 */
 	public ArrayList<Block> getInstructions() {
+		ArrayList<Block> blocklist= new ArrayList<Block>();
+		for(int i=0; i<gamePlaying.getBlocks().size(); i++){
+			if(gamePlaying.getBlocks().get(i)!=null){
+				blocklist.add(gamePlaying.getBlocks().get(i));
+			}
+		}
 		
-		return null;
+		return blocklist;
 	}
 	
 	/**
@@ -764,8 +792,14 @@ public class Controller {
 	 * @return True if add is successful, otherwise False
 	 */
 	public boolean addFunctionToBlock(Function function, Block block) {
+		Block functionblock= new Block();
+		functionblock.setCond(function.getName());
+		//NOT SURE HOW TO SET TYPE
+		//NOT SURE HOW TO GET LINE NUMBER OF FUNCTION BLOCK
+		int line=0;//set this to line number of function block
+		gamePlaying.getBlocks().get(block.getlineBegin()).getNestedBlocks().put(line, functionblock);
+		return true;
 		
-		 return false;
 	}
 
 }

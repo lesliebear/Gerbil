@@ -7,7 +7,7 @@ import java.util.HashMap;
  * Block holds instructions which are the strings of the information user enters for 
  * the gerbil to do
  * Note: the following is the type ennumeration
- * Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), ‘e’,’c’} 
+ * Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), ï¿½eï¿½,ï¿½cï¿½} 
  * @author Amulya
  */
 @SuppressWarnings("serial")
@@ -15,7 +15,7 @@ public class Block implements Serializable{
 	/**Nested instructions go in this adjacency hashmap*/
 	HashMap<Integer, Block> nestedBlocks;
 	String conditional;
-	/**Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), ‘e’,’c’} to find type 
+	/**Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), ï¿½eï¿½,ï¿½cï¿½} to find type 
 	 * Basically tells u what the block corresponsds to*/
 	int type; 
 	/**What line in the main screen does this block begin at */
@@ -24,6 +24,7 @@ public class Block implements Serializable{
 	int lineEnd;
 	/**Pointer to the parent block in which this block is nested in = makes it easier to go to upper levels */
 	Block parent;
+
 
 	/**
 	 * Gets the line number where this block began at
@@ -36,6 +37,17 @@ public class Block implements Serializable{
 	 */
 	public int getlineBegin(){
 		return lineBegin;
+	}
+	/**
+	 * Sets the line number where block begins
+	 * 
+	 * @assumes block properly created
+	 * @postcondition block will have lineBegin of line
+	 * @param line int of line to set lineBegin for block
+	 * @return nothing
+	 */
+	public void setlineBegin(int line){
+		this.lineBegin=line;
 	}
 	
 	/**
@@ -52,6 +64,17 @@ public class Block implements Serializable{
 	}
 	
 	/**
+	 * Sets the line number where this block ends at
+	 * 
+	 * @assumes block was properly created
+	 * @postcondition new lineEnd of block will be set to line
+	 * @param line int of line to set lineEnd for block
+	 * @return nothing
+	 */
+	public void setLineEnd(int line){
+		this.lineEnd=line;
+	}
+	/**
 	 * Gets the block's type based on innumeration
 	 *
 	 * @assumes assumes block was properly created
@@ -65,6 +88,17 @@ public class Block implements Serializable{
 	}
 	
 	/**
+	 * Sets the block's type based on enumeration
+	 * 
+	 * @assumes block properly created, does not have type
+	 * @param type Type to set to the block
+	 * @return nothing
+	 */
+	public void setType(int type){
+		this.type=type;
+	}
+	
+	/**
 	 * Gets the conditional
 	 *
 	 * @assumes assumes block was properly created
@@ -75,6 +109,18 @@ public class Block implements Serializable{
 	 */
 	public String getCond(){
 		return conditional;
+	}
+	/**
+	 * Sets the conditional
+	 * 
+	 * @assumes block has no conditional so far
+	 * @exception none
+	 * @postcondition none
+	 * @param conditonal The conditional to set to this Block
+	 * @return nothing
+	 */
+	public void setCond(String conditional){
+		this.conditional=conditional;
 	}
 	
 	/**
