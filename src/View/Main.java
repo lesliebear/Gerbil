@@ -22,7 +22,6 @@ import javax.swing.JPanel;
 
 /**
  * This class creates a GUI for the Gerbil Screen (Opening Screen).
- *
  */
 public class Main extends Screen {
 
@@ -34,7 +33,6 @@ public class Main extends Screen {
 
 	/**
 	 * Constructor that creates all necessary GUI components.
-	 * 
 	 */
 	@SuppressWarnings("serial")
 	public Main() {
