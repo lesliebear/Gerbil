@@ -19,11 +19,10 @@ public class StartGerbil {
 		//Main main = new Main();
 		//Conditionals conditionals = new Conditionals("If");
 		//Play play = new Play();
-		//Conditionals c = new Conditionals("If");
-		DeleteFunction del = new DeleteFunction();
+		//DeleteFunction del = new DeleteFunction();
 		//UserFunction uf = new UserFunction();
-		//Main main = new Main();
 		//Grid g = new Grid(17,17);		
+		//SavedGames sg = new SavedGames();
 	}
 
 	/**

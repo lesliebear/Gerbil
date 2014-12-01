@@ -1,73 +1,249 @@
 package View;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.RenderingHints;
+import java.awt.event.ActionListener;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class SavedGames extends JFrame{
+public class SavedGames extends Screen{
 
-	String[] games = {"Game 1", "Game really long name", "Game 3"};
-	
-	public static SavedGames savedGames;
-	
-	private JPanel mainPanel = new JPanel();
-	private JButton openGame = new JButton("Open Game");
-	private JButton deleteGame = new JButton("Delete Game");
-	private JButton cancel = new JButton("Cancel");
-	
-	static int rows;
-	static int cols;
-	static int hgap;
-	static int vgap;
+	private JFrame frame;
+	private JPanel panel, listPanel, buttonPanel;
+	private JButton openGame, deleteGame, cancel;
+	private JComboBox<String> gamesList;
+	private JLabel gamesLabel;
+	private BufferedImage image;
 	
 	
 	public SavedGames(){
 
-		savedGames = this; 
+		createButtons();
+		gamesLabel = new JLabel("Saved Games");
+		gamesList = new JComboBox<String>();
+		frame = new JFrame("Saved Games");
+		try {
+			image = ImageIO.read(new File("1960811_10204553653977557_1367600592125664392_o.jpg"));
+		} catch (Exception ex) {
+			System.out.println("Couldn't load image");
+		}
 		
-		createScreen(rows,cols,hgap,vgap);
+		panel = new JPanel() {
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+			}
+		};
+		listPanel = new JPanel();
+		listPanel.setOpaque(false);
+		buttonPanel = new JPanel();
+		buttonPanel.setOpaque(false);
+		createScreen();
 	}
 	
-	protected void createScreen(int rows, int cols, int hgap, int vgap) {
+private void createButtons(){
 		
-		mainPanel.setLayout(new GridLayout());
+		openGame = new JButton("Open Game") {
+			public void paint(Graphics g) {
+				openGame.setFont(new Font(null, Font.PLAIN, 30)); 
+				this.setContentAreaFilled(false);
+				this.setBorderPainted(false);
+				Graphics2D g2d = (Graphics2D)g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				super.paint(g);
+				g2d.setColor(Color.WHITE);
+				g2d.fillRoundRect(0, 0, getWidth(),getHeight(), 18, 18);
+				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
+				g2d.drawRoundRect(0, 0, getWidth()-1,getHeight()-1, 18, 18);
+				FontRenderContext frc = new FontRenderContext(null, false, false);
+				Rectangle2D r = getFont().getStringBounds(getText(), frc);
+				float xMargin = (float)(getWidth()-r.getWidth()) / 2;
+				float yMargin = (float)(getHeight()-getFont().getSize()) / 2;
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
+			}
+		};
+		deleteGame  = new JButton("Delete Game") {
+			public void paint(Graphics g) {
+				deleteGame.setFont(new Font(null, Font.PLAIN, 30)); 
+				this.setContentAreaFilled(false);
+				this.setBorderPainted(false);
+				Graphics2D g2d = (Graphics2D)g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				super.paint(g);
+				g2d.setColor(Color.WHITE);
+				g2d.fillRoundRect(0, 0, getWidth(),getHeight(), 18, 18);
+				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
+				g2d.drawRoundRect(0, 0, getWidth()-1,getHeight()-1, 18, 18);
+				FontRenderContext frc = new FontRenderContext(null, false, false);
+				Rectangle2D r = getFont().getStringBounds(getText(), frc);
+				float xMargin = (float)(getWidth()-r.getWidth()) / 2;
+				float yMargin = (float)(getHeight()-getFont().getSize()) / 2;
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
+			}
+		};
 		
-	    for(int i=1;i<=rows;i++)
-        {
-            for(int j=1;j<=cols;j++)
-            {
-                JButton btn=new JButton(String.valueOf(i));
-                mainPanel.add(btn);
-            }
-        }
+		cancel  = new JButton("Cancel") {
+			public void paint(Graphics g) {
+				cancel.setFont(new Font(null, Font.PLAIN, 30)); 
+				this.setContentAreaFilled(false);
+				this.setBorderPainted(false);
+				Graphics2D g2d = (Graphics2D)g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				super.paint(g);
+				g2d.setColor(Color.WHITE);
+				g2d.fillRoundRect(0, 0, getWidth(),getHeight(), 18, 18);
+				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
+				g2d.drawRoundRect(0, 0, getWidth()-1,getHeight()-1, 18, 18);
+				FontRenderContext frc = new FontRenderContext(null, false, false);
+				Rectangle2D r = getFont().getStringBounds(getText(), frc);
+				float xMargin = (float)(getWidth()-r.getWidth()) / 2;
+				float yMargin = (float)(getHeight()-getFont().getSize()) / 2;
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
+			}
+		};
+		
 	}
 	
-	public JComponent getMainComponent(){
-		return mainPanel;
+	/**
+	 * Creates the screen by putting the GUI components together.
+	 */
+	protected void createScreen() {
+		GridBagConstraints c = new GridBagConstraints();
+		gamesList.setPreferredSize(new Dimension(250,50));
+		gamesList.setFont(new Font(null, Font.BOLD, 28));
+		gamesLabel.setForeground(Color.WHITE);
+		gamesLabel.setFont(new Font(null, Font.BOLD, 48));
+		openGame.setFont(new Font(null, Font.BOLD,20));
+		deleteGame.setFont(new Font(null, Font.BOLD,20));
+		cancel.setFont(new Font(null, Font.BOLD,20));
+		Dimension dimension = new Dimension(1024, 768);
+		gamesList.setMinimumSize(new Dimension(200,25));
+		listPanel.add(gamesList);
+		buttonPanel.setLayout(new GridBagLayout());
+		c.fill = GridBagConstraints.BOTH;
+		c.insets = new Insets(0,50,0,20);
+		c.gridx = 0;
+		c.gridy = 0;
+		c.ipady = 35;
+		c.ipadx = 30;
+		buttonPanel.add(openGame,c);
+		c.gridx = 1;
+		c.gridy = 0;
+		c.ipady = 35;
+		c.ipadx = 30;
+		buttonPanel.add(deleteGame,c);
+		c.gridx = 2;
+		c.gridy = 0;
+		c.ipady = 35;
+		c.ipadx = 30;
+		buttonPanel.add(cancel,c);
+		
+		panel.setLayout(new GridBagLayout());
+		c.insets = new Insets(0,250,45,0);
+		c.gridx = 0;
+		c.gridy = 0;
+		panel.add(gamesLabel,c);
+		c.insets = new Insets(100,50,0,100);
+		c.gridx = 0;
+		c.gridy = 1;
+		c.ipady = 0;
+		c.ipadx = 100;
+		panel.add(listPanel,c);
+		c.insets = new Insets(155,0,75,90);
+		c.gridx = 0;
+		c.gridy = 2;
+		panel.add(buttonPanel,c);
+		frame.add(panel);
+		frame.setSize(dimension);
+		frame.setMinimumSize(dimension);
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 	}
 
-	public static void showScreen() {	
-		JFrame frame = new JFrame("Saved Games");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().add(savedGames.getMainComponent());
-		frame.pack(); 
-		frame.setMinimumSize(frame.getSize());
-		frame.setVisible(true); // set it visible
+	/**
+	 * Shows the screen.
+	 * 
+	 */
+	public void show() {
+		
+		frame.setVisible(true);
+		
+	}
+
+	/**
+	 * Hides the screen.
+	 * 
+	 */
+	public void hide() {
+
+		frame.setVisible(false);
+		
+	}
+
+	/**
+	 * Enable the screen
+	 */
+	public void enable() {
+
+		frame.setEnabled(true);
+		
+	}
+
+	/**
+	 * Disable the screen
+	 */
+	public void disable() {
+
+		frame.setEnabled(false);
+		
 	}
 	
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {		
-				try{
-					showScreen();
-				}catch(Exception e){
-					//do something?..not sure if try catch needed
-				}
-			}
-		});
+	/*List Selection Handler*/
+	public void addGameListSelectionListener(ActionListener listener) {
+		gamesList.addActionListener(listener);
+	}
+	
+	/*Button Handlers*/
+	
+	public void addOpenGameEventHandler(ActionListener listener) {
+
+		openGame.addActionListener(listener);
+	}
+
+	public void addDeleteGameEventHandler(ActionListener listener) {
+
+		deleteGame.addActionListener(listener);
+	}
+	
+	public void addCancelEventHandler(ActionListener listener) {
+
+		cancel.addActionListener(listener);
 	}
 }
