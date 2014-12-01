@@ -278,6 +278,7 @@ public class Play extends Screen{
 		playcodeList = new JList(placeholder);
 		scrollpane = new JScrollPane(playcodeList);
 		
+		
 		leftPanel.setLayout(new BorderLayout());
 		leftPanel.add(scrollpane, BorderLayout.CENTER);
 	}
