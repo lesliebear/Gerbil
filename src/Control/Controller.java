@@ -72,9 +72,9 @@ public class Controller {
 	 * 
 	 * */
 	public void initBuiltIn (){
-		Function moveAhead= new Function("Move Ahead");
+		Function moveAhead= new Function("Move Forward");
 		Block moveAheadBlock= new Block();
-		moveAheadBlock.setCond("Move Ahead");
+		moveAheadBlock.setCond("Move Forward");
 		moveAheadBlock.setType(2);
 		moveAhead.getBlockInstructions().put(-2, moveAheadBlock);
 		
@@ -249,6 +249,8 @@ public class Controller {
 	 * 
 	 */
 	public void createBuiltIn(){
+		this.builtIn= new ArrayList<Function>();
+		initBuiltIn();
 	}
 	
 	/**
@@ -321,39 +323,37 @@ public class Controller {
  		String line= block.getCond();
  		
  		StringTokenizer st= new StringTokenizer(line);
- 		String key= st.nextToken();
- 		if(key.equals("if")){
+ 		
+ 		if(block.getType()==3){//"if"
  			
- 		}else if(key.equals("else")){
- 			if(st.nextToken().equals("if")){
- 				
- 			}
- 		}else if(key.equals("while")){
+ 		}else if(block.getType()==5){//"else"
  			
- 		}else if(key.equals("repeat")){
+ 		}else if(block.getType()==4){//"else if"
+ 			
+ 		}else if(block.getType()==6){//"while"
+ 			
+ 		}else if(block.getType()==7){//"repeat"
+ 			
+ 		}else if(block.getType()==0){//"eat"
+ 			
+ 		}else if(block.getType()==1){//"turn left"
+ 			
+ 		}else if(block.getType()==2){//"move forward"
  			
  		}else{
+ 			String key= st.nextToken();
  			while(st.hasMoreTokens()){
- 				key= key + " " +st.nextToken();
+ 				key= key + " " + st.nextToken();
  			}
  			
- 			if(key.equals("Move Ahead")){
- 				
- 			}else if(key.equals("Turn Left")){
- 				
- 			}else if(key.equals("Eat")){
- 				
- 			}else{
- 				HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
- 				for(Entry<Integer, Function> entry: functionlist.entrySet()){
- 					if(entry.getValue().getName().equals(key)){
- 						
- 					}
- 				}
- 				
- 			}
- 			
+ 			HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
+				for(Entry<Integer, Function> entry: functionlist.entrySet()){
+					if(entry.getValue().getName().equals(key)){
+						
+					}
+				}
  		}
+ 		
  		
  		
 		return false;

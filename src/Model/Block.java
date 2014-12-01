@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class Block implements Serializable{
 	/**Nested instructions go in this adjacency hashmap*/
 	HashMap<Integer, Block> nestedBlocks;
-	String conditional;
+	String conditional;// there's food, there's walls
 	/**Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), �e�,�c�} to find type 
 	 * Basically tells u what the block corresponsds to*/
 	int type; 
