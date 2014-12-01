@@ -65,6 +65,29 @@ public class Controller {
 	 * 
 	 * */
 	public void initBuiltIn (){
+		Function moveAhead= new Function("Move Ahead");
+		Block moveAheadBlock= new Block();
+		moveAheadBlock.setCond("Move Ahead");
+		moveAheadBlock.setType(2);
+		moveAhead.getBlockInstructions().put(-2, moveAheadBlock);
+		
+		Function eat= new Function("Eat");
+		Block eatBlock= new Block();
+		eatBlock.setCond("Eat");
+		eatBlock.setType(0);
+		eat.getBlockInstructions().put(0, eatBlock);
+		
+		Function turnLeft= new Function("Turn Left");
+		Block turnLeftBlock= new Block();
+		turnLeftBlock.setCond("Turn Left");
+		turnLeftBlock.setType(1);
+		turnLeft.getBlockInstructions().put(-1, turnLeftBlock);
+		
+		builtIn.add(moveAhead);
+		builtIn.add(eat);
+		builtIn.add(turnLeft);
+		
+		
 		
 	}
 	
@@ -288,6 +311,8 @@ public class Controller {
  	public boolean parseBlock(int pos){
  		HashMap<Integer,Block> blocklist= gamePlaying.getBlocks();
  		Block block= blocklist.get(pos);
+ 		
+ 		
  		
  		
 		return false;
