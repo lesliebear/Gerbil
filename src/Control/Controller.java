@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Scanner;
+import java.util.StringTokenizer;
 
 import Model.Backend;
 import Model.Block;
@@ -41,6 +43,7 @@ public class Controller {
 	Backend backend= new Backend();
 
 	Play play;
+
 
 	
 /**assumes, returns, exceptions**/
@@ -311,8 +314,42 @@ public class Controller {
  	public boolean parseBlock(int pos){
  		HashMap<Integer,Block> blocklist= gamePlaying.getBlocks();
  		Block block= blocklist.get(pos);
+ 		String line= block.getCond();
  		
- 		
+ 		StringTokenizer st= new StringTokenizer(line);
+ 		String key= st.nextToken();
+ 		if(key.equals("if")){
+ 			
+ 		}else if(key.equals("else")){
+ 			if(st.nextToken().equals("if")){
+ 				
+ 			}
+ 		}else if(key.equals("while")){
+ 			
+ 		}else if(key.equals("repeat")){
+ 			
+ 		}else{
+ 			while(st.hasMoreTokens()){
+ 				key= key + " " +st.nextToken();
+ 			}
+ 			
+ 			if(key.equals("Move Ahead")){
+ 				
+ 			}else if(key.equals("Turn Left")){
+ 				
+ 			}else if(key.equals("Eat")){
+ 				
+ 			}else{
+ 				HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
+ 				for(Entry<Integer, Function> entry: functionlist.entrySet()){
+ 					if(entry.getValue().getName().equals(key)){
+ 						
+ 					}
+ 				}
+ 				
+ 			}
+ 			
+ 		}
  		
  		
 		return false;
@@ -510,7 +547,7 @@ public class Controller {
 			//ERROR
 			return null;
 		}
-		Function newfunction= new Function(name,instruction);
+		Function newfunction= new Function(name);
 		return newfunction;
 		//Will call Function.java class constructor
 		//Will call validFunctionName
@@ -803,8 +840,10 @@ public class Controller {
 	public ArrayList<Block> getInstructions() {
 		ArrayList<Block> blocklist= new ArrayList<Block>();
 		for(int i=0; i<gamePlaying.getBlocks().size(); i++){
-			if(gamePlaying.getBlocks().get(i)!=null){
-				blocklist.add(gamePlaying.getBlocks().get(i));
+			for(Entry<Integer,Block> entry: gamePlaying.getBlocks().entrySet()){
+					if(entry.getKey()==i){
+						blocklist.add(entry.getValue());
+					}
 			}
 		}
 		
@@ -818,7 +857,6 @@ public class Controller {
 	 */
 	public boolean addFunctionToBlock(Function function, Block block) {
 		Block functionblock= new Block();
-		functionblock.setCond(function.getName());
 		//NOT SURE HOW TO SET TYPE
 		//NOT SURE HOW TO GET LINE NUMBER OF FUNCTION BLOCK
 		int line=0;//set this to line number of function block
