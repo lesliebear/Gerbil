@@ -52,8 +52,12 @@ public class Controller {
 	 * Constructor
 	 */
 	public Controller() {
-		builtIn= new ArrayList<Function>();
-		instructions = new Instructions();
+		//builtIn= new ArrayList<Function>();
+		//instructions = new Instructions();
+		Grid grid= new Grid(17,17);
+		Play.setNewGrid(grid.getGrid());
+		Play play = new Play();
+		
 		//main = new Main();
 		//playOptions = new PlayOptions();
 		//initEventHandlers();

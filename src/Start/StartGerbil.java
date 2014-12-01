@@ -17,12 +17,12 @@ public class StartGerbil {
 		//Backend bk = new Backend();
 		//System.out.println(bk.saveGames());
 		//Main main = new Main();
-		//Conditionals conditionals = new Conditionals("If");
-		//Play play = new Play();
-		//DeleteFunction del = new DeleteFunction();
-		//UserFunction uf = new UserFunction();
+		Controller controller = new Controller();
+		//Conditionals conditionals = new Conditionals("if");
 		//Grid g = new Grid(17,17);		
 		//SavedGames sg = new SavedGames();
+		//UserFunction uf = new UserFunction();
+		//Play play  = new Play();
 	}
 
 	/**

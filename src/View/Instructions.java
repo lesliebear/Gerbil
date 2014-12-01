@@ -105,7 +105,7 @@ public class Instructions extends Screen{
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			}
 		};
-		JScrollBar sb = new JScrollBar() {
+		JScrollBar sb = new JScrollBar(); /*{
 			public void paintComponent(Graphics g) {
 				setOpaque(false);
 				g.setColor(new Color(128, 128, 128, 110));
@@ -117,8 +117,41 @@ public class Instructions extends Screen{
 				g.fillRect(x, y, width, height);
 				super.paintComponent(g);
 			}
+		};*/
+		BasicScrollBarUI bsui = new BasicScrollBarUI() {
+
+			@Override
+			protected JButton createDecreaseButton(int orientation) {
+				JButton button = super.createDecreaseButton(orientation);
+				button.setOpaque(true);
+				button.setBackground(new Color(128, 128, 128, 110));
+				return button;
+			}
+
+			@Override
+			protected JButton createIncreaseButton(int orientation) {
+				JButton button = super.createIncreaseButton(orientation);
+				button.setOpaque(true);
+				button.setBackground(new Color(128, 128, 128, 110));
+				return button;
+			}
+
+
+			@Override
+			protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
+				//own painting if needed
+				g.setColor(new Color(128, 128, 128, 110));
+				super.paintTrack(g, c, trackBounds);
+			}
+
+			@Override
+			protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
+				g.setColor(new Color(128, 128, 128, 110));
+				super.paintThumb(g, c, thumbBounds);
+				//own painting if needed
+			}
 		};
-		gpScrollPane.setVerticalScrollBar(sb);
+		gpScrollPane.getVerticalScrollBar().setUI(bsui);
 		createScreen();
 	}
 

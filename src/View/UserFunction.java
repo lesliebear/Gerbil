@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,8 +41,7 @@ public class UserFunction extends Screen{
 	private JLabel begin, end, funtion, value, condStatements, givenFunctions;
 	private JTextField textField;
 	private JComboBox userFunctions;
-	private ImageIcon imageIcon;
-	private BufferedImage image;
+	private Image imageApple, imagePear;
 
 	
 	
@@ -51,6 +51,14 @@ public class UserFunction extends Screen{
 	 */
 	public UserFunction() {
 		 
+		 try {
+	            imageApple = ImageIO.read(new File("EditButton_Play.png")).getScaledInstance(67, 67, Image.SCALE_SMOOTH);
+	            imagePear = ImageIO.read(new File("DeleteButton_Play.png")).getScaledInstance(67, 67, Image.SCALE_SMOOTH);;
+	            
+	            
+	        } catch (Exception ex) {
+	            ex.printStackTrace();
+	        }
 		frame = new JFrame();
 		If = new JButton("Test");
 		If.addActionListener(new ActionListener() {
@@ -58,23 +66,13 @@ public class UserFunction extends Screen{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			
-				 try {
-			            image = ImageIO.read(new File("EditButton_Play.png"));
-			        } catch (Exception ex) {
-			            ex.printStackTrace();
-			        }
-				 gridPanel[0][0].setIcon(new ImageIcon(image.getScaledInstance(67, 67, image.SCALE_SMOOTH)));
+				
+				 gridPanel[0][0].setIcon(new ImageIcon(imagePear));
 			}
 			
 		});
 		panel = new JPanel();
 		gridPanel = new JLabel[15][15];
-		  try {
-	            image = ImageIO.read(new File("DeleteButton_Play.png"));
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-		imageIcon = new ImageIcon("DeleteButton_Play.png");
 		createScreen();
 		
 	}
@@ -95,8 +93,7 @@ public class UserFunction extends Screen{
 			for(int j = 0; j < 15; j++) {
 				gridPanel[i][j] = new JLabel();
 				gridPanel[i][j].setSize(new Dimension(67,67));
-				//image.getScaledInstance(30, 30, image.SCALE_SMOOTH);
-				gridPanel[i][j].setIcon(new ImageIcon(image.getScaledInstance(67, 67, image.SCALE_SMOOTH)));
+				gridPanel[i][j].setIcon(new ImageIcon(imageApple));
 				panel.add(gridPanel[i][j]);
 			}
 		}

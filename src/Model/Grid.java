@@ -47,6 +47,7 @@ public class Grid implements Serializable{
 		grid = new char[rows][columns];
 		visited = new int[rows][columns];
 		initGrid();
+		printGrid();
 	}
 
 	/**
@@ -91,10 +92,11 @@ public class Grid implements Serializable{
 	public void randomGrid(){
 
 		grid[1][this.grid[0].length-2]='t'; //place water can
+		grid[grid.length - 2][1] ='g';
 		for (int b = 0; b <2*(this.grid.length-2); b++){//put in 30 walls as obstacles 
 			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
-			if (((R!=grid[0].length-2)&&(S!=1)) && (grid[R][S]=='0')){ 
+			if ((grid[R][S]=='0')){ 
 				//if empty and not in location of water can or gerbil
 				this.grid[R][S]='w';
 			} 
@@ -240,6 +242,11 @@ public class Grid implements Serializable{
 				visited[i][j] = 0;
 			}
 		}
+	}
+	
+	public char[][] getGrid() {
+		
+		return grid;
 	}
 
 	/**
