@@ -53,12 +53,12 @@ public class Controller {
 	 */
 	public Controller() {
 		//builtIn= new ArrayList<Function>();
-		//instructions = new Instructions();
+		Instructions instructions = new Instructions();
 		Grid grid= new Grid(17,17);
 		Play.setNewGrid(grid.getGrid());
 		Play play = new Play();
-		DeleteFunction df = new DeleteFunction();
-		Main main = new Main();
+		//DeleteFunction df = new DeleteFunction();
+		//Main main = new Main();
 		//playOptions = new PlayOptions();
 		//initEventHandlers();
 	}
