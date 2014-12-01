@@ -1,7 +1,6 @@
 package View;
  
 import java.awt.BasicStroke;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -39,7 +38,6 @@ public class Conditionals {
 	/**LHS and RHS panels**/
 	static JPanel leftPanel = new JPanel(); 
 	static JPanel rightPanel = new JPanel();
-	static JPanel listPanel = new JPanel();
 	
 	/**Right side panel: labels, buttons, other**/
 	JLabel conditionalsL = new JLabel("Conditional Statements"); 	
@@ -63,7 +61,7 @@ public class Conditionals {
 	JLabel elseL= new JLabel("Else :");
 	JLabel elseifL= new JLabel("Else if :");
 	JLabel whileL = new JLabel("While :");
-	JLabel valueL = new JLabel("Value ");
+	JLabel bodyL = new JLabel("Body ");
 	 
 	JButton okB;
 	JButton cancelB; 
@@ -103,6 +101,7 @@ public class Conditionals {
 		/**Right side panel**/
 		ifB= new JButton("If"){
 			public void paint(Graphics g) {
+				ifB.setFont(new Font("Serif", Font.PLAIN, 18)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -124,6 +123,7 @@ public class Conditionals {
 		
 		elseB= new JButton("Else"){
 			public void paint(Graphics g) {
+				elseB.setFont(new Font("Serif", Font.PLAIN, 18)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -144,6 +144,7 @@ public class Conditionals {
 		};
 		elseifB= new JButton("Else if"){
 			public void paint(Graphics g) {
+				elseifB.setFont(new Font("Serif", Font.PLAIN, 18)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -164,6 +165,7 @@ public class Conditionals {
 		};
 		whileB = new JButton("While"){
 			public void paint(Graphics g) {
+				whileB.setFont(new Font("Serif", Font.PLAIN, 18)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -184,6 +186,7 @@ public class Conditionals {
 		};
 		repeatB= new JButton("Repeat"){
 			public void paint(Graphics g) {
+				repeatB.setFont(new Font("Serif", Font.PLAIN, 18)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -205,6 +208,7 @@ public class Conditionals {
 
 		moveAheadB= new JButton("Move Ahead"){
 			public void paint(Graphics g) {
+				moveAheadB.setFont(new Font("Serif", Font.PLAIN, 18)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -226,6 +230,7 @@ public class Conditionals {
 		
 		turnLeftB= new JButton("Turn Left"){
 			public void paint(Graphics g) {
+				turnLeftB.setFont(new Font("Serif", Font.PLAIN, 18)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -247,6 +252,7 @@ public class Conditionals {
 		
 		eatB = new JButton("Eat"){
 			public void paint(Graphics g) {
+				eatB.setFont(new Font("Serif", Font.PLAIN, 18)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -269,6 +275,7 @@ public class Conditionals {
 		/**Left side panel**/
 		okB = new JButton("OK"){
 			public void paint(Graphics g) {
+				okB.setFont(new Font("Serif", Font.PLAIN, 18)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -290,6 +297,7 @@ public class Conditionals {
 		
 		cancelB = new JButton("Cancel"){
 			public void paint(Graphics g) {
+				cancelB.setFont(new Font("Serif", Font.PLAIN, 18)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -384,42 +392,27 @@ public class Conditionals {
 		rightPanel.add(userDefinedFunctions, gc); //placeholder */
 	}
 	
-	public void setJListComponents(){
-		Dimension size= listPanel.getPreferredSize();
-		size.width =1000;
-		size.height = 5000;
-		listPanel.setPreferredSize(size);
-		listPanel.setSize(new Dimension(500,500));
-		
-		// EDIT: this should be called from somewhere else...
-		String placeholder[] = { "Begin", "Office", "Extended Family",
-		        "Company (US)", "Company (World)", "Team", "Will",
-		        "Birthday Card List", "High School", "Country", "Continent",
-		        "End", "............................INSERT NEW............................" };
-		
-		
-		conditionalscodeList = new JList(placeholder);
-		scrollpane = new JScrollPane(conditionalscodeList);
-		
-		listPanel.setLayout(new BorderLayout());
-		listPanel.add(scrollpane, BorderLayout.CENTER);
-	}
-	
 	public void setLeftComponents(){
 		leftPanel.setLayout(new GridBagLayout());
 		leftPanel.setOpaque(true);
 		GridBagConstraints gc = new GridBagConstraints();
 		
 		Dimension size= leftPanel.getPreferredSize();
-		size.width =600;
-		size.height = 500;
+		size.width =675;
+		size.height = 600;
 		leftPanel.setPreferredSize(size);
 		
-		/*Creating Code List*/
-		setJListComponents();
+		ifL.setFont(new Font("Serif", Font.BOLD, 30));
+		bodyL.setFont(new Font("Serif", Font.BOLD, 18));
 		
-		/*Setting Font*/
-		ifL.setFont(new Font("Serif", Font.BOLD, 25)); 
+		// EDIT: this should be called from somewhere else...
+		String placeholder[] = { "Begin",
+		        "End",  "INSERT NEW" };
+		
+		conditionalscodeList = new JList(placeholder);
+		scrollpane = new JScrollPane(conditionalscodeList);
+		
+		conditionalscodeList.setVisibleRowCount(20);
 		
 		String[] drop = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"}; // EDIT : should come from somewhere else
 		conditionalDropdown = new JComboBox(drop);
@@ -428,9 +421,9 @@ public class Conditionals {
 		gc.gridy = 0;
 		
 		if(type.equals("If")){
-		 
+			
 			leftPanel.add(ifL, gc);
-		 
+	
 		}else if(type.equals("Else")){
 		
 			leftPanel.add(elseL, gc);
@@ -452,27 +445,36 @@ public class Conditionals {
 			leftPanel.add(repeatNumTimes, gc);
 		}
 		
+		gc.insets = new Insets(10,0,0,20);
+
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.gridwidth = 2;
 		gc.gridx = 1; 
 		gc.gridy=0; 
 		leftPanel.add(conditionalDropdown, gc);
 		
-		gc.fill = GridBagConstraints.NONE;
+		gc.insets = new Insets(0,0,0,0);
 		
+		gc.fill = GridBagConstraints.NONE;
+		gc.weightx = .70;
 		gc.gridwidth = 1;
 		gc.gridx = 0; 
 		gc.gridy=1; 
-		leftPanel.add(valueL, gc);
+		leftPanel.add(bodyL, gc);
 		
-		gc.fill = GridBagConstraints.BOTH;
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		
+		gc.insets = new Insets(10,0,0,20);
 		gc.gridwidth = 2;
 		gc.gridx = 1; 
 		gc.gridy=1; 
-		leftPanel.add(listPanel, gc);
+		leftPanel.add(scrollpane, gc);
 		
 		gc.fill = GridBagConstraints.NONE;
 		
+		//top, left, botton, right <- insets
+		gc.insets = new Insets(60,0,0,0);
+				
 		gc.gridwidth = 1;
 		gc.gridx = 1; 
 		gc.gridy=2; 
