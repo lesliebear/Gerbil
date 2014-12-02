@@ -5,25 +5,24 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Insets;
+import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.awt.Rectangle;
+import java.io.IOException;
 
-import javax.swing.JComponent;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.plaf.ScrollPaneUI;
-import javax.swing.plaf.basic.BasicScrollBarUI;
+
 
 /**
  * This class creates a GUI for the Instruction Screen (Help screen).
@@ -35,14 +34,14 @@ public class Instructions extends Screen{
 	private JPanel panel;
 	private JButton back;
 	private BufferedImage image;
-	private JTextArea gamePlayText, loadSaveText;
-	private JScrollPane gpScrollPane, lsScrollPane;
+	private JLabel instructions;
+	private JScrollPane scrollPane;
 	
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 * 
 	 */
-	@SuppressWarnings("serial")
+
 	public Instructions() {
 		 
 		frame = new JFrame("Instructions");
@@ -66,34 +65,12 @@ public class Instructions extends Screen{
 				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
 			}
 		};
-		gamePlayText = new JTextArea() {
-			public void paint(Graphics g) {
-				setOpaque(false);
-				g.setColor(new Color(128, 128, 128, 110));
-				Insets insets = getInsets();
-				int x = insets.left;
-				int y = insets.top;
-				int width = getWidth() - (insets.left + insets.right);
-				int height = getHeight() - (insets.top + insets.bottom);
-				g.fillRect(x, y, width, height);
-				super.paint(g);
-			}
-		};
-		loadSaveText = new JTextArea() {
-			public void paint(Graphics g) {
-				setOpaque(false);
-				g.setColor(new Color(128, 128, 128, 110));
-				Insets insets = getInsets();
-				int x = insets.left;
-				int y = insets.top;
-				int width = getWidth() - (insets.left + insets.right);
-				int height = getHeight() - (insets.top + insets.bottom);
-				g.fillRect(x, y, width, height);
-				super.paint(g);
-			}
-		};
-		gpScrollPane = new JScrollPane(gamePlayText);	
-		lsScrollPane = new JScrollPane(loadSaveText);
+		instructions = new JLabel();
+		try {
+			instructions.setIcon(new ImageIcon(ImageIO.read(new File("instructions.png")).getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		try {
 			image = ImageIO.read(new File("instruction.jpg"));
 		} catch (Exception ex) {
@@ -105,53 +82,7 @@ public class Instructions extends Screen{
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			}
 		};
-		JScrollBar sb = new JScrollBar(); /*{
-			public void paintComponent(Graphics g) {
-				setOpaque(false);
-				g.setColor(new Color(128, 128, 128, 110));
-				Insets insets = getInsets();
-				int x = insets.left;
-				int y = insets.top;
-				int width = getWidth() - (insets.left + insets.right);
-				int height = getHeight() - (insets.top + insets.bottom);
-				g.fillRect(x, y, width, height);
-				super.paintComponent(g);
-			}
-		};*/
-		BasicScrollBarUI bsui = new BasicScrollBarUI() {
-
-			@Override
-			protected JButton createDecreaseButton(int orientation) {
-				JButton button = super.createDecreaseButton(orientation);
-				button.setOpaque(true);
-				button.setBackground(new Color(128, 128, 128, 110));
-				return button;
-			}
-
-			@Override
-			protected JButton createIncreaseButton(int orientation) {
-				JButton button = super.createIncreaseButton(orientation);
-				button.setOpaque(true);
-				button.setBackground(new Color(128, 128, 128, 110));
-				return button;
-			}
-
-
-			@Override
-			protected void paintTrack(Graphics g, JComponent c, Rectangle trackBounds) {
-				//own painting if needed
-				g.setColor(new Color(128, 128, 128, 110));
-				super.paintTrack(g, c, trackBounds);
-			}
-
-			@Override
-			protected void paintThumb(Graphics g, JComponent c, Rectangle thumbBounds) {
-				g.setColor(new Color(128, 128, 128, 110));
-				super.paintThumb(g, c, thumbBounds);
-				//own painting if needed
-			}
-		};
-		gpScrollPane.getVerticalScrollBar().setUI(bsui);
+		scrollPane = new JScrollPane(instructions);
 		createScreen();
 	}
 
@@ -163,22 +94,7 @@ public class Instructions extends Screen{
 		
 		Dimension textAreaDimension = new Dimension(300,375);
 		Dimension dimension = new Dimension(1024, 768);
-		gamePlayText.setEditable(true);
-		gamePlayText.setLineWrap(true);
-		gpScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		gpScrollPane.setPreferredSize(textAreaDimension);
-		gpScrollPane.setOpaque(false);
-		gpScrollPane.getViewport().setOpaque(false);
-	    gpScrollPane.setBorder(null);
-	    loadSaveText.setEditable(true);
-		loadSaveText.setLineWrap(true);
-	    lsScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		lsScrollPane.setPreferredSize(textAreaDimension);
-		lsScrollPane.setOpaque(false);
-		lsScrollPane.getViewport().setOpaque(false);
-	    lsScrollPane.setBorder(null);
-		
-		//panel.add(gpScrollPane);
+		panel.add(scrollPane);
 		frame.add(panel);
 		frame.setSize(dimension);
 		frame.setMinimumSize(dimension);
