@@ -306,7 +306,8 @@ public class Controller {
 		return false;
 
 		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
-		//Question: should we have something that asks them if they want to delete even if the code will become invalid ?
+		//Question: should we have something that asks them if they want to delete
+		//if invalidates = do not delete code...
 
 
 	}
@@ -339,12 +340,36 @@ public class Controller {
 	 * @param instruction instruction to be added to Block
 	 * @return false/true; false if inserting the instruction to the given block fails, true if it succeeds
 	 */
-	public boolean insertToBlock(int id, String instruction){
-
-		//Will call searchForBlock to find block of the given id
+	public boolean insertToBlock(int id, Block b){
+		//Will call searchForBlock to find block of the given id and insert insert b to it
+		//will cascade the changes if prevDiff != currDiff (see cascadeNumberingChanges method)
 		return false;
-
-
+	}
+	
+	/**
+	 * Cascades the line number changes to the rest of the code after insert, delete or edit
+	 * @param prevDiff Previous difference in end - start
+	 * @param currDiff Current/new difference in end - start
+	 * @param b Block that the change occured in
+	 * @assumes have checked if prevDiff==currDiff to make sure we don't use this method if it is
+	 */
+	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b){
+		if(b.getParent()==null){
+			return; //no more higher level to get to
+		}
+		HashMap<Integer,Block> nb = b.getParent().getNestedBlocks();
+		Block temp=null;
+		int tempDiff =0;
+		for(int key: nb.keySet()){
+			if (key>lineBegin){ //cascade the difference to the blocks after b!
+				temp=nb.get(key); //get the object
+				tempDiff=temp.getlineEnd()-temp.getlineBegin(); //calculate the difference before hand
+				temp.setlineBegin(temp.getlineBegin()+currDiff); //change line begin with the difference
+				temp.setLineEnd(temp.getlineBegin()+tempDiff); //did this with temp diff just in case
+			}
+		}
+		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
+		
 	}
 
 	/**

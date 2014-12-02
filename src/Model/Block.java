@@ -25,7 +25,18 @@ public class Block implements Serializable{
 	/**Pointer to the parent block in which this block is nested in = makes it easier to go to upper levels */
 	Block parent;
 
-
+	/**
+	 * Gets the parent of the current node that holds it in the nesting
+	 * 
+	 * @assumes Assumes parent block is null if it is at the first level in main screen
+	 * @exception none
+	 * @postcondition none
+	 * @return the parent block
+	 */
+	public Block getParent(){
+		return this.parent;
+	}
+	
 	/**
 	 * Gets the line number where this block began at
 	 *
