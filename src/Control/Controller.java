@@ -965,19 +965,21 @@ public class Controller {
 		return true;
 	}
 
-	///////////////////////////////does get instructions still work?///////////////////////////////////////
+	
 	/**
 	 * This method will return a list of instructions of the current game
 	 * @return List of instructions
 	 */
 	public ArrayList<Block> getInstructions() {
 		ArrayList<Block> blocklist= new ArrayList<Block>();
-		for(int i=0; i<gamePlaying.getBlocks().size(); i++){
-			for(Entry<Integer,Block> entry: gamePlaying.getBlocks().entrySet()){
-				if(entry.getKey()==i){
-					blocklist.add(entry.getValue());
-				}
-			}
+		ArrayList<Integer> keylist= new ArrayList<Integer>();
+		for(Entry<Integer,Block> entry: gamePlaying.getBlocks().entrySet()){
+			keylist.add(entry.getKey());
+		}
+		sortKeys(keylist);
+		for(int i=0; i<keylist.size(); i++){
+			Block block= gamePlaying.getBlocks().get(keylist.get(i));
+			blocklist.add(block);
 		}
 		return blocklist;
 	}
