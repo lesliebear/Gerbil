@@ -3,9 +3,13 @@ package View;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
@@ -31,7 +35,7 @@ import javax.swing.JScrollPane;
 public class Instructions extends Screen{
 
 	private JFrame frame;
-	private JPanel panel;
+	private JPanel panel, buttonPanel;
 	private JButton back;
 	private BufferedImage image;
 	private JLabel instructions;
@@ -67,7 +71,7 @@ public class Instructions extends Screen{
 		};
 		instructions = new JLabel();
 		try {
-			instructions.setIcon(new ImageIcon(ImageIO.read(new File("instructions.png")).getScaledInstance(100, 100, Image.SCALE_SMOOTH)));
+			instructions.setIcon(new ImageIcon(ImageIO.read(new File("instructions.png")).getScaledInstance(800, 400, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -82,6 +86,7 @@ public class Instructions extends Screen{
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			}
 		};
+		buttonPanel = new JPanel();
 		scrollPane = new JScrollPane(instructions);
 		createScreen();
 	}
@@ -93,7 +98,22 @@ public class Instructions extends Screen{
 	protected void createScreen() {
 	
 		Dimension dimension = new Dimension(1024, 768);
-		panel.add(scrollPane);
+		scrollPane.setPreferredSize(new Dimension(800,400));
+		back.setPreferredSize(new Dimension (220,75));
+		back.setFont(new Font(null, Font.BOLD, 20));
+		buttonPanel.add(back);
+		buttonPanel.setOpaque(false);
+		panel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		c.insets = new Insets(80,0,0,0);
+		c.fill = GridBagConstraints.BOTH;
+		c.gridx = 0;
+		c.gridy = 0;
+		panel.add(scrollPane, c);
+		c.insets = new Insets(40,0,0,0);
+		c.gridx = 0;
+		c.gridy = 1;
+		panel.add(buttonPanel, c);
 		frame.add(panel);
 		frame.setSize(dimension);
 		frame.setMinimumSize(dimension);
