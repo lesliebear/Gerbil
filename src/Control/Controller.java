@@ -55,7 +55,8 @@ public class Controller {
 		Play play = new Play();
 		Main main = new Main();
 		Instructions instr = new Instructions();
-		PlayOptions po = new PlayOptions();		
+		PlayOptions po = new PlayOptions();	
+		UserFunction uf = new UserFunction();
 		//initTempGrid();
 	}
 	
