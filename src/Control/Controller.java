@@ -307,6 +307,27 @@ public class Controller {
 
 	}
 	
+
+
+	/**
+	 * Will insert a NEW block of code into a user specified index/position
+	 *
+	 * @assumes Index to insert block is valid
+	 * @exception none
+	 * @postcondition Inserts new block of code
+	 * 
+	 * @param nested HashMap to recurse on for nesting initial value is the one in gamePlaying
+	 * @param pos index/position of block to insert = it is the line number 
+	 * @param b block to be inserted
+	 * @return false/ true; false if inserting the Block fails, true if it succeeds
+	 */
+	public boolean insertBlock(HashMap<Integer,Block> nested,int pos, Block b){
+		//find the block that has the line begin = pos and inserts b in the right place
+		//cascades the changes in line numbers 
+		
+		return false;
+	}
+	
 	/**
 	 * Will insert instruction to an already created Block of code
 	 * 
@@ -319,27 +340,26 @@ public class Controller {
 	 * @return false/true; false if inserting the instruction to the given block fails, true if it succeeds
 	 */
 	public boolean insertToBlock(int id, Block b){
+		Block parent = searchForBlock(id, gamePlaying.getBlocks()); //get parent since we know parent's line number
+		parent.getNestedBlocks().put(b.getlineBegin(), b); 
 		//Will call searchForBlock to find block of the given id and insert insert b to it
 		//will cascade the changes if prevDiff != currDiff (see cascadeNumberingChanges method)
 		return false;
 	}
 
 	/**
-	 * Will insert a NEW block of code into a user specified index/position
-	 *
-	 * @assumes Index to insert block is valid, instruction may be invalid
-	 * @exception none
-	 * @postcondition Inserts new block of code
-	 * 
-	 * @param pos index/position of block to insert = it is the 
-	 * @param instruction Instruction to be inserted into a block
-	 * @return false/ true; false if inserting the Block fails, true if it succeeds
+	 * Figures out the given line number's parent block's line number = good for highlighting
+	 * @param id line number clicked upon
+	 * @param b the hashmap of blocks to search for the parent block
+	 * @return the parent block is returned
 	 */
-	public boolean insertBlock(int pos, Block b){
-		//Will call the Block.java class to initialize a new block
-		return false;
+	public Block getParentLineNumber(int line, HashMap<Integer,Block> blocks){
+		if (blocks.keySet().isEmpty()){ //cannot get into it more
+			return null;
+		}
+		
+		return null;
 	}
-
 	
 	/**
 	 * Cascades the line number changes to the rest of the code after insert, delete or edit
@@ -365,11 +385,11 @@ public class Controller {
 		}
 		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
 	}
-
+	
 	/**
 	 * Searches for a Block by id field
 	 * 
-	 * @assumes Block to search for must exist
+	 * @assumes Block to search for must exist!!!
 	 * @exception none
 	 * @postcondition Finds block being searched for
 	 * 
