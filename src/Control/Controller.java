@@ -43,6 +43,7 @@ public class Controller {
 	
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil();
+
 	
 	/**
 	 * initializes temp grid by copying values of game grid
@@ -66,10 +67,12 @@ public class Controller {
 
 		Grid grid= new Grid(17,17);
 		Play.setNewGrid(grid.getGrid());
+		
+		initTempGrid();
 	
 
 	}
-	
+
 	/**Creates and initializes built in functions
 	 * 
 	 * @assumes nothing
@@ -169,16 +172,12 @@ public class Controller {
 		
 	}
 	
- 	/**
- 	 * Will parse blocks created by the user and store in ArrayList for play
- 	 * 
- 	 * @assumes Block data may be incorrect
- 	 * @exception none
- 	 * @postcondition stored ArrayList of order of commands "move,eat,turnleft"
- 	 * 
- 	 * @return false/true; false if parsing fails, true if parsing succeeds
- 	 */
- 	public boolean parseBlocks(){
+	/**
+	 * goes through user coded blocks and stores commands in arraylist in the order and
+	 * number of times they will be executed for play
+	 */
+	public void storeBlockCommands(){
+		ArrayList<Block> finalblocks= new ArrayList<Block>();
  		HashMap<Integer,Block> blocklist= gamePlaying.getBlocks();
  		boolean[] visited= new boolean[blocklist.size()+1];
  		for(int x=0; x<blocklist.size()+1; x++){
@@ -191,29 +190,54 @@ public class Controller {
  			}else{
  				visited[i]=true;
  				Block block= blocklist.get(i);
+ 			}
+ 		}
+	}
+	
+ 	/**
+ 	 * Will parse blocks created by the user and store in ArrayList for play
+ 	 * 
+ 	 * @assumes Block data may be incorrect
+ 	 * @exception none
+ 	 * @postcondition stored ArrayList of order of commands "move,eat,turnleft"
+ 	 * 
+ 	 * @return false/true; false if parsing fails, true if parsing succeeds
+ 	 */
+ 	public boolean parseBlock(Block block){
+ 		Gerbil gerbil= gamePlaying.getGerbil();
+
  		 		String line= block.getCond();
  		 		
  		 		StringTokenizer st= new StringTokenizer(line);
  		 		
  		 		if(block.getType()==3){//"if"
  		 			if(block.getCond().equals("there's Wall Ahead")){
- 		 				
- 		 			}else if(block.getCond().equals("there's Apple")){
- 		 				
- 		 			}else if(block.getCond().equals("there's Pumpkin")){
- 		 				
- 		 			}else if(block.getCond().equals("there's Pear")){
- 		 				
+ 		 				if(isthereWallAhead(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
+ 		 					
+ 		 				}else{
+ 		 					
+ 		 				}
+ 		 			}else if(block.getCond().equals("there's Food")){
+ 		 				if(isthereFood(tempgerbil.getX(),tempgerbil.getY())){
+ 		 					
+ 		 				}else{
+ 		 					
+ 		 				}
  		 			}else if(block.getCond().equals("there's No Wall Ahead")){
+ 		 				if(!isthereWallAhead(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
+ 		 					
+ 		 				}else{
+ 		 					
+ 		 				}
  		 				
- 		 			}else if(block.getCond().equals("there's No Apple")){
+ 		 			}else if(block.getCond().equals("there's No Food")){
+ 		 				if(!isthereFood(tempgerbil.getX(),tempgerbil.getY())){
+ 		 					
+ 		 				}else{
+ 		 					
+ 		 				}
  		 				
- 		 			}else if(block.getCond().equals("there's No Pumpkin")){
- 		 				
- 		 			}else if(block.getCond().equals("there's No Pear")){
- 		 				
- 		 			}
- 		 			
+ 		 			}			
  		 		}else if(block.getType()==5){//"else"
  		 			
  		 		}else if(block.getType()==4){//"else if"
@@ -241,13 +265,7 @@ public class Controller {
  							}
  						}
  		 		}
- 			}
- 		}
- 		
- 		
- 		
- 		
- 		
+
 		return false;
 		
 		//Will not call other functions/classes
@@ -270,10 +288,10 @@ public class Controller {
 	 */
 	public void editBlock(int pos, String instruction){
 		HashMap<Integer,Block> blocklist= gamePlaying.getBlocks();
-		blocklist.get(pos);
+		Block block=blocklist.get(pos);
 		//need to add setInstructions in Block Class
 		
-		if(!parseBlocks()){
+		if(!parseBlock(block)){
 			//ERROR
 		}
 		
@@ -600,22 +618,20 @@ public class Controller {
 	}
 	
 	/**
-	 * Will change the position of the gerbil to a new (x,y) location
+	 * Will change the position of the gerbil to one cell forward
 	 * 
 	 * @assumes Move may be invalid
 	 * @exception none
 	 * @postcondition Makes move iff move is valid
-	 * 
-	 * @param newX New X position of gerbil
-	 * @param newY New Y position of gerbil
+	 * @param gerbil the gerbil object to move forward
 	 * @return false/true; false if the move was unsuccessful, true if the move was successful 
 	 */
-	public boolean makeMove(int newX, int newY){
-		if(gamePlaying.getGrid().getSquareContent(newY, newX)!='0'){
+	public boolean moveForward(Gerbil gerbil){
+		if(gamePlaying.getGrid().getSquareContent(gerbil.getFrontY(), gerbil.getFrontX())=='w'){
 			return false;
 		}
-		gamePlaying.getGerbil().setX(newX);
-		gamePlaying.getGerbil().setY(newY);
+		gerbil.setX(gerbil.getFrontX());
+		gerbil.setY(gerbil.getFrontY());
 		return true;
 		
 		//Will need grid from Grid.java
@@ -630,12 +646,11 @@ public class Controller {
 	 * @assumes Gerbil exists
 	 * @exception none
 	 * @postcondition Orientation of the Gerbil will be changed
-	 * 
+	 * @param gerbil the gerbil object to turn left
 	 * @return false/true; false if the Gerbil orientation was not changed, true otherwise
 	 */
-	public boolean turnLeft(){
-		//create pointer to gerbil
-		Gerbil gerbil= gamePlaying.getGerbil();
+	public boolean turnLeft(Gerbil gerbil){
+
 		//determine if gerbil is facing north --> will face west
 		if(gerbil.getFrontX()==gerbil.getX() && gerbil.getFrontY()==gerbil.getY()+1){
 			gerbil.setFrontX(gerbil.getX()-1);
@@ -677,13 +692,11 @@ public class Controller {
 	 */
 	public boolean eat(int x, int y){
 		//create pointer to grid
-		Grid grid= gamePlaying.getGrid();
-		if(grid.getSquareContent(y, x)=='k'
-				|| grid.getSquareContent(y, x)=='p'
-				|| grid.getSquareContent(y, x)=='a'){
+		if(tempgrid[y][x]=='k'
+				|| tempgrid[y][x]=='p'
+				|| tempgrid[y][x]=='a'){
 
-			grid.removeFruit(y, x);
-			makeMove(y,x);
+			tempgrid[y][x]='0';
 			return true;
 		}
 		//will need grid from Grid.java
