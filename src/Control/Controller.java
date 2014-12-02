@@ -205,7 +205,7 @@ public class Controller {
 
 		if(block.getType()==3){//"if"
 			if(block.getCond().equals("there's Wall Ahead")){
-				if(isthereWallAhead(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
+				if(isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
 
 				}else{
 
@@ -217,7 +217,7 @@ public class Controller {
 
 				}
 			}else if(block.getCond().equals("there's No Wall Ahead")){
-				if(!isthereWallAhead(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
+				if(!isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
 
 				}else{
 
