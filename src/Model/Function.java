@@ -57,5 +57,11 @@ public class Function implements Serializable{
 	public HashMap<Integer,Block> getBlockInstructions(){
 		return this.blockInstructions;
 	}
+	/**
+	 * Sets the BlockInstructions
+	 */
+	public void setBlockInstructions(HashMap<Integer,Block> blockinstructions){
+		this.blockInstructions= blockinstructions;
+	}
 }
 

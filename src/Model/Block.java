@@ -24,6 +24,8 @@ public class Block implements Serializable{
 	int lineEnd;
 	/**Pointer to the parent block in which this block is nested in = makes it easier to go to upper levels */
 	Block parent;
+	/**Number of times to repeat, set by user*/
+	int repeat=-1;
 
 	/**
 	 * Sets the parent block of this object
@@ -44,6 +46,18 @@ public class Block implements Serializable{
 		return this.parent;
 	}
 	
+	/**
+	 * Gets the repeat number of block
+	 */
+	public int getRepeat(){
+		return repeat;
+	}
+	/**
+	 * Sets the repeat number of block
+	 */
+	public void setRepeat(int repeat){
+		this.repeat=repeat;
+	}
 	/**
 	 * Gets the line number where this block began at
 	 *
