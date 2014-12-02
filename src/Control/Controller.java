@@ -176,68 +176,81 @@ public class Controller {
 	}
 	
  	/**
- 	 * Will parse block at a given index/position created by the user for syntactical correctness
+ 	 * Will parse blocks created by the user and store in ArrayList for play
  	 * 
  	 * @assumes Block data may be incorrect
  	 * @exception none
- 	 * @postcondition Determines if block data is syntactically correct
+ 	 * @postcondition stored ArrayList of order of commands "move,eat,turnleft"
  	 * 
- 	 * @param pos index/position of block to be parsed for syntactical correctness
  	 * @return false/true; false if parsing fails, true if parsing succeeds
  	 */
- 	public boolean parseBlock(int pos){
+ 	public boolean parseBlocks(){
  		HashMap<Integer,Block> blocklist= gamePlaying.getBlocks();
- 		Block block= blocklist.get(pos);
- 		String line= block.getCond();
- 		
- 		StringTokenizer st= new StringTokenizer(line);
- 		
- 		if(block.getType()==3){//"if"
- 			if(block.getCond().equals("there's Wall Ahead")){
- 				
- 			}else if(block.getCond().equals("there's Apple")){
- 				
- 			}else if(block.getCond().equals("there's Pumpkin")){
- 				
- 			}else if(block.getCond().equals("there's Pear")){
- 				
- 			}else if(block.getCond().equals("there's No Wall Ahead")){
- 				
- 			}else if(block.getCond().equals("there's No Apple")){
- 				
- 			}else if(block.getCond().equals("there's No Pumpkin")){
- 				
- 			}else if(block.getCond().equals("there's No Pear")){
- 				
- 			}
- 			
- 		}else if(block.getType()==5){//"else"
- 			
- 		}else if(block.getType()==4){//"else if"
- 			
- 		}else if(block.getType()==6){//"while"
- 			
- 		}else if(block.getType()==7){//"repeat"
- 			
- 		}else if(block.getType()==0){//"eat"
- 			
- 		}else if(block.getType()==1){//"turn left"
- 			
- 		}else if(block.getType()==2){//"move forward"
- 			
- 		}else{
- 			String key= st.nextToken();
- 			while(st.hasMoreTokens()){
- 				key= key + " " + st.nextToken();
- 			}
- 			
- 			HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
-				for(Entry<Integer, Function> entry: functionlist.entrySet()){
-					if(entry.getValue().getName().equals(key)){
-						
-					}
-				}
+ 		boolean[] visited= new boolean[blocklist.size()+1];
+ 		for(int x=0; x<blocklist.size()+1; x++){
+ 			visited[x]=false;
  		}
+ 		
+ 		for(int i=1; i<=blocklist.size();i++){
+ 			if(visited[i]){
+ 				continue;
+ 			}else{
+ 				visited[i]=true;
+ 				Block block= blocklist.get(i);
+ 		 		String line= block.getCond();
+ 		 		
+ 		 		StringTokenizer st= new StringTokenizer(line);
+ 		 		
+ 		 		if(block.getType()==3){//"if"
+ 		 			if(block.getCond().equals("there's Wall Ahead")){
+ 		 				
+ 		 			}else if(block.getCond().equals("there's Apple")){
+ 		 				
+ 		 			}else if(block.getCond().equals("there's Pumpkin")){
+ 		 				
+ 		 			}else if(block.getCond().equals("there's Pear")){
+ 		 				
+ 		 			}else if(block.getCond().equals("there's No Wall Ahead")){
+ 		 				
+ 		 			}else if(block.getCond().equals("there's No Apple")){
+ 		 				
+ 		 			}else if(block.getCond().equals("there's No Pumpkin")){
+ 		 				
+ 		 			}else if(block.getCond().equals("there's No Pear")){
+ 		 				
+ 		 			}
+ 		 			
+ 		 		}else if(block.getType()==5){//"else"
+ 		 			
+ 		 		}else if(block.getType()==4){//"else if"
+ 		 			
+ 		 		}else if(block.getType()==6){//"while"
+ 		 			
+ 		 		}else if(block.getType()==7){//"repeat"
+ 		 			
+ 		 		}else if(block.getType()==0){//"eat"
+ 		 			
+ 		 		}else if(block.getType()==1){//"turn left"
+ 		 			
+ 		 		}else if(block.getType()==2){//"move forward"
+ 		 			
+ 		 		}else{
+ 		 			String key= st.nextToken();
+ 		 			while(st.hasMoreTokens()){
+ 		 				key= key + " " + st.nextToken();
+ 		 			}
+ 		 			
+ 		 			HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
+ 						for(Entry<Integer, Function> entry: functionlist.entrySet()){
+ 							if(entry.getValue().getName().equals(key)){
+ 								
+ 							}
+ 						}
+ 		 		}
+ 			}
+ 		}
+ 		
+ 		
  		
  		
  		
@@ -266,7 +279,7 @@ public class Controller {
 		blocklist.get(pos);
 		//need to add setInstructions in Block Class
 		
-		if(!parseBlock(pos)){
+		if(!parseBlocks()){
 			//ERROR
 		}
 		
