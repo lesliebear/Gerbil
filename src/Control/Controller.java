@@ -942,7 +942,7 @@ public class Controller {
 		return backend.deleteGame(gameName);
 	}
 
-////////////////////////////**Below function NOT DONE YET ***/////////////////////////////////
+
 	/**
 	 * This method will load a given game
 	 * @param gameName Name of the game to load
@@ -951,16 +951,22 @@ public class Controller {
 	public boolean loadGame(String gameName) {
 		this.gamePlaying= backend.getGame(gameName);
 		backend.deleteGame(gameName);
-		///////////if user defined functions not empty, write to functions arraylist in here!!!!!
+		if(!gamePlaying.getfunction().isEmpty()){
+			for(Entry<Integer,Function> entry: gamePlaying.getfunction().entrySet()){
+				this.functions.add(entry.getValue());
+			}
+		}
 		return true;
 	}
-////////////////////////////**Below function NOT DONE YET ***/////////////////////////////////
+
 	/**
 	 * Save current game
 	 * @return True if save is successful, otherwise False 
 	 */
 	public boolean saveGame() {
-		//write back user defined functions into the current game's user defined stuff.  
+		for(int i=0; i<functions.size();i++){
+			gamePlaying.getfunction().put(i, functions.get(i));
+		}  
 		backend.addGame(this.gamePlaying);
 		return true;
 	}
@@ -984,7 +990,7 @@ public class Controller {
 		return blocklist;
 	}
 
-	///////////////////////////////below method not done yet///////////////////////////////////////
+
 	/**
 	 * This method will add a function to current block
 	 * @param function
