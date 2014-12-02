@@ -2,8 +2,6 @@ package Control;
 
 import View.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,17 +9,15 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Scanner;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 import Model.Backend;
 import Model.Block;
 import Model.Function;
 import Model.Game;
+import Model.Gerbil;
 import Model.Grid;
 import Model.User;
-import Model.Gerbil;
 
 /**
  * Controller class will make all necessary modifications to data in order to send it to the control. 
