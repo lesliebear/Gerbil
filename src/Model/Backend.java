@@ -86,7 +86,7 @@ public class Backend implements Serializable {
 	public boolean loadSavedGames(){
 		ObjectInputStream ois;
 		try {
-			ois = new ObjectInputStream(new FileInputStream(storeFile));
+			ois = new ObjectInputStream(new FileInputStream(storeDir+"\\"+storeFile));
 			ArrayList<Game> temp = ((ArrayList<Game>)ois.readObject());
 			this.setGameList(temp);
 			return true;
@@ -116,11 +116,10 @@ public class Backend implements Serializable {
 	public boolean saveGames() { 
 		ObjectOutputStream oos;
 		try {
-			oos = new ObjectOutputStream(new FileOutputStream(storeFile));
+			oos = new ObjectOutputStream(new FileOutputStream(storeDir+"\\"+storeFile));
 			oos.writeObject(games);
 			return true;
 		} catch (Exception e) {return false;} 
-		//This does create file if not found in that location!
 	}
 
 	/**
@@ -231,7 +230,7 @@ public class Backend implements Serializable {
 	public boolean loadSavedUsers()throws IOException, ClassNotFoundException {		
 		ObjectInputStream ois;
 		try {
-			ois = new ObjectInputStream(new FileInputStream(storeFile));
+			ois = new ObjectInputStream(new FileInputStream(storeDir+"\\"+storeFile));
 			ArrayList<User> temp = ((ArrayList<User>)ois.readObject());
 			this.setUsersList(temp);
 			return true;
@@ -258,7 +257,7 @@ public class Backend implements Serializable {
 	public boolean saveUsers() throws IOException { 
 		ObjectOutputStream oos;
 		try {
-			oos = new ObjectOutputStream(new FileOutputStream(storeFile));
+			oos = new ObjectOutputStream(new FileOutputStream(storeDir+"\\"+storeFile));
 			oos.writeObject(users);
 			return true;
 		} catch (FileNotFoundException e) {return false;} catch (IOException e) {return false;}
