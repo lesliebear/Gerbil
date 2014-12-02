@@ -30,8 +30,10 @@ public class Controller {
 	User userPlaying;
 	/**Holds the current game being played */
 	Game gamePlaying;
-	/**Holds the list of built in functions = eat Apple, eat pear, eat pumpking, move, turn left*/
-	ArrayList<Function> builtIn;
+	/**Holds the list of built in functions = eat move, turn left
+	 * And user created are added to the end of this arraylist when game is initialized first
+	 * and then reloaded to the backend when finished game*/
+	ArrayList<Function> functions;
 	//Note eat fruit must be for that fruit only!! else error popup.
 	Backend backend= new Backend();
 	Play play;
@@ -43,6 +45,20 @@ public class Controller {
 	boolean isFunction=false;
 
 
+	/**assumes, returns, exceptions**/
+	/**
+	 * Constructor
+	 */
+	public Controller() {
+		Grid grid= new Grid(17,17);
+		Play.setNewGrid(grid.getGrid());
+		Play play = new Play();
+		Main main = new Main();
+		Instructions instr = new Instructions();
+		PlayOptions po = new PlayOptions();		
+		//initTempGrid();
+	}
+	
 	/**
 	 * initializes temp grid by copying values of game grid
 	 */
@@ -53,22 +69,7 @@ public class Controller {
 			}
 		}
 	}
-
-	/**assumes, returns, exceptions**/
-	/**
-	 * Constructor
-	 */
-	public Controller() {
-		//builtIn= new ArrayList<Function>();
-		Grid grid= new Grid(17,17);
-		Play.setNewGrid(grid.getGrid());
-		Play play = new Play();
-		Main main = new Main();
-		Instructions instr = new Instructions();
-		PlayOptions po = new PlayOptions();
-		
-		//initTempGrid();
-	}
+	
 
 	/**Creates and initializes built in functions
 	 * 
@@ -94,11 +95,13 @@ public class Controller {
 		turnLeftBlock.setType(1);
 		turnLeft.getBlockInstructions().put(-1, turnLeftBlock);
 
-		builtIn.add(moveAhead);
-		builtIn.add(eat);
-		builtIn.add(turnLeft);
+		functions.add(moveAhead);
+		functions.add(eat);
+		functions.add(turnLeft);
 	}
 
+	
+	
 	/**
 	 * Creates and stores the builtIn functions in the controller
 	 * 
@@ -109,7 +112,7 @@ public class Controller {
 	 * 
 	 */
 	public void createBuiltIn(){
-		this.builtIn= new ArrayList<Function>();
+		this.functions = new ArrayList<Function>();
 		initBuiltIn();
 	}
 
@@ -939,6 +942,7 @@ public class Controller {
 		return backend.deleteGame(gameName);
 	}
 
+////////////////////////////**Below function NOT DONE YET ***/////////////////////////////////
 	/**
 	 * This method will load a given game
 	 * @param gameName Name of the game to load
@@ -947,14 +951,16 @@ public class Controller {
 	public boolean loadGame(String gameName) {
 		this.gamePlaying= backend.getGame(gameName);
 		backend.deleteGame(gameName);
+		///////////if user defined functions not empty, write to functions arraylist in here!!!!!
 		return true;
 	}
-
+////////////////////////////**Below function NOT DONE YET ***/////////////////////////////////
 	/**
 	 * Save current game
 	 * @return True if save is successful, otherwise False 
 	 */
 	public boolean saveGame() {
+		//write back user defined functions into the current game's user defined stuff.  
 		backend.addGame(this.gamePlaying);
 		return true;
 	}
@@ -985,18 +991,36 @@ public class Controller {
 	public boolean addFunctionToBlock(int begin, Function function, Block block) {
 		//Note: A function is a one liner!! thus i set currDifference in cascadeNumbering Changes to 1
 		Block functionblock= new Block();
-		functionblock.setType(8); //NEEDS lineBegin and lineEnd!!!!!!!!!
+		functionblock.setType(8); 
 		functionblock.setlineBegin(begin);
 		functionblock.setLineEnd(begin+1);
 		functionblock.setParent(block);
-		//NOT SURE HOW TO SET TYPE
-		//NOT SURE HOW TO GET LINE NUMBER OF FUNCTION BLOCK
-		
-		int line=0;//set this to line number of function block
-		gamePlaying.getBlocks().get(block.getlineBegin()).getNestedBlocks().put(line, functionblock);
-		cascadeNumberingChanges(line,1,functionblock);
+		int funcNum = findFunction(function.getName());
+		functionblock.setFunctionNum(funcNum);
+		gamePlaying.getBlocks().get(block.getlineBegin()).getNestedBlocks().put(begin, functionblock);
+		cascadeNumberingChanges(begin,1,functionblock);
 		return true;
 
+	}
+
+	/**
+	 * Finds functions in array list of functions. First built in functions exist in that arraylist
+	 * then user built functions so search through via name.
+	 * 
+	 * @assumes The function exists in arraylist of functions
+	 * @exception none
+	 * @postcondition none
+	 *  
+	 * @param name Name of the function we are searching for. 
+	 * @return The index of the function.
+	 */
+	private int findFunction(String name) {
+		for (int i =0; i<functions.size(); i++){
+			if (functions.get(i).getName().equals(name)){
+				return i;
+			}
+		}
+		return -1;
 	}
 
 }
