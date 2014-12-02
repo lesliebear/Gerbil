@@ -66,7 +66,12 @@ public class Controller {
 		//builtIn= new ArrayList<Function>();
 		Grid grid= new Grid(17,17);
 		Play.setNewGrid(grid.getGrid());
-		initTempGrid();
+		Play play = new Play();
+		Main main = new Main();
+		Instructions instr = new Instructions();
+		PlayOptions po = new PlayOptions();
+		
+		//initTempGrid();
 	}
 
 	/**Creates and initializes built in functions

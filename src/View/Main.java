@@ -100,7 +100,7 @@ public class Main extends Screen {
 			}
 		}; 
 		try {
-			image = ImageIO.read(new File("10619975_10204553653617548_7614187758233835955_o.jpg"));
+			image = ImageIO.read(new File("backgroundMain.jpg"));
 		} catch (Exception ex) {
 			System.out.println("Could not load image");
 		}

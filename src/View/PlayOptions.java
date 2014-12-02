@@ -99,7 +99,7 @@ public class PlayOptions extends Screen{
 			}
 		};
 		try {
-			image = ImageIO.read(new File("1960811_10204553653977557_1367600592125664392_o.jpg"));
+			image = ImageIO.read(new File("background.jpg"));
 		} catch (Exception ex) {
 			System.out.println("Couldn't load image");
 		}
@@ -144,7 +144,7 @@ public class PlayOptions extends Screen{
 		frame.setMinimumSize(dimension);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(false);
+		frame.setVisible(true);
 	}
 
 	/**

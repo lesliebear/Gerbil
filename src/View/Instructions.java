@@ -95,7 +95,7 @@ public class Instructions extends Screen{
 		gpScrollPane = new JScrollPane(gamePlayText);	
 		lsScrollPane = new JScrollPane(loadSaveText);
 		try {
-			image = ImageIO.read(new File("instruct.jpg"));
+			image = ImageIO.read(new File("instruction.jpg"));
 		} catch (Exception ex) {
 			System.out.println("Couldn't load image");
 		}

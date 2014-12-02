@@ -61,20 +61,26 @@ public class Grid implements Serializable{
 	 */
 	private void initGrid(){
 		do{//put walls all around and init 0s = empty grid area.
-			for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
-				for (int j = 0; j<grid[0].length;j++){ 
-					if((j==0)||(j==grid[0].length-1) || (i==0)||(i==grid.length-1)){
-						grid[i][j]='w'; //wall surrounds entire grid. 
-					}else{
-						grid[i][j] = '0'; //empty grid area.
-					}
+			resetVisited();
+			fruitCoordinates.clear();
+			createEmptyGrid();
+			randomGrid(); //places walls and fruit
+			checkValidFruits(grid.length-2, 1);
+			resetVisited();
+		}while(!(hasValidPath(grid.length-2,1)) //start from bottom left corner = gerbil location 
+			 || (fruitCoordinates.size()!=0)); //reach all fruit
+	}
+	
+	private void createEmptyGrid() {
+		for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
+			for (int j = 0; j<grid[0].length;j++){ 
+				if((j==0)||(j==grid[0].length-1) || (i==0)||(i==grid.length-1)){
+					grid[i][j]='w'; //wall surrounds entire grid. 
+				}else{
+					grid[i][j] = '0'; //empty grid area.
 				}
 			}
-			randomGrid(); //places walls and fruit
-			resetVisited();
-			checkValidFruits(grid.length-2, 1);
-		}while(((hasValidPath(this.grid.length-2,1))==false) //start from bottom left corner = gerbil location 
-			&& (fruitCoordinates.size()!=0)); //reach all fruit
+		}
 	}
 
 	/**
