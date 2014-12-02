@@ -14,8 +14,10 @@ import java.util.HashMap;
 public class Block implements Serializable{
 	/**Nested instructions go in this adjacency hashmap*/
 	HashMap<Integer, Block> nestedBlocks;
+	int functionNum=-1;
+	/** What the conditional is for while, if,else if*/
 	String conditional;// there's food, there's walls
-	/**Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), �e�,�c�} to find type 
+	/**Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), function(8), 'c','e'} to find type 
 	 * Basically tells u what the block corresponsds to*/
 	int type; 
 	/**What line in the main screen does this block begin at */
@@ -25,8 +27,21 @@ public class Block implements Serializable{
 	/**Pointer to the parent block in which this block is nested in = makes it easier to go to upper levels */
 	Block parent;
 	/**Number of times to repeat, set by user*/
-	int repeat=-1;
+	int repeat=0;
 
+	/**Sets the function number to indicate that the instructions are refering to a function
+	 * @param numOfFunction The index number of the function in the arraylist of functions
+	 */
+	public void setFunctionNum(int numOfFunction){ 
+		this.functionNum=numOfFunction;
+	}
+	
+	/**
+	 * Gets the function number of the current block so this block refers to a function. 
+	 */
+	public int getFunctionNum(){
+		return this.functionNum;
+	}
 	/**
 	 * Sets the parent block of this object
 	 * @param b Parent block to set for this object
