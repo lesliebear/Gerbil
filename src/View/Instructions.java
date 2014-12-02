@@ -91,8 +91,7 @@ public class Instructions extends Screen{
 	 * 
 	 */
 	protected void createScreen() {
-		
-		Dimension textAreaDimension = new Dimension(300,375);
+	
 		Dimension dimension = new Dimension(1024, 768);
 		panel.add(scrollPane);
 		frame.add(panel);
