@@ -531,6 +531,18 @@ public class Controller {
 	public boolean insertBlock(HashMap<Integer,Block> nested,int pos, Block b){
 		//find the block that has the line begin = pos and inserts b in the right place
 		//cascades the changes in line numbers 
+		ArrayList<Integer> keylist= new ArrayList<Integer>();
+		for(Entry<Integer,Block> entry: gamePlaying.getBlocks().entrySet()){
+			keylist.add(entry.getKey());
+		}
+		keylist= sortKeys(keylist);
+		
+		int currdiff= keylist.get(keylist.size()-1)  -  keylist.get(0);
+		Block tempblock= gamePlaying.getBlocks().get(pos);
+		cascadeNumberingChanges(pos, currdiff, tempblock);
+		
+		gamePlaying.getBlocks().put(pos, b);
+		
 		
 		return false;
 	}
