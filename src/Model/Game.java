@@ -117,14 +117,8 @@ public class Game implements Serializable{
 	 * 
 	 * @param functionToAdd function to be added to Functions list
 	 */
-	public boolean addFunction(Function functionToAdd){
-		for (Function f: this.functions.values()){
-			if (f.name.equals(functionToAdd.name)){
-				return false;
-			}
-		}
+	public void addFunction(Function functionToAdd){
 		this.functions.put(this.functions.keySet().size(),functionToAdd);//means index 0 +
-		return true;
 	}
 	
 	
