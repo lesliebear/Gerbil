@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import Model.Backend;
@@ -130,7 +131,7 @@ public class Controller {
 			return newgame;		
 		}else if(temp==1){
 			/////////////////Error: Game names must consist of letters and numbers only//////////
-			
+
 			return null;
 		}else{
 			//Error: Cannot create Game because game name exists////////////////////////
@@ -321,12 +322,9 @@ public class Controller {
 	 * @param instruction Instruction to be inserted into a block
 	 * @return false/ true; false if inserting the Block fails, true if it succeeds
 	 */
-	public boolean insertBlock(int pos, String instruction){
-
+	public boolean insertBlock(int pos, Block b){
 		//Will call the Block.java class to initialize a new block
 		return false;
-
-
 	}
 
 
@@ -352,21 +350,28 @@ public class Controller {
 	/**
 	 * Searches for a Block by id field
 	 * 
-	 * @assumes Block to search for may not exist
+	 * @assumes Block to search for must exist
 	 * @exception none
-	 * @postcondition Finds block being searched for iff it exists
+	 * @postcondition Finds block being searched for
 	 * 
-	 * @param id id of Block to be searched for 
+	 * @param id id of Block to be searched for so it is the line number 
 	 * @return Block with the given id if found, else returns null
 	 */
-	public Block searchForBlock(int id){
-
-		//Will not call any other function/class
-
-		return null;
-
-
-
+	public Block searchForBlock(int id, HashMap<Integer,Block> block){
+		if(block.keySet().isEmpty()){ //no more nesting
+			return null;
+		}
+		for (int curr: block.keySet()){
+			if(curr==id){
+				return block.get(curr);
+			}else if(block.get(curr).getlineBegin()<id && block.get(curr).getlineEnd()>id){ 
+				//the block contains the line number in it so search inside
+				return searchForBlock(id,block.get(curr).getNestedBlocks());
+			}else if (curr>id){ //too big and not before this
+				return null;
+			}
+		}
+		return null; //did not find.
 	}
 
 	/*Checks for conditionals*/
@@ -534,7 +539,7 @@ public class Controller {
 		for(Entry<Integer,Function> entry: list.entrySet()){
 			functionnames.add(entry.getValue().getName());
 		}
-		
+
 		ArrayList<String> functionlist= sortAlphabetical(functionnames);
 		ArrayList<Function>functions= new ArrayList<Function>();
 
@@ -578,7 +583,7 @@ public class Controller {
 	}
 
 	/*Movement stuff*/
-//////go through array list that consists move, eat, or turn left and see after each movement if valid or not!!!!
+	//////go through array list that consists move, eat, or turn left and see after each movement if valid or not!!!!
 	/**
 	 * Determines if a path of a given set of instructions is clear of walls
 	 * 
@@ -711,7 +716,7 @@ public class Controller {
 		return true;
 	}
 
-///////////////////////////////does get instructions still work?///////////////////////////////////////
+	///////////////////////////////does get instructions still work?///////////////////////////////////////
 	/**
 	 * This method will return a list of instructions of the current game
 	 * @return List of instructions
@@ -728,7 +733,7 @@ public class Controller {
 		return blocklist;
 	}
 
-///////////////////////////////below method not done yet///////////////////////////////////////
+	///////////////////////////////below method not done yet///////////////////////////////////////
 	/**
 	 * This method will add a function to current block
 	 * @param function
