@@ -26,6 +26,13 @@ public class Block implements Serializable{
 	Block parent;
 
 	/**
+	 * Sets the parent block of this object
+	 * @param b Parent block to set for this object
+	 */
+	public void setParent(Block b){
+		this.parent=b;
+	}
+	/**
 	 * Gets the parent of the current node that holds it in the nesting
 	 * 
 	 * @assumes Assumes parent block is null if it is at the first level in main screen
