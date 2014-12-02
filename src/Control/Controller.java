@@ -952,9 +952,15 @@ public class Controller {
 		this.gamePlaying= backend.getGame(gameName);
 		backend.deleteGame(gameName);
 		if(!gamePlaying.getfunction().isEmpty()){
+			ArrayList<Integer> keylist= new ArrayList<Integer>();
 			for(Entry<Integer,Function> entry: gamePlaying.getfunction().entrySet()){
-				this.functions.add(entry.getValue());
+				keylist.add(entry.getKey());
 			}
+			keylist=sortKeys(keylist);
+			for(int i=0; i<keylist.size(); i++){
+				this.functions.add(gamePlaying.getfunction().get(keylist.get(i)));
+			}
+
 		}
 		return true;
 	}
@@ -982,7 +988,7 @@ public class Controller {
 		for(Entry<Integer,Block> entry: gamePlaying.getBlocks().entrySet()){
 			keylist.add(entry.getKey());
 		}
-		sortKeys(keylist);
+		keylist=sortKeys(keylist);
 		for(int i=0; i<keylist.size(); i++){
 			Block block= gamePlaying.getBlocks().get(keylist.get(i));
 			blocklist.add(block);
