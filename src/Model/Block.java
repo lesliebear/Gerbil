@@ -27,7 +27,7 @@ public class Block implements Serializable{
 	/**Pointer to the parent block in which this block is nested in = makes it easier to go to upper levels */
 	Block parent;
 	/**Number of times to repeat, set by user*/
-	int repeat=0;
+	int repeat=-1;
 
 	/**Sets the function number to indicate that the instructions are refering to a function
 	 * @param numOfFunction The index number of the function in the arraylist of functions
