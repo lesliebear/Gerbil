@@ -75,7 +75,7 @@ public class Play extends Screen{
 	private static char[][] grid;
 	
 	/** Image icons of all the necessary pictures */
-	private static ImageIcon imageApple, imagePear, imageGrass, imagePumpkin, imageWall, imageGerbil;
+	private static ImageIcon imageApple, imagePear, imageGrass, imagePumpkin, imageWall, imageGerbil, imageWater;
 	
 	/**
 	 * Constructor that creates all necessary GUI components.
@@ -88,6 +88,7 @@ public class Play extends Screen{
 	        imagePumpkin = new ImageIcon(ImageIO.read(new File("pumpkin.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
 	        imageWall = new ImageIcon(ImageIO.read(new File("wall icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
 	        imageGerbil = new ImageIcon(ImageIO.read(new File("gerbil icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageWater = new ImageIcon(ImageIO.read(new File("waterBottle.jpg")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
 	            
 	    } catch (Exception ex) {
 	            ex.printStackTrace();
@@ -319,6 +320,8 @@ public class Play extends Screen{
 			for(int j = 0; j < grid[0].length; j++) {
 				gridBoxes[i][j] = new JLabel();
 				switch(grid[i][j]) {
+					case'0':gridBoxes[i][j].setIcon(imageGrass);
+							break;
 					case'w':gridBoxes[i][j].setIcon(imageWall);
 							break;
 					case'a':gridBoxes[i][j].setIcon(imageApple);
@@ -329,8 +332,7 @@ public class Play extends Screen{
 							break;
 					case'g':gridBoxes[i][j].setIcon(imageGerbil);
 							break;
-					case'0':gridBoxes[i][j].setIcon(imageGrass);
-							break;
+					case't':gridBoxes[i][j].setIcon(imageWater);
 				}
 				gridPanel.add(gridBoxes[i][j]);
 			}
