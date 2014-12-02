@@ -259,9 +259,7 @@ public class Controller {
 				}
 			}
 		}
-
 		return false;
-
 		//Will not call other functions/classes
 	}
 
@@ -285,10 +283,7 @@ public class Controller {
 		if(!parseBlock(block)){
 			//ERROR
 		}
-
 		//Will call parseBlock - must reparse the block to see if valid change has been made
-
-
 	}	
 
 
@@ -311,6 +306,23 @@ public class Controller {
 
 
 	}
+	
+	/**
+	 * Will insert instruction to an already created Block of code
+	 * 
+	 * @assumes Block to insert to exists, instruction may be invalid
+	 * @exception none
+	 * @postcondition Inserts instruction to Block
+	 * 
+	 * @param id id of Block to add instruction to 
+	 * @param instruction instruction to be added to Block
+	 * @return false/true; false if inserting the instruction to the given block fails, true if it succeeds
+	 */
+	public boolean insertToBlock(int id, Block b){
+		//Will call searchForBlock to find block of the given id and insert insert b to it
+		//will cascade the changes if prevDiff != currDiff (see cascadeNumberingChanges method)
+		return false;
+	}
 
 	/**
 	 * Will insert a NEW block of code into a user specified index/position
@@ -328,23 +340,6 @@ public class Controller {
 		return false;
 	}
 
-
-	/**
-	 * Will insert instruction to an already created Block of code
-	 * 
-	 * @assumes Block to insert to exists, instruction may be invalid
-	 * @exception none
-	 * @postcondition Inserts instruction to Block
-	 * 
-	 * @param id id of Block to add instruction to 
-	 * @param instruction instruction to be added to Block
-	 * @return false/true; false if inserting the instruction to the given block fails, true if it succeeds
-	 */
-	public boolean insertToBlock(int id, Block b){
-		//Will call searchForBlock to find block of the given id and insert insert b to it
-		//will cascade the changes if prevDiff != currDiff (see cascadeNumberingChanges method)
-		return false;
-	}
 	
 	/**
 	 * Cascades the line number changes to the rest of the code after insert, delete or edit
@@ -369,7 +364,6 @@ public class Controller {
 			}
 		}
 		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
-		
 	}
 
 	/**

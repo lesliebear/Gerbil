@@ -46,7 +46,7 @@ public class Grid implements Serializable{
 		grid = new char[rows][columns];
 		visited = new int[rows][columns];
 		initGrid();
-		printGrid();
+		//printGrid();
 	}
 
 	/**
@@ -88,7 +88,6 @@ public class Grid implements Serializable{
 	 */
 	private void randomGrid(){
 		grid[1][grid[0].length-2]='t'; //place water can
-		grid[grid.length - 2][1] ='g';
 		for (int b = 0; b <2*(grid.length-2); b++){//put in 30 walls as obstacles 
 			int R = (int)(Math.random()*(grid.length-2)) + 1;  //gets random row number between 1 and the number of rows-1
 			int S = (int)(Math.random()*(grid[0].length-2)) + 1;  // gets random col number between 1 and the number of columns-1
