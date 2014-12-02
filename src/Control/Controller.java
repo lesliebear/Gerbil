@@ -1,4 +1,4 @@
-package Control;
+	package Control;
 
 import View.*;
 
@@ -982,12 +982,19 @@ public class Controller {
 	 * @param function
 	 * @return True if add is successful, otherwise False
 	 */
-	public boolean addFunctionToBlock(Function function, Block block) {
+	public boolean addFunctionToBlock(int begin, Function function, Block block) {
+		//Note: A function is a one liner!! thus i set currDifference in cascadeNumbering Changes to 1
 		Block functionblock= new Block();
+		functionblock.setType(8); //NEEDS lineBegin and lineEnd!!!!!!!!!
+		functionblock.setlineBegin(begin);
+		functionblock.setLineEnd(begin+1);
+		functionblock.setParent(block);
 		//NOT SURE HOW TO SET TYPE
 		//NOT SURE HOW TO GET LINE NUMBER OF FUNCTION BLOCK
+		
 		int line=0;//set this to line number of function block
 		gamePlaying.getBlocks().get(block.getlineBegin()).getNestedBlocks().put(line, functionblock);
+		cascadeNumberingChanges(line,1,functionblock);
 		return true;
 
 	}
