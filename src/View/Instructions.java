@@ -70,7 +70,7 @@ public class Instructions extends Screen{
 		};
 		instructions = new JLabel();
 		try {
-			instructions.setIcon(new ImageIcon(ImageIO.read(new File("instructions.png")).getScaledInstance(800, 400, Image.SCALE_SMOOTH)));
+			instructions.setIcon(new ImageIcon(ImageIO.read(new File("instructions.jpg")).getScaledInstance(800, 960, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -97,7 +97,7 @@ public class Instructions extends Screen{
 	protected void createScreen() {
 	
 		Dimension dimension = new Dimension(1024, 768);
-		scrollPane.setPreferredSize(new Dimension(800,400));
+		scrollPane.setPreferredSize(new Dimension(800, 400));
 		back.setPreferredSize(new Dimension (220,75));
 		back.setFont(new Font(null, Font.BOLD, 20));
 		buttonPanel.add(back);
