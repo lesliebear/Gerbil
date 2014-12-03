@@ -346,16 +346,14 @@ public class Play extends Screen{
 							break;
 					case'p':gridBoxes[i][j].setIcon(imagePear);
 							break;
-					case'g':gridBoxes[i][j].setIcon(imageGerbilEast);
+					case'g':gridBoxes[i][j].setIcon(imageGerbilNorth);
 							break;
 					case't':gridBoxes[i][j].setIcon(imageWater);
 				}
 				gridPanel.add(gridBoxes[i][j]);
 			}
 		}
-		gridBoxes[0][1].setIcon(imageGerbilNorth);
-		gridBoxes[0][2].setIcon(imageGerbilWest);
-		gridBoxes[0][3].setIcon(imageGerbilSouth);
+	
 	}
 	
 	public static void setLowerComponents(){
@@ -584,5 +582,17 @@ public class Play extends Screen{
 	
 	public void addUserFunctionsListSelectionListener(ActionListener listener) {
 		userFunctionsDD.addActionListener(listener);
+	}
+	
+	public void showEat() {
+		
+	}
+	
+	public void showMove() {
+		
+	}
+	
+	public void showTurnLeft() {
+		
 	}
 }
