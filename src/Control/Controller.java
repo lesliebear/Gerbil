@@ -556,7 +556,7 @@ public class Controller {
 		
 		//cascade here??
 		
-		if(!parseBlock(block)){
+		if(!compileBlocks()){
 			//ERROR
 		}
 		
@@ -1156,5 +1156,58 @@ public class Controller {
 		}
 		return -1;
 	}
+	
+	
+
+	/**
+	 *DELETE THIS CODE LATER/////////////////
+	*/
+	public String[] getTerminals(){ 
+		String[] terminals= new String[41];
+		terminals[0]= "move";
+		terminals[1]= "turn left";
+		terminals[2]="turn left";
+		terminals[3]="turn left";
+		terminals[4]= "move";
+		terminals[5]= "move";
+		terminals[6]= "move";
+		terminals[7]= "turn left";
+		terminals[8]="move";
+		terminals[9]="move";
+		terminals[10]="turn right";
+		terminals[11]="move";
+		terminals[12]="eat";
+		terminals[13]="move";
+		terminals[14]="move";
+		terminals[15]="move";
+		terminals[16]="eat";
+		terminals[17]="move";
+		terminals[18]="move";
+		terminals[19]="eat";
+		terminals[20]="turn left";
+		terminals[21]="move";
+		terminals[22]="move";
+		terminals[23]="move";
+		terminals[24]="move";
+		terminals[25]="move";
+		terminals[26]="move";
+		terminals[27]="move";
+		terminals[28]="move";
+		terminals[29]="move";
+		terminals[30]="move";
+		terminals[31]="move";
+		terminals[32]="turn left";
+		terminals[33]="turn left";
+		terminals[34]="turn left";
+		terminals[35]="move";
+		terminals[36]="move";
+		terminals[37]="move";
+		terminals[38]="eat";
+		terminals[39]="move";
+		terminals[40]="move";
+		
+		return terminals;
+	}
+	 
 
 }
