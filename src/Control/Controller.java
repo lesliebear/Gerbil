@@ -72,13 +72,6 @@ public class Controller {
 		this.userCodingNow=b;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * initializes temp grid by copying values of game grid
 	 */
