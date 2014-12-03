@@ -19,13 +19,13 @@ public class StartGerbil {
 		//Main main = new Main();
 		//Controller controller = new Controller();
 		//Conditionals conditionals = new Conditionals("if");
-		//Grid g = new Grid(17,17);		
+		Grid g = new Grid(17,17);		
 		//SavedGames sg = new SavedGames();
 		//UserFunction uf = new UserFunction();
 		//Play play  = new Play();
 		//DeleteFunction df = new DeleteFunction();
 		//Finish f = new Finish();
-		ActionListenersControl ac = new ActionListenersControl();
+		//ActionListenersControl ac = new ActionListenersControl();
 		//ErrorDialog ed = new ErrorDialog("<html>You have no saved games.<br> Please select \"New Game\" to start a new game.<html>");
 	}
 
