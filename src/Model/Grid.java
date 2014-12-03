@@ -25,7 +25,24 @@ public class Grid implements Serializable{
 	private static final long serialVersionUID = 1L;
 	/**17x17 grid size because the outer edges will have walls  
 	 * Grid does not have gerbil location = gerbil object has the location info.*/
-	private char[][] grid;
+	private char[][] grid = {{'w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w'},
+			{'w','0','0','0','0','0','w','k','0','0','0','0','0','k','0','t','w'},
+			{'w','0','0','0','0','0','w','0','0','0','0','0','0','0','0','0','w'},
+			{'w','w','0','0','a','0','0','0','0','0','0','0','0','p','0','0','w'},
+			{'w','0','0','0','k','0','0','w','0','0','p','0','0','a','0','p','w'},
+			{'w','0','0','0','0','0','0','0','0','0','a','0','w','0','0','0','w'},
+			{'w','0','w','0','w','0','w','0','0','a','0','w','0','w','a','0','w'},
+			{'w','0','0','a','0','k','0','a','0','w','0','0','0','0','a','0','w'},
+			{'w','0','0','0','k','w','0','0','0','w','0','0','w','0','0','0','w'},
+			{'w','w','0','0','0','0','0','w','0','0','0','0','0','w','0','w','w'},
+			{'w','0','0','0','0','0','0','0','w','0','0','k','0','0','k','0','w'},
+			{'w','0','0','0','0','0','w','0','w','0','0','0','0','0','0','w','w'},
+			{'w','p','0','0','0','p','0','0','p','0','a','w','0','0','p','0','w'},
+			{'w','0','0','0','0','w','0','0','w','k','0','w','0','w','0','0','w'},
+			{'w','0','0','0','0','w','0','0','p','0','0','0','p','0','0','p','w'},
+			{'w','0','k','0','0','a','k','w','0','w','0','0','0','0','0','0','w'},
+			{'w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w'},
+			};
 	/**Temporary grid to help see if fruit are reachable */
 	private int[][] visited;
 	/**Holds the fruit location to verify if fruits are reachable or not */
@@ -43,10 +60,14 @@ public class Grid implements Serializable{
 	 * 
 	 */
 	public Grid(int rows, int columns){	
-		grid = new char[rows][columns];
+		//grid = new char[rows][columns];
 		visited = new int[rows][columns];
-		initGrid();
+		//initGrid();
 		//printGrid();
+	}
+	
+	public void gridSet(){
+		
 	}
 
 	/**
