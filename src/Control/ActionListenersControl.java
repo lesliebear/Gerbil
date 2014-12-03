@@ -2,8 +2,13 @@ package Control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-import View.*;
+import View.Instructions;
+import View.Main;
+import View.Play;
+import View.PlayOptions;
+import View.UserFunction;
 
 public class ActionListenersControl {
 	
@@ -12,7 +17,10 @@ public class ActionListenersControl {
 	PlayOptions playOptions;
 	Instructions instructions;
 	UserFunction userFunction;
-	Controller controller;
+	public static Controller controller;
+	
+	int selectedIndexPlayScreen = Play.playcodeList.getSelectedIndex();
+	int selectedIndexOther;
 	
 	public ActionListenersControl(){
 		controller = new Controller();
@@ -24,9 +32,6 @@ public class ActionListenersControl {
 		play = new Play();
 		initEventHandlers();
 		main.show();
-		
-		
-
 	}
 	/**
 	 * Sets up event handlers for each screen
@@ -160,15 +165,19 @@ public class ActionListenersControl {
 			}	
 		});
 		
-		/**Code List**/
+		/**Code List
 		
-		//MISSING
+		play.addCodeListSelectionListener(new ListSelectionListener() {
+			
+		});**/
 		
 		/**JComboBoxes**/
-		
 		play.addConditionalsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+				Play.playcodeList
+				ArrayList<String> temp = new ArrayList<String>();
+				
+				
 			}	
 		});
 		
@@ -186,9 +195,20 @@ public class ActionListenersControl {
 	}
 	
 	private void addUserFunctionEventHandlers() {
-		userFunction.addBackEventHandler(new ActionListener() {
+		userFunction.addCancelEventHandler(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
+				play.show();
+				userFunction.hide();
+			}
+		});
+		
+		userFunction.addOkEventHandler(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				//System.out.println(UserFunction.conditionalDropdown.getText());
+				Controller.userDefined.add(UserFunction.conditionalDropdown.getText());
+				play.refresh();
 				play.show();
 				userFunction.hide();
 			}

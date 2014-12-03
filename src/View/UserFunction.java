@@ -30,8 +30,6 @@ import javax.swing.JTextField;
  *
  */
 public class UserFunction extends Screen{
-
-	
 	/**LHS and RHS panels**/
 	static JPanel leftPanel = new JPanel(); 
 	static JPanel rightPanel = new JPanel();
@@ -65,7 +63,7 @@ public class UserFunction extends Screen{
 	JButton okB;
 	JButton cancelB; 
 	
-	JTextField conditionalDropdown; /*get from control*/ 
+	public static JTextField conditionalDropdown; /*get from control*/ 
 	
 	private static JList functionsCodeList;
 	private static JScrollPane scrollpane;
@@ -397,7 +395,7 @@ public class UserFunction extends Screen{
 		
 		// EDIT: this should be called from somewhere else...
 		String placeholder[] = { "Begin",
-		        "End",  "INSERT NEW" };
+		        "End",  " " };
 		
 		functionsCodeList = new JList(placeholder);
 		scrollpane = new JScrollPane(functionsCodeList);
@@ -525,7 +523,7 @@ public class UserFunction extends Screen{
 		frame.setEnabled(false);
 	}
 	
-	public void addBackEventHandler(ActionListener listener) {
+	public void addCancelEventHandler(ActionListener listener) {
 		cancelB.addActionListener(listener);
 	}
 	
