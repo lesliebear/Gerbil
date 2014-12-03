@@ -19,7 +19,7 @@ public class ActionListenersControl {
 		playOptions = new PlayOptions();
 		instructions = new Instructions();
 		userFunction = new UserFunction();
-		Play.setNewGrid(controller.grid.getGrid());
+		Play.setNewGrid(controller.gamePlaying.getGrid().getGridRepresentation());
 		play = new Play();
 		initEventHandlers();
 		
