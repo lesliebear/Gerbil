@@ -50,7 +50,7 @@ public class Conditionals {
 	JButton whileB;
 	JButton repeatB;
 	
-	JButton moveAheadB;
+	JButton moveForwardB;
 	JButton turnLeftB;
 	JButton eatB;
 	
@@ -206,9 +206,9 @@ public class Conditionals {
 			}
 		};
 
-		moveAheadB= new JButton("Move Ahead"){
+		moveForwardB= new JButton("Move Forward"){
 			public void paint(Graphics g) {
-				moveAheadB.setFont(new Font("Serif", Font.PLAIN, 18)); 
+				moveForwardB.setFont(new Font("Serif", Font.PLAIN, 18)); 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;
@@ -372,7 +372,7 @@ public class Conditionals {
 		
 		gc.gridx = 0;
 		gc.gridy = 8;
-		rightPanel.add(moveAheadB, gc);
+		rightPanel.add(moveForwardB, gc);
 		
 		gc.gridx = 0;
 		gc.gridy = 9;
