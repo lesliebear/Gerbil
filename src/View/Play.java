@@ -1,5 +1,5 @@
 package View;
- 
+
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -37,18 +37,18 @@ import Control.ActionListenersControl;
  * This class creates a GUI for the Play screen.
  */
 public class Play extends Screen{
-	
+
 	public static ArrayList<String> instructions;
 	static DefaultListModel model;
-	
+
 	private static JFrame frame;
-	
+
 	/**Panels**/
 	private static JPanel upperPanel = new JPanel();
 	private static JPanel leftPanel = new JPanel(); 
 	private static JPanel gridPanel = new JPanel();
 	private static JPanel lowerPanel = new JPanel();
-	
+
 	/**Upper Panel Components**/
 	private static JButton menuB;
 	private static JButton playB;
@@ -58,14 +58,14 @@ public class Play extends Screen{
 	private static JButton deleteB;
 	private static JButton clearallB; 
 	private static JButton saveB;
-	
+
 	/**Left Panel Components**/
 	public static JList playcodeList;
 	private static JScrollPane scrollpane;
-	
+
 	/**Grid Panel components**/
 	private static JLabel[][] gridBoxes;
-	
+
 	/**Lower Panel Components**/
 	private static JButton createFunctionB;
 	private static JButton deleteFunctionB;
@@ -74,19 +74,19 @@ public class Play extends Screen{
 	public static JComboBox userFunctionsDD;
 	public static JComboBox checksDD;
 	public static JComboBox numsDD;
-	
+
 	private static JLabel conditionalStatementsL;
 	private static JLabel givenFunctionsL;
 	private static JLabel userDefinedFunctionsL;
 	private static JLabel checksL;
 	private static JLabel numsL;
-	
+
 	/** Gerbil grid representation */
 	private static char[][] grid;
-	
+
 	/** Image icons of all the necessary pictures */
 	private static ImageIcon imageApple, imagePear, imageGrass, imagePumpkin, imageWall, imageGerbilEast, imageGerbilWest, imageGerbilNorth, imageGerbilSouth, imageWater;
-	
+
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 */
@@ -95,25 +95,25 @@ public class Play extends Screen{
 		instructions.add(0, "Begin");
 		instructions.add(1, "End");
 		instructions.add(2, " ");
-		
+
 		try {
 			imageApple = new ImageIcon(ImageIO.read(new File("apple icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));
-	        imagePear = new ImageIcon(ImageIO.read(new File("pear icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageGrass = new ImageIcon(ImageIO.read(new File("grass icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imagePumpkin = new ImageIcon(ImageIO.read(new File("pumpkin.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageWall = new ImageIcon(ImageIO.read(new File("wall icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageGerbilEast = new ImageIcon(ImageIO.read(new File("gerbilEast.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageGerbilWest = new ImageIcon(ImageIO.read(new File("gerbilWest.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageGerbilNorth = new ImageIcon(ImageIO.read(new File("gerbilNorth.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageGerbilSouth = new ImageIcon(ImageIO.read(new File("gerbilSouth.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageWater = new ImageIcon(ImageIO.read(new File("waterBottle.jpg")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	            
-	    } catch (Exception ex) {
-	            ex.printStackTrace();
-	    }
+			imagePear = new ImageIcon(ImageIO.read(new File("pear icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+			imageGrass = new ImageIcon(ImageIO.read(new File("grass icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+			imagePumpkin = new ImageIcon(ImageIO.read(new File("pumpkin.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+			imageWall = new ImageIcon(ImageIO.read(new File("wall icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+			imageGerbilEast = new ImageIcon(ImageIO.read(new File("gerbilEast.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+			imageGerbilWest = new ImageIcon(ImageIO.read(new File("gerbilWest.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+			imageGerbilNorth = new ImageIcon(ImageIO.read(new File("gerbilNorth.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+			imageGerbilSouth = new ImageIcon(ImageIO.read(new File("gerbilSouth.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+			imageWater = new ImageIcon(ImageIO.read(new File("waterBottle.jpg")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		createAndShowGUI();
 	}
-	
+
 	public static void setNewGrid(char[][] newGrid) {
 		grid = newGrid;
 	}
@@ -123,57 +123,57 @@ public class Play extends Screen{
 	 */
 	protected static void createAndShowGUI() { 
 		frame = new JFrame("Play"); // EDIT: User defined game name?
-	
+
 		setUpperComponents();
 		setLeftComponents();
 		setGridComponents();
 		setLowerComponents();
-		
+
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
 		Container c = frame.getContentPane();
-	
+
 		gc.gridwidth = 2;
 		gc.gridx = 0;
 		gc.gridy = 0; 
 		c.add(upperPanel,gc);
-		
+
 		gc.gridwidth = 1; 
 		gc.gridx = 0;
 		gc.gridy=1;
 		c.add(leftPanel,gc);
-		
+
 		gc.gridwidth =1;
 		gc.gridx = 1;
 		gc.gridy=1;
 		c.add(gridPanel,gc);
-		
+
 		gc.gridwidth = 2; 
 		gc.gridx = 0;
 		gc.gridy=2;
 		c.add(lowerPanel,gc);
-		
+
 		frame.setResizable(false);
 		//frame.setMinimumSize(new Dimension(875, 150));
 		frame.pack();
 		frame.setVisible(false);
 		frame.setLocationRelativeTo(null);
 	}
-	
+
 	public static void setUpperComponents(){
 		upperPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
-		
+
 		Dimension size= upperPanel.getPreferredSize();
 		size.width = 875;
 		size.height = 35;
 		upperPanel.setPreferredSize(size);
-		
+
 		ImageIcon menuIcon = new ImageIcon("MenuButton_Play.png");
 		Image  menuImg = menuIcon.getImage() ;   //width, height, type scaling
 		Image  menuNewimg =  menuImg.getScaledInstance( 105, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
-		
+
 		menuB = new JButton(new ImageIcon( menuNewimg));
 		menuB.setBorderPainted(false);
 		menuB.setFocusPainted(false);
@@ -184,7 +184,7 @@ public class Play extends Screen{
 		ImageIcon playIcon = new ImageIcon("PlayButton_Play.png");
 		Image  playImg = playIcon.getImage() ;   //width, height, type scaling
 		Image  playNewimg =  playImg.getScaledInstance( 105, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
-		
+
 		playB = new JButton(new ImageIcon( playNewimg));
 		playB.setBorderPainted(false);
 		playB.setFocusPainted(false);
@@ -195,7 +195,7 @@ public class Play extends Screen{
 		ImageIcon stopIcon = new ImageIcon("StopButton_Play.png");
 		Image  stopImg = stopIcon.getImage() ;   //width, height, type scaling
 		Image  stopNewimg =  stopImg.getScaledInstance(110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
-		
+
 		stopB = new JButton(new ImageIcon( stopNewimg));
 		stopB.setBorderPainted(false);
 		stopB.setFocusPainted(false);
@@ -206,7 +206,7 @@ public class Play extends Screen{
 		ImageIcon insertIcon = new ImageIcon("InsertButton_Play.png");
 		Image  insertImg = insertIcon.getImage() ;   //width, height, type scaling
 		Image  insertNewimg =  insertImg.getScaledInstance( 110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
-		
+
 		insertB = new JButton(new ImageIcon(insertNewimg));
 		insertB.setBorderPainted(false);
 		insertB.setFocusPainted(false);
@@ -217,7 +217,7 @@ public class Play extends Screen{
 		ImageIcon editIcon = new ImageIcon("EditButton_Play.png");
 		Image  editImg = editIcon.getImage() ;   //width, height, type scaling
 		Image  editNewimg =  editImg.getScaledInstance( 110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
-		
+
 		editB = new JButton(new ImageIcon( editNewimg));
 		editB.setBorderPainted(false);
 		editB.setFocusPainted(false);
@@ -228,7 +228,7 @@ public class Play extends Screen{
 		ImageIcon deleteIcon = new ImageIcon("DeleteButton_Play.png");
 		Image  deleteImg = deleteIcon.getImage() ;   //width, height, type scaling
 		Image  deleteNewimg =  deleteImg.getScaledInstance( 110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
-		
+
 		deleteB = new JButton(new ImageIcon( deleteNewimg));
 		deleteB.setBorderPainted(false);
 		deleteB.setFocusPainted(false);
@@ -239,7 +239,7 @@ public class Play extends Screen{
 		ImageIcon clearallIcon = new ImageIcon("ClearAllButton_Play.png");
 		Image  clearallImg = clearallIcon.getImage() ;   //width, height, type scaling
 		Image  clearallNewimg =  clearallImg.getScaledInstance( 110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
-		
+
 		clearallB = new JButton(new ImageIcon( clearallNewimg));
 		clearallB.setBorderPainted(false);
 		clearallB.setFocusPainted(false);
@@ -250,50 +250,50 @@ public class Play extends Screen{
 		ImageIcon saveIcon = new ImageIcon("SaveButton_Play.png");
 		Image  saveImg = saveIcon.getImage() ;   //width, height, type scaling
 		Image  saveNewimg =  saveImg.getScaledInstance(110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
-		
+
 		saveB = new JButton(new ImageIcon(saveNewimg));
 		saveB.setBorderPainted(false);
 		saveB.setFocusPainted(false);
 		saveB.setContentAreaFilled(true);
 		saveB.setBackground(Color.BLACK);
 		saveB.setOpaque(true);
-		
+
 		gc.weightx = 1; //determines how much of the space will be occupied by it
 		gc.fill = GridBagConstraints.HORIZONTAL;
 
 		gc.gridx=0;
 		gc.gridy=0; 
 		upperPanel.add(menuB, gc);
-		
+
 		gc.gridx=1;
 		gc.gridy=0; 
 		upperPanel.add(playB, gc);
-		
+
 		gc.gridx=2;
 		gc.gridy=0; 
 		upperPanel.add(stopB, gc);
-		
+
 		gc.gridx=3;
 		gc.gridy=0; 
 		upperPanel.add(insertB, gc);
-		
+
 		gc.gridx=4;
 		gc.gridy=0; 
 		upperPanel.add(editB, gc);
-		
+
 		gc.gridx=5;
 		gc.gridy=0; 
 		upperPanel.add(deleteB, gc);
-		
+
 		gc.gridx=6;
 		gc.gridy=0; 
 		upperPanel.add(clearallB, gc);
-		
+
 		gc.gridx=7;
 		gc.gridy=0;
 		upperPanel.add(saveB, gc);
 	}
-	
+
 	/*
 	 * Kat: 
 	 * 
@@ -313,23 +313,23 @@ public class Play extends Screen{
 		size.width =250;
 		size.height = 500;
 		leftPanel.setPreferredSize(size);
-		
+
 		// EDIT: this should be called from somewhere else...
 		String placeholder[] = { "Begin","End"," "};
-		
+
 		model=new DefaultListModel();
-		
+
 		for(int i=0; i<instructions.size();i++){
 			model.addElement(instructions.get(i));
 		}
-		
+
 		playcodeList = new JList(model);
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-2);
-	
+
 		if(beforeIsConditional()){
 			disableAllPlayDDButChecks();
 		}
-		
+
 		playcodeList.addListSelectionListener(new ListSelectionListener() {
 
 			@Override
@@ -340,11 +340,11 @@ public class Play extends Screen{
 		});
 
 		scrollpane = new JScrollPane(playcodeList);
-		
+
 		leftPanel.setLayout(new BorderLayout());
 		leftPanel.add(scrollpane, BorderLayout.CENTER);
 	}
-	
+
 	public static void setGridComponents(){
 		gridPanel.setLayout(new GridLayout(grid.length, grid[0].length));	
 		Dimension size= gridPanel.getPreferredSize();
@@ -356,35 +356,35 @@ public class Play extends Screen{
 			for(int j = 0; j < grid[0].length; j++) {
 				gridBoxes[i][j] = new JLabel();
 				switch(grid[i][j]) {
-					case'0':gridBoxes[i][j].setIcon(imageGrass);
-							break;
-					case'w':gridBoxes[i][j].setIcon(imageWall);
-							break;
-					case'a':gridBoxes[i][j].setIcon(imageApple);
-							break;
-					case'k':gridBoxes[i][j].setIcon(imagePumpkin);
-							break;
-					case'p':gridBoxes[i][j].setIcon(imagePear);
-							break;
-					case'g':gridBoxes[i][j].setIcon(imageGerbilNorth);
-							break;
-					case't':gridBoxes[i][j].setIcon(imageWater);
+				case'0':gridBoxes[i][j].setIcon(imageGrass);
+				break;
+				case'w':gridBoxes[i][j].setIcon(imageWall);
+				break;
+				case'a':gridBoxes[i][j].setIcon(imageApple);
+				break;
+				case'k':gridBoxes[i][j].setIcon(imagePumpkin);
+				break;
+				case'p':gridBoxes[i][j].setIcon(imagePear);
+				break;
+				case'g':gridBoxes[i][j].setIcon(imageGerbilNorth);
+				break;
+				case't':gridBoxes[i][j].setIcon(imageWater);
 				}
 				gridPanel.add(gridBoxes[i][j]);
 			}
 		}
-	
+
 	}
-	
+
 	public static void setLowerComponents(){
 		lowerPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
-		
+
 		Dimension size= lowerPanel.getPreferredSize();
 		size.width =875;
 		size.height =  125; 
 		lowerPanel.setPreferredSize(size);
-		
+
 		createFunctionB = new JButton(){
 			public void paint(Graphics g) {
 				this.setContentAreaFilled(false);
@@ -405,7 +405,7 @@ public class Play extends Screen{
 				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
 			}
 		};
-		
+
 		deleteFunctionB = new JButton(){
 			public void paint(Graphics g) {
 				this.setContentAreaFilled(false);
@@ -426,33 +426,33 @@ public class Play extends Screen{
 				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
 			}
 		};
-		
-		
+
+
 		createFunctionB.setText("Create Function");
 		deleteFunctionB.setText("Delete Function");
-		
+
 		// EDIT: this should come from something else...
 		String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
 		String[] functions = {"Move Forward", "Turn Left", "Eat"};
 		String [] checks = {"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
 		String[] nums = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"};
-		
-		
+
+
 		conditionalsDD = new JComboBox(conditionals);
 		givenFunctionsDD = new JComboBox(functions);
-		
+
 		//userFunctionsDD = new JComboBox();
 		//userFunctionsDD.setModel(new DefaultComboBoxModel(arrayList.toArray()));
 		userFunctionsDD = new JComboBox(ActionListenersControl.controller.userDefined.toArray());
 		checksDD = new JComboBox(checks);
 		numsDD = new JComboBox(nums);
-		
+
 		conditionalStatementsL = new JLabel("<html>Conditional </br> Statements<html>");
 		givenFunctionsL = new JLabel("Given Functions");
 		userDefinedFunctionsL = new JLabel("<html>User Functions</html>");
 		checksL = new JLabel("Checks");
 		numsL = new JLabel("Numbers");
-		
+
 		gc.fill = GridBagConstraints.BOTH;
 		gc.weightx = .70;
 		gc.weighty = 1;
@@ -464,68 +464,68 @@ public class Play extends Screen{
 		gc.gridx=0;
 		gc.gridy=0;
 		lowerPanel.add(createFunctionB, gc);
-		
+
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.gridx=0;
 		gc.gridy=1;
 		lowerPanel.add(deleteFunctionB, gc);
 
 		gc.insets = new Insets(20,30,0,0);
-		
+
 		gc.gridheight= 1;
 		/*Labels*/
 		gc.gridx=1;
 		gc.gridy=0;
 		lowerPanel.add(conditionalStatementsL, gc);
-		
+
 		gc.gridx=2;
 		gc.gridy=0;
 		lowerPanel.add(givenFunctionsL, gc);
-		
+
 		gc.gridx=3;
 		gc.gridy=0;
 		lowerPanel.add(userDefinedFunctionsL, gc);
-		
+
 		gc.gridx=4;
 		gc.gridy=0;
 		lowerPanel.add(checksL, gc);
-		
+
 		gc.gridx=5;
 		gc.gridy=0;
 		lowerPanel.add(numsL, gc);
-		
+
 		//gc.insets = new Insets(0,30,0,80);
 		/*Dropdowns*/
 		gc.gridx=1;
 		gc.gridy=1;
 		lowerPanel.add(conditionalsDD, gc);
-		
+
 		gc.gridx=2;
 		gc.gridy=1;
 		lowerPanel.add(givenFunctionsDD, gc);
-		
+
 		gc.gridx=3;
 		gc.gridy=1;
 		lowerPanel.add(userFunctionsDD, gc);
-		
+
 		gc.gridx=4;
 		gc.gridy=1;
 		lowerPanel.add(checksDD, gc);
-		
+
 		gc.gridx=5;
 		gc.gridy=1;
 		lowerPanel.add(numsDD, gc);
-	
+
 	}
-	
+
 	/**
 	 * Creates the screen by putting the GUI components together.
 	 * 
 	 */
 	protected void createScreen() {	
-		
+
 	}	
-	
+
 	public void refreshUserFunctions(){
 		userFunctionsDD.removeAllItems();
 
@@ -533,16 +533,16 @@ public class Play extends Screen{
 			userFunctionsDD.addItem(s);
 		}
 	}
-	
+
 	public static void refreshCodeList(){
 		model.clear();
-		
+
 		for(int i=0; i<instructions.size();i++){
 			model.addElement(instructions.get(i));
 		}
-		
+
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
-		
+
 		if(beforeIsConditional()){
 			disableAllPlayDDButChecks();
 		}
@@ -555,7 +555,7 @@ public class Play extends Screen{
 	public void show() {
 		frame.setVisible(true);
 	}
-	
+
 	/**
 	 * Hides the screen.
 	 * 
@@ -573,9 +573,9 @@ public class Play extends Screen{
 	public void disable() {
 		frame.setEnabled(false);
 	}
-	
+
 	/**Button Listeners**/
-	
+
 	public void addMenuEventHandler(ActionListener listener) {
 		menuB.addActionListener(listener);
 	}
@@ -611,63 +611,34 @@ public class Play extends Screen{
 	public void addCreateFunctionEventHandler(ActionListener listener) {
 		createFunctionB.addActionListener(listener);
 	}
-	
+
 	/**Code List/
 	public void addCodeListSelectionListener(ActionListener listener) {
 		playcodeList.addListSelectionListener(listener);
 	}**/
-	
+
 	/**JComboBoxes**/
 	public void addConditionalsListSelectionListener(ActionListener listener) {
 		conditionalsDD.addActionListener(listener);
 	}
-	
+
 	public void addGivenFunctionsListSelectionListener(ActionListener listener) {
 		givenFunctionsDD.addActionListener(listener);
 
 	}
-	
+
 	public void addUserFunctionsListSelectionListener(ActionListener listener) {
 		userFunctionsDD.addActionListener(listener);
 	}
-	
+
 	public void addChecksFunctionsListSelectionListener(ActionListener listener) {
 		checksDD.addActionListener(listener);
 	}
-	
+
 	public void addNumsFunctionsListSelectionListener(ActionListener listener) {
 		numsDD.addActionListener(listener);
 	}
-	
-	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass) {
-		
-		gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imageGrass);
-		switch(compass) {
-		case'n':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilNorth);
-				break;
-		case's':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilSouth);
-				break;
-		case'w':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilWest);
-				break;
-		case'e':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilEast);
-				break;
-		}
-	}
-	
-	public void showTurnLeft(char compass, int gerbilX, int gerbilY) {
-		
-		switch(compass) {
-			case'n':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilNorth);
-					break;
-			case's':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilSouth);
-					break;
-			case'w':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilWest);
-					break;
-			case'e':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilEast);
-					break;
-		}
-	}
-	
+
 	public static boolean beforeIsConditional(){
 		if(Play.instructions.get(Play.playcodeList.getSelectedIndex()-1) == "If"){
 			return true;
@@ -683,7 +654,7 @@ public class Play extends Screen{
 
 		return false;
 	}
-	
+
 	public static boolean conditionalSelected(){ 
 		if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "If"){
 			return true;
@@ -699,7 +670,7 @@ public class Play extends Screen{
 
 		return false;
 	}
-	
+
 	public static void disableAllPlayDDButChecks(){
 		Play.conditionalsDD.setEnabled(false);
 		Play.givenFunctionsDD.setEnabled(false);
@@ -714,10 +685,51 @@ public class Play extends Screen{
 		Play.checksDD.setEnabled(true);
 		Play.numsDD.setEnabled(true);
 	}
-	
+
 	public static void clearAll(){
 		model.clear();
-		model.addElement("End");
 		model.addElement("Begin");
+		model.addElement("End");
 	}
+	
+	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass, char spot) {
+
+		switch(spot) {
+		case'1':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imageApple);
+		break;
+		case'2':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imagePear);
+		break;
+		case'3':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imagePumpkin);
+		break;
+		case'0':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imageGrass);
+		break;
+		}
+
+		switch(compass) {
+		case'n':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilNorth);
+		break;
+		case's':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilSouth);
+		break;
+		case'w':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilWest);
+		break;
+		case'e':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilEast);
+		break;
+		}
+	}
+
+	public void showTurnLeft(char compass, int gerbilX, int gerbilY) {
+
+		switch(compass) {
+		case'n':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilNorth);
+		break;
+		case's':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilSouth);
+		break;
+		case'w':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilWest);
+		break;
+		case'e':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilEast);
+		break;
+		}
+	}
+
+
 }
