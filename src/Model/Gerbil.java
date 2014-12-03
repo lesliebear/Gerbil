@@ -31,10 +31,10 @@ public class Gerbil implements Serializable{
 	 * 
 	 */
 	public Gerbil(){
-		this.frontX=14;
-		this.frontY=1;
-		this.currX=15;
-		this.currY=1;
+		this.frontX=1;
+		this.frontY=14;
+		this.currX=1;
+		this.currY=15;
 		compass = 'n';
 	}
 	
@@ -145,7 +145,5 @@ public class Gerbil implements Serializable{
 	
 	public char getCompass() {
 		return compass;
-	}
-	
+	}	
 }
-

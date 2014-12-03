@@ -3,6 +3,7 @@ package Control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Timer;
 
 import View.ErrorDialog;
 import View.Instructions;
@@ -130,7 +131,31 @@ public class ActionListenersControl {
 		
 		play.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+				Thread thread = new Thread() {
+					public void run() {
+						String[] instructions = controller.getTerminals();
+						for(int i = 0; i < instructions.length; i++) {
+							if(instructions[i].equals("turn left")) {
+								controller.turnLeft(controller.tempgerbil);
+								play.showTurnLeft(controller.tempgerbil.getCompass(), controller.tempgerbil.getY(), controller.tempgerbil.getX());
+							}
+							else if(instructions[i].equals("move")) {
+								play.showMove(controller.tempgerbil.getY(), controller.tempgerbil.getX(), controller.tempgerbil.getFrontY(), controller.tempgerbil.getFrontX(), controller.tempgerbil.getCompass(), controller.tempgrid[controller.tempgerbil.getY()][controller.tempgerbil.getX()]);
+								controller.moveForward(controller.tempgerbil);
+							}
+							else {
+								controller.eat(controller.tempgerbil.getFrontY(), controller.tempgerbil.getX());
+							}
+							try {
+								sleep(1000);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
+				};
+				thread.start();
 			}	
 		});
 

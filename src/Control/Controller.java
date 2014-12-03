@@ -40,8 +40,8 @@ public class Controller {
 	
 	public static ArrayList<String> userDefined = new ArrayList<String>();
 
-	char[][] tempgrid= new char[17][17];
-	Gerbil tempgerbil= new Gerbil();
+	char[][] tempgrid;//= new char[17][17];
+	Gerbil tempgerbil;//= new Gerbil();
 	boolean isFunction=false;
 
 	/**assumes, returns, exceptions**/
@@ -54,41 +54,18 @@ public class Controller {
 
 	}
 
-	public void runProgram() {
-		
-		
-	}
 	
-	public void terminalAction(String[] instructions) {
-		
-		for(int i = 0; i < instructions.length; i++) {
-			if(instructions[i].equals("turn left")) {
-				turnLeft(tempgerbil);
-				play.showTurnLeft(tempgerbil.getCompass(), tempgerbil.getFrontX(), tempgerbil.getFrontY());
-			}
-			else if(instructions[i].equals("move")) {
-				play.showMove(tempgerbil.getX(), tempgerbil.getY(), tempgerbil.getFrontX(), tempgerbil.getFrontY(), tempgerbil.getCompass());
-				moveForward(tempgerbil);
-			}
-			else {
-				
-			}
-			try {
-				Thread.sleep(1000);
-			} catch(Exception ex) {
-				
-			}
-		}
-	}
 	/**
 	 * initializes temp grid by copying values of game grid
 	 */
 	public void initTempGrid(){
-		for(int i=0; i<17; i++){
+		tempgrid = gamePlaying.getGrid().getGridRepresentation();
+		tempgerbil = gamePlaying.getGerbil();
+		/*for(int i=0; i<17; i++){
 			for(int j=0; j<17; j++){
 				tempgrid[i][j]= gamePlaying.getGrid().getSquareContent(i, j);
 			}
-		}
+		}*/
 	}
 
 
@@ -979,12 +956,25 @@ public class Controller {
 		if(gamePlaying.getGrid().getSquareContent(gerbil.getFrontY(), gerbil.getFrontX())=='w'){
 			return false;
 		}
+		//tempgrid[tempgerbil.getX()][tempgerbil.getX()] = '0';
 		int diffX = gerbil.getFrontX()-gerbil.getX();
 		int diffY = gerbil.getFrontY()-gerbil.getY();
 		gerbil.setX(gerbil.getFrontX());
 		gerbil.setY(gerbil.getFrontY());
 		gerbil.setFrontX(gerbil.getFrontX()+diffX); //resets frontX and y accordingly
 		gerbil.setFrontY(gerbil.getFrontY()+diffY);
+		if(tempgrid[tempgerbil.getX()][tempgerbil.getX()] == 'a') {
+			tempgrid[tempgerbil.getX()][tempgerbil.getX()] = '1';
+		}
+		else if (tempgrid[tempgerbil.getX()][tempgerbil.getX()] == 'p') {
+			tempgrid[tempgerbil.getX()][tempgerbil.getX()] = '2';
+		}
+		else if(tempgrid[tempgerbil.getX()][tempgerbil.getX()] == 'k') {
+			tempgrid[tempgerbil.getX()][tempgerbil.getX()] = '3';
+		}
+		else {
+			tempgrid[tempgerbil.getX()][tempgerbil.getX()] = 'g';
+		}
 		return true;
 	}
 
@@ -1045,10 +1035,10 @@ public class Controller {
 	 */
 	public boolean eat(int x, int y){
 		//create pointer to grid
-		if(tempgrid[y][x]=='k' //if food
-				|| tempgrid[y][x]=='p'
-				|| tempgrid[y][x]=='a'){
-			tempgrid[y][x]='0'; //eat
+		if(tempgrid[y][x]=='1' //if food
+				|| tempgrid[y][x]=='2'
+				|| tempgrid[y][x]=='3'){
+			tempgrid[y][x]='g'; //eat
 			return true;
 		}
 		//will need grid from Grid.java
@@ -1164,7 +1154,12 @@ public class Controller {
 	+	 *DELETE THIS CODE LATER/////////////////
 	+	*/
 	public String[] getTerminals(){ 
-		String[] terminals= new String[41];
+		
+		//String[] terminals = new String[1];
+		//terminals[0] = "turn left";
+		//terminals[1] = "turn left";
+		//terminals[2] = "move";
+		String[] terminals= new String[43];
 		terminals[0]= "move";
 		terminals[1]= "turn left";
 		terminals[2]="turn left";
@@ -1175,19 +1170,19 @@ public class Controller {
 		terminals[7]= "turn left";
 		terminals[8]="move";
 		terminals[9]="move";
-		terminals[10]="turn right";
-		terminals[11]="move";
-		terminals[12]="eat";
+		terminals[10]="turn left";
+		terminals[11]="turn left";
+		terminals[12]="turn left";
 		terminals[13]="move";
-		terminals[14]="move";
+		terminals[14]="eat";
 		terminals[15]="move";
-		terminals[16]="eat";
+		terminals[16]="move";
 		terminals[17]="move";
-		terminals[18]="move";
-		terminals[19]="eat";
-		terminals[20]="turn left";
-		terminals[21]="move";
-		terminals[22]="move";
+		terminals[18]="eat";
+		terminals[19]="move";
+		terminals[20]="move";
+		terminals[21]="eat";
+		terminals[22]="turn left";
 		terminals[23]="move";
 		terminals[24]="move";
 		terminals[25]="move";
@@ -1197,17 +1192,17 @@ public class Controller {
 		terminals[29]="move";
 		terminals[30]="move";
 		terminals[31]="move";
-		terminals[32]="turn left";
-		terminals[33]="turn left";
+		terminals[32]="move";
+		terminals[33]="move";
 		terminals[34]="turn left";
-		terminals[35]="move";
-		terminals[36]="move";
+		terminals[35]="turn left";
+		terminals[36]="turn left";
 		terminals[37]="move";
-		terminals[38]="eat";
+		terminals[38]="move";
 		terminals[39]="move";
-		terminals[40]="move";
-
+		terminals[40]="eat";
+		terminals[41]="move";
+		terminals[42]="move";
 		return terminals;
 	}
-
 }

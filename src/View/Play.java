@@ -605,14 +605,20 @@ public class Play extends Screen{
 		userFunctionsDD.addActionListener(listener);
 	}
 	
-	public void showEat() {
-		
-		
-	}
 	
-	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass) {
+	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass, char spot) {
 		
-		gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imageGrass);
+		switch(spot) {
+			case'1':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imageApple);
+					break;
+			case'2':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imagePear);
+					break;
+			case'3':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imagePumpkin);
+					break;
+			case'g':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imageGrass);
+					break;
+		}
+		
 		switch(compass) {
 		case'n':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilNorth);
 				break;
