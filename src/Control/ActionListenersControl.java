@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import View.ErrorDialog;
 import View.Instructions;
 import View.Main;
 import View.Play;
@@ -17,10 +18,17 @@ public class ActionListenersControl {
 	PlayOptions playOptions;
 	Instructions instructions;
 	UserFunction userFunction;
+	ErrorDialog errorDialog;
 	public static Controller controller;
 	
-	//int selectedIndexPlayScreen = Play.playcodeList.getSelectedIndex();
-	//int selectedIndexOther;
+	int selectedIndexPlayScreen; /*Code list*/
+	
+	/*ComboBoxes*/
+	static int selectedIndexConditionals;
+	static int selectedIndexGivenFunctions;
+	static int selectedIndexUserFunctions;
+	
+	int selectedIndexOther;
 	
 	public ActionListenersControl(){
 		controller = new Controller();
@@ -28,6 +36,9 @@ public class ActionListenersControl {
 		playOptions = new PlayOptions();
 		instructions = new Instructions();
 		userFunction = new UserFunction();
+		errorDialog = new ErrorDialog();
+		errorDialog.hide();
+		
 		Play.setNewGrid(controller.gamePlaying.getGrid().getGridRepresentation());
 		play = new Play();
 		initEventHandlers();
@@ -43,6 +54,7 @@ public class ActionListenersControl {
 		addInstructionsEventHandlers();
 		addPlayEventHandlers();
 		addUserFunctionEventHandlers();
+		addErrorDialogEventHandlers();
 	}
 	
 	/**
@@ -174,22 +186,28 @@ public class ActionListenersControl {
 		/**JComboBoxes**/
 		play.addConditionalsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+				//Play.playcodeList
 				ArrayList<String> temp = new ArrayList<String>();
 				
-				
+				selectedIndexConditionals = Play.conditionalsDD.getSelectedIndex();
 			}	
 		});
 		
 		play.addGivenFunctionsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
+				selectedIndexGivenFunctions = Play.givenFunctionsDD.getSelectedIndex();
+				
+				if(Play.instructions.get(0) == "Begin"){
+					errorDialog.errorL.setText("Cannot insert here");
+					errorDialog.show();
+				}
 			}	
 		});
 		
 		play.addUserFunctionsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+				selectedIndexUserFunctions = Play.givenFunctionsDD.getSelectedIndex();
 			}	
 		});
 	}
@@ -208,9 +226,17 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				//System.out.println(UserFunction.conditionalDropdown.getText());
 				Controller.userDefined.add(UserFunction.conditionalDropdown.getText());
-				play.refresh();
+				play.refreshUserFunctions();
 				play.show();
 				userFunction.hide();
+			}
+		});
+	}
+	
+	private void addErrorDialogEventHandlers() {
+		errorDialog.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				errorDialog.hide();
 			}
 		});
 	}

@@ -17,9 +17,10 @@ import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.ComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -37,8 +38,9 @@ import Control.ActionListenersControl;
  */
 public class Play extends Screen{
 	
-	String[] instructions = {"move", "move", "move", "turnleft", "turnleft", "turnleft"};
-
+	public static ArrayList<String> instructions;
+	static DefaultListModel model;
+	
 	private static JFrame frame;
 	
 	/**Panels**/
@@ -67,10 +69,10 @@ public class Play extends Screen{
 	/**Lower Panel Components**/
 	private static JButton createFunctionB;
 	private static JButton deleteFunctionB;
-	private static JComboBox conditionalsDD;
-	private static JComboBox givenFunctionsDD;
-	private static JComboBox userFunctionsDD;
-	private static JComboBox checksDD;
+	public static JComboBox conditionalsDD;
+	public static JComboBox givenFunctionsDD;
+	public static JComboBox userFunctionsDD;
+	public static JComboBox checksDD;
 	
 	private static JLabel conditionalStatementsL;
 	private static JLabel givenFunctionsL;
@@ -87,6 +89,11 @@ public class Play extends Screen{
 	 * Constructor that creates all necessary GUI components.
 	 */
 	public Play() {
+		instructions = new ArrayList<String>();
+		instructions.add(0, "Begin");
+		instructions.add(1, "End");
+		instructions.add(2, " ");
+		
 		try {
 			imageApple = new ImageIcon(ImageIO.read(new File("apple icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));
 	        imagePear = new ImageIcon(ImageIO.read(new File("pear icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
@@ -308,7 +315,13 @@ public class Play extends Screen{
 		// EDIT: this should be called from somewhere else...
 		String placeholder[] = { "Begin","End"," "};
 		
-		playcodeList = new JList(placeholder);
+		model=new DefaultListModel();
+		
+		for(int i=0; i<instructions.size();i++){
+			model.addElement(instructions.get(i));
+		}
+		
+		playcodeList = new JList(model);
 		
 		playcodeList.addListSelectionListener(new ListSelectionListener() {
 
@@ -493,11 +506,19 @@ public class Play extends Screen{
 		
 	}	
 	
-	public void refresh(){
+	public void refreshUserFunctions(){
 		userFunctionsDD.removeAllItems();
 
 		for(String s: ActionListenersControl.controller.userDefined){
 			userFunctionsDD.addItem(s);
+		}
+	}
+	
+	public void refreshCodeList(){
+		model.clear();
+		
+		for(int i=0; i<instructions.size();i++){
+			model.addElement(instructions.get(i));
 		}
 	}
 
