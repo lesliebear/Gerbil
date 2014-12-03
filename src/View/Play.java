@@ -75,7 +75,7 @@ public class Play extends Screen{
 	private static char[][] grid;
 	
 	/** Image icons of all the necessary pictures */
-	private static ImageIcon imageApple, imagePear, imageGrass, imagePumpkin, imageWall, imageGerbil, imageWater;
+	private static ImageIcon imageApple, imagePear, imageGrass, imagePumpkin, imageWall, imageGerbilEast, imageGerbilWest, imageGerbilNorth, imageGerbilSouth, imageWater;
 	
 	/**
 	 * Constructor that creates all necessary GUI components.
@@ -87,7 +87,10 @@ public class Play extends Screen{
 	        imageGrass = new ImageIcon(ImageIO.read(new File("grass icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
 	        imagePumpkin = new ImageIcon(ImageIO.read(new File("pumpkin.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
 	        imageWall = new ImageIcon(ImageIO.read(new File("wall icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageGerbil = new ImageIcon(ImageIO.read(new File("gerbil icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageGerbilEast = new ImageIcon(ImageIO.read(new File("gerbilEast.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageGerbilWest = new ImageIcon(ImageIO.read(new File("gerbilWest.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageGerbilNorth = new ImageIcon(ImageIO.read(new File("gerbilNorth.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageGerbilSouth = new ImageIcon(ImageIO.read(new File("gerbilSouth.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
 	        imageWater = new ImageIcon(ImageIO.read(new File("waterBottle.jpg")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
 	            
 	    } catch (Exception ex) {
@@ -328,13 +331,16 @@ public class Play extends Screen{
 							break;
 					case'p':gridBoxes[i][j].setIcon(imagePear);
 							break;
-					case'g':gridBoxes[i][j].setIcon(imageGerbil);
+					case'g':gridBoxes[i][j].setIcon(imageGerbilEast);
 							break;
 					case't':gridBoxes[i][j].setIcon(imageWater);
 				}
 				gridPanel.add(gridBoxes[i][j]);
 			}
 		}
+		gridBoxes[0][1].setIcon(imageGerbilNorth);
+		gridBoxes[0][2].setIcon(imageGerbilWest);
+		gridBoxes[0][3].setIcon(imageGerbilSouth);
 	}
 	
 	public static void setLowerComponents(){

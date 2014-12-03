@@ -48,7 +48,7 @@ public class Controller {
 
 	/**assumes, returns, exceptions**/
 	/**
-	 * Constructor
+	 * Constructors
 	 */
 	public Controller() {
 		initTempGrid();
