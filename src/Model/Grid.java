@@ -246,7 +246,7 @@ public class Grid implements Serializable{
 	 * Returns Grid to caller
 	 * @return Grid 
 	 */
-	public char[][] getGrid() {
+	public char[][] getGridRepresentation() {
 		return grid;
 	}
 }

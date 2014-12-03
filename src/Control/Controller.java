@@ -43,7 +43,7 @@ public class Controller {
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil();
 	boolean isFunction=false;
-	Grid grid;
+
 
 
 	/**assumes, returns, exceptions**/
@@ -51,7 +51,8 @@ public class Controller {
 	 * Constructor
 	 */
 	public Controller() {
-		grid= new Grid(17,17);
+		gamePlaying = new Game("Test");
+		
 	
 		//initTempGrid();
 	}
