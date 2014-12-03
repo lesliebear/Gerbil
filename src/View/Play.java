@@ -62,6 +62,7 @@ public class Play extends Screen{
 	
 	/**Lower Panel Components**/
 	private static JButton createFunctionB;
+	private static JButton deleteFunctionB;
 	private static JComboBox conditionalsDD;
 	private static JComboBox givenFunctionsDD;
 	private static JComboBox userFunctionsDD;
@@ -366,7 +367,30 @@ public class Play extends Screen{
 			}
 		};
 		
+		deleteFunctionB = new JButton(){
+			public void paint(Graphics g) {
+				this.setContentAreaFilled(false);
+				this.setBorderPainted(false);
+				Graphics2D g2d = (Graphics2D)g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				super.paint(g);
+				g2d.setColor(Color.WHITE);
+				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
+				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
+				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
+				FontRenderContext frc = new FontRenderContext(null, false, false);
+				Rectangle2D r = getFont().getStringBounds(getText(), frc);
+				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
+				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
+			}
+		};
+		
+		
 		createFunctionB.setText("Create Function");
+		deleteFunctionB.setText("Delete Function");
 		
 		// EDIT: this should come from something else...
 		String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
@@ -394,6 +418,12 @@ public class Play extends Screen{
 		gc.gridx=0;
 		gc.gridy=0;
 		lowerPanel.add(createFunctionB, gc);
+		
+		gc.fill = GridBagConstraints.HORIZONTAL;
+		gc.gridx=0;
+		gc.gridy=1;
+		lowerPanel.add(deleteFunctionB, gc);
+
 
 		gc.insets = new Insets(0,30,0,15);
 		
