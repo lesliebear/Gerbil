@@ -586,13 +586,35 @@ public class Play extends Screen{
 	
 	public void showEat() {
 		
-	}
-	
-	public void showMove() {
 		
 	}
 	
-	public void showTurnLeft() {
+	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass) {
 		
+		gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imageGrass);
+		switch(compass) {
+		case'n':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilNorth);
+				break;
+		case's':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilSouth);
+				break;
+		case'w':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilWest);
+				break;
+		case'e':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilEast);
+				break;
+		}
+	}
+	
+	public void showTurnLeft(char compass, int gerbilX, int gerbilY) {
+		
+		switch(compass) {
+			case'n':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilNorth);
+					break;
+			case's':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilSouth);
+					break;
+			case'w':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilWest);
+					break;
+			case'e':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilEast);
+					break;
+		}
 	}
 }

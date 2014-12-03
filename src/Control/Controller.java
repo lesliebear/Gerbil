@@ -63,8 +63,20 @@ public class Controller {
 		
 		for(int i = 0; i < instructions.length; i++) {
 			if(instructions[i].equals("turn left")) {
-				tempgerbil.setFrontX(i);
-				tempgerbil.setFrontY(i);
+				turnLeft(tempgerbil);
+				play.showTurnLeft(tempgerbil.getCompass(), tempgerbil.getFrontX(), tempgerbil.getFrontY());
+			}
+			else if(instructions[i].equals("move")) {
+				play.showMove(tempgerbil.getX(), tempgerbil.getY(), tempgerbil.getFrontX(), tempgerbil.getFrontY(), tempgerbil.getCompass());
+				moveForward(tempgerbil);
+			}
+			else {
+				
+			}
+			try {
+				Thread.sleep(1000);
+			} catch(Exception ex) {
+				
 			}
 		}
 	}
@@ -992,24 +1004,28 @@ public class Controller {
 		if(gerbil.getFrontX()==gerbil.getX() && gerbil.getFrontY()==gerbil.getY()+1){
 			gerbil.setFrontX(gerbil.getX()+1);
 			gerbil.setFrontY(gerbil.getY());
+			gerbil.setCompass('e');
 			return true;
 		}
 		//determine if gerbil is facing North --> will face West
 		if(gerbil.getFrontX()==gerbil.getX() && gerbil.getFrontY()==gerbil.getY()-1){
 			gerbil.setFrontX(gerbil.getX()-1);
 			gerbil.setFrontY(gerbil.getY());
+			gerbil.setCompass('w');
 			return true;
 		}
 		//determine if gerbil is facing East --> will face North
 		if(gerbil.getFrontX()==gerbil.getX()+1 && gerbil.getFrontY()==gerbil.getY()){
 			gerbil.setFrontX(gerbil.getX());
 			gerbil.setFrontY(gerbil.getY()-1);
+			gerbil.setCompass('n');
 			return true;
 		}
 		//determine if gerbil is facing West --> will face South
 		if(gerbil.getFrontX()==gerbil.getX()-1 && gerbil.getFrontY()==gerbil.getY()){
 			gerbil.setFrontX(gerbil.getX());
 			gerbil.setFrontY(gerbil.getY()+1);
+			gerbil.setCompass('s');
 			return true;
 		}
 
