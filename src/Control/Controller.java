@@ -1,7 +1,5 @@
 package Control;
 
-import View.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -16,8 +14,8 @@ import Model.Block;
 import Model.Function;
 import Model.Game;
 import Model.Gerbil;
-import Model.Grid;
 import Model.User;
+import View.Play;
 
 /**
  * Controller class will make all necessary modifications to data in order to send it to the control. 
@@ -39,8 +37,8 @@ public class Controller {
 	Play play;
 	ArrayList<String> finalblocks= new ArrayList<String>();
 	HashMap<Integer,Boolean> visited;
-	HashMap<Integer,Block> userCodingTemp;
-	Block userCodingNow = null;
+	
+	public static ArrayList<String> userDefined = new ArrayList<String>();
 
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil();
@@ -48,30 +46,14 @@ public class Controller {
 
 	/**assumes, returns, exceptions**/
 	/**
-	 * Constructors
+	 * Constructor
 	 */
 	public Controller() {
-		initTempGrid();
 		gamePlaying = new Game("Test");
+		initTempGrid();
+
 	}
-	
-	public void cancelBlock(int begin){
-		
-	}
-	
-	/**
-	 * First View calls this, and then when user has entered the information, they will call
-	 * finishCreateBlocks method if the user clicks ok, otherwise, click cancelBlock, if user clicks cancel
-	 * @param type Enumerated type of the object
-	 * @param begin 
-	 */
-	public void createBlocks(int type, int begin){
-		Block b = new Block();
-		b.setlineBegin(begin);
-		b.setType(type);
-		this.userCodingNow=b;
-	}
-	
+
 	/**
 	 * initializes temp grid by copying values of game grid
 	 */
@@ -531,7 +513,7 @@ public class Controller {
 		//Will not call other functions/classes
 
 
-	}	
+	}
 
 	/**
 	 * Will edit a block at a given index/position selected by the user with a newly 
@@ -556,7 +538,7 @@ public class Controller {
 		
 		//cascade here??
 		
-		if(!compileBlocks()){
+		if(!parseBlock(block)){
 			//ERROR
 		}
 		
@@ -576,19 +558,10 @@ public class Controller {
 	 * @return true/false; false if failure to delete, true if deletion succeeds
 	 */
 	public boolean deleteBlock(int pos){
-		Block b = searchForBlock(pos, gamePlaying.getBlocks()); //gets the block we want to delete
-		int currDiff = b.getlineEnd()-b.getlineBegin();
-		Block parent = b.getParent();
-		if(parent==null){ //no nesting level
-			gamePlaying.getBlocks().remove(pos);
-		}
-		cascadeNumberingChanges(pos,-1*currDiff, b);//MAKE SURE -1*currDIFF!!!!! 
-		//cascade first with negative number the then remove
-		parent.getNestedBlocks().remove(b.getlineBegin(), b);
 		return false;
 
 		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
-		//Question: should we have something that asks them if they want to delete = view asks for sure or not
+		//Question: should we have something that asks them if they want to delete
 		//if invalidates = do not delete code...
 
 
@@ -607,14 +580,14 @@ public class Controller {
 	 * @param b Block that we are adding
 	 * 
 	 */
-	public boolean insertBlock(HashMap<Integer,Block> nested,int pos, Block b){
+	public boolean insertToBlock(HashMap<Integer,Block> nested,int pos, Block b){
 		//find the block that has the line begin = pos and inserts b in the right place
 		//cascades the changes in line numbers 
 		ArrayList<Integer> keylist= new ArrayList<Integer>();
 		for(Entry<Integer,Block> entry: gamePlaying.getBlocks().entrySet()){
 			keylist.add(entry.getKey());
 		}
-		keylist= sortKeys(keylist);	
+		keylist= sortKeys(keylist);
 
 		int currdiff= keylist.get(keylist.size()-1)  -  keylist.get(0);
 		Block tempblock= gamePlaying.getBlocks().get(pos);
@@ -639,7 +612,7 @@ public class Controller {
 	 * @param b block to be inserted
 	 * @return false/ true; false if inserting the Block fails, true if it succeeds
 	 */
-	public void insertToBlock(int id, Block b){
+	public void insertBlock(int id, Block b){
 		Block parent = searchForBlock(id, gamePlaying.getBlocks()); //get parent since we know parent's line number
 		//note: even if the nested blocks has that key already, we need to move it down by calling this funciton again with b's begin+end 
 		if(parent.getNestedBlocks().keySet().contains(b.getlineBegin())){
@@ -648,7 +621,7 @@ public class Controller {
 			//Will call searchForBlock to find block of the given id and insert insert b to it
 			int currDiff = b.getlineEnd()-b.getlineBegin();
 			cascadeNumberingChanges(b.getlineBegin(),currDiff,b);
-			insertToBlock(b.getlineBegin()+b.getlineEnd(), temp);
+			insertBlock(b.getlineBegin()+b.getlineEnd(), temp);
 		}
 		parent.getNestedBlocks().put(b.getlineBegin(), b); 
 		//Will call searchForBlock to find block of the given id and insert insert b to it
@@ -1156,58 +1129,5 @@ public class Controller {
 		}
 		return -1;
 	}
-	
-	
-
-	/**
-	 *DELETE THIS CODE LATER/////////////////
-	*/
-	public String[] getTerminals(){ 
-		String[] terminals= new String[41];
-		terminals[0]= "move";
-		terminals[1]= "turn left";
-		terminals[2]="turn left";
-		terminals[3]="turn left";
-		terminals[4]= "move";
-		terminals[5]= "move";
-		terminals[6]= "move";
-		terminals[7]= "turn left";
-		terminals[8]="move";
-		terminals[9]="move";
-		terminals[10]="turn right";
-		terminals[11]="move";
-		terminals[12]="eat";
-		terminals[13]="move";
-		terminals[14]="move";
-		terminals[15]="move";
-		terminals[16]="eat";
-		terminals[17]="move";
-		terminals[18]="move";
-		terminals[19]="eat";
-		terminals[20]="turn left";
-		terminals[21]="move";
-		terminals[22]="move";
-		terminals[23]="move";
-		terminals[24]="move";
-		terminals[25]="move";
-		terminals[26]="move";
-		terminals[27]="move";
-		terminals[28]="move";
-		terminals[29]="move";
-		terminals[30]="move";
-		terminals[31]="move";
-		terminals[32]="turn left";
-		terminals[33]="turn left";
-		terminals[34]="turn left";
-		terminals[35]="move";
-		terminals[36]="move";
-		terminals[37]="move";
-		terminals[38]="eat";
-		terminals[39]="move";
-		terminals[40]="move";
-		
-		return terminals;
-	}
-	 
 
 }

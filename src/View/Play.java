@@ -13,13 +13,13 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 
 import javax.imageio.ImageIO;
+import javax.swing.ComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -28,6 +28,10 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import Control.ActionListenersControl;
 /**
  * This class creates a GUI for the Play screen.
  */
@@ -54,7 +58,7 @@ public class Play extends Screen{
 	private static JButton saveB;
 	
 	/**Left Panel Components**/
-	private static JList playcodeList;
+	public static JList playcodeList;
 	private static JScrollPane scrollpane;
 	
 	/**Grid Panel components**/
@@ -66,10 +70,12 @@ public class Play extends Screen{
 	private static JComboBox conditionalsDD;
 	private static JComboBox givenFunctionsDD;
 	private static JComboBox userFunctionsDD;
+	private static JComboBox checksDD;
 	
 	private static JLabel conditionalStatementsL;
 	private static JLabel givenFunctionsL;
 	private static JLabel userDefinedFunctionsL;
+	private static JLabel checksL;
 	
 	/** Gerbil grid representation */
 	private static char[][] grid;
@@ -108,7 +114,7 @@ public class Play extends Screen{
 	 */
 	protected static void createAndShowGUI() { 
 		frame = new JFrame("Play"); // EDIT: User defined game name?
-		
+	
 		setUpperComponents();
 		setLeftComponents();
 		setGridComponents();
@@ -300,11 +306,20 @@ public class Play extends Screen{
 		leftPanel.setPreferredSize(size);
 		
 		// EDIT: this should be called from somewhere else...
-		String placeholder[] = { "Begin","End","INSERT NEW" };
+		String placeholder[] = { "Begin","End"," "};
 		
 		playcodeList = new JList(placeholder);
-		scrollpane = new JScrollPane(playcodeList);
 		
+		playcodeList.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
+		scrollpane = new JScrollPane(playcodeList);
 		
 		leftPanel.setLayout(new BorderLayout());
 		leftPanel.add(scrollpane, BorderLayout.CENTER);
@@ -401,17 +416,20 @@ public class Play extends Screen{
 		// EDIT: this should come from something else...
 		String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
 		String[] functions = {"Move Forward", "Turn Left", "Eat"};
+		String [] checks = {"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
 		
 		conditionalsDD = new JComboBox(conditionals);
 		givenFunctionsDD = new JComboBox(functions);
 		
 		//userFunctionsDD = new JComboBox();
 		//userFunctionsDD.setModel(new DefaultComboBoxModel(arrayList.toArray()));
-		userFunctionsDD = new JComboBox();
+		userFunctionsDD = new JComboBox(ActionListenersControl.controller.userDefined.toArray());
+		checksDD = new JComboBox(checks);
 		
-		conditionalStatementsL = new JLabel("Conditional Statements");
+		conditionalStatementsL = new JLabel("<html>Conditional </br> Statements<html>");
 		givenFunctionsL = new JLabel("Given Functions");
-		userDefinedFunctionsL = new JLabel("User Defined Functions");
+		userDefinedFunctionsL = new JLabel("<html>User Functions</html>");
+		checksL = new JLabel("Checks");
 		
 		gc.fill = GridBagConstraints.BOTH;
 		gc.weightx = .70;
@@ -430,7 +448,7 @@ public class Play extends Screen{
 		gc.gridy=1;
 		lowerPanel.add(deleteFunctionB, gc);
 
-		gc.insets = new Insets(20,30,0,15);
+		gc.insets = new Insets(20,30,0,30);
 		
 		gc.gridheight= 1;
 		/*Labels*/
@@ -446,7 +464,11 @@ public class Play extends Screen{
 		gc.gridy=0;
 		lowerPanel.add(userDefinedFunctionsL, gc);
 		
-		gc.insets = new Insets(0,30,0,80);
+		gc.gridx=4;
+		gc.gridy=0;
+		lowerPanel.add(checksL, gc);
+		
+		//gc.insets = new Insets(0,30,0,80);
 		/*Dropdowns*/
 		gc.gridx=1;
 		gc.gridy=1;
@@ -459,6 +481,10 @@ public class Play extends Screen{
 		gc.gridx=3;
 		gc.gridy=1;
 		lowerPanel.add(userFunctionsDD, gc);
+		
+		gc.gridx=4;
+		gc.gridy=1;
+		lowerPanel.add(checksDD, gc);
 	}
 	
 	/**
@@ -468,6 +494,14 @@ public class Play extends Screen{
 	protected void createScreen() {	
 		
 	}	
+	
+	public void refresh(){
+		userFunctionsDD.removeAllItems();
+
+		for(String s: ActionListenersControl.controller.userDefined){
+			userFunctionsDD.addItem(s);
+		}
+	}
 
 	/**
 	 * Shows the screen.
@@ -533,10 +567,10 @@ public class Play extends Screen{
 		createFunctionB.addActionListener(listener);
 	}
 	
-	/**Code List**/
-	//public void addCodeListSelectionListener(ActionListener listener) {
-		//codeList.addListSelectionListener(listener);
-	//}
+	/**Code List/
+	public void addCodeListSelectionListener(ActionListener listener) {
+		playcodeList.addListSelectionListener(listener);
+	}**/
 	
 	/**JComboBoxes**/
 	public void addConditionalsListSelectionListener(ActionListener listener) {
@@ -550,6 +584,5 @@ public class Play extends Screen{
 	
 	public void addUserFunctionsListSelectionListener(ActionListener listener) {
 		userFunctionsDD.addActionListener(listener);
-
 	}
 }
