@@ -161,7 +161,7 @@ public class DeleteFunction extends Screen{
 		frame.setMinimumSize(dimension);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		frame.setVisible(false);
 	}
 
 	/**

@@ -3,24 +3,27 @@ package Control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import View.Instructions;
-import View.Main;
-import View.Play;
-import View.PlayOptions;
+import View.*;
 
 public class ActionListenersControl {
 	Main main;
 	Play play;
 	PlayOptions playOptions;
 	Instructions instructions;
+	UserFunction userFunction;
+	Controller controller;
 	
 	public ActionListenersControl(){
-		Instructions instructions = new Instructions();
-		Play play = new Play();
-		//DeleteFunction df = new DeleteFunction();
-		//Main main = new Main();
-		//playOptions = new PlayOptions();
-		//initEventHandlers();
+		controller = new Controller();
+		main = new Main();
+		playOptions = new PlayOptions();
+		instructions = new Instructions();
+		userFunction = new UserFunction();
+		Play.setNewGrid(controller.grid.getGrid());
+		play = new Play();
+		initEventHandlers();
+		
+
 	}
 	/**
 	 * Sets up event handlers for each screen
@@ -29,6 +32,9 @@ public class ActionListenersControl {
 		
 		addMainEventHandlers();
 		addPlayOptionsEventHandlers();
+		addInstructionsEventHandlers();
+		addPlayEventHandlers();
+		addUserFunctionEventHandlers();
 	}
 	
 	/**
@@ -44,12 +50,13 @@ public class ActionListenersControl {
 		});
 		main.addInstructionsEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+				instructions.show();
+				main.hide();
 			}
 		});
 		main.addExitEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					
+				System.exit(0);
 			}
 		});
 	}
@@ -60,23 +67,33 @@ public class ActionListenersControl {
 	private void addPlayOptionsEventHandlers() {
 		
 		playOptions.addLoadGameEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 			
 			}	
 		});
 		playOptions.addNewGameEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			
+			public void actionPerformed(ActionEvent e) {
+				play.show();
+				playOptions.hide();
 			}	
 		});
 		playOptions.addBackEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				main.show();
 				playOptions.hide();
 			}
 		});
 	}
 	
+	private void addInstructionsEventHandlers() {
+		
+		instructions.addBackEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				instructions.hide();
+				main.show();
+			}		
+		});
+	}
 	
 	
 	/**
@@ -86,7 +103,8 @@ public class ActionListenersControl {
 		/**Button Listeners**/
 		play.addMenuEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+				playOptions.show();
+				play.hide();
 			}	
 		});
 		
@@ -134,7 +152,8 @@ public class ActionListenersControl {
 		
 		play.addCreateFunctionEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+				userFunction.show();
+				play.hide();
 			}	
 		});
 		
@@ -160,6 +179,16 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 			
 			}	
+		});
+	}
+	
+	private void addUserFunctionEventHandlers() {
+		userFunction.addBackEventHandler(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				play.show();
+				userFunction.hide();
+			}
 		});
 	}
 }
