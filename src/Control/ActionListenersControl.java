@@ -2,15 +2,8 @@ package Control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Timer;
 
-import View.ErrorDialog;
-import View.Instructions;
-import View.Main;
-import View.Play;
-import View.PlayOptions;
-import View.UserFunction;
+import View.*;
 
 public class ActionListenersControl {
 	
@@ -20,6 +13,7 @@ public class ActionListenersControl {
 	Instructions instructions;
 	UserFunction userFunction;
 	ErrorDialog errorDialog;
+	Finish finish;
 	public static Controller controller;
 	
 	int selectedIndexPlayScreen; /*Code list*/
@@ -42,6 +36,7 @@ public class ActionListenersControl {
 		instructions = new Instructions();
 		userFunction = new UserFunction();
 		errorDialog = new ErrorDialog();
+		finish = new Finish();
 		errorDialog.hide();
 
 		Play.setNewGrid(controller.gamePlaying.getGrid().getGridRepresentation());
@@ -134,7 +129,6 @@ public class ActionListenersControl {
 
 		play.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				Thread thread = new Thread() {
 					public void run() {
 						String[] instructions = controller.getTerminals();
@@ -144,14 +138,17 @@ public class ActionListenersControl {
 								play.showTurnLeft(controller.tempgerbil.getCompass(), controller.tempgerbil.getY(), controller.tempgerbil.getX());
 							}
 							else if(instructions[i].equals("move")) {
-								play.showMove(controller.tempgerbil.getY(), controller.tempgerbil.getX(), controller.tempgerbil.getFrontY(), controller.tempgerbil.getFrontX(), controller.tempgerbil.getCompass(), controller.tempgrid[controller.tempgerbil.getY()][controller.tempgerbil.getX()]);
+								int currX = controller.tempgerbil.getX();
+								int currY = controller.tempgerbil.getY();
 								controller.moveForward(controller.tempgerbil);
+								play.showMove(currY, currX, controller.tempgerbil.getY(), controller.tempgerbil.getX(), controller.tempgerbil.getCompass(), controller.tempgrid[currY][currX]);
+								
 							}
-							else {
-								controller.eat(controller.tempgerbil.getFrontY(), controller.tempgerbil.getX());
+							else if(instructions[i].equals("eat")) {
+								controller.eat(controller.tempgerbil.getFrontX(), controller.tempgerbil.getY());
 							}
 							try {
-								sleep(1000);
+								sleep(500);
 							} catch (InterruptedException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -160,7 +157,7 @@ public class ActionListenersControl {
 					}
 				};
 				thread.start();
-			}	
+			}
 		});
 
 		play.addStopEventHandler(new ActionListener() {
