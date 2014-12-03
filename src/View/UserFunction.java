@@ -11,6 +11,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
@@ -39,6 +40,8 @@ public class UserFunction extends Screen{
 	JLabel conditionalsL = new JLabel("Conditional Statements"); 	
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
 	JLabel userDefinedL = new JLabel("User Defined Functions");
+	
+	static JFrame frame;
 	
 	JButton ifB;
 	JButton elseB;
@@ -460,7 +463,7 @@ public class UserFunction extends Screen{
 	 */
 	protected static void createAndShowGUI() { 
 
-		JFrame frame = new JFrame("Function");
+		frame = new JFrame("Function");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.setLayout(new GridBagLayout());
@@ -479,7 +482,8 @@ public class UserFunction extends Screen{
 		
 		frame.pack();
 		frame.setResizable(false);
-		frame.setVisible(true);
+		frame.setVisible(false);
+		frame.setLocationRelativeTo(null);
 	}
 
 	public JComponent getLeftComponent() {
@@ -495,28 +499,37 @@ public class UserFunction extends Screen{
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
+	/**
+	 * Shows the screen.
+	 * 
+	 */
 	public void show() {
-		// TODO Auto-generated method stub
-		
+		frame.setVisible(true);
 	}
-
-	@Override
+	
+	/**
+	 * Hides the screen.
+	 * 
+	 */
 	public void hide() {
-		// TODO Auto-generated method stub
-		
+		frame.setVisible(false);
 	}
 
 	@Override
 	public void enable() {
-		// TODO Auto-generated method stub
-		
+		frame.setEnabled(true);
 	}
 
 	@Override
 	public void disable() {
-		// TODO Auto-generated method stub
-		
+		frame.setEnabled(false);
+	}
+	
+	public void addBackEventHandler(ActionListener listener) {
+		cancelB.addActionListener(listener);
+	}
+	
+	public void addOkEventHandler(ActionListener listener) {
+		okB.addActionListener(listener);
 	}
 }

@@ -139,7 +139,8 @@ public class Play extends Screen{
 		frame.setResizable(false);
 		//frame.setMinimumSize(new Dimension(875, 150));
 		frame.pack();
-		frame.setVisible(true);
+		frame.setVisible(false);
+		frame.setLocationRelativeTo(null);
 	}
 	
 	public static void setUpperComponents(){

@@ -43,6 +43,7 @@ public class Controller {
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil();
 	boolean isFunction=false;
+	Grid grid;
 
 
 	/**assumes, returns, exceptions**/
@@ -50,13 +51,8 @@ public class Controller {
 	 * Constructor
 	 */
 	public Controller() {
-		Grid grid= new Grid(17,17);
-		Play.setNewGrid(grid.getGrid());
-		Play play = new Play();
-		Main main = new Main();
-		Instructions instr = new Instructions();
-		PlayOptions po = new PlayOptions();	
-		UserFunction uf = new UserFunction();
+		grid= new Grid(17,17);
+	
 		//initTempGrid();
 	}
 	
