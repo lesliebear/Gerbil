@@ -43,7 +43,6 @@ public class Play extends Screen{
 	private static JPanel gridPanel = new JPanel();
 	private static JPanel lowerPanel = new JPanel();
 	
-	
 	/**Upper Panel Components**/
 	private static JButton menuB;
 	private static JButton playB;
@@ -189,7 +188,7 @@ public class Play extends Screen{
 		Image  insertImg = insertIcon.getImage() ;   //width, height, type scaling
 		Image  insertNewimg =  insertImg.getScaledInstance( 110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
 		
-		insertB = new JButton(new ImageIcon( insertNewimg));
+		insertB = new JButton(new ImageIcon(insertNewimg));
 		insertB.setBorderPainted(false);
 		insertB.setFocusPainted(false);
 		insertB.setContentAreaFilled(true);
@@ -233,7 +232,7 @@ public class Play extends Screen{
 		Image  saveImg = saveIcon.getImage() ;   //width, height, type scaling
 		Image  saveNewimg =  saveImg.getScaledInstance(110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
 		
-		saveB = new JButton(new ImageIcon( saveNewimg));
+		saveB = new JButton(new ImageIcon(saveNewimg));
 		saveB.setBorderPainted(false);
 		saveB.setFocusPainted(false);
 		saveB.setContentAreaFilled(true);
@@ -297,10 +296,7 @@ public class Play extends Screen{
 		leftPanel.setPreferredSize(size);
 		
 		// EDIT: this should be called from somewhere else...
-		String placeholder[] = { "Begin", "Office", "Extended Family",
-		        "Company (US)", "Company (World)", "Team", "Will",
-		        "Birthday Card List", "High School", "Country", "Continent",
-		        "End", "............................INSERT NEW............................" };
+		String placeholder[] = { "Begin","End","INSERT NEW" };
 		
 		playcodeList = new JList(placeholder);
 		scrollpane = new JScrollPane(playcodeList);
@@ -373,11 +369,15 @@ public class Play extends Screen{
 		createFunctionB.setText("Create Function");
 		
 		// EDIT: this should come from something else...
-		String[] placeholder = { "Bird", "Cat", "Dog", "Rabbit", "Pig" };
+		String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
+		String[] functions = {"Move Forward", "Turn Left", "Eat"};
 		
-		conditionalsDD = new JComboBox(placeholder);
-		givenFunctionsDD = new JComboBox(placeholder);
-		userFunctionsDD = new JComboBox(placeholder);
+		conditionalsDD = new JComboBox(conditionals);
+		givenFunctionsDD = new JComboBox(functions);
+		
+		//userFunctionsDD = new JComboBox();
+		//userFunctionsDD.setModel(new DefaultComboBoxModel(arrayList.toArray()));
+		userFunctionsDD = new JComboBox();
 		
 		conditionalStatementsL = new JLabel("Conditional Statements");
 		givenFunctionsL = new JLabel("Given Functions");
