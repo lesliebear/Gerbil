@@ -1,4 +1,4 @@
-	package Control;
+package Control;
 
 import View.*;
 
@@ -56,7 +56,7 @@ public class Controller {
 	
 		//initTempGrid();
 	}
-	
+
 	/**
 	 * initializes temp grid by copying values of game grid
 	 */
@@ -67,7 +67,7 @@ public class Controller {
 			}
 		}
 	}
-	
+
 
 	/**Creates and initializes built in functions
 	 * 
@@ -98,8 +98,8 @@ public class Controller {
 		functions.add(turnLeft);
 	}
 
-	
-	
+
+
 	/**
 	 * Creates and stores the builtIn functions in the controller
 	 * 
@@ -222,9 +222,9 @@ public class Controller {
 			}
 		}
 		return false;
-		
+
 	}
-	
+
 	/**
 	 * goes through user coded blocks and stores commands in arraylist finalblocks in the order and
 	 * number of times they will be executed for play
@@ -255,216 +255,216 @@ public class Controller {
 			}
 		}
 	}
-	
- 	/**
- 	 * Will parse blocks created by the user and store in ArrayList finalblocks for play
- 	 * 
- 	 * @assumes Block data may be incorrect
- 	 * @exception none
- 	 * @postcondition stored ArrayList of order of commands "move,eat,turnleft"
- 	 * 
- 	 * @return false/true; false if parsing fails, true if parsing succeeds
- 	 */
- 	public boolean parseBlock(Block block){
- 		if(!isFunction){
- 			int num= block.getlineBegin();
- 	 		visited.remove(block.getlineBegin());
- 	 		visited.put(num,true);
- 		}
- 		HashMap<Integer,Block> nestedblocklist= block.getNestedBlocks();
- 		//initialize and sort nested keys
- 		ArrayList<Integer> nestedkeylist= new ArrayList<Integer>();
- 		for(Entry<Integer,Block> entry: nestedblocklist.entrySet()){
+
+	/**
+	 * Will parse blocks created by the user and store in ArrayList finalblocks for play
+	 * 
+	 * @assumes Block data may be incorrect
+	 * @exception none
+	 * @postcondition stored ArrayList of order of commands "move,eat,turnleft"
+	 * 
+	 * @return false/true; false if parsing fails, true if parsing succeeds
+	 */
+	public boolean parseBlock(Block block){
+		if(!isFunction){
+			int num= block.getlineBegin();
+			visited.remove(block.getlineBegin());
+			visited.put(num,true);
+		}
+		HashMap<Integer,Block> nestedblocklist= block.getNestedBlocks();
+		//initialize and sort nested keys
+		ArrayList<Integer> nestedkeylist= new ArrayList<Integer>();
+		for(Entry<Integer,Block> entry: nestedblocklist.entrySet()){
 			nestedkeylist.add(entry.getKey());
 		}
- 		ArrayList<Integer> nestedsortedkeys= sortKeys(nestedkeylist);
+		ArrayList<Integer> nestedsortedkeys= sortKeys(nestedkeylist);
 
 
- 		String line= block.getCond();
- 		StringTokenizer st= new StringTokenizer(line);
+		String line= block.getCond();
+		StringTokenizer st= new StringTokenizer(line);
 
- 		if(block.getType()==3){//"if"
- 		 	if(block.getCond().equals("there's Wall Ahead")){
- 		 		if(isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
- 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 		 				Block nestedblock= nestedblocklist.get(i);
- 		 				parseBlock(nestedblock);
- 		 			}
- 		 			return true;
- 		 		}else{
- 		 			return true; 					
- 		 		}
- 		 	}else if(block.getCond().equals("there's Food")){
- 		 		if(isthereFood(tempgerbil.getX(),tempgerbil.getY())){
- 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 		 				Block nestedblock= nestedblocklist.get(i);
- 		 				parseBlock(nestedblock);
- 		 			}	
- 		 			return true;
- 		 		}else{
- 		 			return true;		
- 		 		}
- 		 	}else if(block.getCond().equals("there's No Wall Ahead")){
- 		 		if(!isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
- 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 		 				Block nestedblock= nestedblocklist.get(i);
- 		 				parseBlock(nestedblock);
- 		 			}
- 		 			return true;
- 		 		}else{
- 		 			return true;		
- 		 		}
- 		 				
- 		 	}else if(block.getCond().equals("there's No Food")){
- 		 		if(!isthereFood(tempgerbil.getX(),tempgerbil.getY())){
- 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 		 				Block nestedblock= nestedblocklist.get(i);
- 		 				parseBlock(nestedblock);
- 		 			}
- 		 			return true;
- 		 		}else{
- 		 			return true;		
- 		 		}
- 		 				
- 		 	}
- 		 	return false;
- 		 	}else if(block.getType()==5){//"else"
- 		 		for(int i=0; i<nestedsortedkeys.size(); i++){
-		 				Block nestedblock= nestedblocklist.get(i);
-		 				parseBlock(nestedblock);
-		 		}
- 		 		return true;
- 		 	}else if(block.getType()==4){//"else if"
- 		 		if(block.getCond().equals("there's Wall Ahead")){
- 	 		 		if(isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
- 	 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 	 		 				Block nestedblock= nestedblocklist.get(i);
- 	 		 				parseBlock(nestedblock);
- 	 		 			}
- 	 		 			return true;
- 	 		 		}else{
- 	 		 			return true; 					
- 	 		 		}
- 	 		 	}else if(block.getCond().equals("there's Food")){
- 	 		 		if(isthereFood(tempgerbil.getX(),tempgerbil.getY())){
- 	 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 	 		 				Block nestedblock= nestedblocklist.get(i);
- 	 		 				parseBlock(nestedblock);
- 	 		 			}
- 	 		 			return true;
- 	 		 		}else{
- 	 		 			return true;		
- 	 		 		}
- 	 		 	}else if(block.getCond().equals("there's No Wall Ahead")){
- 	 		 		if(!isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
- 	 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 	 		 				Block nestedblock= nestedblocklist.get(i);
- 	 		 				parseBlock(nestedblock);
- 	 		 			}	
- 	 		 			return true;
- 	 		 		}else{
- 	 		 			return true;		
- 	 		 		}
- 	 		 				
- 	 		 	}else if(block.getCond().equals("there's No Food")){
- 	 		 		if(!isthereFood(tempgerbil.getX(),tempgerbil.getY())){
- 	 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 	 		 				Block nestedblock= nestedblocklist.get(i);
- 	 		 				parseBlock(nestedblock);
- 	 		 			}	
- 	 		 			return true;
- 	 		 		}else{
- 	 		 			return true;		
- 	 		 		}
- 	 		 				
- 	 		 	}
- 		 		return false;
- 		 	}else if(block.getType()==6){//"while"
- 		 		if(block.getCond().equals("there's Wall Ahead")){
- 	 		 		while(isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
- 	 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 	 		 				Block nestedblock= nestedblocklist.get(i);
- 	 		 				parseBlock(nestedblock);
- 	 		 			}
- 	 		 		}
- 	 		 			return true; 					
- 	 		 	}else if(block.getCond().equals("there's Food")){
- 	 		 		while(isthereFood(tempgerbil.getX(),tempgerbil.getY())){
- 	 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 	 		 				Block nestedblock= nestedblocklist.get(i);
- 	 		 				parseBlock(nestedblock);
- 	 		 			}
- 	 		 		}
- 	 		 			return true;		
- 	 		 	}else if(block.getCond().equals("there's No Wall Ahead")){
- 	 		 		while(!isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
- 	 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 	 		 				Block nestedblock= nestedblocklist.get(i);
- 	 		 				parseBlock(nestedblock);
- 	 		 			}	
- 	 		 		}
- 	 		 			return true;			
- 	 		 	}else if(block.getCond().equals("there's No Food")){
- 	 		 		while(!isthereFood(tempgerbil.getX(),tempgerbil.getY())){
- 	 		 			for(int i=0; i<nestedsortedkeys.size(); i++){
- 	 		 				Block nestedblock= nestedblocklist.get(i);
- 	 		 				parseBlock(nestedblock);
- 	 		 			}	
- 	 		 		}
- 	 		 			return true;					
- 	 		 	}
- 		 		return false;	
- 		 	}else if(block.getType()==7){//"repeat"
- 		 		int repeat= block.getRepeat();
- 		 		if(repeat==-1){
- 		 			return false;
- 		 		}
- 		 		for(int i=0; i<repeat; i++){
- 		 			for(int j=0; j<nestedsortedkeys.size(); j++){
-		 				Block nestedblock= nestedblocklist.get(j);
-		 				parseBlock(nestedblock);
- 		 			}
- 		 			return true;
- 		 		}
- 		 		return true;	
- 		 	}else if(block.getType()==0){//"eat"
- 				finalblocks.add("Eat");
- 				return true;
- 	 		}else if(block.getType()==1){//"turn left"
- 		 		finalblocks.add("Turn Left");	
- 		 		return true;
- 	 		}else if(block.getType()==2){//"move forward"
- 		 		finalblocks.add("Move Forward");	
- 		 		return true;
- 		 	}else{
- 		 		String key= st.nextToken();
- 		 		while(st.hasMoreTokens()){
- 		 			key= key + " " + st.nextToken();
- 		 		}
- 		 			
- 		 		HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
- 				for(Entry<Integer, Function> entry: functionlist.entrySet()){
- 					if(entry.getValue().getName().equals(key)){
- 						HashMap<Integer,Block> fnestedblocklist= entry.getValue().getBlockInstructions();
- 						ArrayList<Integer> fnestedkeylist= new ArrayList<Integer>();
- 				 		for(Entry<Integer,Block> fentry: fnestedblocklist.entrySet()){
- 							fnestedkeylist.add(fentry.getKey());
- 						}
- 				 		ArrayList<Integer> fnestedsortedkeys= sortKeys(fnestedkeylist);				
- 	 		 			for(int i=0; i<fnestedsortedkeys.size(); i++){
- 	 		 				Block fnestedblock= fnestedblocklist.get(i);
- 	 		 				this.isFunction=true;
- 	 		 				parseBlock(fnestedblock);
- 	 		 			}
- 	 		 			this.isFunction=false;
- 	 		 			return true;
- 					}
- 				}
- 				return false;
- 		 	}
-		
+		if(block.getType()==3){//"if"
+			if(block.getCond().equals("there's Wall Ahead")){
+				if(isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}
+					return true;
+				}else{
+					return true; 					
+				}
+			}else if(block.getCond().equals("there's Food")){
+				if(isthereFood(tempgerbil.getX(),tempgerbil.getY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}	
+					return true;
+				}else{
+					return true;		
+				}
+			}else if(block.getCond().equals("there's No Wall Ahead")){
+				if(!isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}
+					return true;
+				}else{
+					return true;		
+				}
+
+			}else if(block.getCond().equals("there's No Food")){
+				if(!isthereFood(tempgerbil.getX(),tempgerbil.getY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}
+					return true;
+				}else{
+					return true;		
+				}
+
+			}
+			return false;
+		}else if(block.getType()==5){//"else"
+			for(int i=0; i<nestedsortedkeys.size(); i++){
+				Block nestedblock= nestedblocklist.get(i);
+				parseBlock(nestedblock);
+			}
+			return true;
+		}else if(block.getType()==4){//"else if"
+			if(block.getCond().equals("there's Wall Ahead")){
+				if(isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}
+					return true;
+				}else{
+					return true; 					
+				}
+			}else if(block.getCond().equals("there's Food")){
+				if(isthereFood(tempgerbil.getX(),tempgerbil.getY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}
+					return true;
+				}else{
+					return true;		
+				}
+			}else if(block.getCond().equals("there's No Wall Ahead")){
+				if(!isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}	
+					return true;
+				}else{
+					return true;		
+				}
+
+			}else if(block.getCond().equals("there's No Food")){
+				if(!isthereFood(tempgerbil.getX(),tempgerbil.getY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}	
+					return true;
+				}else{
+					return true;		
+				}
+
+			}
+			return false;
+		}else if(block.getType()==6){//"while"
+			if(block.getCond().equals("there's Wall Ahead")){
+				while(isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}
+				}
+				return true; 					
+			}else if(block.getCond().equals("there's Food")){
+				while(isthereFood(tempgerbil.getX(),tempgerbil.getY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}
+				}
+				return true;		
+			}else if(block.getCond().equals("there's No Wall Ahead")){
+				while(!isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}	
+				}
+				return true;			
+			}else if(block.getCond().equals("there's No Food")){
+				while(!isthereFood(tempgerbil.getX(),tempgerbil.getY())){
+					for(int i=0; i<nestedsortedkeys.size(); i++){
+						Block nestedblock= nestedblocklist.get(i);
+						parseBlock(nestedblock);
+					}	
+				}
+				return true;					
+			}
+			return false;	
+		}else if(block.getType()==7){//"repeat"
+			int repeat= block.getRepeat();
+			if(repeat==-1){
+				return false;
+			}
+			for(int i=0; i<repeat; i++){
+				for(int j=0; j<nestedsortedkeys.size(); j++){
+					Block nestedblock= nestedblocklist.get(j);
+					parseBlock(nestedblock);
+				}
+				return true;
+			}
+			return true;	
+		}else if(block.getType()==0){//"eat"
+			finalblocks.add("Eat");
+			return true;
+		}else if(block.getType()==1){//"turn left"
+			finalblocks.add("Turn Left");	
+			return true;
+		}else if(block.getType()==2){//"move forward"
+			finalblocks.add("Move Forward");	
+			return true;
+		}else{
+			String key= st.nextToken();
+			while(st.hasMoreTokens()){
+				key= key + " " + st.nextToken();
+			}
+
+			HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
+			for(Entry<Integer, Function> entry: functionlist.entrySet()){
+				if(entry.getValue().getName().equals(key)){
+					HashMap<Integer,Block> fnestedblocklist= entry.getValue().getBlockInstructions();
+					ArrayList<Integer> fnestedkeylist= new ArrayList<Integer>();
+					for(Entry<Integer,Block> fentry: fnestedblocklist.entrySet()){
+						fnestedkeylist.add(fentry.getKey());
+					}
+					ArrayList<Integer> fnestedsortedkeys= sortKeys(fnestedkeylist);				
+					for(int i=0; i<fnestedsortedkeys.size(); i++){
+						Block fnestedblock= fnestedblocklist.get(i);
+						this.isFunction=true;
+						parseBlock(fnestedblock);
+					}
+					this.isFunction=false;
+					return true;
+				}
+			}
+			return false;
+		}
+
 		//Will not call other functions/classes
-		
+
 
 	}
 
@@ -489,6 +489,7 @@ public class Controller {
 			//ERROR
 		}
 		//Will call parseBlock - must reparse the block to see if valid change has been made
+		//will cascade the changes if prevDiff != currDiff (see cascadeNumberingChanges method)
 	}	
 
 
@@ -511,7 +512,7 @@ public class Controller {
 
 
 	}
-	
+
 
 
 	/**
@@ -534,53 +535,80 @@ public class Controller {
 			keylist.add(entry.getKey());
 		}
 		keylist= sortKeys(keylist);
-		
+
 		int currdiff= keylist.get(keylist.size()-1)  -  keylist.get(0);
 		Block tempblock= gamePlaying.getBlocks().get(pos);
 		cascadeNumberingChanges(pos, currdiff, tempblock);
-		
+
 		gamePlaying.getBlocks().put(pos, b);
-		
-		
-		return false;
-	}
-	
-	/**
-	 * Will insert instruction to an already created Block of code
-	 * 
-	 * @assumes Block to insert to exists, instruction may be invalid
-	 * @exception none
-	 * @postcondition Inserts instruction to Block
-	 * 
-	 * @param id id of Block to add instruction to 
-	 * @param instruction instruction to be added to Block
-	 * @return false/true; false if inserting the instruction to the given block fails, true if it succeeds
-	 */
-	public boolean insertToBlock(int id, Block b){
-		Block parent = searchForBlock(id, gamePlaying.getBlocks()); //get parent since we know parent's line number
-		parent.getNestedBlocks().put(b.getlineBegin(), b); 
-		//Will call searchForBlock to find block of the given id and insert insert b to it
-		//will cascade the changes if prevDiff != currDiff (see cascadeNumberingChanges method)
+
+
 		return false;
 	}
 
 	/**
+	 * Will insert instruction to an already created Block of code
+	 * 
+	 * @assumes Block to insert to exists and has been validated. 
+	 * @exception none
+	 * @postcondition Inserts instruction to Block
+	 * 
+	 * @param id id of Block to add instruction to so it is parent's line begin
+	 * @param b Block that we are adding
+	 * 
+	 */
+	public void insertToBlock(int id, Block b){
+		Block parent = searchForBlock(id, gamePlaying.getBlocks()); //get parent since we know parent's line number
+		//note: even if the nested blocks has that key already, we need to move it down by calling this funciton again with b's begin+end 
+		if(parent.getNestedBlocks().keySet().contains(b.getlineBegin())){
+			Block temp = parent.getNestedBlocks().get(b.getlineBegin());
+			parent.getNestedBlocks().put(b.getlineBegin(), b); 
+			//Will call searchForBlock to find block of the given id and insert insert b to it
+			int currDiff = b.getlineEnd()-b.getlineBegin();
+			cascadeNumberingChanges(b.getlineBegin(),currDiff,b);
+			insertToBlock(b.getlineBegin()+b.getlineEnd(), temp);
+		}
+		parent.getNestedBlocks().put(b.getlineBegin(), b); 
+		//Will call searchForBlock to find block of the given id and insert insert b to it
+		int currDiff = b.getlineEnd()-b.getlineBegin();
+		cascadeNumberingChanges(b.getlineBegin(),currDiff,b);
+	}
+
+	/**
 	 * Figures out the given line number's parent block's line number = good for highlighting
+	 * 
+	 * @assumes the line number exists so we search for it and then see the type to return parent or current block
 	 * @param id line number clicked upon
 	 * @param b the hashmap of blocks to search for the parent block
 	 * @return the parent block is returned
 	 */
-	public Block getParentLineNumber(int line, HashMap<Integer,Block> blocks){
-		if (blocks.keySet().isEmpty()){ //cannot get into it more
-			return null;
+	public Block getHighlighting(int line, HashMap<Integer,Block> blocks){
+		Block b = searchForBlock(line, blocks); //gets the block the line is in
+		int type = b.getType();
+		int lineNum = b.getlineBegin();
+		if(lineNum==line && type>2){ //cannot return terminals like that so go down to continue computation
+				return b;
 		}
-		
+		//eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), function(8),
+		if(type>=0 && type <=2){ //[0-2]
+			//terminal so see if they belong in larger block. no parent, then return them
+			if (b.getParent()!=null){
+				return b.getParent();
+			}else{
+				return b;
+			}
+		}else if (type==3|| type==6 || type==7 || type==8){
+			return b;
+		}else if(type==4 || type==5){ //else if and else so return their parent which should be "if"
+			return b.getParent();
+		}
+
 		return null;
 	}
-	
+
 	/**
 	 * Cascades the line number changes to the rest of the code after insert, delete or edit
-	 * @param prevDiff Previous difference in end - start
+	 * @param lineBegin The block that was changed, inserted, deleted etc's line begin. 
 	 * @param currDiff Current/new difference in end - start
 	 * @param b Block that the change occured in
 	 * @assumes have checked if prevDiff==currDiff to make sure we don't use this method if it is
@@ -602,7 +630,7 @@ public class Controller {
 		}
 		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
 	}
-	
+
 	/**
 	 * Searches for a Block by id field
 	 * 
@@ -987,7 +1015,7 @@ public class Controller {
 		return true;
 	}
 
-	
+
 	/**
 	 * This method will return a list of instructions of the current game
 	 * @return List of instructions
