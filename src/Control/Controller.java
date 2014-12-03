@@ -49,8 +49,8 @@ public class Controller {
 	 * Constructor
 	 */
 	public Controller() {
-		initTempGrid();
 		gamePlaying = new Game("Test");
+		initTempGrid();
 
 	}
 
