@@ -97,5 +97,4 @@ public class ErrorDialog extends Screen{
 		frame.setEnabled(false);
 		
 	}
-
 }

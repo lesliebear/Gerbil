@@ -343,7 +343,7 @@ public class Play extends Screen{
 		
 		Dimension size= lowerPanel.getPreferredSize();
 		size.width =875;
-		size.height = 65; //65
+		size.height =  125; 
 		lowerPanel.setPreferredSize(size);
 		
 		createFunctionB = new JButton(){
@@ -412,7 +412,7 @@ public class Play extends Screen{
 		gc.weighty = 1;
 		gc.gridheight= 2;
 		//top, left, botton, right <- insets
-		gc.insets = new Insets(0,30,0,80);
+		gc.insets = new Insets(0,30,10,80);
 
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.gridx=0;
@@ -424,8 +424,7 @@ public class Play extends Screen{
 		gc.gridy=1;
 		lowerPanel.add(deleteFunctionB, gc);
 
-
-		gc.insets = new Insets(0,30,0,15);
+		gc.insets = new Insets(20,30,0,15);
 		
 		gc.gridheight= 1;
 		/*Labels*/
@@ -441,6 +440,7 @@ public class Play extends Screen{
 		gc.gridy=0;
 		lowerPanel.add(userDefinedFunctionsL, gc);
 		
+		gc.insets = new Insets(0,30,0,80);
 		/*Dropdowns*/
 		gc.gridx=1;
 		gc.gridy=1;
