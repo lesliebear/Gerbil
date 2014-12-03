@@ -16,13 +16,15 @@ public class ActionListenersControl {
 	
 	public ActionListenersControl(){
 		controller = new Controller();
+		main = new Main();
 		playOptions = new PlayOptions();
 		instructions = new Instructions();
 		userFunction = new UserFunction();
 		Play.setNewGrid(controller.gamePlaying.getGrid().getGridRepresentation());
 		play = new Play();
 		initEventHandlers();
-		main = new Main();
+		main.show();
+		
 		
 
 	}
