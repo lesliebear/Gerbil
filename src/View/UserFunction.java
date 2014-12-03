@@ -14,7 +14,9 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -25,11 +27,16 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import Control.Controller;
+
 /**
  * This class creates a GUI for the Function Screen.
  *
  */
 public class UserFunction extends Screen{
+	public static ArrayList<String> instructions;
+	static DefaultListModel model;
+	
 	/**LHS and RHS panels**/
 	static JPanel leftPanel = new JPanel(); 
 	static JPanel rightPanel = new JPanel();
@@ -39,6 +46,7 @@ public class UserFunction extends Screen{
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
 	JLabel userDefinedL = new JLabel("User Defined Functions");
 	JLabel checksL = new JLabel("Checks");
+	JLabel numsL = new JLabel("Numbers");
 	
 	static JFrame frame;
 	
@@ -49,12 +57,13 @@ public class UserFunction extends Screen{
 	JButton repeatB;
 	
 	JButton moveAheadB;
-	JButton turnLeftB;
+	public static JButton turnLeftB;
 	JButton eatB;
 	
 	JComboBox userDefinedFunctions; /*get from control*/ 
 	
 	public static JComboBox checksDD;
+	public static JComboBox numsDD;
 	
 	/**Left side panel: labels, buttons, other**/
 	JLabel ifL = new JLabel("If :");
@@ -68,21 +77,21 @@ public class UserFunction extends Screen{
 	
 	public static JTextField conditionalDropdown; /*get from control*/ 
 	
-	private static JList functionsCodeList;
+	public static JList functionsCodeList;
 	private static JScrollPane scrollpane;
 	
 	/** Repeat stuff **/
 	JLabel repeatL= new JLabel("Function Name:"); 
-	String[] nums = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"};
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	JComboBox repeatNumTimes = new JComboBox(nums);
 
-	
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 */
 	public UserFunction () {
+		instructions = new ArrayList<String>();
+		instructions.add(0, "Begin");
+		instructions.add(1, "End");
+		instructions.add(2, " ");
+		
 		createButtons();
 		setRightComponents();
 		setLeftComponents();
@@ -327,15 +336,16 @@ public class UserFunction extends Screen{
 		userDefinedL.setFont(new Font("Serif", Font.BOLD, 18));
 		checksL.setFont(new Font("Serif", Font.BOLD, 18));
 		
-		String[] drop = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"}; // EDIT : should come from somewhere else
-		userDefinedFunctions = new JComboBox(drop);
+		userDefinedFunctions = new JComboBox(Controller.userDefined.toArray());
 		
 		String [] checks = {"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
 		checksDD = new JComboBox(checks);
 		
+		String[] nums =  {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"};
+		numsDD = new JComboBox(nums);
 		
 		//top, left, botton, right <- insets
-		gc.insets = new Insets(1,0,10,5);
+		gc.insets = new Insets(1,0,5,5);
 	      
 		//gc.anchor = GridBagConstraints.WEST;
 		
@@ -397,6 +407,15 @@ public class UserFunction extends Screen{
 		gc.gridx = 0;
 		gc.gridy = 14;
 		rightPanel.add(checksDD, gc); //placeholder */
+		
+		gc.gridx = 0;
+		gc.gridy = 15;
+		rightPanel.add(numsL,gc);
+		
+		gc.gridx = 0;
+		gc.gridy = 16;
+		rightPanel.add(numsDD, gc);
+		
 	}
 	
 	public void setLeftComponents(){
@@ -411,11 +430,17 @@ public class UserFunction extends Screen{
 		
 		bodyL.setFont(new Font("Serif", Font.BOLD, 20));
 		
-		// EDIT: this should be called from somewhere else...
-		String placeholder[] = { "Begin",
-		        "End",  " " };
+
 		
-		functionsCodeList = new JList(placeholder);
+		model=new DefaultListModel();
+		
+		for(int i=0; i<instructions.size();i++){
+			model.addElement(instructions.get(i));
+		}
+		
+		functionsCodeList = new JList(model);
+		functionsCodeList.setSelectedIndex(functionsCodeList.getModel().getSize()-2);
+		
 		scrollpane = new JScrollPane(functionsCodeList);
 		
 		functionsCodeList.setVisibleRowCount(20);
@@ -546,4 +571,19 @@ public class UserFunction extends Screen{
 	public void addOkEventHandler(ActionListener listener) {
 		okB.addActionListener(listener);
 	}
+	
+	public void addTurnLeftEventHandler(ActionListener listener) {
+		turnLeftB.addActionListener(listener);
+	}
+	
+	public static void refreshCodeList(){
+		model.clear();
+		
+		for(int i=0; i<instructions.size();i++){
+			model.addElement(instructions.get(i));
+		}
+		
+		functionsCodeList.setSelectedIndex(functionsCodeList.getModel().getSize()-1);
+	}
+	
 }

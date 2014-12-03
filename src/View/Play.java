@@ -73,11 +73,13 @@ public class Play extends Screen{
 	public static JComboBox givenFunctionsDD;
 	public static JComboBox userFunctionsDD;
 	public static JComboBox checksDD;
+	public static JComboBox numsDD;
 	
 	private static JLabel conditionalStatementsL;
 	private static JLabel givenFunctionsL;
 	private static JLabel userDefinedFunctionsL;
 	private static JLabel checksL;
+	private static JLabel numsL;
 	
 	/** Gerbil grid representation */
 	private static char[][] grid;
@@ -322,6 +324,11 @@ public class Play extends Screen{
 		}
 		
 		playcodeList = new JList(model);
+		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-2);
+	
+		if(beforeIsConditional()){
+			disableAllPlayDDButChecks();
+		}
 		
 		playcodeList.addListSelectionListener(new ListSelectionListener() {
 
@@ -428,6 +435,8 @@ public class Play extends Screen{
 		String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
 		String[] functions = {"Move Forward", "Turn Left", "Eat"};
 		String [] checks = {"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
+		String[] nums = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"};
+		
 		
 		conditionalsDD = new JComboBox(conditionals);
 		givenFunctionsDD = new JComboBox(functions);
@@ -436,11 +445,13 @@ public class Play extends Screen{
 		//userFunctionsDD.setModel(new DefaultComboBoxModel(arrayList.toArray()));
 		userFunctionsDD = new JComboBox(ActionListenersControl.controller.userDefined.toArray());
 		checksDD = new JComboBox(checks);
+		numsDD = new JComboBox(nums);
 		
 		conditionalStatementsL = new JLabel("<html>Conditional </br> Statements<html>");
 		givenFunctionsL = new JLabel("Given Functions");
 		userDefinedFunctionsL = new JLabel("<html>User Functions</html>");
 		checksL = new JLabel("Checks");
+		numsL = new JLabel("Numbers");
 		
 		gc.fill = GridBagConstraints.BOTH;
 		gc.weightx = .70;
@@ -459,7 +470,7 @@ public class Play extends Screen{
 		gc.gridy=1;
 		lowerPanel.add(deleteFunctionB, gc);
 
-		gc.insets = new Insets(20,30,0,30);
+		gc.insets = new Insets(20,30,0,0);
 		
 		gc.gridheight= 1;
 		/*Labels*/
@@ -479,6 +490,10 @@ public class Play extends Screen{
 		gc.gridy=0;
 		lowerPanel.add(checksL, gc);
 		
+		gc.gridx=5;
+		gc.gridy=0;
+		lowerPanel.add(numsL, gc);
+		
 		//gc.insets = new Insets(0,30,0,80);
 		/*Dropdowns*/
 		gc.gridx=1;
@@ -496,6 +511,11 @@ public class Play extends Screen{
 		gc.gridx=4;
 		gc.gridy=1;
 		lowerPanel.add(checksDD, gc);
+		
+		gc.gridx=5;
+		gc.gridy=1;
+		lowerPanel.add(numsDD, gc);
+	
 	}
 	
 	/**
@@ -514,11 +534,17 @@ public class Play extends Screen{
 		}
 	}
 	
-	public void refreshCodeList(){
+	public static void refreshCodeList(){
 		model.clear();
 		
 		for(int i=0; i<instructions.size();i++){
 			model.addElement(instructions.get(i));
+		}
+		
+		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
+		
+		if(beforeIsConditional()){
+			disableAllPlayDDButChecks();
 		}
 	}
 
@@ -605,20 +631,17 @@ public class Play extends Screen{
 		userFunctionsDD.addActionListener(listener);
 	}
 	
+	public void addChecksFunctionsListSelectionListener(ActionListener listener) {
+		checksDD.addActionListener(listener);
+	}
 	
-	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass, char spot) {
+	public void addNumsFunctionsListSelectionListener(ActionListener listener) {
+		numsDD.addActionListener(listener);
+	}
+	
+	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass) {
 		
-		switch(spot) {
-			case'1':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imageApple);
-					break;
-			case'2':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imagePear);
-					break;
-			case'3':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imagePumpkin);
-					break;
-			case'g':gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imageGrass);
-					break;
-		}
-		
+		gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imageGrass);
 		switch(compass) {
 		case'n':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilNorth);
 				break;
@@ -643,5 +666,58 @@ public class Play extends Screen{
 			case'e':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilEast);
 					break;
 		}
+	}
+	
+	public static boolean beforeIsConditional(){
+		if(Play.instructions.get(Play.playcodeList.getSelectedIndex()-1) == "If"){
+			return true;
+		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()-1) == "Else if"){
+			return true;
+		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()-1) == "Else"){
+			return true;
+		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()-1) == "While"){
+			return true;
+		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()-1) == "Repeat"){
+			return true;
+		}
+
+		return false;
+	}
+	
+	public static boolean conditionalSelected(){ 
+		if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "If"){
+			return true;
+		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Else if"){
+			return true;
+		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Else"){
+			return true;
+		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "While"){
+			return true;
+		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Repeat"){
+			return true;
+		}
+
+		return false;
+	}
+	
+	public static void disableAllPlayDDButChecks(){
+		Play.conditionalsDD.setEnabled(false);
+		Play.givenFunctionsDD.setEnabled(false);
+		Play.userFunctionsDD.setEnabled(false);
+		Play.numsDD.setEnabled(false);
+	}
+
+	public static void enableAllPlayDD(){
+		Play.conditionalsDD.setEnabled(true);
+		Play.givenFunctionsDD.setEnabled(true);
+		Play.userFunctionsDD.setEnabled(true);
+		Play.checksDD.setEnabled(true);
+		Play.numsDD.setEnabled(true);
+	}
+	
+	public static void clearAll(){
+		model.clear();
+		model.addElement("End");
+		model.addElement("Begin");
 	}
 }
