@@ -13,7 +13,7 @@ public class ActionListenersControl {
 	Instructions instructions;
 	UserFunction userFunction;
 	ErrorDialog errorDialog;
-	Finish finish;
+	//Finish finish;
 	public static Controller controller;
 	
 	int selectedIndexPlayScreen; /*Code list*/
@@ -36,7 +36,7 @@ public class ActionListenersControl {
 		instructions = new Instructions();
 		userFunction = new UserFunction();
 		errorDialog = new ErrorDialog();
-		finish = new Finish();
+	//	finish = new Finish();
 		errorDialog.hide();
 
 		Play.setNewGrid(controller.gamePlaying.getGrid().getGridRepresentation());
