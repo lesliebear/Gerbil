@@ -18,6 +18,8 @@ public class Gerbil implements Serializable{
 	/**The row of the gerbil (used to help find the location and direction gerbil is facing)*/
 	private int currY;
 	
+	private char compass;
+	
 	/**
 	 * Constructor for the object. The gerbil starts off in the bottom left corner of grid 
 	 * and facing upwards. ^
@@ -33,6 +35,7 @@ public class Gerbil implements Serializable{
 		this.frontY=1;
 		this.currX=15;
 		this.currY=1;
+		compass = 'n';
 	}
 	
 	/**
@@ -134,6 +137,14 @@ public class Gerbil implements Serializable{
 	 */
 	public void setFrontY(int i){
 		this.frontY= i;
+	}
+	
+	public void setCompass(char c) {
+		compass = c;
+	}
+	
+	public char getCompass() {
+		return compass;
 	}
 	
 }
