@@ -19,8 +19,8 @@ public class ActionListenersControl {
 	UserFunction userFunction;
 	public static Controller controller;
 	
-	int selectedIndexPlayScreen = Play.playcodeList.getSelectedIndex();
-	int selectedIndexOther;
+	//int selectedIndexPlayScreen = Play.playcodeList.getSelectedIndex();
+	//int selectedIndexOther;
 	
 	public ActionListenersControl(){
 		controller = new Controller();
@@ -174,7 +174,7 @@ public class ActionListenersControl {
 		/**JComboBoxes**/
 		play.addConditionalsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Play.playcodeList
+			
 				ArrayList<String> temp = new ArrayList<String>();
 				
 				

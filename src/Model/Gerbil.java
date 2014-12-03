@@ -29,7 +29,7 @@ public class Gerbil implements Serializable{
 	 * 
 	 */
 	public Gerbil(){
-		this.frontX = 14;
+		this.frontX=14;
 		this.frontY=1;
 		this.currX=15;
 		this.currY=1;
