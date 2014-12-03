@@ -38,6 +38,7 @@ public class UserFunction extends Screen{
 	JLabel conditionalsL = new JLabel("Conditional Statements"); 	
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
 	JLabel userDefinedL = new JLabel("User Defined Functions");
+	JLabel checksL = new JLabel("Checks");
 	
 	static JFrame frame;
 	
@@ -52,6 +53,8 @@ public class UserFunction extends Screen{
 	JButton eatB;
 	
 	JComboBox userDefinedFunctions; /*get from control*/ 
+	
+	public static JComboBox checksDD;
 	
 	/**Left side panel: labels, buttons, other**/
 	JLabel ifL = new JLabel("If :");
@@ -322,12 +325,17 @@ public class UserFunction extends Screen{
 		conditionalsL.setFont(new Font("Serif", Font.BOLD, 18)); 
 		givenFunctionsL.setFont(new Font("Serif", Font.BOLD, 18)); 
 		userDefinedL.setFont(new Font("Serif", Font.BOLD, 18));
+		checksL.setFont(new Font("Serif", Font.BOLD, 18));
 		
 		String[] drop = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"}; // EDIT : should come from somewhere else
 		userDefinedFunctions = new JComboBox(drop);
 		
+		String [] checks = {"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
+		checksDD = new JComboBox(checks);
+		
+		
 		//top, left, botton, right <- insets
-		gc.insets = new Insets(5,0,10,5);
+		gc.insets = new Insets(1,0,10,5);
 	      
 		//gc.anchor = GridBagConstraints.WEST;
 		
@@ -359,6 +367,7 @@ public class UserFunction extends Screen{
 		gc.gridy = 7;
 		rightPanel.add(givenFunctionsL, gc);
 		
+		
 		gc.gridx = 0;
 		gc.gridy = 8;
 		rightPanel.add(moveAheadB, gc);
@@ -379,6 +388,15 @@ public class UserFunction extends Screen{
 		gc.gridx = 0;
 		gc.gridy = 12;
 		rightPanel.add(userDefinedFunctions, gc); //placeholder */
+		
+		
+		gc.gridx = 0;
+		gc.gridy = 13;
+		rightPanel.add(checksL, gc);
+		
+		gc.gridx = 0;
+		gc.gridy = 14;
+		rightPanel.add(checksDD, gc); //placeholder */
 	}
 	
 	public void setLeftComponents(){
@@ -409,8 +427,6 @@ public class UserFunction extends Screen{
 		
 		repeatL.setFont(new Font(null, Font.BOLD, 25));
 		leftPanel.add(repeatL, gc);
-		
-
 		
 		gc.insets = new Insets(10,0,0,20);
 
