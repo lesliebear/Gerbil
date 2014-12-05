@@ -41,18 +41,21 @@ public class Controller {
 	HashMap<Integer,Boolean> visited;
 	Block userCodingNow = null;
 	Block parent = null;
+	Gerbil runtimeGerbil= gamePlaying.getGerbil(); //Gerbil used for animation/runtime only
 
 	char[][] tempgrid= new char[17][17];
-	Gerbil tempgerbil= new Gerbil();
+	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
 	boolean isFunction=false;
+	
+	int countblocks=1;
 
 	/**assumes, returns, exceptions**/
 	/**
 	 * Constructors
 	 */
 	public Controller() {
-		initTempGrid();
 		gamePlaying = new Game("Test");
+		initTempGrid();
 	}
 
 	/**
@@ -70,7 +73,7 @@ public class Controller {
 			this.userCodingNow=null;//this is all that needs to be done here!
 		}else if(type=='e'){//finished coding for the block so put into the correct spot
 			parent = findCurrParent(begin, this.parent); //finds the inner most block that does not have line end
-			this.insertToBlock(begin, this.userCodingNow);
+			this.insertBlockToMain(begin, this.userCodingNow);
 			this.userCodingNow.setParent(parent);
 			this.userCodingNow.setLineEnd(begin+numLines);
 			int currType= this.userCodingNow.getType();
@@ -262,41 +265,45 @@ public class Controller {
 	 * compiling blocks (finalblocks arraylist) using tempgrid and tempgerbil
 	 * to show what is happening step by step
 	 * until error/ends at goal
-	 * @return true-if run was successful and reached water container, false-if run was not successful
-	 * 
+	 * @return int- (0)-win the game 
+	 * (1)-error eating/no food on square trying to eat
+	 * (2)-error wall/cannot move forward bc there is wall
+	 * (3)-error turning left(this should not be able to happen/indicates problem in our code)
+	 * 		/or miscellaneous error on runBlocks()
 	 */
-	public boolean runBlocks(){
+	public int runBlocks(){
 		compileBlocks();
 		String command;
 		for(int i=0; i<finalblocks.size(); i++){
 			command=finalblocks.get(i);
 			if(command.equals("Eat")){
-				boolean eat= eat(tempgerbil.getX(), tempgerbil.getY());
+				boolean eat= eat(runtimeGerbil.getX(), runtimeGerbil.getY());
 				if(eat==false){
 					//errorEat() dialogue box??;
-					return false;
+					return 1;
 				}
 			}else if(command.equals("Turn Left")){
-				boolean turnleft= turnLeft(tempgerbil);
+				boolean turnleft= turnLeft(runtimeGerbil);
 				if(turnleft==false){
-					return false;
+					System.out.println("Error turning left");
+					return 3;
 				}
 			}else if(command.equals("Move Forward")){
-				boolean moveforward= moveForward(tempgerbil);
+				boolean moveforward= moveForward(runtimeGerbil);
 				if(moveforward==false){
 					//errorWall() dialogue box??
-					return false;
+					return 2;
 				}else{
-					if(isthereWater(tempgerbil.getX(), tempgerbil.getY())){
+					if(isthereWater(runtimeGerbil.getX(), runtimeGerbil.getY())){
 						//YOU WIN THE GAME dialogue box??
-						return true;
+						return 0;
 					}
 				}
 			}else{
-				return false;
+				return 3;
 			}
 		}
-		return false;
+		return 3;
 
 	}
 
@@ -308,6 +315,8 @@ public class Controller {
 	public boolean compileBlocks(){
 		//clears finalblocks arraylist in case it's not empty
 		finalblocks.clear();
+		//resets tempgrid and tempgerbil to original states
+		resetTempGrid();
 		HashMap<Integer,Block> blocklist= gamePlaying.getBlocks();
 		ArrayList<Integer> keylist= new ArrayList<Integer>();
 
@@ -328,8 +337,8 @@ public class Controller {
 				Block block= blocklist.get(i);
 				boolean success=parseBlock(block);
 				if(success==false){
-					return false;
-					//error in parsing
+					System.out.println("error in parsing");
+					return false;   //error in parsing
 				}
 			}
 		}
@@ -552,12 +561,15 @@ public class Controller {
 			return true;	
 		}else if(block.getType()==0){//"eat"
 			finalblocks.add("Eat");
+			eat(tempgerbil.getX(),tempgerbil.getY());
 			return true;
 		}else if(block.getType()==1){//"turn left"
-			finalblocks.add("Turn Left");	
+			finalblocks.add("Turn Left");
+			turnLeft(tempgerbil);
 			return true;
 		}else if(block.getType()==2){//"move forward"
-			finalblocks.add("Move Forward");	
+			finalblocks.add("Move Forward");
+			moveForward(tempgerbil);
 			return true;
 		}else{
 			String key= st.nextToken();
@@ -594,10 +606,11 @@ public class Controller {
 	}	
 
 	/**
-	 * Will edit a block at a given index/position selected by the user with a newly 
-	 * provided instruction 
+	 * Will edit a block at a given index/position selected by the user with a new
+	 * HashMap containing blocks of newly provided instruction 
 	 * 
-	 * @assumes Newly entered data may be invalid
+	 * @assumes Newly entered data must be valid/nested block instructions must be valid
+	 * 			based on guiding system
 	 * @exception none
 	 * @postcondition Will edit a block of data
 	 * 
@@ -606,24 +619,17 @@ public class Controller {
 	 * @return
 	 */
 	public void editBlock(int pos, HashMap<Integer,Block> instructionblocks){
-		HashMap<Integer,Block> blocklist= gamePlaying.getBlocks();
-		Block block=blocklist.get(pos);
+		Block b = searchForBlock(pos, gamePlaying.getBlocks()); //gets the block we want to edit
+		int prevdiff= b.getlineEnd()-b.getlineBegin()+1; //get prevdiff of block
 		//clear nested blocks and replace with new nested block instructions
-		block.getNestedBlocks().clear();
-		for(Entry<Integer,Block> entry: instructionblocks.entrySet()){
-			block.getNestedBlocks().put(entry.getKey(), entry.getValue());
+		b.setNestedBlocks(instructionblocks); //set block's nested blocks to new instructionblocks
+		int currdiff= b.getlineEnd()-b.getlineBegin()+1; //get new/currdiff of block
+		if(prevdiff!=currdiff){ //will cascade the changes if prevDiff != currDiff (see cascadeNumberingChanges method)
+			cascadeNumberingChanges(pos,currdiff,b);
 		}
-
-		//cascade here??
-
-		if(!parseBlock(block)){
-			//ERROR
-		}
-
-		//Will call parseBlock - must reparse the block to see if valid change has been made
-		//will cascade the changes if prevDiff != currDiff (see cascadeNumberingChanges method)
-	}	
-
+		return;
+	}
+	
 
 	/**
 	 * Will delete a block of code at a given index/position selected by the user 
@@ -637,21 +643,35 @@ public class Controller {
 	 */
 	public boolean deleteBlock(int pos){
 		Block b = searchForBlock(pos, gamePlaying.getBlocks()); //gets the block we want to delete
-		int currDiff = b.getlineEnd()-b.getlineBegin();
+		if(b==null){
+			return false; //failure to find block
+		}
+		//check if valid to delete(if block is of type"else", parent must be type"if/elseif")
+		//	(if block is of type "else if", parent must be type "if/elseif")
+		if(b.getType()==4 || b.getType()==5){
+			if(b.getParent().getType()!=3 && b.getParent().getType()!=4){
+				//ERROR can't delete, will make syntax invalid
+				return false;
+			}
+		}
+		
+		int currDiff = b.getlineEnd()-b.getlineBegin()+1;
 		Block parent = b.getParent();
+		
+		//cascade first with negative number the then remove
+		//UPDATE: new cascade method updates line numbers, and creates new hashmap for each
+		//		  level based on all existing blocks(before and after pos), so should delete first, then cascade
 		if(parent==null){ //no nesting level
 			gamePlaying.getBlocks().remove(pos);
+		}else{
+			parent.getNestedBlocks().remove(b.getlineBegin(), b);
 		}
 		cascadeNumberingChanges(pos,-1*currDiff, b);//MAKE SURE -1*currDIFF!!!!! 
-		//cascade first with negative number the then remove
-		parent.getNestedBlocks().remove(b.getlineBegin(), b);
-		return false;
 
+		return true;
 		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
 		//Question: should we have something that asks them if they want to delete = view asks for sure or not
 		//if invalidates = do not delete code...
-
-
 	}
 
 
@@ -663,27 +683,97 @@ public class Controller {
 	 * @exception none
 	 * @postcondition Inserts instruction to Block
 	 * 
-	 * @param id id of Block to add instruction to so it is parent's line begin
-	 * @param b Block that we are adding
+	 * @param key id/key/linebegin of Block to add instruction to
+	 * @param instruction nested block instructions to add to block with key
 	 * 
 	 */
-	public boolean insertBlock(HashMap<Integer,Block> nested,int pos, Block b){
-		//find the block that has the line begin = pos and inserts b in the right place
+	
+//ISN'T THIS THE SAME AS EDIT BLOCK??? USER CAN ONLY INSERT INSTRUCTION BY EDITING BLOCK
+	/*public boolean insertInstructionToBlock(int key, HashMap<Integer,Block> instruction){
+		//find the block that has the line begin = key and inserts instruction in the right place
 		//cascades the changes in line numbers 
-		ArrayList<Integer> keylist= new ArrayList<Integer>();
-		for(Entry<Integer,Block> entry: gamePlaying.getBlocks().entrySet()){
-			keylist.add(entry.getKey());
-		}
-		keylist= sortKeys(keylist);	
+		Block b = searchForBlock(key, gamePlaying.getBlocks()); //gets the block we want
+		
 
 		int currdiff= keylist.get(keylist.size()-1)  -  keylist.get(0);
-		Block tempblock= gamePlaying.getBlocks().get(pos);
-		cascadeNumberingChanges(pos, currdiff, tempblock);
+		Block tempblock= gamePlaying.getBlocks().get(key);
+		cascadeNumberingChanges(key, currdiff, tempblock);
 
-		gamePlaying.getBlocks().put(pos, b);
+		//gamePlaying.getBlocks().put(key, instruction);
 
 
 		return false;
+	}*/
+	
+	/**
+	 * Will insert a NEW block of code into a user specified index/position
+	 *
+	 * @assumes Index to insert block is valid
+	 * @exception none
+	 * @postcondition Inserts new block of code
+	 * 
+	 * @param nested HashMap to recurse on for nesting initial value is the one in gamePlaying
+	 * @param pos index/position of block to insert = it is the line number 
+	 * @param b block to be inserted
+	 * @return false/ true; false if inserting the Block fails, true if it succeeds
+	 */
+	public void insertBlockToMain(int id, Block b){
+		Block parent = findParentInMain(id);
+		Block reference = null;
+		if(parent==null){//no parents, parent is MAIN 
+			for(int key: gamePlaying.getBlocks().keySet()){
+				reference = gamePlaying.getBlocks().get(key);//find sibling block as reference when cascade
+				break;
+			}
+		}else{
+			for(int key: parent.getNestedBlocks().keySet()){
+				reference = parent.getNestedBlocks().get(key);//find sibling block as reference when cascade
+				break;
+			}
+		}
+		if(reference==null){
+			//no existing blocks in game
+			gamePlaying.getBlocks().put(id, b);
+			return;
+		}
+		int currdiff= this.countblocks; //number of blocks/lines in block to insert
+		this.countblocks=1; //reset countblocks
+		cascadeNumberingChanges(id,currdiff, reference);
+		//after cascade, should have a free spot in hashmap with key=id since moved original id block down to diff key
+		parent.getNestedBlocks().put(id, b);
+		
+	}
+	
+	/**
+	 * counts the total number of lines(blocks) in a block (including nested blocks)
+	 */
+	public void countBlocks(Block b){
+		if(b.getNestedBlocks().isEmpty()){
+			return;
+		}
+		for(int key: b.getNestedBlocks().keySet()){
+			this.countblocks++;
+			countBlocks(b.getNestedBlocks().get(key));
+		}
+	}
+	
+	/**
+	 * Search for possible parent of block to insert in MAIN
+	 * @param pos line number of block whose parent we are finding
+	 */
+	public Block findParentInMain(int pos){
+		int n=pos+1;
+		Block b;
+		while(n>0){
+			b= searchForBlock(n,gamePlaying.getBlocks());
+			if(b.getlineEnd()==pos && b.getlineEnd()-b.getlineBegin()!=0){
+				//return block found at n if block lineEnd==pos AND is not a function block
+				return b;
+			}
+			n=n-1; //traverse upwards in line numbers
+		}
+		//at this point, no parent was found, so no parent exists
+		return null;	
 	}
 
 
@@ -699,7 +789,7 @@ public class Controller {
 	 * @param b block to be inserted
 	 * @return false/ true; false if inserting the Block fails, true if it succeeds
 	 */
-	public void insertToBlock(int id, Block b){
+	/*public void insertToBlock(int id, Block b){
 		Block parent = searchForBlock(id, gamePlaying.getBlocks()); //get parent since we know parent's line number
 		//note: even if the nested blocks has that key already, we need to move it down by calling this funciton again with b's begin+end 
 		if(parent.getNestedBlocks().keySet().contains(b.getlineBegin())){
@@ -708,13 +798,13 @@ public class Controller {
 			//Will call searchForBlock to find block of the given id and insert insert b to it
 			int currDiff = b.getlineEnd()-b.getlineBegin();
 			cascadeNumberingChanges(b.getlineBegin(),currDiff,b);
-			insertToBlock(b.getlineBegin()+b.getlineEnd(), temp);
+			insertBlockToMain(b.getlineBegin()+b.getlineEnd(), temp);
 		}
 		parent.getNestedBlocks().put(b.getlineBegin(), b); 
 		//Will call searchForBlock to find block of the given id and insert insert b to it
 		int currDiff = b.getlineEnd()-b.getlineBegin();
 		cascadeNumberingChanges(b.getlineBegin(),currDiff,b);
-	}
+	}*/
 
 	/**
 	 * Figures out the given line number's parent block's line number = good for highlighting
@@ -747,7 +837,50 @@ public class Controller {
 
 		return null;
 	}
-
+	
+	
+	
+	/**
+	 * Cascades the line number changes to the rest of the code after insert, delete or edit
+	 * @param lineBegin The block that was changed, inserted, deleted etc's line begin. 
+	 * 			/IMPORTANT: lineBegin is the line number above SELECTED line number in view
+	 * @param currDiff Current/new difference in end - start
+	 * @param b Block that the change occurred in
+	 * @assumes have checked if prevDiff==currDiff to make sure we don't use this method if it is
+	 */
+	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b){
+		HashMap<Integer,Block> nb;
+		HashMap<Integer,Block> tempnb= new HashMap<Integer,Block>();
+		boolean lastBlocks=false;
+		if(b.getParent()==null){
+			nb= gamePlaying.getBlocks();
+			lastBlocks=true;
+		}else{
+			nb = b.getParent().getNestedBlocks();//get hashmap containing b and sister blocks
+		}
+		Block temp=null;
+		int tempDiff =0;
+		for(int key: nb.keySet()){
+			if (key>=lineBegin){ //cascade the difference to the blocks after b!
+				temp=nb.get(key); //get the object
+				tempDiff=temp.getlineEnd()-temp.getlineBegin(); //calculate the difference before hand
+				temp.setlineBegin(temp.getlineBegin()+currDiff); //change line begin with the difference
+				temp.setLineEnd(temp.getlineBegin()+tempDiff); //did this with temp diff just in case
+				tempnb.put(temp.getlineBegin(), temp); //put each updated block in temp hashmap with new key
+			}else{ //put each un-updated block in temp hashmap with original key
+				tempnb.put(key, nb.get(key));
+			}
+		} 
+		if(lastBlocks==true){
+			gamePlaying.setBlocks(tempnb); //replace original MAIN hashmap with new/updated MAIN hashmap
+			return; //no more higher level to get to
+		}
+		b.getParent().setNestedBlocks(tempnb); //replace original nested hashmap with new/updated nested hashmap
+		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
+	}
+	
+	
+	//original cascadeNumberingChanges
 	/**
 	 * Cascades the line number changes to the rest of the code after insert, delete or edit
 	 * @param lineBegin The block that was changed, inserted, deleted etc's line begin. 
@@ -755,11 +888,11 @@ public class Controller {
 	 * @param b Block that the change occured in
 	 * @assumes have checked if prevDiff==currDiff to make sure we don't use this method if it is
 	 */
-	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b){
+/*	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b){
 		if(b.getParent()==null){
 			return; //no more higher level to get to
 		}
-		HashMap<Integer,Block> nb = b.getParent().getNestedBlocks();
+		HashMap<Integer,Block> nb = b.getParent().getNestedBlocks();//get hashmap containing b and sister blocks
 		Block temp=null;
 		int tempDiff =0;
 		for(int key: nb.keySet()){
@@ -771,7 +904,7 @@ public class Controller {
 			}
 		}
 		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
-	}
+	}*/
 
 	/**
 	 * Searches for a Block by id field
@@ -786,15 +919,13 @@ public class Controller {
 	public Block searchForBlock(int id, HashMap<Integer,Block> block){
 		if(block.keySet().isEmpty()){ //no more nesting
 			return null;
-		}
+		}		
 		for (int curr: block.keySet()){
 			if(curr==id){
 				return block.get(curr);
 			}else if(block.get(curr).getlineBegin()<id && block.get(curr).getlineEnd()>id){ 
 				//the block contains the line number in it so search inside
 				return searchForBlock(id,block.get(curr).getNestedBlocks());
-			}else if (curr>id){ //too big and not before this
-				return null;
 			}
 		}
 		return null; //did not find.
@@ -1101,8 +1232,8 @@ public class Controller {
 	 * @exception none 
 	 * @postcondition removes item from (x,y) iff it exists
 	 * 
-	 * @param x pos of food to eat ; newX for gerbil
-	 * @param y pos of food to eat ; newY for gerbil
+	 * @param x pos of food to eat
+	 * @param y pos of food to eat
 	 * @return
 	 */
 	public boolean eat(int x, int y){
