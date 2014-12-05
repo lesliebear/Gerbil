@@ -16,7 +16,7 @@ public class Block implements Serializable{
 	HashMap<Integer, Block> nestedBlocks;
 	int functionNum=-1;
 	/** What the conditional is for while, if,else if*/
-	String conditional;// there's food, there's walls
+	String conditional;// there's Wall Ahead, there's Food, there's No Wall Ahead, there's No Food
 	/**Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), function(8), 'c','e'} to find type 
 	 * Basically tells u what the block corresponsds to*/
 	int type; 
@@ -182,6 +182,13 @@ public class Block implements Serializable{
 	 */
 	public HashMap<Integer,Block> getNestedBlocks(){
 		return this.nestedBlocks;
+	}
+	
+	/**
+	 * Sets new hashmap to nested blocks
+	 */
+	public void setNestedBlocks(HashMap<Integer,Block> newNestedBlocks){
+		this.nestedBlocks= newNestedBlocks;
 	}
 }
 
