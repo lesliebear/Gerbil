@@ -9,7 +9,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
@@ -24,11 +23,11 @@ public class ErrorDialog extends Screen{
 	private JFrame frame;
 	private JPanel panel;
 	private JButton backB;
-	public static JLabel errorL;
+	private JLabel errorL;
 	
-	public ErrorDialog() {
+	public ErrorDialog(String errorLabel) {
 		frame = new JFrame("Error");
-		errorL = new JLabel();
+		errorL = new JLabel(errorLabel);
 		panel = new JPanel();
 		
 		backB = new JButton("Back") {
@@ -97,9 +96,5 @@ public class ErrorDialog extends Screen{
 	public void disable() {
 		frame.setEnabled(false);
 		
-	}
-	
-	public void addOkEventHandler(ActionListener listener) {
-		backB.addActionListener(listener);
 	}
 }
