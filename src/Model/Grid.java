@@ -40,7 +40,7 @@ public class Grid implements Serializable{
 	 * @assumes random grid needs to be created
 	 * @exception none
 	 * @postcondition creates a grid we can access and can still play
-	 * 
+	 *  
 	 */
 	public Grid(int rows, int columns){	
 		grid = new char[rows][columns];

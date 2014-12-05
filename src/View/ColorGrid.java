@@ -22,7 +22,7 @@ public class ColorGrid extends JPanel {
             gridPanel.add(new ColorGridCell(row, col));
          }
       }
-
+ 
       setLayout(new GridBagLayout()); // to center component added
       add(gridPanel);
    }

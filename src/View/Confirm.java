@@ -16,7 +16,7 @@ public class Confirm extends Screen {
 		 
 	}
 
-	/**
+	/** 
 	 * Creates the screen by putting the GUI components together.
 	 * 
 	 */

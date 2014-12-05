@@ -41,7 +41,7 @@ public class Finish extends Screen {
 	 * 
 	 */
 	public Finish() {
-		createAndShowGUI();
+		createAndShowGUI(); 
 	}
 	
 	

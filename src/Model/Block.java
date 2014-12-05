@@ -9,7 +9,7 @@ import java.util.HashMap;
  * Note: the following is the type ennumeration
  * Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), �e�,�c�} 
  * @author Amulya
- */
+ */ 
 @SuppressWarnings("serial")
 public class Block implements Serializable{
 	/**Nested instructions go in this adjacency hashmap*/

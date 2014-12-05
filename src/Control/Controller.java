@@ -63,9 +63,16 @@ public class Controller {
 	 * First View calls this, and then when user has entered the information, they will call
 	 * finishCreateBlocks method if the user clicks ok, otherwise, click cancelBlock, if user clicks cancel
 	 * @param type Enumerated type of the object
-	 * @param begin 
+	 * @param begin The beginLine fo the object so the line number it starts at
+	 * @assumes if same function is called with c, the function was cancelled at some point so we ignore what we have currently 
+	 * @assuems if same function is called with e, the function was finished so we add to the list
 	 */
 	public void createBlocks(int type, int begin){
+		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
+			this.userCodingNow=null;
+		}else if(type=='e'){//finished coding for the block so put into the correct spot
+			this.insertToBlock(begin, this.userCodingNow);
+		}
 		Block b = new Block();
 		b.setlineBegin(begin);
 		b.setType(type);
@@ -1005,24 +1012,29 @@ public class Controller {
 		if(gerbil.getFrontX()==gerbil.getX() && gerbil.getFrontY()==gerbil.getY()+1){
 			gerbil.setFrontX(gerbil.getX()+1);
 			gerbil.setFrontY(gerbil.getY());
+			gerbil.setCompass('e');
+			
 			return true;
 		}
 		//determine if gerbil is facing North --> will face West
 		if(gerbil.getFrontX()==gerbil.getX() && gerbil.getFrontY()==gerbil.getY()-1){
 			gerbil.setFrontX(gerbil.getX()-1);
 			gerbil.setFrontY(gerbil.getY());
+			gerbil.setCompass('w');
 			return true;
 		}
 		//determine if gerbil is facing East --> will face North
 		if(gerbil.getFrontX()==gerbil.getX()+1 && gerbil.getFrontY()==gerbil.getY()){
 			gerbil.setFrontX(gerbil.getX());
 			gerbil.setFrontY(gerbil.getY()-1);
+			gerbil.setCompass('n');
 			return true;
 		}
 		//determine if gerbil is facing West --> will face South
 		if(gerbil.getFrontX()==gerbil.getX()-1 && gerbil.getFrontY()==gerbil.getY()){
 			gerbil.setFrontX(gerbil.getX());
 			gerbil.setFrontY(gerbil.getY()+1);
+			gerbil.setCompass('s');
 			return true;
 		}
 

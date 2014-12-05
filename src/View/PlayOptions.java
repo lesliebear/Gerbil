@@ -39,7 +39,7 @@ public class PlayOptions extends Screen{
 		 
 		frame = new JFrame("Options");
 		loadGame = new JButton("Load Game") {
-			public void paint(Graphics g) {
+			public void paint(Graphics g) { 
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
 				Graphics2D g2d = (Graphics2D)g;

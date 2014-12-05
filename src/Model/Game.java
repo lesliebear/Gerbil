@@ -10,7 +10,7 @@ import java.util.HashMap;
  * A game consists of an obstacle course through which the the user must
  * navigate the avatar to get to the goal of the water drinking area. 
  * In the Fancy features, the User can create the obstacle course 
- * @author Amulya
+ * @author Amulya 
  */
 @SuppressWarnings("serial")
 public class Game implements Serializable{

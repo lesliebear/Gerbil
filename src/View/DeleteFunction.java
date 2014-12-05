@@ -36,7 +36,7 @@ public class DeleteFunction extends Screen{
 	private JButton done, delete;
 	private JComboBox<String> functionsList;
 	private JLabel functionsLabel;
-	private BufferedImage image;
+	private BufferedImage image; 
 	
 	/**
 	 * Constructor that creates all necessary GUI components.

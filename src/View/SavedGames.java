@@ -46,7 +46,7 @@ public class SavedGames extends Screen{
 			image = ImageIO.read(new File("1960811_10204553653977557_1367600592125664392_o.jpg"));
 		} catch (Exception ex) {
 			System.out.println("Couldn't load image");
-		}
+		} 
 		
 		panel = new JPanel() {
 			protected void paintComponent(Graphics g) {

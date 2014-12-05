@@ -30,7 +30,7 @@ import javax.swing.JTextField;
  *
  */
 public class UserFunction extends Screen{
-
+ 
 	
 	/**LHS and RHS panels**/
 	static JPanel leftPanel = new JPanel(); 

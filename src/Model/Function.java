@@ -8,7 +8,7 @@ import java.util.HashMap;
  * Cannot edit functions. can only create and use them. If 
  * a function is deleted, then we parse the code to see if the function
  * deleted will be used. 
- * @author Amulya
+ * @author Amulya 
  */
 @SuppressWarnings("serial")
 public class Function implements Serializable{

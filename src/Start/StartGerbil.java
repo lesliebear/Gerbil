@@ -9,7 +9,7 @@ import View.*;
  */
 public class StartGerbil {
 
-	/**
+	/** 
 	 * Main method.
 	 * @param args
 	 */

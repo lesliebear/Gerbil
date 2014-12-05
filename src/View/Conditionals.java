@@ -34,7 +34,7 @@ public class Conditionals {
 
 	/**Type of conditional frame**/
 	static String type;
-	
+	 
 	public static Conditionals conditionals;
 	
 	/**LHS and RHS panels**/

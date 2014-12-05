@@ -44,7 +44,7 @@ public class Instructions extends Screen{
 	 * Constructor that creates all necessary GUI components.
 	 * 
 	 */
-
+ 
 	public Instructions() {
 		 
 		frame = new JFrame("Instructions");

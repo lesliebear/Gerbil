@@ -16,7 +16,7 @@ public class User implements Serializable{
 	/**Array List that holds games of the user */
 	private ArrayList<Game> games = new ArrayList<Game>();
 	
-	/**
+	/** 
 	 * Constructor to create a user object
 	 * 
 	 * @assumes We have checked that same named user does not exist

@@ -19,7 +19,7 @@ public abstract class Screen {
 	
 	/**
 	 * Method to be implemented: Shows the screen.
-	 * 
+	 *  
 	 */
 	public abstract void show();
 		

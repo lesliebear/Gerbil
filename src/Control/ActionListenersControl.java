@@ -7,7 +7,7 @@ import View.*;
 
 public class ActionListenersControl {
 	
-	Main main;
+	Main main; 
 	Play play;
 	PlayOptions playOptions;
 	Instructions instructions;

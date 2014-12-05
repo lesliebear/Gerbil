@@ -6,7 +6,7 @@ import java.io.Serializable;
  * The Gerbil Avatar object that stores the information about where the Gerbil is located
  * @author Amulya
  * */
-@SuppressWarnings("serial")
+@SuppressWarnings("serial") 
 public class Gerbil implements Serializable{
 	
 	/**The column in front of the gerbil (used to help find the direction gerbil is facing)*/
@@ -17,6 +17,8 @@ public class Gerbil implements Serializable{
 	private int currX; 
 	/**The row of the gerbil (used to help find the location and direction gerbil is facing)*/
 	private int currY;
+	/**Helps view out to figure out which picture to use in grid */
+	char compass;
 	
 	/**
 	 * Constructor for the object. The gerbil starts off in the bottom left corner of grid 
@@ -29,10 +31,36 @@ public class Gerbil implements Serializable{
 	 * 
 	 */
 	public Gerbil(){
-		this.frontX = 14;
-		this.frontY=1;
-		this.currX=15;
-		this.currY=1;
+		this.frontX = 1;
+		this.frontY=14;
+		this.currX=1;
+		this.currY=15;
+		this.compass = 'n';
+	}
+	
+	/**
+	 * Sets the current direction of Gerbil
+	 * 
+	 * @assumes assumes it is 'n','s','e',or 'w' only
+	 * @exception none
+	 * @postcondition none
+	 * @param c Character to set the compass to = must be 'n','s','e', or 'w'
+	 */
+	public int setCompass(char c){
+		return this.compass=c;
+	}
+	
+	/**
+	 * Gets the current direction of Gerbil
+	 * 
+	 * @assumes assumes it is 'n','s','e',or 'w' only
+	 * @exception none
+	 * @postcondition none
+	 * 
+	 * @return X value of Gerbil's direction
+	 */
+	public int getCompass(){
+		return this.compass;
 	}
 	
 	/**
