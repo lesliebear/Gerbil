@@ -15,13 +15,10 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import Control.Controller;
 
 /**
  * This class creates a GUI for the Gerbil Screen (Opening Screen).
@@ -33,7 +30,7 @@ public class Main extends Screen {
 	private BufferedImage image;
 	private JFrame frame;
 	private static Main main;
-	
+
 	/**
 	 * Constructor that creates all necessary GUI components.
 	 */
