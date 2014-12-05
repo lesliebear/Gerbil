@@ -18,7 +18,7 @@ public class Gerbil implements Serializable{
 	/**The row of the gerbil (used to help find the location and direction gerbil is facing)*/
 	private int currY;
 	/**Helps view out to figure out which picture to use in grid */
-	char compass;
+	private char compass;
 	
 	/**
 	 * Constructor for the object. The gerbil starts off in the bottom left corner of grid 
