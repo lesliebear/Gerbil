@@ -1,4 +1,4 @@
-package View; 
+package View;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -9,29 +9,28 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
-import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
-
-public class ErrorDialog extends Screen{
+public class SaveGame extends Screen{
 
 	private JFrame frame;
 	private JPanel panel;
-	private JButton backB;
-	public static JLabel errorL;
+	private JButton ok,cancel;
+	private JTextField saveGame;
 	
-	public ErrorDialog() {
-		frame = new JFrame("Error");
-		errorL = new JLabel();
+	public SaveGame() {
+		frame = new JFrame("Save Game");
+		saveGame = new JTextField(10);
 		panel = new JPanel();
 		
-		backB = new JButton("Back") {
+		ok = new JButton("Ok") {
 			public void paint(Graphics g) {
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
@@ -52,6 +51,28 @@ public class ErrorDialog extends Screen{
 			}
 		};
 		
+		cancel = new JButton("Cancel") {
+			public void paint(Graphics g) {
+				this.setContentAreaFilled(false);
+				this.setBorderPainted(false);
+				Graphics2D g2d = (Graphics2D)g;
+				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
+				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+				super.paint(g);
+				g2d.setColor(Color.WHITE);
+				g2d.fillRoundRect(0, 0, getWidth(),getHeight(), 18, 18);
+				g2d.setColor(Color.BLACK);
+				g2d.setStroke(new BasicStroke(2));
+				g2d.drawRoundRect(0, 0, getWidth()-1,getHeight()-1, 18, 18);
+				FontRenderContext frc = new FontRenderContext(null, false, false);
+				Rectangle2D r = getFont().getStringBounds(getText(), frc);
+				float xMargin = (float)(getWidth()-r.getWidth()) / 2;
+				float yMargin = (float)(getHeight()-getFont().getSize()) / 2;
+				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
+			}
+		};
+		
+		
 		createScreen();
 	}
 	
@@ -63,11 +84,14 @@ public class ErrorDialog extends Screen{
 		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 0;
 		c.gridy = 0;
-		panel.add(errorL, c);
+		panel.add(saveGame, c);
 		c.insets = new Insets(40,0,0,0);
 		c.gridx = 0;
 		c.gridy = 1;
-		panel.add(backB, c);
+		panel.add(ok, c);
+		c.gridx = 1;
+		c.gridy = 1;
+		panel.add(cancel, c);
 		frame.add(panel);
 		frame.setSize(dimension);
 		frame.setMinimumSize(dimension);
@@ -90,16 +114,10 @@ public class ErrorDialog extends Screen{
 	@Override
 	public void enable() {
 		frame.setEnabled(true);
-		
 	}
 	
 	@Override
 	public void disable() {
 		frame.setEnabled(false);
-		
-	}
-	
-	public void addOkEventHandler(ActionListener listener) {
-		backB.addActionListener(listener);
 	}
 }
