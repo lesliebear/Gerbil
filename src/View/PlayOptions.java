@@ -99,7 +99,7 @@ public class PlayOptions extends Screen{
 			}
 		};
 		try {
-			image = ImageIO.read(new File("background.jpg"));
+			image = ImageIO.read(new File("pics/background.jpg"));
 		} catch (Exception ex) {
 			System.out.println("Couldn't load image");
 		}
