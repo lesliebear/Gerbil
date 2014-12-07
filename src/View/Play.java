@@ -73,7 +73,8 @@ public class Play extends Screen{
 	
 	/** Gerbil grid representation */
 	private static char[][] grid;
-	
+	private static int row;
+	private static int column;
 	/** Image icons of all the necessary pictures */
 	private static ImageIcon imageApple, imagePear, imageGrass, imagePumpkin, imageWall, imageGerbilEast, imageGerbilWest, imageGerbilNorth, imageGerbilSouth, imageWater;
 	
@@ -82,16 +83,16 @@ public class Play extends Screen{
 	 */
 	public Play() {
 		try {
-			imageApple = new ImageIcon(ImageIO.read(new File("apple icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));
-	        imagePear = new ImageIcon(ImageIO.read(new File("pear icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageGrass = new ImageIcon(ImageIO.read(new File("grass icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imagePumpkin = new ImageIcon(ImageIO.read(new File("pumpkin.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageWall = new ImageIcon(ImageIO.read(new File("wall icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageGerbilEast = new ImageIcon(ImageIO.read(new File("gerbilEast.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageGerbilWest = new ImageIcon(ImageIO.read(new File("gerbilWest.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageGerbilNorth = new ImageIcon(ImageIO.read(new File("gerbilNorth.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageGerbilSouth = new ImageIcon(ImageIO.read(new File("gerbilSouth.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
-	        imageWater = new ImageIcon(ImageIO.read(new File("waterBottle.jpg")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+			imageApple = new ImageIcon(ImageIO.read(new File("pics/apple icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));
+	        imagePear = new ImageIcon(ImageIO.read(new File("pics/pear icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageGrass = new ImageIcon(ImageIO.read(new File("pics/grass icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imagePumpkin = new ImageIcon(ImageIO.read(new File("pics/pumpkin.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageWall = new ImageIcon(ImageIO.read(new File("pics/wall icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageGerbilEast = new ImageIcon(ImageIO.read(new File("pics/gerbilEast.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageGerbilWest = new ImageIcon(ImageIO.read(new File("pics/gerbilWest.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageGerbilNorth = new ImageIcon(ImageIO.read(new File("pics/gerbilNorth.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageGerbilSouth = new ImageIcon(ImageIO.read(new File("pics/gerbilSouth.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
+	        imageWater = new ImageIcon(ImageIO.read(new File("pics/waterBottle.jpg")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
 	            
 	    } catch (Exception ex) {
 	            ex.printStackTrace();
@@ -101,6 +102,11 @@ public class Play extends Screen{
 	
 	public static void setNewGrid(char[][] newGrid) {
 		grid = newGrid;
+	}
+	
+	public static void setGerbilLocation(int x, int y) {
+		row = x;
+		column = y;
 	}
 
 	/**
@@ -155,7 +161,7 @@ public class Play extends Screen{
 		size.height = 35;
 		upperPanel.setPreferredSize(size);
 		
-		ImageIcon menuIcon = new ImageIcon("MenuButton_Play.png");
+		ImageIcon menuIcon = new ImageIcon("pics/MenuButton_Play.png");
 		Image  menuImg = menuIcon.getImage() ;   //width, height, type scaling
 		Image  menuNewimg =  menuImg.getScaledInstance( 105, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
 		
@@ -166,7 +172,7 @@ public class Play extends Screen{
 		menuB.setBackground(Color.BLACK);
 		menuB.setOpaque(true);
 		/********/
-		ImageIcon playIcon = new ImageIcon("PlayButton_Play.png");
+		ImageIcon playIcon = new ImageIcon("pics/PlayButton_Play.png");
 		Image  playImg = playIcon.getImage() ;   //width, height, type scaling
 		Image  playNewimg =  playImg.getScaledInstance( 105, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
 		
@@ -177,7 +183,7 @@ public class Play extends Screen{
 		playB.setBackground(Color.BLACK);
 		playB.setOpaque(true);
 		/********/
-		ImageIcon stopIcon = new ImageIcon("StopButton_Play.png");
+		ImageIcon stopIcon = new ImageIcon("pics/StopButton_Play.png");
 		Image  stopImg = stopIcon.getImage() ;   //width, height, type scaling
 		Image  stopNewimg =  stopImg.getScaledInstance(110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
 		
@@ -188,7 +194,7 @@ public class Play extends Screen{
 		stopB.setBackground(Color.BLACK);
 		stopB.setOpaque(true);
 		/********/
-		ImageIcon insertIcon = new ImageIcon("InsertButton_Play.png");
+		ImageIcon insertIcon = new ImageIcon("pics/InsertButton_Play.png");
 		Image  insertImg = insertIcon.getImage() ;   //width, height, type scaling
 		Image  insertNewimg =  insertImg.getScaledInstance( 110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
 		
@@ -199,7 +205,7 @@ public class Play extends Screen{
 		insertB.setBackground(Color.BLACK);
 		insertB.setOpaque(true);
 		/********/
-		ImageIcon editIcon = new ImageIcon("EditButton_Play.png");
+		ImageIcon editIcon = new ImageIcon("pics/EditButton_Play.png");
 		Image  editImg = editIcon.getImage() ;   //width, height, type scaling
 		Image  editNewimg =  editImg.getScaledInstance( 110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
 		
@@ -210,7 +216,7 @@ public class Play extends Screen{
 		editB.setBackground(Color.BLACK);
 		editB.setOpaque(true);
 		/********/
-		ImageIcon deleteIcon = new ImageIcon("DeleteButton_Play.png");
+		ImageIcon deleteIcon = new ImageIcon("pics/DeleteButton_Play.png");
 		Image  deleteImg = deleteIcon.getImage() ;   //width, height, type scaling
 		Image  deleteNewimg =  deleteImg.getScaledInstance( 110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
 		
@@ -221,7 +227,7 @@ public class Play extends Screen{
 		deleteB.setBackground(Color.BLACK);
 		deleteB.setOpaque(true);
 		/********/
-		ImageIcon clearallIcon = new ImageIcon("ClearAllButton_Play.png");
+		ImageIcon clearallIcon = new ImageIcon("pics/ClearAllButton_Play.png");
 		Image  clearallImg = clearallIcon.getImage() ;   //width, height, type scaling
 		Image  clearallNewimg =  clearallImg.getScaledInstance( 110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
 		
@@ -232,7 +238,7 @@ public class Play extends Screen{
 		clearallB.setBackground(Color.BLACK);
 		clearallB.setOpaque(true);
 		/********/
-		ImageIcon saveIcon = new ImageIcon("SaveButton_Play.png");
+		ImageIcon saveIcon = new ImageIcon("pics/SaveButton_Play.png");
 		Image  saveImg = saveIcon.getImage() ;   //width, height, type scaling
 		Image  saveNewimg =  saveImg.getScaledInstance(110, 25,  java.awt.Image.SCALE_SMOOTH ) ; 
 		
@@ -331,16 +337,13 @@ public class Play extends Screen{
 							break;
 					case'p':gridBoxes[i][j].setIcon(imagePear);
 							break;
-					case'g':gridBoxes[i][j].setIcon(imageGerbilEast);
-							break;
 					case't':gridBoxes[i][j].setIcon(imageWater);
+							break;
 				}
 				gridPanel.add(gridBoxes[i][j]);
 			}
 		}
-		gridBoxes[0][1].setIcon(imageGerbilNorth);
-		gridBoxes[0][2].setIcon(imageGerbilWest);
-		gridBoxes[0][3].setIcon(imageGerbilSouth);
+		gridBoxes[row][column].setIcon(imageGerbilNorth);
 	}
 	
 	public static void setLowerComponents(){
@@ -527,6 +530,10 @@ public class Play extends Screen{
 
 	public void addSaveEventHandler(ActionListener listener) {
 		saveB.addActionListener(listener);
+	}
+
+	public void addDeleteFunctionEventHandler(ActionListener listener) {
+		deleteFunctionB.addActionListener(listener);
 	}
 
 	public void addCreateFunctionEventHandler(ActionListener listener) {
