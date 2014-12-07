@@ -532,6 +532,10 @@ public class Play extends Screen{
 		saveB.addActionListener(listener);
 	}
 
+	public void addDeleteFunctionEventHandler(ActionListener listener) {
+		deleteFunctionB.addActionListener(listener);
+	}
+
 	public void addCreateFunctionEventHandler(ActionListener listener) {
 		createFunctionB.addActionListener(listener);
 	}
