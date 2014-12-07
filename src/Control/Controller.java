@@ -634,7 +634,6 @@ public class Controller {
 						return false;
 					}
 				}
-				return true;
 			}
 			return true;	
 		}else if(block.getType()==0){//"eat"

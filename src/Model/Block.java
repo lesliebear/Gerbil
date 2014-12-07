@@ -183,6 +183,15 @@ public class Block implements Serializable{
 	public HashMap<Integer,Block> getNestedBlocks(){
 		return this.nestedBlocks;
 	}
+
+	/**
+	 * Sets the nested blocks field
+	 * @param instructionblocks Nested blocks to set the object's field to
+	 */
+	public void setNestedBlocks(HashMap<Integer, Block> instructionblocks) {
+		this.nestedBlocks=instructionblocks;
+		
+	}
 }
 
 
