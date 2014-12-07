@@ -49,7 +49,7 @@ public class DeleteFunction extends Screen{
 		functionsList = new JComboBox<String>();
 		frame = new JFrame("Delete Functions");
 		try {
-			image = ImageIO.read(new File("1960811_10204553653977557_1367600592125664392_o.jpg"));
+			image = ImageIO.read(new File("pics/background.jpg"));
 		} catch (Exception ex) {
 			System.out.println("Couldn't load image");
 		}

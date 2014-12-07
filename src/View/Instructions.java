@@ -70,12 +70,12 @@ public class Instructions extends Screen{
 		};
 		instructions = new JLabel();
 		try {
-			instructions.setIcon(new ImageIcon(ImageIO.read(new File("instructions.jpg")).getScaledInstance(800, 960, Image.SCALE_SMOOTH)));
+			instructions.setIcon(new ImageIcon(ImageIO.read(new File("pics/instructions.jpg")).getScaledInstance(800, 960, Image.SCALE_SMOOTH)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		try {
-			image = ImageIO.read(new File("instruction.jpg"));
+			image = ImageIO.read(new File("pics/instruction.jpg"));
 		} catch (Exception ex) {
 			System.out.println("Couldn't load image");
 		}

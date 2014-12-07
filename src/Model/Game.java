@@ -58,16 +58,22 @@ public class Game implements Serializable{
 		return gerbil;
 	}
 	/**
-	 * Gets the ArrayList of user written code that shows up in the GUI
+	 * Gets the HashMap of user written code that shows up in the GUI
 	 * 
-	 * @assumes assumes blocks arraylist object exists
+	 * @assumes assumes blocks hashmap object exists
 	 * @exception none
-	 * @postcondition returns blocks arraylist object that has been instantiated.
+	 * @postcondition returns blocks hashmap object that has been instantiated.
 	 * 
-	 * @return The Arraylist of user written code in GUI
+	 * @return The Hashmap of user written code in GUI
 	 */
 	public HashMap<Integer,Block> getBlocks(){
 		return blocks;
+	}
+	/**
+	 * Sets the hashmap of blocks in main code
+	 */
+	public void setBlocks(HashMap<Integer,Block> newBlocks){
+		this.blocks=newBlocks;
 	}
 	/**
 	 * Gets the Grid object of the game

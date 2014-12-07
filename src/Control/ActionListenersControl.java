@@ -4,11 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import View.*;
+import Model.*;
 
 public class ActionListenersControl {
 	
 	Main main; 
 	Play play;
+	DeleteFunction deleteFunction;
 	PlayOptions playOptions;
 	Instructions instructions;
 	UserFunction userFunction;
@@ -16,17 +18,20 @@ public class ActionListenersControl {
 	
 	public ActionListenersControl(){
 		controller = new Controller();
+		deleteFunction = new DeleteFunction();
 		main = new Main();
 		playOptions = new PlayOptions();
 		instructions = new Instructions();
 		userFunction = new UserFunction();
-		Play.setNewGrid(controller.gamePlaying.getGrid().getGridRepresentation());
+		initGrid();
 		play = new Play();
 		initEventHandlers();
 		main.show();
-		
-		
-
+	}
+	
+	private void initGrid() {
+		Play.setNewGrid(controller.gamePlaying.getGrid().getGridRepresentation());
+		Play.setGerbilLocation(controller.gamePlaying.getGerbil().getY(), controller.gamePlaying.getGerbil().getX());
 	}
 	/**
 	 * Sets up event handlers for each screen
@@ -150,6 +155,13 @@ public class ActionListenersControl {
 		play.addSaveEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
+			}	
+		});
+		
+		play.addDeleteFunctionEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				deleteFunction.show();
+				play.hide();
 			}	
 		});
 		
