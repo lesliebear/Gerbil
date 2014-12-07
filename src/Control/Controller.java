@@ -54,6 +54,83 @@ public class Controller {
 		initTempGrid();
 		gamePlaying = new Game("Test");
 	}
+	
+	
+	/**
+	 * Prints the hashmap of the blocks based on the indentation level(nesting level)
+	 * @param tab The indentation level of the block to be printed out
+	 * @param blocks Takes hashmap to print out the contents of the hashmap
+	 * eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), function(8)
+	 */
+	public void printBlocks(int tab, HashMap<Integer,Block> blocks){
+		int type;
+		String tabStr="";
+		for(int i =0; i<2; i++){
+			tabStr+='\t';
+		}
+		for(Integer b: blocks.keySet()){
+			Block block = blocks.get(b);
+			System.out.print(block.getlineBegin());
+			type = block.getType();
+			if(type==1){ //eat = terminal so no nesting
+				
+				System.out.println(tabStr+" Eat");
+			}else if(type==2){ //turn left  = terminal so no nesting
+				System.out.println(tabStr+" TurnLeft");
+			}else if(type==2){ //move = terminal so no nesting
+				System.out.println(tabStr+" Move");
+			}else if(type==2){ //if
+				System.out.println(tabStr+" If "+block.getCond());
+				tabStr+='\t';
+				System.out.println(block.getlineBegin()+1+tabStr+" begin");
+				if(!(block.getNestedBlocks().isEmpty())){
+					printBlocks(tab++,block.getNestedBlocks());
+				}
+				System.out.println(block.getlineEnd()+tabStr+" end");
+			}else if(type==2){ //else if
+				System.out.println(tabStr+" Else if "+block.getCond());
+				tabStr+='\t';
+				System.out.println(block.getlineBegin()+1+tabStr+" begin");
+				if(!(block.getNestedBlocks().isEmpty())){
+					printBlocks(tab++,block.getNestedBlocks());
+				}
+				System.out.println(block.getlineEnd()+tabStr+" end");
+			}else if(type==2){//else
+				System.out.println(tabStr+" Else ");
+				tabStr+='\t';
+				System.out.println(block.getlineBegin()+1+tabStr+" begin");
+				if(!(block.getNestedBlocks().isEmpty())){
+					printBlocks(tab++,block.getNestedBlocks());
+				}
+				System.out.println(block.getlineEnd()+tabStr+" end");
+			}else if(type==2){//while
+				System.out.println(tabStr+" While "+block.getCond());
+				tabStr+='\t';
+				System.out.println(block.getlineBegin()+1+tabStr+" begin");
+				if(!(block.getNestedBlocks().isEmpty())){
+					printBlocks(tab++,block.getNestedBlocks());
+				}
+				System.out.println(block.getlineEnd()+tabStr+"end");;
+			}else if(type==2){//repeat
+				System.out.println(tabStr+" Repeat "+block.getRepeat());
+				tabStr+='\t';
+				System.out.println(block.getlineBegin()+1+tabStr+"begin");
+				if(!(block.getNestedBlocks().isEmpty())){
+					printBlocks(tab++,block.getNestedBlocks());
+				}
+				System.out.println(block.getlineEnd()+tabStr+" end");
+			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
+				Function f = this.functions.get(block.getFunctionNum());
+				System.out.println(tabStr+f.getName());
+			}
+			
+			
+			
+			
+			System.out.println(blocks.get(b).getlineEnd());
+		}
+		
+	}
 
 	/**
 	 * First View calls this, and then when user has entered the information, they will call

@@ -13,19 +13,19 @@ import java.util.HashMap;
 @SuppressWarnings("serial")
 public class Block implements Serializable{
 	/**Nested instructions go in this adjacency hashmap*/
-	HashMap<Integer, Block> nestedBlocks;
+	HashMap<Integer, Block> nestedBlocks = new HashMap<Integer,Block>();
 	int functionNum=-1;
 	/** What the conditional is for while, if,else if*/
-	String conditional;// there's food, there's walls
+	String conditional=null;// there's food, there's walls
 	/**Enumeration{eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), function(8), 'c','e'} to find type 
 	 * Basically tells u what the block corresponsds to*/
-	int type; 
+	int type=-1; 
 	/**What line in the main screen does this block begin at */
-	int lineBegin;
+	int lineBegin=-1;
 	/**What line in the main screen does this block end at*/
-	int lineEnd;
+	int lineEnd=-1;
 	/**Pointer to the parent block in which this block is nested in = makes it easier to go to upper levels */
-	Block parent;
+	Block parent=null;
 	/**Number of times to repeat, set by user*/
 	int repeat=-1;
 
