@@ -41,7 +41,7 @@ public class Controller {
 	HashMap<Integer,Boolean> visited;
 	Block userCodingNow = null;
 	Block parent = null;
-	Gerbil runtimeGerbil= gamePlaying.getGerbil(); //Gerbil used for animation/runtime only
+	Gerbil runtimeGerbil;//= gamePlaying.getGerbil(); //Gerbil used for animation/runtime only
 
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
@@ -55,6 +55,7 @@ public class Controller {
 	 */
 	public Controller() {
 		gamePlaying = new Game("Test");
+		runtimeGerbil = gamePlaying.getGerbil();
 		initTempGrid();
 	}
 

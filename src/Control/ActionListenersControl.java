@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import View.*;
+import Model.*;
 
 public class ActionListenersControl {
 	
@@ -20,13 +21,18 @@ public class ActionListenersControl {
 		playOptions = new PlayOptions();
 		instructions = new Instructions();
 		userFunction = new UserFunction();
-		Play.setNewGrid(controller.gamePlaying.getGrid().getGridRepresentation());
+		initGrid();
 		play = new Play();
 		initEventHandlers();
 		main.show();
 		
 		
 
+	}
+	
+	private void initGrid() {
+		Play.setNewGrid(controller.gamePlaying.getGrid().getGridRepresentation());
+		Play.setGerbilLocation(controller.gamePlaying.getGerbil().getY(), controller.gamePlaying.getGerbil().getX());
 	}
 	/**
 	 * Sets up event handlers for each screen
