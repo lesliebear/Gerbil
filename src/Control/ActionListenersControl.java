@@ -10,6 +10,7 @@ public class ActionListenersControl {
 	
 	Main main; 
 	Play play;
+	DeleteFunction deleteFunction;
 	PlayOptions playOptions;
 	Instructions instructions;
 	UserFunction userFunction;
@@ -17,6 +18,7 @@ public class ActionListenersControl {
 	
 	public ActionListenersControl(){
 		controller = new Controller();
+		deleteFunction = new DeleteFunction();
 		main = new Main();
 		playOptions = new PlayOptions();
 		instructions = new Instructions();
@@ -25,9 +27,6 @@ public class ActionListenersControl {
 		play = new Play();
 		initEventHandlers();
 		main.show();
-		
-		
-
 	}
 	
 	private void initGrid() {
@@ -156,6 +155,13 @@ public class ActionListenersControl {
 		play.addSaveEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			
+			}	
+		});
+		
+		play.addDeleteFunctionEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				deleteFunction.show();
+				play.hide();
 			}	
 		});
 		
