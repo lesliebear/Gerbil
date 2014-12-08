@@ -210,7 +210,7 @@ public class Controller {
 				return 'n'; //not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
 			}
 			if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
-				b.setParent(null);
+				b.setParent(this.userCodingNow);
 				this.userCodingNow=b;
 				if(this.parent!=null){ //inserting into parent's block
 					parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
