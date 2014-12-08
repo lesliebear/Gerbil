@@ -65,7 +65,11 @@ public class StartGerbil {
 		System.out.println(controller.deleteBlock(4));
 		controller.printBlocks(0,controller.getCurrGame().getBlocks());
 		int end=controller.getCurrGame().getBlocks().get(2).getNestedBlocks().get(5).getlineEnd();
-		System.out.println(end);
+		controller.compileBlocks();
+		controller.printTempGrid();
+		for(int i=0; i<controller.getFinalBlocks().size(); i++){
+			System.out.println(controller.getFinalBlocks().get(i));
+		}
 	}
 
 	/**

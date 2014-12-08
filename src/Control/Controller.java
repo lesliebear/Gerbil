@@ -32,7 +32,12 @@ public class Controller {
 	Game gamePlaying;
 	/**Holds the list of built in functions = eat move, turn left
 	 * And user created are added to the end of this arraylist when game is initialized first
-	 * and then reloaded to the backend when finished game*/
+	 * and then reloaded to the backend when finished game
+	 * functions[0]=eat
+	 * functions[1]=turn left
+	 * functions[2]=move forward
+	 * functions[3....*]=user added functions
+	 */
 	ArrayList<Function> functions;
 	//Note eat fruit must be for that fruit only!! else error popup.
 	Backend backend= new Backend();
@@ -196,6 +201,21 @@ public class Controller {
 				}
 				this.userCodingNow.setRepeat(repeat);
 
+			}else if(currType==8){//user-defined FUNCTION block so find int for cond and store int in functionNum
+				int functionNum=-1;
+				if(cond==null){
+					///////////ERROR: Function not selected????
+				}else{
+					for(int i=0; i<this.functions.size(); i++){
+						if(functions.get(i).equals(cond)){
+							functionNum= i;
+							break;
+						}
+					}
+				}
+				this.userCodingNow.setFunctionNum(functionNum);
+				
+				
 			}else if(currType==3 || currType==6){ //if and while loops
 				this.userCodingNow.setCond(cond);
 			}else if(currType==4){ //for else if, we need to check if parent == if => parent cannot be null
@@ -301,7 +321,7 @@ public class Controller {
 		Function moveAhead= new Function("Move Forward");
 		Block moveAheadBlock= new Block();
 		moveAheadBlock.setType(2);
-		moveAhead.getBlockInstructions().put(-2, moveAheadBlock);
+		moveAhead.getBlockInstructions().put(2, moveAheadBlock);
 
 		Function eat= new Function("Eat");
 		Block eatBlock= new Block();
@@ -311,11 +331,11 @@ public class Controller {
 		Function turnLeft= new Function("Turn Left");
 		Block turnLeftBlock= new Block();
 		turnLeftBlock.setType(1);
-		turnLeft.getBlockInstructions().put(-1, turnLeftBlock);
-
-		functions.add(moveAhead);
+		turnLeft.getBlockInstructions().put(1, turnLeftBlock);
+		
 		functions.add(eat);
 		functions.add(turnLeft);
+		functions.add(moveAhead);
 	}
 
 
@@ -330,8 +350,10 @@ public class Controller {
 	 * 
 	 */
 	public void createBuiltIn(){
-		this.functions = new ArrayList<Function>();
-		initBuiltIn();
+		if(this.functions.isEmpty()){
+			this.functions = new ArrayList<Function>();
+			initBuiltIn();
+		}
 	}
 
 	/**
@@ -509,11 +531,6 @@ public class Controller {
 			nestedkeylist.add(entry.getKey());
 		}
 		ArrayList<Integer> nestedsortedkeys= sortKeys(nestedkeylist);
-
-
-		String line= block.getCond();
-		StringTokenizer st= new StringTokenizer(line);
-
 
 		if(block.getType()==3){//"if"
 			if(block.getCond().equals("There'sWall?")){
@@ -712,38 +729,28 @@ public class Controller {
 			finalblocks.add("Move Forward");
 			moveForward(tempgerbil);
 			return true;
-		}else{
-			String key= st.nextToken();
-			while(st.hasMoreTokens()){
-				key= key + " " + st.nextToken();
+		}else if(block.getType()==8){//user defined function
+			ArrayList<Function> functionlist= functions;
+			Function function= functionlist.get(block.getFunctionNum());
+			HashMap<Integer,Block> fnestedblocklist= function.getBlockInstructions();
+			ArrayList<Integer> fnestedkeylist= new ArrayList<Integer>();
+			for(Entry<Integer,Block> fentry: fnestedblocklist.entrySet()){
+				fnestedkeylist.add(fentry.getKey());
 			}
-
-			HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
-			for(Entry<Integer, Function> entry: functionlist.entrySet()){
-				if(entry.getValue().getName().equals(key)){
-					HashMap<Integer,Block> fnestedblocklist= entry.getValue().getBlockInstructions();
-					ArrayList<Integer> fnestedkeylist= new ArrayList<Integer>();
-					for(Entry<Integer,Block> fentry: fnestedblocklist.entrySet()){
-						fnestedkeylist.add(fentry.getKey());
-					}
-					ArrayList<Integer> fnestedsortedkeys= sortKeys(fnestedkeylist);				
-					for(int i=0; i<fnestedsortedkeys.size(); i++){
-						Block fnestedblock= fnestedblocklist.get(i);
-						this.isFunction=true;
-						boolean success=parseBlock(fnestedblock);
-						if(success==false){
-							return false;
-						}
-					}
-					this.isFunction=false;
-					return true;
+			ArrayList<Integer> fnestedsortedkeys= sortKeys(fnestedkeylist);				
+			for(int i=0; i<fnestedsortedkeys.size(); i++){
+				Block fnestedblock= fnestedblocklist.get(i);
+				this.isFunction=true;
+				boolean success=parseBlock(fnestedblock);
+				if(success==false){
+					return false;
 				}
 			}
-			return false;
+			this.isFunction=false;
+			return true;
 		}
-		//Will not call other functions/classes
-
-
+		return false;
+		//ERROR block does not have a valid type
 	}	
 
 	/**
@@ -1200,7 +1207,7 @@ public class Controller {
 	 * @postcondition Determines if function name is unique/valid
 	 * 
 	 * @param name User provided name for function
-	 * @return false/true; false if the function name is not unique && valid, true if unique && valid
+	 * @return int; 1 if function name does not consist of letters or digits, 2 if the function name is not unique && valid, 3 if unique && valid
 	 */
 	public int validFunctionName(String name){
 		for(int i=0; i<name.length(); i++){
@@ -1209,12 +1216,12 @@ public class Controller {
 				return 1;
 			}
 		}
-		HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
-		for(Entry<Integer, Function> entry: functionlist.entrySet()){
-			if(entry.getValue().getName().equals(name)){
+		for(int j=0; j<functions.size(); j++){
+			if(functions.get(j).getName().equals(name)){
 				return 2;
 			}
 		}
+		
 		return 3;
 	}
 
@@ -1230,7 +1237,7 @@ public class Controller {
 	 * @param functionToAdd function to be added to function list
 	 */
 	public void addFunction(Function functionToAdd){
-		gamePlaying.addFunction(functionToAdd);
+		functions.add(functionToAdd);
 	}
 
 
@@ -1247,10 +1254,9 @@ public class Controller {
 	 */
 	public boolean deleteFunction(String name){
 		//Will not call any functions/classes
-		HashMap<Integer,Function> functionlist= gamePlaying.getfunction();
-		for(Entry<Integer,Function> entry: functionlist.entrySet()){
-			if(entry.getValue().getName().equals(name)){
-				functionlist.remove(entry.getKey());
+		for(int i=0; i<functions.size(); i++){
+			if(functions.get(i).getName().equals(name)){
+				functions.remove(i);
 				return true;
 			}
 		}
@@ -1267,25 +1273,13 @@ public class Controller {
 	 * 
 	 * @return ArrayList of strings with all functions that have been created in the program
 	 */
-	public ArrayList<Function> getFunctions(){
-
+	public ArrayList<String> getFunctions(){
 		ArrayList<String> functionnames= new ArrayList<String>();
-		HashMap<Integer,Function>list=gamePlaying.getfunction();
-		for(Entry<Integer,Function> entry: list.entrySet()){
-			functionnames.add(entry.getValue().getName());
+		for(int i=0; i<functions.size(); i++){
+			functionnames.add(functions.get(i).getName());
 		}
-
-		ArrayList<String> functionlist= sortAlphabetical(functionnames);
-		ArrayList<Function>functions= new ArrayList<Function>();
-
-		for(int i=0; i<functionlist.size(); i++){
-			for(Entry<Integer,Function> entry: list.entrySet()){
-				if(entry.getValue().getName().equals(functionlist.get(i))){
-					functions.add(entry.getValue());
-				}
-			}
-		}
-		return functions;
+		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
+		return sortedfunctions;
 	}
 
 	/**
@@ -1446,14 +1440,9 @@ public class Controller {
 		backend.deleteGame(gameName);
 		if(!gamePlaying.getfunction().isEmpty()){
 			ArrayList<Integer> keylist= new ArrayList<Integer>();
-			for(Entry<Integer,Function> entry: gamePlaying.getfunction().entrySet()){
-				keylist.add(entry.getKey());
-			}
-			keylist=sortKeys(keylist);
 			for(int i=0; i<keylist.size(); i++){
-				this.functions.add(gamePlaying.getfunction().get(keylist.get(i)));
+				this.functions.add(gamePlaying.getfunction().get(i));
 			}
-
 		}
 		return true;
 	}
@@ -1464,7 +1453,7 @@ public class Controller {
 	 */
 	public boolean saveGame() {
 		for(int i=0; i<functions.size();i++){
-			gamePlaying.getfunction().put(i, functions.get(i));
+			gamePlaying.getfunction().add(functions.get(i));
 		}  
 		backend.addGame(this.gamePlaying);
 		return true;
