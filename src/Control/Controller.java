@@ -180,8 +180,19 @@ public class Controller {
 			}
 			
 			if(parent==null){ //insert into gamePlaying.blocks and cascade!!!
-				insertBlockToMain(this.userCodingNow.getlineBegin(), this.userCodingNow);
-				//*****************figure out what insert!!!!!!!!!!!!!!!********************
+				/*So insert only happens to main, the rest are edit and delete so 
+				we first check if the begin line we are given already exsits in the 
+				main, if it does, we cascade, then insert to not delete the current 
+				block at that number. else we simply add = works for both between lines 
+				and end of code.*/
+				for (int key: this.gamePlaying.getBlocks().keySet()){
+					if(key==begin){
+						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow);
+						this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
+						return 'g';
+					}
+				}//get past this means, end of lines!
+				this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
 			}else{ //we ended this so parent is now the currBlock coded
 				this.userCodingNow=parent;
 				this.parent=this.userCodingNow.getParent();
@@ -814,10 +825,14 @@ public class Controller {
 	public void insertBlockToMain(int id, Block b){
 		//Block parent = findParentInMain(id); = parent is null! => cannot find parent
 		Block reference = null;
+		int temp;
 		if(b.getParent()==null){//no parents, parent is MAIN => can insert to main 
 			for(int key: gamePlaying.getBlocks().keySet()){
-				reference = gamePlaying.getBlocks().get(key);//find sibling block as reference when cascade
-				break;
+				if(id<key){ //if key is bigger than id 
+					reference = gamePlaying.getBlocks().get(key);//find sibling block as reference when cascade
+					temp = key;
+					//break;
+				}
 			}
 		}else{ //parent block not null
 			for(int key: parent.getNestedBlocks().keySet()){
@@ -883,7 +898,7 @@ public class Controller {
 	 * @param b block to be inserted
 	 * @return false/ true; false if inserting the Block fails, true if it succeeds
 	 */
-	/*public void insertToBlock(int id, Block b){
+	public void insertToBlock(int id, Block b){
 		Block parent = searchForBlock(id, gamePlaying.getBlocks()); //get parent since we know parent's line number
 		//note: even if the nested blocks has that key already, we need to move it down by calling this funciton again with b's begin+end 
 		if(parent.getNestedBlocks().keySet().contains(b.getlineBegin())){
@@ -898,7 +913,7 @@ public class Controller {
 		//Will call searchForBlock to find block of the given id and insert insert b to it
 		int currDiff = b.getlineEnd()-b.getlineBegin();
 		cascadeNumberingChanges(b.getlineBegin(),currDiff,b);
-	}*/
+	}
 
 	/**
 	 * Figures out the given line number's parent block's line number = good for highlighting

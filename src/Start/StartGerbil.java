@@ -20,6 +20,10 @@ public class StartGerbil {
 		Controller controller = new Controller();
 		controller.createBlocks(0, 1, 0, null);
 		controller.createBlocks('e', 1, 1, null);
+		controller.createBlocks(1, 2, 0, null);
+		controller.createBlocks('e', 2, 1, null);
+		controller.createBlocks(2, 0, 0, null);
+		controller.createBlocks('e', 0, 1, null);
 		controller.printBlocks(0,controller.getCurrGame().getBlocks());
 		//Conditionals conditionals = new Conditionals("if");
 		//Grid g = new Grid(17,17);		
