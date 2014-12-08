@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -19,7 +20,7 @@ public class Game implements Serializable{
 	/**Grid user is playing on for this game*/
 	private Grid grid; 
 	/**User created functions for this game that appear in drop down list for user to select*/
-	private HashMap<Integer,Function> functions; 
+	private ArrayList<Function> functions; 
 	/**Gerbil object to give gerbil's position*/
 	private Gerbil gerbil; 
 	/**Name of the game that user designates when saving*/
@@ -39,7 +40,7 @@ public class Game implements Serializable{
 		this.name=name;
 		this.gerbil= new Gerbil();
 		this.grid = new Grid(17,17);
-		this.functions= new HashMap<Integer,Function>();
+		this.functions= new ArrayList<Function>();
 		this.blocks= new HashMap<Integer,Block>();
 		
 	}
@@ -108,7 +109,7 @@ public class Game implements Serializable{
 	 * 
 	 * @return User defined functions arraylist
 	 */
-	public HashMap<Integer,Function> getfunction(){
+	public ArrayList<Function> getfunction(){
 		return functions;
 	}
 	
@@ -124,7 +125,7 @@ public class Game implements Serializable{
 	 * @param functionToAdd function to be added to Functions list
 	 */
 	public void addFunction(Function functionToAdd){
-		this.functions.put(this.functions.keySet().size(),functionToAdd);//means index 0 +
+		this.functions.add(functionToAdd);//means index 0 +
 	}
 	
 	
@@ -139,12 +140,14 @@ public class Game implements Serializable{
 	 * @return true if successful deletion, false otherwise
 	 */
 	public boolean deleteFunction(String funcNameToDelete){
-		for (Function f: this.functions.values()){
-			if (f.name.equals(funcNameToDelete)){
-				this.functions.remove(f);
+		for(int i=0; i<this.functions.size(); i++){
+			if(this.functions.get(i).name.equals(funcNameToDelete)){
+				this.functions.remove(i);
+				return true;
 			}
 		}
 		return false;
+		
 	}
 	
 }
