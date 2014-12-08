@@ -75,21 +75,20 @@ public class Controller {
 	public void printBlocks(int tab, HashMap<Integer,Block> blocks){
 		int type;
 		String tabStr="";
-		for(int i =0; i<2; i++){
+		for(int i =0; i<tab; i++){
 			tabStr+='\t';
 		}
 		for(Integer b: blocks.keySet()){
 			Block block = blocks.get(b);
 			System.out.print(block.getlineBegin());
 			type = block.getType();
-			if(type==1){ //eat = terminal so no nesting
-				
+			if(type==0){ //eat = terminal so no nesting
 				System.out.println(tabStr+" Eat");
-			}else if(type==2){ //turn left  = terminal so no nesting
+			}else if(type==1){ //turn left  = terminal so no nesting
 				System.out.println(tabStr+" TurnLeft");
 			}else if(type==2){ //move = terminal so no nesting
 				System.out.println(tabStr+" Move");
-			}else if(type==2){ //if
+			}else if(type==3){ //if
 				System.out.println(tabStr+" If "+block.getCond());
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+" begin");
@@ -97,7 +96,7 @@ public class Controller {
 					printBlocks(tab++,block.getNestedBlocks());
 				}
 				System.out.println(block.getlineEnd()+tabStr+" end");
-			}else if(type==2){ //else if
+			}else if(type==4){ //else if
 				System.out.println(tabStr+" Else if "+block.getCond());
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+" begin");
@@ -105,7 +104,7 @@ public class Controller {
 					printBlocks(tab++,block.getNestedBlocks());
 				}
 				System.out.println(block.getlineEnd()+tabStr+" end");
-			}else if(type==2){//else
+			}else if(type==5){//else
 				System.out.println(tabStr+" Else ");
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+" begin");
@@ -113,7 +112,7 @@ public class Controller {
 					printBlocks(tab++,block.getNestedBlocks());
 				}
 				System.out.println(block.getlineEnd()+tabStr+" end");
-			}else if(type==2){//while
+			}else if(type==6){//while
 				System.out.println(tabStr+" While "+block.getCond());
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+" begin");
@@ -121,7 +120,7 @@ public class Controller {
 					printBlocks(tab++,block.getNestedBlocks());
 				}
 				System.out.println(block.getlineEnd()+tabStr+"end");;
-			}else if(type==2){//repeat
+			}else if(type==7){//repeat
 				System.out.println(tabStr+" Repeat "+block.getRepeat());
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+"begin");
