@@ -765,15 +765,6 @@ public class Controller {
 		if(b==null){
 			return false; //failure to find block
 		}
-		//check if valid to delete(if block is of type"else", parent must be type"if/elseif")
-		//	(if block is of type "else if", parent must be type "if/elseif")
-		if(b.getType()==4 || b.getType()==5){
-			if(b.getParent().getType()!=3 && b.getParent().getType()!=4){
-				//ERROR can't delete, will make syntax invalid
-				return false;
-			}
-		}
-
 		int currDiff = b.getlineEnd()-b.getlineBegin()+1;
 		Block parent = b.getParent();
 
@@ -932,25 +923,23 @@ public class Controller {
 	 * Figures out the given line number's parent block's line number = good for highlighting
 	 * 
 	 * @assumes the line number exists so we search for it and then see the type to return parent or current block
-	 * @param id line number clicked upon
 	 * @param b the hashmap of blocks to search for the parent block
 	 * @return the parent block is returned
 	 */
 	public Block getHighlighting(int line, HashMap<Integer,Block> blocks){
 		Block b = searchForBlock(line, blocks); //gets the block the line is in
 		int type = b.getType();
-		int lineNum = b.getlineBegin();
-		if(lineNum==line && type>2){ //cannot return terminals like that so go down to continue computation
-			return b;
-		}
+
 		//eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), function(8),
 		if(type>=0 && type <=2){ //[0-2]
-			//terminal so see if they belong in larger block. no parent, then return them
-			if (b.getParent()!=null){
+			return b;
+			
+			//below is for terminal so see if they belong in larger block. no parent, then return them
+			/**if (b.getParent()!=null){
 				return b.getParent();
 			}else{
 				return b;
-			}
+			}*/
 		}else if (type==3|| type==6 || type==7 || type==8){
 			return b;
 		}else if(type==4 || type==5){ //else if and else so return their parent which should be "if"
@@ -959,8 +948,6 @@ public class Controller {
 
 		return null;
 	}
-
-
 
 	/**
 	 * Cascades the line number changes to the rest of the code after insert, delete or edit
@@ -1041,16 +1028,25 @@ public class Controller {
 	public Block searchForBlock(int id, HashMap<Integer,Block> blocks){
 		if(blocks.keySet().isEmpty()){ //no more nesting
 			return null;
-		}		
+		}
+		int tempCurr=0; //its ok if set to 0 because the check for is empty is already done.
 		for (int curr: blocks.keySet()){
 			if(curr==id){
 				return blocks.get(curr);
-			}else if(blocks.get(curr).getlineBegin()<id && blocks.get(curr).getlineEnd()>id){ 
+			}else if(blocks.get(curr).getlineBegin()<=id && blocks.get(curr).getlineEnd()>=id){ 
 				//the block contains the line number in it so search inside
-				return searchForBlock(id,blocks.get(curr).getNestedBlocks());
+				tempCurr=curr;
+				Block temp = searchForBlock(id,blocks.get(curr).getNestedBlocks());
+				if (temp==null){
+					return blocks.get(tempCurr);
+				}else{
+					return temp;
+				}
 			}
 		}
-		return null; //did not find.
+		//exit out without finding it meaning it is not a particular block's begin line.
+		//meaning we have to find the inside the closest inside and that is temp curr 
+		return null;
 	}
 
 	/*Checks for conditionals*/

@@ -28,6 +28,9 @@ public class StartGerbil {
 		controller.createBlocks(2, 0, 0, null); //insert
 		controller.createBlocks('e', 0, 1, null);
 		controller.printBlocks(0,controller.getCurrGame().getBlocks());
+		System.out.println("___________________________________________");
+		Block b = controller.getHighlighting(0, controller.getCurrGame().getBlocks());
+		System.out.println(b.getlineBegin()+" "+b.getType());
 		//Conditionals conditionals = new Conditionals("if");
 		//Grid g = new Grid(17,17);		
 		//SavedGames sg = new SavedGames();
