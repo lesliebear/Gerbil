@@ -32,20 +32,17 @@ public class Controller {
 	Game gamePlaying;
 	/**Holds the list of built in functions = eat move, turn left
 	 * And user created are added to the end of this arraylist when game is initialized first
-	 * and then reloaded to the backend when finished game
-	 * functions[0]=eat
-	 * functions[1]=turn left
-	 * functions[2]=move forward
-	 * functions[3....*]=user added functions
-	 */
+	 * and then reloaded to the backend when finished game*/
 	ArrayList<Function> functions;
 	//Note eat fruit must be for that fruit only!! else error popup.
 	Backend backend= new Backend();
 	Play play;
 	ArrayList<String> finalblocks= new ArrayList<String>();
 	HashMap<Integer,Boolean> visited;
-	Block userCodingNow = null;
 	Block parent = null;
+	Block userCodingNow = null;
+	Block userCodingNowEdit= null;
+	Block parentEdit = null;
 	Gerbil runtimeGerbil;//= gamePlaying.getGerbil(); //Gerbil used for animation/runtime only
 
 	char[][] tempgrid= new char[17][17];
@@ -205,6 +202,7 @@ public class Controller {
 				int functionNum=-1;
 				if(cond==null){
 					///////////ERROR: Function not selected????
+					return 'n';
 				}else{
 					for(int i=0; i<this.functions.size(); i++){
 						if(functions.get(i).equals(cond)){
@@ -213,18 +211,13 @@ public class Controller {
 						}
 					}
 				}
-				this.userCodingNow.setFunctionNum(functionNum);
-				
-				
+				this.userCodingNow.setFunctionNum(functionNum);	
 			}else if(currType==3 || currType==6){ //if and while loops
 				this.userCodingNow.setCond(cond);
 			}else if(currType==4){ //for else if, we need to check if parent == if => parent cannot be null
-				if(parent==null || this.userCodingNow.getParent().getType()!=3){
-					//////////////ERROR: Illegal Else if entered. If statement has to exist for else if to exist////////
-					return 'n';
-				}
+				this.userCodingNow.setCond(cond);
 			}else if(currType== 5){ //for else, we need to check if parent==if or else if! else error
-				if(parent==null || (this.userCodingNow.getParent().getType()!=3)){
+				if(this.userCodingNow.getParent().getType()!=3){ //parent can be null! but hte usercoding now's parent cannot be null!! it has to be if!!
 					//////////////ERROR: Illegal Else if entered. If statement has to exist for else if to exist////////
 					return 'n';
 				}
@@ -247,8 +240,8 @@ public class Controller {
 				this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
 			} //we ended this so parent is now the currBlock coded
 			this.userCodingNow=parent;
-			if(parent!=null){
-				this.parent=this.userCodingNow.getParent();
+			if(this.parent!=null){
+					this.parent=this.userCodingNow.getParent();
 			}
 
 			return 'g';
@@ -256,18 +249,50 @@ public class Controller {
 			Block b = new Block();
 			b.setlineBegin(begin);
 			b.setType(type);
-			if((type==4 || type==5) && (this.parent==null||this.parent.getType()!=3)){
-				return 'n'; //not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
-			}
-			if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
-				b.setParent(this.userCodingNow);
-				this.parent=this.userCodingNow;
-				this.userCodingNow=b;
-				if(this.parent!=null){ //inserting into parent's block
-					parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+			if((type==4) || (type==5)){ //SPECIAL FOR ELSE IF AND ELSE!!!
+				Block parIf = null; 
+				if(this.userCodingNow==null){ //find in main level = no nesting
+					for(int k: this.gamePlaying.getBlocks().keySet()){
+						if(this.gamePlaying.getBlocks().get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
+							parIf = gamePlaying.getBlocks().get(k);
+						}
+					}
+				}else{ //find in parent's level!
+					for(int k: this.userCodingNow.getNestedBlocks().keySet()){
+						int tempTP = this.userCodingNow.getNestedBlocks().get(k).getType();
+						if((tempTP==3 || tempTP==4) && k<begin){//after checking all of them it sets it to the last if just less than the current line
+							parIf = this.userCodingNow.getNestedBlocks().get(k);
+						}
+					}
+				}
+				if(parIf==null){
+					return 'n'; //not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
+				}else if(parIf.getlineEnd()+1!=begin){
+					//So we are trying to insert the else if or else after the if for else if OR if/else if for ELSE!!!
+					return 'n';
+				}else{
+					if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
+						b.setParent(parIf.getParent()); //set else if or else stuff's parent to the parent of if block!!
+						this.parent=parIf.getParent();
+						this.userCodingNow=b;
+						//inserting into parent's block
+						parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+					}else{
+						b.setParent(parIf.getParent());
+						this.userCodingNow=b; //don't put in if in main;s nesting
+					}
 				}
 			}else{
-				this.userCodingNow=b;
+				if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
+					b.setParent(this.userCodingNow);
+					this.parent=this.userCodingNow;
+					this.userCodingNow=b;
+					if(this.parent!=null){ //inserting into parent's block
+						parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+					}
+				}else{
+					this.userCodingNow=b; //don't put in if its in main's nesting
+				}
 			}
 			return 'g';
 
@@ -762,20 +787,89 @@ public class Controller {
 	 * @exception none
 	 * @postcondition Will edit a block of data
 	 * 
-	 * @param pos  index/position of block to be edited by user
-	 * @param instructionblocks new nested block of instructions to be placed in block
-	 * @return
+	 * @param type Type of block = same as create blocks = can be 'e','c' or enumeration
+	 * @param begin line that was selected via highlighting for editing = can be terminal 
+	 * or non terminal => that is the block that will be found and added to!!
+	 * @param numLines Lines modified so it is line end - line begin +1 so ex. terminals are 1
+	 * @param cond conditional if if,while,else if stuff inserted, else it is integer for repeat 
 	 */
-	public void editBlock(int pos, HashMap<Integer,Block> instructionblocks){
-		Block b = searchForBlock(pos, gamePlaying.getBlocks()); //gets the block we want to edit
-		int prevdiff= b.getlineEnd()-b.getlineBegin()+1; //get prevdiff of block
-		//clear nested blocks and replace with new nested block instructions
-		b.setNestedBlocks(instructionblocks); //set block's nested blocks to new instructionblocks
-		int currdiff= b.getlineEnd()-b.getlineBegin()+1; //get new/currdiff of block
-		if(prevdiff!=currdiff){ //will cascade the changes if prevDiff != currDiff (see cascadeNumberingChanges method)
-			cascadeNumberingChanges(pos,currdiff,b);
+	public char editBlock(int type, int begin, int numLines, String cond){
+		Block par = searchForBlock(begin, gamePlaying.getBlocks()); //gets the block we want to edit/insert into
+
+		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
+			this.userCodingNowEdit=null;//this is all that needs to be done here!
+			this.userCodingNowEdit=this.parentEdit;
+			return 'g';
+		}else if(type=='e'){//finished coding for the block so put into the correct spot
+			this.userCodingNowEdit.setLineEnd(begin+numLines-1);	
+			int currType= this.userCodingNowEdit.getType();
+			if(currType==7){//repeat block so turn cond into int and store in repeat
+				int repeat=-1;
+				if(cond==null){
+					///////////////////ERROR: Number of repetitions was not selected!//////////////
+					return 'n';
+				}else{ //no need to check if cond is int or not since view will provide int for it 
+					repeat =Integer.valueOf(cond);
+				}
+				this.userCodingNowEdit.setRepeat(repeat);
+
+			}else if(currType==3 || currType==6){ //if and while loops
+				this.userCodingNowEdit.setCond(cond);
+			}else if(currType==4){ //for else if, we need to check if parent == if => parent cannot be null
+				if(parentEdit==null || this.userCodingNowEdit.getParent().getType()!=3){
+					//////////////ERROR: Illegal Else if entered. If statement has to exist for else if to exist////////
+					return 'n';
+				}
+			}else if(currType== 5){ //for else, we need to check if parent==if or else if! else error
+				if(parentEdit==null || (this.userCodingNowEdit.getParent().getType()!=3)){
+					//////////////ERROR: Illegal Else if entered. If statement has to exist for else if to exist////////
+					return 'n';
+				}
+			}
+
+			if(parentEdit.equals(par)){ //insert into gamePlaying.blocks and cascade!!!
+				/*So insert only happens to main, the rest are edit and delete so 
+				we first check if the begin line we are given already exsits in the 
+				main, if it does, we cascade, then insert to not delete the current 
+				block at that number. else we simply add = works for both between lines 
+				and end of code.*/
+				for (int key: this.gamePlaying.getBlocks().keySet()){
+					if(key==begin){
+						cascadeNumberingChanges(begin, this.userCodingNowEdit.getlineEnd()-this.userCodingNowEdit.getlineBegin()+1, this.userCodingNowEdit);
+						this.gamePlaying.getBlocks().put(begin, this.userCodingNowEdit);
+						this.userCodingNowEdit=null;
+						return 'g';
+					}
+				}//get past this means, end of lines!
+				this.gamePlaying.getBlocks().put(begin, this.userCodingNowEdit);
+			} //we ended this so parent is now the currBlock coded
+			this.userCodingNowEdit=parentEdit;
+			if(parentEdit!=null){
+				this.parentEdit=this.userCodingNowEdit.getParent();
+			}
+
+			return 'g';
+		}else{ //first time making a block
+			Block b = new Block();
+			b.setlineBegin(begin);
+			b.setType(type);
+			if((type==4 || type==5) && (this.parentEdit==null||this.parentEdit.getType()!=3)){
+				return 'n'; //not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
+			}
+			if(this.userCodingNowEdit!=null){ //curr not null so we need to set current to user playing and parent to curr
+				b.setParent(this.userCodingNowEdit);
+				this.parentEdit=this.userCodingNowEdit;
+				this.userCodingNowEdit=b;
+				if(this.parentEdit!=null){ //inserting into parent's block
+					parentEdit.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+				}
+			}else{
+				this.userCodingNowEdit=b;
+				this.parentEdit=par;
+			}
+			return 'g';
+
 		}
-		return;
 	}
 
 
