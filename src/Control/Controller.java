@@ -93,7 +93,8 @@ public class Controller {
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+" begin");
 				if(!(block.getNestedBlocks().isEmpty())){
-					printBlocks(tab++,block.getNestedBlocks());
+					int tempTab = tab+1;
+					printBlocks(tempTab,block.getNestedBlocks());
 				}
 				System.out.println(block.getlineEnd()+tabStr+" end");
 			}else if(type==4){ //else if
@@ -101,7 +102,8 @@ public class Controller {
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+" begin");
 				if(!(block.getNestedBlocks().isEmpty())){
-					printBlocks(tab++,block.getNestedBlocks());
+					int tempTab = tab+1;
+					printBlocks(tempTab,block.getNestedBlocks());
 				}
 				System.out.println(block.getlineEnd()+tabStr+" end");
 			}else if(type==5){//else
@@ -109,7 +111,8 @@ public class Controller {
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+" begin");
 				if(!(block.getNestedBlocks().isEmpty())){
-					printBlocks(tab++,block.getNestedBlocks());
+					int tempTab = tab+1;
+					printBlocks(tempTab,block.getNestedBlocks());
 				}
 				System.out.println(block.getlineEnd()+tabStr+" end");
 			}else if(type==6){//while
@@ -117,7 +120,8 @@ public class Controller {
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+" begin");
 				if(!(block.getNestedBlocks().isEmpty())){
-					printBlocks(tab++,block.getNestedBlocks());
+					int tempTab = tab+1;
+					printBlocks(tempTab,block.getNestedBlocks());
 				}
 				System.out.println(block.getlineEnd()+tabStr+"end");;
 			}else if(type==7){//repeat
@@ -125,15 +129,16 @@ public class Controller {
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
-					printBlocks(tab++,block.getNestedBlocks());
+					int tempTab = tab+1;
+					printBlocks(tempTab,block.getNestedBlocks());
 				}
 				System.out.println(block.getlineEnd()+tabStr+" end");
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
 				Function f = this.functions.get(block.getFunctionNum());
 				System.out.println(tabStr+f.getName());
 			}	
-
-			for(int i =0; i<tab; i++){//reset the tabs
+			tabStr="";
+			for(int j =0; j<tab; j++){//reset the tabs
 				tabStr+='\t';
 			}
 		}
@@ -157,7 +162,7 @@ public class Controller {
 			this.userCodingNow=this.parent;
 			return 'g';
 		}else if(type=='e'){//finished coding for the block so put into the correct spot
-			this.userCodingNow.setLineEnd(begin+numLines);	
+			this.userCodingNow.setLineEnd(begin+numLines-1);	
 			int currType= this.userCodingNow.getType();
 			if(currType==7){//repeat block so turn cond into int and store in repeat
 				int repeat=-1;
@@ -193,14 +198,17 @@ public class Controller {
 					if(key==begin){
 						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow);
 						this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
+						this.userCodingNow=null;
 						return 'g';
 					}
 				}//get past this means, end of lines!
 				this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
-			}else{ //we ended this so parent is now the currBlock coded
-				this.userCodingNow=parent;
+			} //we ended this so parent is now the currBlock coded
+			this.userCodingNow=parent;
+			if(parent!=null){
 				this.parent=this.userCodingNow.getParent();
 			}
+
 			return 'g';
 		}else{ //first time making a block
 			Block b = new Block();
@@ -211,6 +219,7 @@ public class Controller {
 			}
 			if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
 				b.setParent(this.userCodingNow);
+				this.parent=this.userCodingNow;
 				this.userCodingNow=b;
 				if(this.parent!=null){ //inserting into parent's block
 					parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
@@ -976,9 +985,9 @@ public class Controller {
 		for(int key: nb.keySet()){
 			if (key>=lineBegin){ //cascade the difference to the blocks after b!
 				temp=nb.get(key); //get the object
-				tempDiff=temp.getlineEnd()-temp.getlineBegin(); //calculate the difference before hand
-				temp.setlineBegin(temp.getlineBegin()+currDiff); //change line begin with the difference
-				temp.setLineEnd(temp.getlineBegin()+tempDiff); //did this with temp diff just in case
+				tempDiff=temp.getlineEnd()-temp.getlineBegin()+1; //calculate the difference before hand
+				temp.setlineBegin(b.getlineEnd()+tempDiff); //change line begin with the difference
+				temp.setLineEnd(temp.getlineBegin()+tempDiff-1); //did this with temp diff just in case
 				tempnb.put(temp.getlineBegin(), temp); //put each updated block in temp hashmap with new key
 			}else{ //put each un-updated block in temp hashmap with original key
 				tempnb.put(key, nb.get(key));
