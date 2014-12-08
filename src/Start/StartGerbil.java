@@ -19,16 +19,22 @@ public class StartGerbil {
 		Controller controller = new Controller();
 		controller.createBlocks(0, 1, 0, null); //eat
 		controller.createBlocks('e', 1, 1, null);
+		
 		controller.createBlocks(3, 1, 0, null); //if theres no wall
-		controller.createBlocks(1, 3, 0, null); //turn left
+		controller.createBlocks(2, 3, 0, null); //move
 		controller.createBlocks('e', 3, 1, null);
 		controller.createBlocks('e', 1, 4, "There'sNoWall");
-		controller.createBlocks(2, 0, 0, null); //insert
+		controller.createBlocks(4, 5, 0, null);
+		controller.createBlocks(0,6,0,null); //add eat to the else if
+		controller.createBlocks('e',6,1,null);
+		controller.createBlocks('e', 5, 4, "There'sWall?"); //else if inserted!!
+		
+		controller.createBlocks(1, 0, 0, null); //insert turn left at line 0
 		controller.createBlocks('e', 0, 1, null);
 		controller.printBlocks(0,controller.getCurrGame().getBlocks());
-		System.out.println("_______________deleteblockstuff____________________________");
-		System.out.println(controller.deleteBlock(0));
-		controller.printBlocks(0,controller.getCurrGame().getBlocks());
+		//System.out.println("_______________deleteblockstuff____________________________");
+		//System.out.println(controller.deleteBlock(0));
+		//controller.printBlocks(0,controller.getCurrGame().getBlocks());
 		
 		//Conditionals conditionals = new Conditionals("if");
 		//Grid g = new Grid(17,17);		
