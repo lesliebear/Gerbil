@@ -59,6 +59,12 @@ public class Controller {
 		initTempGrid();
 	}
 	
+	//////////////////////////////////DEBUGGIN METHODS/////////////////////////////////////
+	
+	public Game getCurrGame(){
+		return this.gamePlaying;
+	}
+	
 	
 	/**
 	 * Prints the hashmap of the blocks based on the indentation level(nesting level)
@@ -126,16 +132,11 @@ public class Controller {
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
 				Function f = this.functions.get(block.getFunctionNum());
 				System.out.println(tabStr+f.getName());
-			}
-			
-			
-			
-			
-			System.out.println(blocks.get(b).getlineEnd());
+			}			
 		}
 		
 	}
-
+	//////////////////////////////////DEBUGGIN METHODS////////////////////////////////////////////
 	/**
 	 * First View calls this, and then when user has entered the information, they will call
 	 * finishCreateBlocks method if the user clicks ok, otherwise, click cancelBlock, if user clicks cancel
@@ -145,20 +146,21 @@ public class Controller {
 	 * @param cond This is for while and if statements AND it also sends the integer for Repeat!!
 	 * @assumes if same function is called with c, the function was cancelled at some point so we ignore what we have currently 
 	 * @assuems if same function is called with e, the function was finished so we add to the list
+	 * @return 'g' char if good else 'n' if not good => don't close the current location.
 	 */
-	public void createBlocks(int type, int begin, int numLines, String cond){
+	public char createBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
 			this.userCodingNow=null;//this is all that needs to be done here!
+			this.userCodingNow=this.parent;
+			return 'g';
 		}else if(type=='e'){//finished coding for the block so put into the correct spot
-			parent = findCurrParent(begin, this.parent); //finds the inner most block that does not have line end
-			this.insertBlockToMain(begin, this.userCodingNow);
-			this.userCodingNow.setParent(parent);
-			this.userCodingNow.setLineEnd(begin+numLines);
+			this.userCodingNow.setLineEnd(begin+numLines);	
 			int currType= this.userCodingNow.getType();
 			if(currType==7){//repeat block so turn cond into int and store in repeat
 				int repeat=-1;
 				if(cond==null){
 					///////////////////ERROR: Number of repetitions was not selected!//////////////
+					return 'n';
 				}else{ //no need to check if cond is int or not since view will provide int for it 
 					repeat =Integer.valueOf(cond);
 				}
@@ -169,24 +171,41 @@ public class Controller {
 			}else if(currType==4){ //for else if, we need to check if parent == if => parent cannot be null
 				if(parent==null || this.userCodingNow.getParent().getType()!=3){
 					//////////////ERROR: Illegal Else if entered. If statement has to exist for else if to exist////////
+					return 'n';
 				}
 			}else if(currType== 5){ //for else, we need to check if parent==if or else if! else error
-				if(parent==null || (this.userCodingNow.getParent().getType()!=3 && this.userCodingNow.getParent().getType()!=4)){
+				if(parent==null || (this.userCodingNow.getParent().getType()!=3)){
 					//////////////ERROR: Illegal Else if entered. If statement has to exist for else if to exist////////
+					return 'n';
 				}
 			}
 			
 			if(parent==null){ //insert into gamePlaying.blocks and cascade!!!
-				///////////figure out what insert!!!!!!!!!!!!!!!!///////////////////////////////////////////////////////
+				insertBlockToMain(this.userCodingNow.getlineBegin(), this.userCodingNow);
+				//*****************figure out what insert!!!!!!!!!!!!!!!********************
+			}else{ //we ended this so parent is now the currBlock coded
+				this.userCodingNow=parent;
+				this.parent=this.userCodingNow.getParent();
 			}
+			return 'g';
 		}else{ //first time making a block
 			Block b = new Block();
 			b.setlineBegin(begin);
 			b.setType(type);
-			if(parent==null){ //if parent is null, block is its own parent so parent stays null = left this here so we remember this case in case of future changes
-				parent = null;
+			if((type==4 || type==5) && (this.parent==null||this.parent.getType()!=3)){
+				return 'n'; //not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
 			}
-			this.userCodingNow=b;
+			if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
+				b.setParent(this.userCodingNow);
+				this.userCodingNow=b;
+				if(this.parent!=null){ //inserting into parent's block
+					parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+				}
+			}else{
+				this.userCodingNow=b;
+			}
+			return 'g';
+			
 		}
 	}
 
@@ -789,20 +808,19 @@ public class Controller {
 	 * @exception none
 	 * @postcondition Inserts new block of code
 	 * 
-	 * @param nested HashMap to recurse on for nesting initial value is the one in gamePlaying
 	 * @param pos index/position of block to insert = it is the line number 
 	 * @param b block to be inserted
 	 * @return false/ true; false if inserting the Block fails, true if it succeeds
 	 */
 	public void insertBlockToMain(int id, Block b){
-		Block parent = findParentInMain(id);
+		//Block parent = findParentInMain(id); = parent is null! => cannot find parent
 		Block reference = null;
-		if(parent==null){//no parents, parent is MAIN 
+		if(b.getParent()==null){//no parents, parent is MAIN => can insert to main 
 			for(int key: gamePlaying.getBlocks().keySet()){
 				reference = gamePlaying.getBlocks().get(key);//find sibling block as reference when cascade
 				break;
 			}
-		}else{
+		}else{ //parent block not null
 			for(int key: parent.getNestedBlocks().keySet()){
 				reference = parent.getNestedBlocks().get(key);//find sibling block as reference when cascade
 				break;
