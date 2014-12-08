@@ -1038,16 +1038,16 @@ public class Controller {
 	 * @param id id of Block to be searched for so it is the line number 
 	 * @return Block with the given id if found, else returns null
 	 */
-	public Block searchForBlock(int id, HashMap<Integer,Block> block){
-		if(block.keySet().isEmpty()){ //no more nesting
+	public Block searchForBlock(int id, HashMap<Integer,Block> blocks){
+		if(blocks.keySet().isEmpty()){ //no more nesting
 			return null;
 		}		
-		for (int curr: block.keySet()){
+		for (int curr: blocks.keySet()){
 			if(curr==id){
-				return block.get(curr);
-			}else if(block.get(curr).getlineBegin()<id && block.get(curr).getlineEnd()>id){ 
+				return blocks.get(curr);
+			}else if(blocks.get(curr).getlineBegin()<id && blocks.get(curr).getlineEnd()>id){ 
 				//the block contains the line number in it so search inside
-				return searchForBlock(id,block.get(curr).getNestedBlocks());
+				return searchForBlock(id,blocks.get(curr).getNestedBlocks());
 			}
 		}
 		return null; //did not find.
