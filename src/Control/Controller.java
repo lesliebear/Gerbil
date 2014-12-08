@@ -60,7 +60,29 @@ public class Controller {
 	}
 
 	//////////////////////////////////DEBUGGIN METHODS/////////////////////////////////////
-
+	/**
+	 * returns finalblocks arraylist
+	 */
+	public ArrayList<String> getFinalBlocks(){
+		return this.finalblocks;
+	}
+	/**
+	 * Prints the tempgrid 
+	 * 
+	 * @assumes debugging reasons
+	 * @exception none
+	 * @postcondition nothing
+	 */
+	public void printTempGrid(){
+		for (int i =0; i<tempgrid.length;i++){
+			for (int j = 0; j<tempgrid[0].length;j++){
+				System.out.print(tempgrid[i][j]+" "); //prints out row in one line
+			}
+			System.out.println(); //new line for new row. 
+		}
+	}
+	
+	
 	public Game getCurrGame(){
 		return this.gamePlaying;
 	}
@@ -454,7 +476,7 @@ public class Controller {
 			if(visited.get(sortedkeys.get(i))){
 				continue;
 			}else{
-				Block block= blocklist.get(i);
+				Block block= blocklist.get(sortedkeys.get(i));
 				boolean success=parseBlock(block);
 				if(success==false){
 					System.out.println("error in parsing");
