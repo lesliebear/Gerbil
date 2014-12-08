@@ -61,7 +61,7 @@ public class Controller {
 		initTempGrid();
 	}
 
-	//////////////////////////////////DEBUGGIN METHODS/////////////////////////////////////
+	//////////////////////////////////DEBUGGIN METHODS BEGIN/////////////////////////////////////
 	/**
 	 * returns finalblocks arraylist
 	 */
@@ -122,7 +122,7 @@ public class Controller {
 				}
 				System.out.println(block.getlineEnd()+tabStr+" end");
 			}else if(type==4){ //else if
-				System.out.println(tabStr+" Else if "+block.getCond());
+				System.out.println(tabStr+" ElseIf "+block.getCond());
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+" begin");
 				if(!(block.getNestedBlocks().isEmpty())){
@@ -168,7 +168,7 @@ public class Controller {
 		}
 
 	}
-	//////////////////////////////////DEBUGGIN METHODS////////////////////////////////////////////
+	//////////////////////////////////DEBUGGIN METHODS END////////////////////////////////////////////
 	/**
 	 * First View calls this, and then when user has entered the information, they will call
 	 * finishCreateBlocks method if the user clicks ok, otherwise, click cancelBlock, if user clicks cancel
