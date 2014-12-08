@@ -998,7 +998,7 @@ public class Controller {
 				tempDiff=temp.getlineEnd()-temp.getlineBegin()+1; //calculate the difference before hand
 				if(currDiff<=0){
 					temp.setlineBegin(b.getlineEnd()+temp.getlineBegin()+currDiff); //change line begin with the difference
-					temp.setLineEnd(temp.getlineBegin()+tempDiff); //did this with temp diff just in case
+					temp.setLineEnd(temp.getlineBegin()+tempDiff-1); //did this with temp diff just in case
 				}else{
 					temp.setlineBegin(b.getlineEnd()+tempDiff); //change line begin with the difference
 					temp.setLineEnd(temp.getlineBegin()+tempDiff-1); //did this with temp diff just in case

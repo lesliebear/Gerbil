@@ -1,7 +1,5 @@
 package Start;
 import Control.*;
-import Model.*;
-import View.*;
  
 /**
  * Main program.
@@ -19,21 +17,19 @@ public class StartGerbil {
 		//Main main = new Main();
 		//checks{"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
 		Controller controller = new Controller();
-		controller.printTempGrid();
-	
-		controller.createBlocks(6, 1, 0, null);//while no wall
-		controller.createBlocks(2, 3, 0, null);//move
-		controller.createBlocks('e', 3, 1, null);//move
-		controller.createBlocks(3, 4, 0, null);//if food
-		controller.createBlocks(0, 6, 0, null); //eat
-		controller.createBlocks('e', 6, 1, null); //eat
-		controller.createBlocks('e', 4, 4, "There'sFood");//if food
-		controller.createBlocks('e', 1, 8, "There'sNoWall");//while no wall
-		controller.printBlocks(0, controller.getCurrGame().getBlocks());
-		controller.compileBlocks();
-		for(int i=0; i<controller.getFinalBlocks().size(); i++){
-			System.out.println(controller.getFinalBlocks().get(i));
-		}
+		controller.createBlocks(0, 1, 0, null); //eat
+		controller.createBlocks('e', 1, 1, null);
+		controller.createBlocks(3, 1, 0, null); //if theres no wall
+		controller.createBlocks(1, 3, 0, null); //turn left
+		controller.createBlocks('e', 3, 1, null);
+		controller.createBlocks('e', 1, 4, "There'sNoWall");
+		controller.createBlocks(2, 0, 0, null); //insert
+		controller.createBlocks('e', 0, 1, null);
+		controller.printBlocks(0,controller.getCurrGame().getBlocks());
+		System.out.println("_______________deleteblockstuff____________________________");
+		System.out.println(controller.deleteBlock(0));
+		controller.printBlocks(0,controller.getCurrGame().getBlocks());
+		
 		//Conditionals conditionals = new Conditionals("if");
 		//Grid g = new Grid(17,17);		
 		//SavedGames sg = new SavedGames();
