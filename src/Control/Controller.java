@@ -46,7 +46,7 @@ public class Controller {
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
 	boolean isFunction=false;
-	
+
 	int countblocks=1;
 
 	/**assumes, returns, exceptions**/
@@ -58,14 +58,14 @@ public class Controller {
 		runtimeGerbil = gamePlaying.getGerbil();
 		initTempGrid();
 	}
-	
+
 	//////////////////////////////////DEBUGGIN METHODS/////////////////////////////////////
-	
+
 	public Game getCurrGame(){
 		return this.gamePlaying;
 	}
-	
-	
+
+
 	/**
 	 * Prints the hashmap of the blocks based on the indentation level(nesting level)
 	 * @param tab The indentation level of the block to be printed out
@@ -132,12 +132,12 @@ public class Controller {
 				Function f = this.functions.get(block.getFunctionNum());
 				System.out.println(tabStr+f.getName());
 			}	
-			
+
 			for(int i =0; i<tab; i++){//reset the tabs
 				tabStr+='\t';
 			}
 		}
-		
+
 	}
 	//////////////////////////////////DEBUGGIN METHODS////////////////////////////////////////////
 	/**
@@ -182,7 +182,7 @@ public class Controller {
 					return 'n';
 				}
 			}
-	 		
+
 			if(parent==null){ //insert into gamePlaying.blocks and cascade!!!
 				/*So insert only happens to main, the rest are edit and delete so 
 				we first check if the begin line we are given already exsits in the 
@@ -210,7 +210,7 @@ public class Controller {
 				return 'n'; //not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
 			}
 			if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
-				b.setParent(this.userCodingNow);
+				b.setParent(null);
 				this.userCodingNow=b;
 				if(this.parent!=null){ //inserting into parent's block
 					parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
@@ -219,7 +219,7 @@ public class Controller {
 				this.userCodingNow=b;
 			}
 			return 'g';
-			
+
 		}
 	}
 
@@ -739,7 +739,7 @@ public class Controller {
 		}
 		return;
 	}
-	
+
 
 	/**
 	 * Will delete a block of code at a given index/position selected by the user 
@@ -764,10 +764,10 @@ public class Controller {
 				return false;
 			}
 		}
-		
+
 		int currDiff = b.getlineEnd()-b.getlineBegin()+1;
 		Block parent = b.getParent();
-		
+
 		//cascade first with negative number the then remove
 		//UPDATE: new cascade method updates line numbers, and creates new hashmap for each
 		//		  level based on all existing blocks(before and after pos), so should delete first, then cascade
@@ -797,13 +797,13 @@ public class Controller {
 	 * @param instruction nested block instructions to add to block with key
 	 * 
 	 */
-	
-//ISN'T THIS THE SAME AS EDIT BLOCK??? USER CAN ONLY INSERT INSTRUCTION BY EDITING BLOCK
+
+	//ISN'T THIS THE SAME AS EDIT BLOCK??? USER CAN ONLY INSERT INSTRUCTION BY EDITING BLOCK
 	/*public boolean insertInstructionToBlock(int key, HashMap<Integer,Block> instruction){
 		//find the block that has the line begin = key and inserts instruction in the right place
 		//cascades the changes in line numbers 
 		Block b = searchForBlock(key, gamePlaying.getBlocks()); //gets the block we want
-		
+
 
 		int currdiff= keylist.get(keylist.size()-1)  -  keylist.get(0);
 		Block tempblock= gamePlaying.getBlocks().get(key);
@@ -814,7 +814,7 @@ public class Controller {
 
 		return false;
 	}*/
-	
+
 	/**
 	 * Will insert a NEW block of code into a user specified index/position
 	 *
@@ -854,9 +854,9 @@ public class Controller {
 		cascadeNumberingChanges(id,currdiff, reference);
 		//after cascade, should have a free spot in hashmap with key=id since moved original id block down to diff key
 		parent.getNestedBlocks().put(id, b);
-		
+
 	}
-	
+
 	/**
 	 * counts the total number of lines(blocks) in a block (including nested blocks)
 	 */
@@ -869,7 +869,7 @@ public class Controller {
 			countBlocks(b.getNestedBlocks().get(key));
 		}
 	}
-	
+
 	/**
 	 * Search for possible parent of block to insert in MAIN
 	 * @param pos line number of block whose parent we are finding
@@ -950,9 +950,9 @@ public class Controller {
 
 		return null;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Cascades the line number changes to the rest of the code after insert, delete or edit
 	 * @param lineBegin The block that was changed, inserted, deleted etc's line begin. 
@@ -991,8 +991,8 @@ public class Controller {
 		b.getParent().setNestedBlocks(tempnb); //replace original nested hashmap with new/updated nested hashmap
 		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
 	}
-	
-	
+
+
 	//original cascadeNumberingChanges
 	/**
 	 * Cascades the line number changes to the rest of the code after insert, delete or edit
@@ -1001,7 +1001,7 @@ public class Controller {
 	 * @param b Block that the change occured in
 	 * @assumes have checked if prevDiff==currDiff to make sure we don't use this method if it is
 	 */
-/*	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b){
+	/*	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b){
 		if(b.getParent()==null){
 			return; //no more higher level to get to
 		}
