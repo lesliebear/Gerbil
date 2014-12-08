@@ -971,7 +971,6 @@ public class Controller {
 		return null;
 	}
 
-
 	/**
 	 * Cascades the line number changes to the rest of the code after insert, delete or edit
 	 * @param lineBegin The block that was changed, inserted, deleted etc's line begin. 
@@ -981,6 +980,9 @@ public class Controller {
 	 * @assumes have checked if prevDiff==currDiff to make sure we don't use this method if it is
 	 */
 	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b){
+		if(b.getParent()!=null){
+			b.getParent().setLineEnd(b.getParent().getlineEnd()+currDiff);
+		}
 		HashMap<Integer,Block> nb;
 		HashMap<Integer,Block> tempnb= new HashMap<Integer,Block>();
 		boolean lastBlocks=false;
@@ -991,18 +993,17 @@ public class Controller {
 			nb = b.getParent().getNestedBlocks();//get hashmap containing b and sister blocks
 		}
 		Block temp=null;
-		int tempDiff =0;
 		for(int key: nb.keySet()){
 			if (key>=lineBegin){ //cascade the difference to the blocks after b!
 				temp=nb.get(key); //get the object
-				tempDiff=temp.getlineEnd()-temp.getlineBegin()+1; //calculate the difference before hand
-				if(currDiff<=0){
-					temp.setlineBegin(b.getlineEnd()+temp.getlineBegin()+currDiff); //change line begin with the difference
-					temp.setLineEnd(temp.getlineBegin()+tempDiff-1); //did this with temp diff just in case
-				}else{
-					temp.setlineBegin(b.getlineEnd()+tempDiff); //change line begin with the difference
-					temp.setLineEnd(temp.getlineBegin()+tempDiff-1); //did this with temp diff just in case
+				if(!temp.getNestedBlocks().isEmpty()){
+					for(int nestedkey: temp.getNestedBlocks().keySet()){
+						cascadeInward(lineBegin,currDiff,temp.getNestedBlocks().get(nestedkey));
+						break;
+					}
 				}
+				temp.setlineBegin(temp.getlineBegin()+currDiff); //change line begin with the difference
+				temp.setLineEnd(temp.getlineEnd()+currDiff); 
 				tempnb.put(temp.getlineBegin(), temp); //put each updated block in temp hashmap with new key
 			}else{ //put each un-updated block in temp hashmap with original key
 				tempnb.put(key, nb.get(key));
@@ -1014,6 +1015,37 @@ public class Controller {
 		}
 		b.getParent().setNestedBlocks(tempnb); //replace original nested hashmap with new/updated nested hashmap
 		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
+	}
+	
+	/**
+	 * cascadesNumberingChanges Inward to nested blocks
+	 * @param lineBegin The block that was changed, inserted, deleted etc's line begin. 
+	 * 			/IMPORTANT: lineBegin is the line number above SELECTED line number in view
+	 * @param currDiff Current/new difference in end - start
+	 * @param b Block that the change occurred in
+	 */
+	public void cascadeInward(int lineBegin, int currDiff, Block b){
+		HashMap<Integer,Block> nb;
+		HashMap<Integer,Block> tempnb= new HashMap<Integer,Block>();
+		nb = b.getParent().getNestedBlocks();//get hashmap containing b and sister blocks
+		Block temp=null;
+		for(int key: nb.keySet()){
+			if (key>=lineBegin){ //cascade the difference to the blocks after b!
+				temp=nb.get(key); //get the object
+				if(!temp.getNestedBlocks().isEmpty()){
+					for(int nestedkey: temp.getNestedBlocks().keySet()){
+						cascadeInward(lineBegin,currDiff,temp.getNestedBlocks().get(nestedkey));
+						break;
+					}
+				}
+				temp.setlineBegin(temp.getlineBegin()+currDiff); //change line begin with the difference
+				temp.setLineEnd(temp.getlineEnd()+currDiff); 
+				tempnb.put(temp.getlineBegin(), temp); //put each updated block in temp hashmap with new key
+			}else{ //put each un-updated block in temp hashmap with original key
+				tempnb.put(key, nb.get(key));
+			}	
+		} 
+		b.getParent().setNestedBlocks(tempnb);
 	}
 
 	//original cascadeNumberingChanges
