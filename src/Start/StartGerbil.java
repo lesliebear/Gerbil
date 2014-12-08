@@ -20,24 +20,17 @@ public class StartGerbil {
 		//checks{"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
 		Controller controller = new Controller();
 		controller.createBlocks(0, 1, 0, null); //eat
-		controller.createBlocks('e', 1, 1, null);//eat
-		controller.createBlocks(6, 2, 0, null);//whilethere'swall
-		controller.createBlocks(3, 4, 0,null); //if there'sfood
-		controller.createBlocks(7, 6, 3, null);//repeat 4
-		controller.createBlocks(2, 8, 1, null); //move
-		controller.createBlocks('e', 8, 1, null);//move
-		controller.createBlocks('e', 6, 4, "4");//repeat 4
-		controller.createBlocks('e',4, 7, "There'sFood");//if there's foood
-		controller.createBlocks('e',2, 10, "There'sWall?");//whilethere'swall
-		/*controller.createBlocks(3, 1, 0, null); //if theres no wall
+		controller.createBlocks('e', 1, 1, null);
+		controller.createBlocks(3, 1, 0, null); //if theres no wall
 		controller.createBlocks(1, 3, 0, null); //turn left
 		controller.createBlocks('e', 3, 1, null);
 		controller.createBlocks('e', 1, 5, "There'sNoWall");
 		controller.createBlocks(2, 0, 0, null); //insert
-		controller.createBlocks('e', 0, 1, null);*/
+		controller.createBlocks('e', 0, 1, null);
 		controller.printBlocks(0,controller.getCurrGame().getBlocks());
-		
-		
+		System.out.println("___________________________________________");
+		Block b = controller.getHighlighting(0, controller.getCurrGame().getBlocks());
+		System.out.println(b.getlineBegin()+" "+b.getType());
 		//Conditionals conditionals = new Conditionals("if");
 		//Grid g = new Grid(17,17);		
 		//SavedGames sg = new SavedGames();
