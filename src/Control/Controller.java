@@ -772,11 +772,11 @@ public class Controller {
 		//UPDATE: new cascade method updates line numbers, and creates new hashmap for each
 		//		  level based on all existing blocks(before and after pos), so should delete first, then cascade
 		if(parent==null){ //no nesting level
-			gamePlaying.getBlocks().remove(pos);
+			gamePlaying.getBlocks().remove(b.getlineBegin());
 		}else{
 			parent.getNestedBlocks().remove(b.getlineBegin(), b);
 		}
-		cascadeNumberingChanges(pos,-1*currDiff, b);//MAKE SURE -1*currDIFF!!!!! 
+		cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, b);//MAKE SURE -1*currDIFF!!!!! 
 
 		return true;
 		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
@@ -933,7 +933,7 @@ public class Controller {
 		//eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), function(8),
 		if(type>=0 && type <=2){ //[0-2]
 			return b;
-			
+
 			//below is for terminal so see if they belong in larger block. no parent, then return them
 			/**if (b.getParent()!=null){
 				return b.getParent();
@@ -948,6 +948,7 @@ public class Controller {
 
 		return null;
 	}
+
 
 	/**
 	 * Cascades the line number changes to the rest of the code after insert, delete or edit
@@ -973,8 +974,13 @@ public class Controller {
 			if (key>=lineBegin){ //cascade the difference to the blocks after b!
 				temp=nb.get(key); //get the object
 				tempDiff=temp.getlineEnd()-temp.getlineBegin()+1; //calculate the difference before hand
-				temp.setlineBegin(b.getlineEnd()+tempDiff); //change line begin with the difference
-				temp.setLineEnd(temp.getlineBegin()+tempDiff-1); //did this with temp diff just in case
+				if(currDiff<=0){
+					temp.setlineBegin(b.getlineEnd()+temp.getlineBegin()+currDiff); //change line begin with the difference
+					temp.setLineEnd(temp.getlineBegin()+tempDiff); //did this with temp diff just in case
+				}else{
+					temp.setlineBegin(b.getlineEnd()+tempDiff); //change line begin with the difference
+					temp.setLineEnd(temp.getlineBegin()+tempDiff-1); //did this with temp diff just in case
+				}
 				tempnb.put(temp.getlineBegin(), temp); //put each updated block in temp hashmap with new key
 			}else{ //put each un-updated block in temp hashmap with original key
 				tempnb.put(key, nb.get(key));
@@ -987,7 +993,6 @@ public class Controller {
 		b.getParent().setNestedBlocks(tempnb); //replace original nested hashmap with new/updated nested hashmap
 		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
 	}
-
 
 	//original cascadeNumberingChanges
 	/**
