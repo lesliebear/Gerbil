@@ -131,7 +131,11 @@ public class Controller {
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
 				Function f = this.functions.get(block.getFunctionNum());
 				System.out.println(tabStr+f.getName());
-			}			
+			}	
+			
+			for(int i =0; i<tab; i++){//reset the tabs
+				tabStr+='\t';
+			}
 		}
 		
 	}
