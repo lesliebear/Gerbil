@@ -17,11 +17,12 @@ public class StartGerbil {
 		//Backend bk = new Backend();
 		//System.out.println(bk.saveGames());
 		//Main main = new Main();
+		//checks{"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
 		Controller controller = new Controller();
 		controller.createBlocks(0, 1, 0, null);
 		controller.createBlocks('e', 1, 1, null);
-		controller.createBlocks(1, 2, 0, null);
-		controller.createBlocks('e', 2, 1, null);
+		controller.createBlocks(3, 1, 0, null);
+		controller.createBlocks('e', 1, 5, "There'sNoWall");
 		controller.createBlocks(2, 0, 0, null);
 		controller.createBlocks('e', 0, 1, null);
 		controller.printBlocks(0,controller.getCurrGame().getBlocks());
