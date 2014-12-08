@@ -9,14 +9,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.StringTokenizer;
-
 import Model.Backend;
 import Model.Block;
 import Model.Function;
 import Model.Game;
 import Model.Gerbil;
-import Model.Grid;
 import Model.User;
 
 /**
@@ -33,7 +30,7 @@ public class Controller {
 	/**Holds the list of built in functions = eat move, turn left
 	 * And user created are added to the end of this arraylist when game is initialized first
 	 * and then reloaded to the backend when finished game*/
-	ArrayList<Function> functions;
+	ArrayList<Function> functions = new ArrayList<Function>();
 	//Note eat fruit must be for that fruit only!! else error popup.
 	Backend backend= new Backend();
 	Play play;
@@ -178,21 +175,20 @@ public class Controller {
 	 * @param cond This is for while and if statements AND it also sends the integer for Repeat!!
 	 * @assumes if same function is called with c, the function was cancelled at some point so we ignore what we have currently 
 	 * @assuems if same function is called with e, the function was finished so we add to the list
-	 * @return 'g' char if good else 'n' if not good => don't close the current location.
 	 */
-	public char createBlocks(int type, int begin, int numLines, String cond){
+	public void createBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
 			this.userCodingNow=null;//this is all that needs to be done here!
 			this.userCodingNow=this.parent;
-			return 'g';
-		}else if(type=='e'){//finished coding for the block so put into the correct spot
+			return;
+		}else if((type=='e') && (this.userCodingNow!=null)){//finished coding for the block so put into the correct spot
 			this.userCodingNow.setLineEnd(begin+numLines-1);	
 			int currType= this.userCodingNow.getType();
 			if(currType==7){//repeat block so turn cond into int and store in repeat
 				int repeat=-1;
 				if(cond==null){
 					///////////////////ERROR: Number of repetitions was not selected!//////////////
-					return 'n';
+					return;
 				}else{ //no need to check if cond is int or not since view will provide int for it 
 					repeat =Integer.valueOf(cond);
 				}
@@ -201,8 +197,8 @@ public class Controller {
 			}else if(currType==8){//user-defined FUNCTION block so find int for cond and store int in functionNum
 				int functionNum=-1;
 				if(cond==null){
-					///////////ERROR: Function not selected????
-					return 'n';
+					///////////ERROR: Function not selected////////////////////////////
+					return;
 				}else{
 					for(int i=0; i<this.functions.size(); i++){
 						if(functions.get(i).equals(cond)){
@@ -211,16 +207,15 @@ public class Controller {
 						}
 					}
 				}
+				if(functionNum==-1){ //despite searching for it!! 
+					///////////////ERROR: Illegal funciton entered!!!!!/////////////
+					return;
+				}
 				this.userCodingNow.setFunctionNum(functionNum);	
 			}else if(currType==3 || currType==6){ //if and while loops
 				this.userCodingNow.setCond(cond);
 			}else if(currType==4){ //for else if, we need to check if parent == if => parent cannot be null
 				this.userCodingNow.setCond(cond);
-			}else if(currType== 5){ //for else, we need to check if parent==if or else if! else error
-				if(this.userCodingNow.getParent().getType()!=3){ //parent can be null! but hte usercoding now's parent cannot be null!! it has to be if!!
-					//////////////ERROR: Illegal Else if entered. If statement has to exist for else if to exist////////
-					return 'n';
-				}
 			}
 
 			if(parent==null){ //insert into gamePlaying.blocks and cascade!!!
@@ -234,7 +229,7 @@ public class Controller {
 						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow);
 						this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
 						this.userCodingNow=null;
-						return 'g';
+						return;
 					}
 				}//get past this means, end of lines!
 				this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
@@ -243,12 +238,14 @@ public class Controller {
 			if(this.parent!=null){
 					this.parent=this.userCodingNow.getParent();
 			}
-
-			return 'g';
+			return;
 		}else{ //first time making a block
 			Block b = new Block();
 			b.setlineBegin(begin);
 			b.setType(type);
+			if(type=='e'){
+				return;
+			}
 			if((type==4) || (type==5)){ //SPECIAL FOR ELSE IF AND ELSE!!!
 				Block parIf = null; 
 				if(this.userCodingNow==null){ //find in main level = no nesting
@@ -266,10 +263,13 @@ public class Controller {
 					}
 				}
 				if(parIf==null){
-					return 'n'; //not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
+					//////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
+					//not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
+					return;
 				}else if(parIf.getlineEnd()+1!=begin){
 					//So we are trying to insert the else if or else after the if for else if OR if/else if for ELSE!!!
-					return 'n';
+					////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
+					return;
 				}else{
 					if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
 						b.setParent(parIf.getParent()); //set else if or else stuff's parent to the parent of if block!!
@@ -294,8 +294,7 @@ public class Controller {
 					this.userCodingNow=b; //don't put in if its in main's nesting
 				}
 			}
-			return 'g';
-
+			return;
 		}
 	}
 
@@ -1546,6 +1545,7 @@ public class Controller {
 	 * @return True if save is successful, otherwise False 
 	 */
 	public boolean saveGame() {
+		
 		for(int i=0; i<functions.size();i++){
 			gamePlaying.getfunction().add(functions.get(i));
 		}  
