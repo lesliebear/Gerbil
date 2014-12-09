@@ -30,10 +30,14 @@ public class StartGerbil {
 		controller.createBlocks('e',10,1,null);
 		controller.createBlocks('e',8,4,"There'sNoFood");
 		controller.createBlocks(5,12,0,null); //else
-		controller.createBlocks(0,14,0,null);
-		controller.createBlocks('e',14,0,null);
-		controller.createBlocks('e',12,4,null);
-		controller.createBlocks('e', 2, 15, "There'sNoWall");
+		controller.createBlocks(3,14,0,null);  //if inside else
+		controller.createBlocks(2, 16, 0, null); //move inside if inside else
+		controller.createBlocks('e', 16, 2, null); 
+		controller.createBlocks('e',14,4,"There'sNoFood"); //end if inside else
+		controller.createBlocks(0,18,0,null); //eat
+		controller.createBlocks('e',18,1,null);//end eat
+		controller.createBlocks('e',19,4,null); //end else
+		controller.createBlocks('e', 2, 22, "There'sNoWall");
 
 		controller.createBlocks(1, 1, 0, null); //turnleft = put infront of everything!
 		controller.createBlocks('e', 1, 1, null);
@@ -50,9 +54,9 @@ public class StartGerbil {
 		controller.createBlocks(1, 0, 0, null); //insert turn left at line 0
 		controller.createBlocks('e', 0, 1, null);*/
 		controller.printBlocks(0,controller.getCurrGame().getBlocks());
-		System.out.println("_______________deleteblockstuff____________________________");
-		System.out.println(controller.deleteBlock(5));
-		controller.printBlocks(0,controller.getCurrGame().getBlocks());
+		//System.out.println("_______________deleteblockstuff____________________________");
+		//System.out.println(controller.deleteBlock(16));
+		//controller.printBlocks(0,controller.getCurrGame().getBlocks());
 		
 		//Conditionals conditionals = new Conditionals("if");
 		//Grid g = new Grid(17,17);		
