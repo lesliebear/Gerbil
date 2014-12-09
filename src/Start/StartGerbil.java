@@ -29,7 +29,11 @@ public class StartGerbil {
 		controller.createBlocks(2,9,0,null);
 		controller.createBlocks('e',9,1,null);
 		controller.createBlocks('e',8,4,"There'sNoFood");
-		controller.createBlocks('e', 2, 11, "There'sNoWall");
+		controller.createBlocks(5,12,0,null); //else
+		controller.createBlocks(0,14,0,null);
+		controller.createBlocks('e',14,0,null);
+		controller.createBlocks('e',12,4,null);
+		controller.createBlocks('e', 2, 15, "There'sNoWall");
 		
 	//	controller.createBlocks(1, 1, 0, null); //turnleft = put infront of everything!
 		//controller.createBlocks('e', 1, 1, null);
