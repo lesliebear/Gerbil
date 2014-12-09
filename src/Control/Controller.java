@@ -468,6 +468,7 @@ public class Controller {
 				boolean eat= eat(runtimeGerbil.getX(), runtimeGerbil.getY());
 				if(eat==false){
 					//errorEat() dialogue box??;
+					System.out.println("errorEat()");
 					return 1;
 				}
 			}else if(command.equals("Turn Left")){
@@ -480,6 +481,7 @@ public class Controller {
 				boolean moveforward= moveForward(runtimeGerbil);
 				if(moveforward==false){
 					//errorWall() dialogue box??
+					System.out.println("errorWall()");
 					return 2;
 				}else{
 					if(isthereWater(runtimeGerbil.getX(), runtimeGerbil.getY())){
@@ -491,6 +493,7 @@ public class Controller {
 				return 3;
 			}
 		}
+		System.out.println("errorDidNotReachWater()");
 		return 4;
 
 	}
@@ -560,7 +563,7 @@ public class Controller {
 			if(block.getCond().equals("There'sWall?")){
 				if(isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success=parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -573,7 +576,7 @@ public class Controller {
 			}else if(block.getCond().equals("There'sFood")){
 				if(isthereFood(tempgerbil.getX(),tempgerbil.getY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success=parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -586,7 +589,7 @@ public class Controller {
 			}else if(block.getCond().equals("There'sNoWall")){
 				if(!isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success=parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -600,7 +603,7 @@ public class Controller {
 			}else if(block.getCond().equals("There'sNoFood")){
 				if(!isthereFood(tempgerbil.getX(),tempgerbil.getY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success=parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -615,7 +618,7 @@ public class Controller {
 			return false;
 		}else if(block.getType()==5){//"else"
 			for(int i=0; i<nestedsortedkeys.size(); i++){
-				Block nestedblock= nestedblocklist.get(i);
+				Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 				boolean success=parseBlock(nestedblock);
 				if(success==false){
 					return false;
@@ -626,7 +629,7 @@ public class Controller {
 			if(block.getCond().equals("There'sWall?")){
 				if(isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success=parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -639,7 +642,7 @@ public class Controller {
 			}else if(block.getCond().equals("There'sFood")){
 				if(isthereFood(tempgerbil.getX(),tempgerbil.getY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success=parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -652,7 +655,7 @@ public class Controller {
 			}else if(block.getCond().equals("There'sNoWall")){
 				if(!isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success=parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -666,7 +669,7 @@ public class Controller {
 			}else if(block.getCond().equals("There'sNoFood")){
 				if(!isthereFood(tempgerbil.getX(),tempgerbil.getY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success=parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -683,7 +686,7 @@ public class Controller {
 			if(block.getCond().equals("There'sWall?")){
 				while(isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success= parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -694,7 +697,7 @@ public class Controller {
 			}else if(block.getCond().equals("There'sFood")){
 				while(isthereFood(tempgerbil.getX(),tempgerbil.getY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success=parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -705,7 +708,7 @@ public class Controller {
 			}else if(block.getCond().equals("There'sNoWall")){
 				while(!isthereWall(tempgerbil.getFrontX(),tempgerbil.getFrontY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success=parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -716,7 +719,7 @@ public class Controller {
 			}else if(block.getCond().equals("There'sNoFood")){
 				while(!isthereFood(tempgerbil.getX(),tempgerbil.getY())){
 					for(int i=0; i<nestedsortedkeys.size(); i++){
-						Block nestedblock= nestedblocklist.get(i);
+						Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(i));
 						boolean success=parseBlock(nestedblock);
 						if(success==false){
 							return false;
@@ -733,7 +736,7 @@ public class Controller {
 			}
 			for(int i=0; i<repeat; i++){
 				for(int j=0; j<nestedsortedkeys.size(); j++){
-					Block nestedblock= nestedblocklist.get(j);
+					Block nestedblock= nestedblocklist.get(nestedsortedkeys.get(j));
 					boolean success=parseBlock(nestedblock);
 					if(success==false){
 						return false;
@@ -763,7 +766,7 @@ public class Controller {
 			}
 			ArrayList<Integer> fnestedsortedkeys= sortKeys(fnestedkeylist);				
 			for(int i=0; i<fnestedsortedkeys.size(); i++){
-				Block fnestedblock= fnestedblocklist.get(i);
+				Block fnestedblock= fnestedblocklist.get(fnestedsortedkeys.get(i));
 				this.isFunction=true;
 				boolean success=parseBlock(fnestedblock);
 				if(success==false){
