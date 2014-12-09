@@ -895,48 +895,33 @@ public class Controller {
 		}
 		int currDiff = b.getlineEnd()-b.getlineBegin()+1;
 		Block pare = b.getParent();
-
-		//cascade first with negative number the then remove
+		HashMap<Integer,Block> nested = null;
 		//UPDATE: new cascade method updates line numbers, and creates new hashmap for each
 		//		  level based on all existing blocks(before and after pos), so should delete first, then cascade
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		int tempDiff = 0;
 		if(pare==null){ //no nesting level
-			gamePlaying.getBlocks().remove(b.getlineBegin()); //remove the if!
-			if(b.getType()==3){//if statement so remove all subsequent ifs and elses
-				java.util.Iterator<Integer> itB =this.gamePlaying.getBlocks().keySet().iterator();
-				int k;
-				while(itB.hasNext()){
-					k = itB.next();
-					Block temB = this.gamePlaying.getBlocks().get(k);
-					int temTp =temB.getType(); 
-					if((temTp==4) || (temTp==5)){
-						itB.remove();
-						int tempDiff =temB.getlineEnd()-temB.getlineBegin()+1; 
-						cascadeNumberingChanges(temB.getlineBegin(),-1*tempDiff, temB);//MAKE SURE -1*currDIFF!!!!! 
-					}else if(temTp==3){//different if block so exit loop
-						break;
-					}
-				}
-			}
-		}else{
-			pare.getNestedBlocks().remove(b.getlineBegin(), b); //remove the if!!
-			if(b.getType()==3){ //if statement so need to remove all subsequent else ifs and elses
-				java.util.Iterator<Integer> it =pare.getNestedBlocks().keySet().iterator();
-				int z;
-				while(it.hasNext()){
-					z = it.next();
-					Block temB = pare.getNestedBlocks().get(z);
-					int temTp =temB.getType(); 
-					if((temTp==4) || (temTp==5)){
-						it.remove();
-						int tempDiff =temB.getlineEnd()-temB.getlineBegin()+1;
-						cascadeNumberingChanges(temB.getlineBegin(),-1*tempDiff, temB);//MAKE SURE -1*currDIFF!!!!! 
-					}else if(temTp==3){//different if block so exit loop
-						break;
-					}
+			nested = gamePlaying.getBlocks();
+		}else{ 
+			nested = pare.getNestedBlocks();
+		}
+		nested.remove(b.getlineBegin(),b);
+		cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, b);//MAKE SURE -1*currDIFF!!!!!
+		if(b.getType()==3){//if statement so remove all subsequent ifs and elses
+			java.util.Iterator<Integer> it =nested.keySet().iterator();
+			int k;
+			while(it.hasNext()){
+				k = it.next();
+				Block temB = nested.get(k);
+				int temTp =temB.getType(); 
+				if((temTp==4) || (temTp==5)){
+					deleteBlock(temB.getlineBegin()); 
+				}else if(temTp==3){//different if block so exit loop
+					break;
 				}
 			}
 		}
-		cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, b);//MAKE SURE -1*currDIFF!!!!! 
+	
 
 		return true;
 		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
