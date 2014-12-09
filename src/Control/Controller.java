@@ -112,34 +112,34 @@ public class Controller {
 			}else if(type==3){ //if
 				System.out.println(tabStr+" If "+block.getCond());
 				tabStr+='\t';
-				System.out.println(block.getlineBegin()+1+tabStr+" begin");
+				System.out.println(block.getlineBegin()+1+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					printBlocks(tempTab,block.getNestedBlocks());
 				}
-				System.out.println(block.getlineEnd()+tabStr+" end");
+				System.out.println(block.getlineEnd()+tabStr+"end");
 			}else if(type==4){ //else if
 				System.out.println(tabStr+" ElseIf "+block.getCond());
 				tabStr+='\t';
-				System.out.println(block.getlineBegin()+1+tabStr+" begin");
+				System.out.println(block.getlineBegin()+1+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					printBlocks(tempTab,block.getNestedBlocks());
 				}
-				System.out.println(block.getlineEnd()+tabStr+" end");
+				System.out.println(block.getlineEnd()+tabStr+"end");
 			}else if(type==5){//else
 				System.out.println(tabStr+" Else ");
 				tabStr+='\t';
-				System.out.println(block.getlineBegin()+1+tabStr+" begin");
+				System.out.println(block.getlineBegin()+1+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					printBlocks(tempTab,block.getNestedBlocks());
 				}
-				System.out.println(block.getlineEnd()+tabStr+" end");
+				System.out.println(block.getlineEnd()+tabStr+"end");
 			}else if(type==6){//while
 				System.out.println(tabStr+" While "+block.getCond());
 				tabStr+='\t';
-				System.out.println(block.getlineBegin()+1+tabStr+" begin");
+				System.out.println(block.getlineBegin()+1+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					printBlocks(tempTab,block.getNestedBlocks());
@@ -153,7 +153,7 @@ public class Controller {
 					int tempTab = tab+1;
 					printBlocks(tempTab,block.getNestedBlocks());
 				}
-				System.out.println(block.getlineEnd()+tabStr+" end");
+				System.out.println(block.getlineEnd()+tabStr+"end");
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
 				Function f = this.functions.get(block.getFunctionNum());
 				System.out.println(tabStr+f.getName());

@@ -19,10 +19,20 @@ public class StartGerbil {
 		Controller controller = new Controller();
 		controller.createBlocks(0, 1, 0, null); //eat
 		controller.createBlocks('e', 1, 1, null);
-		controller.createBlocks(5, 2, 0, null); //add an else without if
-		controller.createBlocks('e', 2, 3, null);
-		controller.createBlocks(1, 1, 0, null); //turnleft
-		controller.createBlocks('e', 1, 1, null);
+		controller.createBlocks(6, 2, 0, null); //a while
+		
+		controller.createBlocks(3, 4, 0, null);// if statement
+		controller.createBlocks(0, 6, 0, null); //add eat
+		controller.createBlocks('e', 6, 1, null); //add eat
+		controller.createBlocks('e', 4, 4, "There'sFood"); //end if
+		controller.createBlocks(4,8,0,null);
+		controller.createBlocks(2,9,0,null);
+		controller.createBlocks('e',9,1,null);
+		controller.createBlocks('e',8,4,"There'sNoFood");
+		controller.createBlocks('e', 2, 11, "There'sNoWall");
+		
+	//	controller.createBlocks(1, 1, 0, null); //turnleft = put infront of everything!
+		//controller.createBlocks('e', 1, 1, null);
 		/**controller.createBlocks(3, 1, 0, null); //if theres no wall
 		controller.createBlocks(2, 3, 0, null); //move
 		controller.createBlocks('e', 3, 1, null);
