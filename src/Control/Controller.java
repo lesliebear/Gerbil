@@ -10,8 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import javax.swing.text.html.HTMLDocument.Iterator;
-
 import Model.Backend;
 import Model.Block;
 import Model.Function;
@@ -898,8 +896,7 @@ public class Controller {
 		HashMap<Integer,Block> nested = null;
 		//UPDATE: new cascade method updates line numbers, and creates new hashmap for each
 		//		  level based on all existing blocks(before and after pos), so should delete first, then cascade
-		ArrayList<Integer> arr = new ArrayList<Integer>();
-		int tempDiff = 0;
+		
 		if(pare==null){ //no nesting level
 			nested = gamePlaying.getBlocks();
 		}else{ 
@@ -921,7 +918,6 @@ public class Controller {
 				}
 			}
 		}
-	
 
 		return true;
 		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
