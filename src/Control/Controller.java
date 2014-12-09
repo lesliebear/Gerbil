@@ -909,7 +909,8 @@ public class Controller {
 					Block temB = this.gamePlaying.getBlocks().get(k);
 					int temTp =temB.getType(); 
 					if((temTp==4) || (temTp==5)){
-						gamePlaying.getBlocks().remove(temB.getlineBegin());
+						itB.remove();
+					//	cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, temB);//MAKE SURE -1*currDIFF!!!!! 
 					}else if(temTp==3){//different if block so exit loop
 						break;
 					}
@@ -925,8 +926,8 @@ public class Controller {
 					Block temB = pare.getNestedBlocks().get(z);
 					int temTp =temB.getType(); 
 					if((temTp==4) || (temTp==5)){
-						pare.getNestedBlocks().remove(temB.getlineBegin());
-						//cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, temB);//MAKE SURE -1*currDIFF!!!!! 
+						it.remove();
+					//	cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, temB);//MAKE SURE -1*currDIFF!!!!! 
 					}else if(temTp==3){//different if block so exit loop
 						break;
 					}
