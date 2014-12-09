@@ -910,7 +910,8 @@ public class Controller {
 					int temTp =temB.getType(); 
 					if((temTp==4) || (temTp==5)){
 						itB.remove();
-						cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, temB);//MAKE SURE -1*currDIFF!!!!! 
+						int tempDiff =temB.getlineEnd()-temB.getlineBegin()+1; 
+						cascadeNumberingChanges(temB.getlineBegin(),-1*tempDiff, temB);//MAKE SURE -1*currDIFF!!!!! 
 					}else if(temTp==3){//different if block so exit loop
 						break;
 					}
@@ -927,7 +928,8 @@ public class Controller {
 					int temTp =temB.getType(); 
 					if((temTp==4) || (temTp==5)){
 						it.remove();
-						cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, temB);//MAKE SURE -1*currDIFF!!!!! 
+						int tempDiff =temB.getlineEnd()-temB.getlineBegin()+1;
+						cascadeNumberingChanges(temB.getlineBegin(),-1*tempDiff, temB);//MAKE SURE -1*currDIFF!!!!! 
 					}else if(temTp==3){//different if block so exit loop
 						break;
 					}
