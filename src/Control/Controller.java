@@ -37,6 +37,7 @@ public class Controller {
 	Play play;
 	ArrayList<String> finalblocks= new ArrayList<String>();
 	HashMap<Integer,Boolean> visited;
+	HashMap<Integer,Block> tempFunctionBlockInstructions= new HashMap<Integer,Block>();
 	Block parent = null;
 	Block userCodingNow = null;
 	Block userCodingNowEdit= null;
@@ -225,15 +226,29 @@ public class Controller {
 				main, if it does, we cascade, then insert to not delete the current 
 				block at that number. else we simply add = works for both between lines 
 				and end of code.*/
-				for (int key: this.gamePlaying.getBlocks().keySet()){
-					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow);
-						this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
-						this.userCodingNow=null;
-						return;
-					}
-				}//get past this means, end of lines!
-				this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
+				
+				//check if creating blocks for function. if so, put in tempFunctionBlockInstructions instead
+				if(this.isFunction){
+					for (int key: this.tempFunctionBlockInstructions.keySet()){
+						if(key==begin){
+							cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow);
+							this.tempFunctionBlockInstructions.put(begin, this.userCodingNow);
+							this.userCodingNow=null;
+							return;
+						}
+					}//get past this means, end of lines!
+					this.tempFunctionBlockInstructions.put(begin, this.userCodingNow);
+				}else{
+					for (int key: this.gamePlaying.getBlocks().keySet()){
+						if(key==begin){
+							cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow);
+							this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
+							this.userCodingNow=null;
+							return;
+						}
+					}//get past this means, end of lines!
+					this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
+				}	
 			} //we ended this so parent is now the currBlock coded
 			this.userCodingNow=parent;
 			if(this.parent!=null){
@@ -249,10 +264,18 @@ public class Controller {
 			}
 			if((type==4) || (type==5)){ //SPECIAL FOR ELSE IF AND ELSE!!!
 				Block parIf = null; 
-				if(this.userCodingNow==null){ //find in main level = no nesting
-					for(int k: this.gamePlaying.getBlocks().keySet()){
-						if(this.gamePlaying.getBlocks().get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
-							parIf = gamePlaying.getBlocks().get(k);
+				if(this.userCodingNow==null){//find in main level = no nesting
+					if(this.isFunction){
+						for(int k: this.tempFunctionBlockInstructions.keySet()){
+							if(this.tempFunctionBlockInstructions.get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
+								parIf = this.tempFunctionBlockInstructions.get(k);
+							}
+						}
+					}else{
+						for(int k: this.gamePlaying.getBlocks().keySet()){
+							if(this.gamePlaying.getBlocks().get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
+								parIf = gamePlaying.getBlocks().get(k);
+							}
 						}
 					}
 				}else{ //find in parent's level!
@@ -1289,6 +1312,49 @@ public class Controller {
 
 	/**
 	 * Will create a function to be added to list of functions
+	 * 	 * First View calls this, and then when user has entered the information, they will call
+	 * finishCreateBlocks method if the user clicks ok, otherwise, click cancelBlock, if user clicks cancel
+	 * @param type Enumerated type of the object
+	 * @param begin The beginLine fo the object so the line number it starts at
+	 * @param numLines is the number of lines of the code entered since this method is called several times
+	 * @param cond This is for while and if statements AND it also sends the integer for Repeat!!
+	 * @assumes if same function is called with c, the function was cancelled at some point so we ignore what we have currently 
+	 * @assuems if same function is called with e, the function was finished so we add to the list
+	 * @assumes function name may not be unique
+	 * @exception none
+	 * @postcondition Creates function iff function name is unique
+	 * 
+	 * @param name User provided function name, must be unique/valid
+	 * @return newly instantiated Function object
+	 * 
+	 * 
+	 */
+	public Function createFunction(int type, int begin, int numLines, String cond){
+		this.parent = null;// set to null in case not already set
+		this.userCodingNow = null;// set to null in case not already set
+		this.isFunction=true;
+		createBlocks(type,begin,numLines,cond);
+		this.isFunction=false;
+		this.parent = null;// set back to null
+		this.userCodingNow = null;// set back to null
+		String name= cond;
+		int temp = validFunctionName(name);
+		if(temp==1){
+			/////////////Error: Functions names can only consists of letters or numbers///////////
+			return null;
+		}else if(temp==2){
+			///////////////////////////Error: Function name already exists////////////////
+			return null;
+		}
+		Function newfunction= new Function(name);
+		newfunction.setBlockInstructions(this.tempFunctionBlockInstructions);
+		this.tempFunctionBlockInstructions= new HashMap<Integer,Block>();//reset to empty
+		addFunction(newfunction); //add to this.functions list
+		return newfunction;
+	}
+	
+	/**
+	 * Will create a function to be added to list of functions
 	 * 
 	 * @assumes function name may not be unique
 	 * @exception none
@@ -1297,7 +1363,7 @@ public class Controller {
 	 * @param name User provided function name, must be unique/valid
 	 * @return newly instantiated Function object
 	 */
-	public Function createFunction(String name,HashMap<Integer,Block> instruction){
+	/*public Function createFunction(String name,HashMap<Integer,Block> instruction){
 		int temp = validFunctionName(name);
 		if(temp==1){
 			/////////////Error: Functions names can only consists of letters or numbers///////////
@@ -1309,7 +1375,7 @@ public class Controller {
 		Function newfunction= new Function(name);
 		newfunction.setBlockInstructions(instruction);
 		return newfunction;
-	}
+	}*/
 
 	/**
 	 * Will determine whether user provided function name is unique and contains valid characters
@@ -1602,7 +1668,7 @@ public class Controller {
 		Block functionblock= new Block();
 		functionblock.setType(8); 
 		functionblock.setlineBegin(begin);
-		functionblock.setLineEnd(begin+1);
+		functionblock.setLineEnd(begin);
 		functionblock.setParent(block);
 		int funcNum = findFunction(function.getName());
 		functionblock.setFunctionNum(funcNum);
