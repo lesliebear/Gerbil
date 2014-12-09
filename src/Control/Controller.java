@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 import Model.Backend;
 import Model.Block;
 import Model.Function;
@@ -891,15 +894,44 @@ public class Controller {
 			return false; //failure to find block
 		}
 		int currDiff = b.getlineEnd()-b.getlineBegin()+1;
-		Block parent = b.getParent();
+		Block pare = b.getParent();
 
 		//cascade first with negative number the then remove
 		//UPDATE: new cascade method updates line numbers, and creates new hashmap for each
 		//		  level based on all existing blocks(before and after pos), so should delete first, then cascade
-		if(parent==null){ //no nesting level
-			gamePlaying.getBlocks().remove(b.getlineBegin());
+		if(pare==null){ //no nesting level
+			gamePlaying.getBlocks().remove(b.getlineBegin()); //remove the if!
+			if(b.getType()==3){//if statement so remove all subsequent ifs and elses
+				java.util.Iterator<Integer> itB =this.gamePlaying.getBlocks().keySet().iterator();
+				int k;
+				while(itB.hasNext()){
+					k = itB.next();
+					Block temB = this.gamePlaying.getBlocks().get(k);
+					int temTp =temB.getType(); 
+					if((temTp==4) || (temTp==5)){
+						gamePlaying.getBlocks().remove(temB.getlineBegin());
+					}else if(temTp==3){//different if block so exit loop
+						break;
+					}
+				}
+			}
 		}else{
-			parent.getNestedBlocks().remove(b.getlineBegin(), b);
+			pare.getNestedBlocks().remove(b.getlineBegin(), b); //remove the if!!
+			if(b.getType()==3){ //if statement so need to remove all subsequent else ifs and elses
+				java.util.Iterator<Integer> it =pare.getNestedBlocks().keySet().iterator();
+				int z;
+				while(it.hasNext()){
+					z = it.next();
+					Block temB = pare.getNestedBlocks().get(z);
+					int temTp =temB.getType(); 
+					if((temTp==4) || (temTp==5)){
+						pare.getNestedBlocks().remove(temB.getlineBegin());
+						//cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, temB);//MAKE SURE -1*currDIFF!!!!! 
+					}else if(temTp==3){//different if block so exit loop
+						break;
+					}
+				}
+			}
 		}
 		cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, b);//MAKE SURE -1*currDIFF!!!!! 
 
