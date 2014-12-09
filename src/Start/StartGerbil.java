@@ -16,43 +16,23 @@ public class StartGerbil {
 		//System.out.println(bk.saveGames());
 		//Main main = new Main();
 		//checks{"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
-		Controller controller = new Controller();
+		/*Controller controller = new Controller();
 		controller.createBlocks(0, 1, 0, null); //eat
 		controller.createBlocks('e', 1, 1, null);
-		controller.createBlocks(6, 2, 0, null); //a while
-		
-		controller.createBlocks(3, 4, 0, null);// if statement
-		controller.createBlocks(0, 6, 0, null); //add eat
-		controller.createBlocks('e', 6, 1, null); //add eat
-		controller.createBlocks('e', 4, 4, "There'sFood"); //end if
-		controller.createBlocks(4,8,0,null);
-		controller.createBlocks(2,10,0,null);
-		controller.createBlocks('e',10,1,null);
-		controller.createBlocks('e',8,4,"There'sNoFood");
-		controller.createBlocks(5,12,0,null); //else
-		controller.createBlocks(0,14,0,null);
-		controller.createBlocks('e',14,0,null);
-		controller.createBlocks('e',12,4,null);
-		controller.createBlocks('e', 2, 15, "There'sNoWall");
-
-		controller.createBlocks(1, 1, 0, null); //turnleft = put infront of everything!
-		controller.createBlocks('e', 1, 1, null);
-//		System.out.println("____________________________AFTER TURN LEFT AT 0____________________");
-		/**controller.createBlocks(3, 1, 0, null); //if theres no wall
-		controller.createBlocks(2, 3, 0, null); //move
+		controller.createBlocks(3, 1, 0, null); //if theres no wall
+		controller.createBlocks(1, 3, 0, null); //turn left
 		controller.createBlocks('e', 3, 1, null);
-		controller.createBlocks('e', 1, 4, "There'sNoWall");
-		controller.createBlocks(4, 5, 0, null);
-		controller.createBlocks(0,6,0,null); //add eat to the else if
-		controller.createBlocks('e',6,1,null);
-		controller.createBlocks('e', 5, 4, "There'sWall?"); //else if inserted!!
-		
-		controller.createBlocks(1, 0, 0, null); //insert turn left at line 0
-		controller.createBlocks('e', 0, 1, null);*/
+		controller.createBlocks(1, 4, 0, null); //turn left
+		controller.createBlocks('e', 4, 1, null);
+		controller.createBlocks('e', 1, 5, "There'sNoWall");
+		controller.createBlocks(2, 0, 0, null); //insert move
+		controller.createBlocks('e', 0, 1, null);
 		controller.printBlocks(0,controller.getCurrGame().getBlocks());
 		System.out.println("_______________deleteblockstuff____________________________");
-		System.out.println(controller.deleteBlock(5));
+		System.out.println(controller.deleteBlock(0));
 		controller.printBlocks(0,controller.getCurrGame().getBlocks());
+		int end=controller.getCurrGame().getBlocks().get(0).getlineEnd();
+		System.out.println(end);*/
 		
 		//Conditionals conditionals = new Conditionals("if");
 		//Grid g = new Grid(17,17);		
@@ -63,6 +43,30 @@ public class StartGerbil {
 		//Finish f = new Finish();
 		//ActionListenersControl ac = new ActionListenersControl();
 		//ErrorDialog ed = new ErrorDialog("<html>You have no saved games.<br> Please select \"New Game\" to start a new game.<html>");
+		Controller controller = new Controller();
+		controller.createBlocks(0, 1, 0, null); //eat
+		controller.createBlocks('e', 1, 1, null);
+		controller.createBlocks(3, 1, 0, null); //if theres no wall
+		controller.createBlocks(1, 3, 0, null); //turn left
+		controller.createBlocks('e', 3, 1, null);
+		controller.createBlocks(1, 4, 0, null); //turn left
+		controller.createBlocks('e', 4, 1, null);
+		controller.createBlocks(6, 5,0,null); //insert while
+		controller.createBlocks(1, 7, 0, null); //turn left
+		controller.createBlocks('e', 7, 1, null);
+		controller.createBlocks('e',5,4,"There'sWall?"); 
+		controller.createBlocks('e', 1, 9, "There'sNoWall");
+		controller.createBlocks(2, 0, 0, null); //insert move
+		controller.createBlocks('e', 0, 1, null);
+		controller.createBlocks(1, 1, 0, null); //insert turn left 
+		controller.createBlocks('e',1,1,null);
+		controller.printBlocks(0,controller.getCurrGame().getBlocks());
+		System.out.println("_______________deleteblockstuff____________________________");
+		System.out.println(controller.deleteBlock(4));
+		controller.printBlocks(0,controller.getCurrGame().getBlocks());
+		int end=controller.getCurrGame().getBlocks().get(2).getNestedBlocks().get(5).getlineEnd();
+		controller.printTempGrid();
+		controller.runBlocks();
 	}
 
 	/**
@@ -72,3 +76,4 @@ public class StartGerbil {
 
 	}
 }
+
