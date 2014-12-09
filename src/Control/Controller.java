@@ -104,13 +104,13 @@ public class Controller {
 			System.out.print(block.getlineBegin());
 			type = block.getType();
 			if(type==0){ //eat = terminal so no nesting
-				System.out.println(tabStr+" Eat");
+				System.out.println(tabStr+"Eat");
 			}else if(type==1){ //turn left  = terminal so no nesting
-				System.out.println(tabStr+" TurnLeft");
+				System.out.println(tabStr+"TurnLeft");
 			}else if(type==2){ //move = terminal so no nesting
-				System.out.println(tabStr+" Move");
+				System.out.println(tabStr+"Move");
 			}else if(type==3){ //if
-				System.out.println(tabStr+" If "+block.getCond());
+				System.out.println(tabStr+"If "+block.getCond());
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
@@ -119,7 +119,7 @@ public class Controller {
 				}
 				System.out.println(block.getlineEnd()+tabStr+"end");
 			}else if(type==4){ //else if
-				System.out.println(tabStr+" ElseIf "+block.getCond());
+				System.out.println(tabStr+"ElseIf "+block.getCond());
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
@@ -128,7 +128,7 @@ public class Controller {
 				}
 				System.out.println(block.getlineEnd()+tabStr+"end");
 			}else if(type==5){//else
-				System.out.println(tabStr+" Else ");
+				System.out.println(tabStr+"Else ");
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
@@ -137,7 +137,7 @@ public class Controller {
 				}
 				System.out.println(block.getlineEnd()+tabStr+"end");
 			}else if(type==6){//while
-				System.out.println(tabStr+" While "+block.getCond());
+				System.out.println(tabStr+"While "+block.getCond());
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
@@ -146,7 +146,7 @@ public class Controller {
 				}
 				System.out.println(block.getlineEnd()+tabStr+"end");;
 			}else if(type==7){//repeat
-				System.out.println(tabStr+" Repeat "+block.getRepeat());
+				System.out.println(tabStr+"Repeat "+block.getRepeat());
 				tabStr+='\t';
 				System.out.println(block.getlineBegin()+1+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
