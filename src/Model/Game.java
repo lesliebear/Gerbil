@@ -36,8 +36,7 @@ public class Game implements Serializable{
 	 * 
 	 * @param name The name of the game
 	 */
-	public Game(String name){
-		this.name=name;
+	public Game(){
 		this.gerbil= new Gerbil();
 		this.grid = new Grid(17,17);
 		this.functions= new ArrayList<Function>();
@@ -87,6 +86,11 @@ public class Game implements Serializable{
 	 */
 	public Grid getGrid(){
 		return grid;
+	}
+	fadfdffd
+	public void setName(String gameName) {
+		
+		name = gameName;
 	}
 	/**
 	 * Gets the name of the game

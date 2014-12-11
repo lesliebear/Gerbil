@@ -41,7 +41,7 @@ public class StartGerbil {
 		//Play play  = new Play();
 		//DeleteFunction df = new DeleteFunction();
 		//Finish f = new Finish();
-		//ActionListenersControl ac = new ActionListenersControl();
+		ActionListenersControl ac = new ActionListenersControl();
 		//ErrorDialog ed = new ErrorDialog("<html>You have no saved games.<br> Please select \"New Game\" to start a new game.<html>");
 		/*Controller controller = new Controller();
 		controller.createBlocks(0, 1, 0, null); //eat

@@ -14,7 +14,9 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -24,6 +26,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionListener;
+
 
 /**
  * This class creates a GUI for the Function Screen.
@@ -35,7 +39,9 @@ public class UserFunction extends Screen{
 	/**LHS and RHS panels**/
 	static JPanel leftPanel = new JPanel(); 
 	static JPanel rightPanel = new JPanel();
-	
+	private int startLineNumber;
+	private int endLineNumber;
+	private DefaultListModel<String> instructions;
 	/**Right side panel: labels, buttons, other**/
 	JLabel conditionalsL = new JLabel("Conditional Statements"); 	
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
@@ -67,7 +73,7 @@ public class UserFunction extends Screen{
 	
 	JTextField conditionalDropdown; /*get from control*/ 
 	
-	private static JList functionsCodeList;
+	private static JList<ArrayList<String>> functionsCodeList;
 	private static JScrollPane scrollpane;
 	
 	/** Repeat stuff **/
@@ -82,6 +88,7 @@ public class UserFunction extends Screen{
 	 * Constructor that creates all necessary GUI components.
 	 */
 	public UserFunction () {
+		instructions = new DefaultListModel<String>();
 		createButtons();
 		setRightComponents();
 		setLeftComponents();
@@ -396,10 +403,9 @@ public class UserFunction extends Screen{
 		bodyL.setFont(new Font("Serif", Font.BOLD, 20));
 		
 		// EDIT: this should be called from somewhere else...
-		String placeholder[] = { "Begin",
-		        "End",  "INSERT NEW" };
 		
-		functionsCodeList = new JList(placeholder);
+		functionsCodeList = new JList(instructions);
+		startLineNumber = 0;
 		scrollpane = new JScrollPane(functionsCodeList);
 		
 		functionsCodeList.setVisibleRowCount(20);
@@ -525,7 +531,52 @@ public class UserFunction extends Screen{
 		frame.setEnabled(false);
 	}
 	
-	public void addBackEventHandler(ActionListener listener) {
+	public void resetLineNumber() {
+		startLineNumber = 0;
+	}
+
+	public int getEndLineNumber() {
+		endLineNumber = instructions.size();
+		return endLineNumber;
+	}
+	
+	public int getSelectedLineNumber() {
+		
+		return functionsCodeList.getSelectedIndex();
+	}
+	public void updateInstructionsList(String[] instructions) {
+		this.instructions.clear();
+		for(int i = 0; i < instructions.length; i++) {
+			this.instructions.addElement(instructions[i]);
+		}
+	}
+	
+	public void addListSelectionEventHandler(ListSelectionListener LSListener) {
+		functionsCodeList.addListSelectionListener(LSListener);
+	}
+	
+	public void addIfEventHandler(ActionListener listener) {
+		ifB.addActionListener(listener);
+	}
+	
+	public void addElseIfEventHandler(ActionListener listener) {
+		elseifB.addActionListener(listener);
+	}
+	
+	public void addElseEventHandler(ActionListener listener) {
+		elseB.addActionListener(listener);
+	}
+	
+	public void addTurnLeftEventHandler(ActionListener listener) {
+		turnLeftB.addActionListener(listener);
+	}
+	public void addMoveAheadEventHandler(ActionListener listener) {
+		moveAheadB.addActionListener(listener);
+	}
+	public void addEatEventHandler(ActionListener listener) {
+		eatB.addActionListener(listener);
+	}
+	public void addCancelEventHandler(ActionListener listener) {
 		cancelB.addActionListener(listener);
 	}
 	

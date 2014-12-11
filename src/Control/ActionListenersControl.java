@@ -3,14 +3,17 @@ package Control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
 import View.*;
-import Model.*;
 
 public class ActionListenersControl {
 	
 	Main main; 
 	Play play;
 	DeleteFunction deleteFunction;
+	ErrorDialog errorDialog;
 	PlayOptions playOptions;
 	Instructions instructions;
 	UserFunction userFunction;
@@ -18,6 +21,7 @@ public class ActionListenersControl {
 	
 	public ActionListenersControl(){
 		controller = new Controller();
+		errorDialog = new ErrorDialog();
 		deleteFunction = new DeleteFunction();
 		main = new Main();
 		playOptions = new PlayOptions();
@@ -81,6 +85,8 @@ public class ActionListenersControl {
 		});
 		playOptions.addNewGameEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				controller.createGame();
 				play.show();
 				playOptions.hide();
 			}	
@@ -118,7 +124,7 @@ public class ActionListenersControl {
 		
 		play.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-			
+				
 			}	
 		});
 
@@ -197,9 +203,64 @@ public class ActionListenersControl {
 		});
 	}
 	
+	private void addDeleteFunctionsEventHandlers() {
+		
+	}
+	
 	private void addUserFunctionEventHandlers() {
-		userFunction.addBackEventHandler(new ActionListener() {
+		
+	
+		userFunction.addListSelectionEventHandler(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent arg0) {
+				controller.getHighlighting(userFunction.getSelectedLineNumber(), controller.gamePlaying.getBlocks());
+			}
+			
+		});
+		
+		userFunction.addEatEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		userFunction.addElseEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 
+			}
+			
+		});
+		
+		userFunction.addElseIfEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		userFunction.addIfEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		
+		userFunction.addMoveAheadEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}	
+		});
+		
+		userFunction.addTurnLeftEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		userFunction.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		userFunction.addCancelEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				play.show();
 				userFunction.hide();

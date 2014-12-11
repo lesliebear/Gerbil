@@ -34,7 +34,7 @@ public class Conditionals {
 
 	/**Type of conditional frame**/
 	static String type;
-	 
+	int currentLineNumber;
 	public static Conditionals conditionals;
 	
 	/**LHS and RHS panels**/
@@ -46,6 +46,7 @@ public class Conditionals {
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
 	JLabel userDefinedL = new JLabel("User Defined Functions");
 	
+
 	JButton ifB;
 	JButton elseB;
 	JButton elseifB;

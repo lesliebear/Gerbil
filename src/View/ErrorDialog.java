@@ -25,9 +25,9 @@ public class ErrorDialog extends Screen{
 	private JButton backB;
 	private JLabel errorL;
 	
-	public ErrorDialog(String errorLabel) {
+	public ErrorDialog() {
 		frame = new JFrame("Error");
-		errorL = new JLabel(errorLabel);
+		errorL = new JLabel();
 		panel = new JPanel();
 		
 		backB = new JButton("Back") {
@@ -74,8 +74,13 @@ public class ErrorDialog extends Screen{
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		
+		
 	}
 	
+	public void setError(String error) {
+		errorL.setText(error);
+	}
 	@Override
 	public void show() {
 		frame.setVisible(true);
