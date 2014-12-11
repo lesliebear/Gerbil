@@ -37,6 +37,7 @@ public class ActionListenersControl {
 	boolean editing;
 	boolean stop;
 	boolean play;
+	int prevBegin=-1;
 	
 	static int parentScreen;
 
@@ -278,16 +279,20 @@ public class ActionListenersControl {
 		playScreen.addInsertEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				inserting = true;
-				
 				playScreen.setInsertSelected();
+				
+				
 			}	
 		});
 
-		playScreen.addEditEventHandler(new ActionListener() {
+		playScreen.addDoneEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				editing = true;
+				if(inserting==true){
+					playScreen.setDoneSelected();
+					//get the info we need from the stuff to fill into the insert blocks
+					Start.StartGerbil.controller.createBlocks('e', prevBegin, numLines, cond);
+				}
 				
-				playScreen.setEditSelected();
 			}	
 		});
 
