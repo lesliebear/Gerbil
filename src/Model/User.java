@@ -2,7 +2,7 @@ package Model;
  
 import java.io.Serializable;
 import java.util.ArrayList;
- 
+  
 /**
  * User class that holds information about the users including the games they have played, saved or made
  *@author Amulya

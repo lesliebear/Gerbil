@@ -88,7 +88,7 @@ public class Controller {
 		String tabStr="";
 		for(int i =0; i<tab; i++){
 			tabStr+='\t';
-		}
+		} 
 		for(Integer b: blocks.keySet()){
 			Block block = blocks.get(b);
 			list.add(Integer.toString(block.getlineBegin()));

@@ -3,7 +3,7 @@ package Model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
-
+ 
  
 /**
  * Game class that holds all the information for a game. 

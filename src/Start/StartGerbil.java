@@ -38,7 +38,7 @@ public class StartGerbil {
 		controller.createBlocks('e',18,1,null);//end eat
 		controller.createBlocks('e',19,4,null); //end else
 		controller.createBlocks('e', 2, 22, "There'sNoWall");
-
+ 
 		controller.createBlocks(1, 1, 0, null); //turnleft = put infront of everything!
 		controller.createBlocks('e', 1, 1, null);
 //		System.out.println("____________________________AFTER TURN LEFT AT 0____________________");
