@@ -1278,6 +1278,11 @@ public class Controller {
 				}
 			}
 		}
+
+		return true;
+		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
+		//Question: should we have something that asks them if they want to delete = view asks for sure or not
+		//if invalidates = do not delete code...
 	}
 
 
