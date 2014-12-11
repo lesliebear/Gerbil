@@ -27,7 +27,7 @@ public class ActionListenersControl {
 		playOptions = new PlayOptions();
 		instructions = new Instructions();
 		userFunction = new UserFunction();
-		initGrid();
+		//initGrid();
 		play = new Play();
 		initEventHandlers();
 		main.show();

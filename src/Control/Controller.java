@@ -60,12 +60,13 @@ public class Controller {
 	 */
 	public Controller() {
 		
-		runtimeGerbil = gamePlaying.getGerbil();
-		initFields();
-		initTempGrid();
+		//runtimeGerbil = gamePlaying.getGerbil();
+		//initFields();
+		//initTempGrid();
 	}
 	
 	public void initFields() {
+		
 		functions = gamePlaying.getfunction();
 	}
 

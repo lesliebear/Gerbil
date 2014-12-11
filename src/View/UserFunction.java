@@ -46,6 +46,8 @@ public class UserFunction extends Screen{
 	JLabel conditionalsL = new JLabel("Conditional Statements"); 	
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
 	JLabel userDefinedL = new JLabel("User Defined Functions");
+	JLabel begin = new JLabel("Begin");
+	JLabel end = new JLabel("End");
 	
 	static JFrame frame;
 	
@@ -434,17 +436,28 @@ public class UserFunction extends Screen{
 		gc.weightx = .70;
 		gc.gridwidth = 1;
 		gc.gridx = 0; 
-		gc.gridy=1; 
+		gc.gridy=2; 
 		leftPanel.add(bodyL, gc);
 		
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		
-		gc.insets = new Insets(10,0,0,20);
+		gc.insets = new Insets(10,0,0,0);
 		gc.gridwidth = 2;
 		gc.gridx = 1; 
 		gc.gridy=1; 
+		leftPanel.add(begin, gc);
+		
+		gc.insets = new Insets(0,0,0,20);
+		gc.gridwidth = 2;
+		gc.gridx = 1; 
+		gc.gridy=2; 
 		leftPanel.add(scrollpane, gc);
 		
+		gc.insets = new Insets(0,0,0,0);
+		gc.gridwidth = 2;
+		gc.gridx = 1; 
+		gc.gridy=3; 
+		leftPanel.add(end, gc);
 		gc.fill = GridBagConstraints.NONE;
 		
 		//top, left, botton, right <- insets
@@ -452,13 +465,13 @@ public class UserFunction extends Screen{
 				
 		gc.gridwidth = 1;
 		gc.gridx = 1; 
-		gc.gridy=2; 
+		gc.gridy=4; 
 		gc.ipady = 20;
 		gc.ipadx = 20;
 		leftPanel.add(okB, gc);
 		
 		gc.gridx = 2; 
-		gc.gridy=2; 
+		gc.gridy=4; 
 		gc.ipady =20;
 		gc.ipadx = 20;
 		leftPanel.add(cancelB, gc);
@@ -536,7 +549,7 @@ public class UserFunction extends Screen{
 	}
 
 	public int getEndLineNumber() {
-		endLineNumber = instructions.size();
+		endLineNumber = instructions.size() + 1;
 		return endLineNumber;
 	}
 	
