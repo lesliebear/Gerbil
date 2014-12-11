@@ -327,11 +327,13 @@ public class Play extends Screen{
 		String placeholder[] = {"INSERT NEW" };
 
 		model=new DefaultListModel();
+		
+		//Controler.gamePlaying.getBlocks
 
-		for(int i=0; i< Start.StartGerbil.control.gamePlaying.instructions.size();i++){
-			Start.StartGerbil.control.gamePlaying.instructions.get(i);
-			String test = Start.StartGerbil.control.gamePlaying.instructions.get(i).instruction;
-			model.addElement(Start.StartGerbil.control.gamePlaying.instructions.get(i).instruction);
+		for(int i=0; i< Start.StartGerbil.controller.gamePlaying.instructions.size();i++){
+			Start.StartGerbil.controller.gamePlaying.instructions.get(i);
+			String test = Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction;
+			model.addElement(Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction);
 		}
 
 		playcodeList = new JList(model);
@@ -557,7 +559,7 @@ public class Play extends Screen{
 
 		//userFunctionsDD = new JComboBox();
 		//userFunctionsDD.setModel(new DefaultComboBoxModel(arrayList.toArray()));
-		userFunctionsDD = new JComboBox(Start.StartGerbil.control.gamePlaying.userDefinedFunctions.toArray());
+		userFunctionsDD = new JComboBox(Start.StartGerbil.controller.gamePlaying.userDefinedFunctions.toArray());
 		checksDD = new JComboBox(checks);
 		numsDD = new JComboBox(nums);
 
@@ -644,9 +646,9 @@ public class Play extends Screen{
 		model.clear();
 		String tmp;
 
-		for(int i=0; i<Start.StartGerbil.control.gamePlaying.instructions.size();i++){
-			tmp = Start.StartGerbil.control.gamePlaying.instructions.get(i).instruction;
-			model.addElement(Start.StartGerbil.control.gamePlaying.instructions.get(i).instruction);
+		for(int i=0; i<Start.StartGerbil.controller.gamePlaying.instructions.size();i++){
+			tmp = Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction;
+			model.addElement(Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction);
 		}
 
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
@@ -841,19 +843,19 @@ public class Play extends Screen{
 		deleteFunctionB.setEnabled(false);
 	}
 	
-	public static void clearAll(){
-		Start.StartGerbil.control.gamePlaying.instructions.clear();
-		Start.StartGerbil.control.gamePlaying.instructions.add(new Block(" ", false, false,1));
+	/*public static void clearAll(){
+		Start.StartGerbil.controller.gamePlaying.instructions.clear();
+		Start.StartGerbil.controller.gamePlaying.instructions.add(new Block(" ", false, false,1));
 
 		model.clear();
 		
-		for(int i =0; i< Start.StartGerbil.control.gamePlaying.instructions.size(); i++){
-			String test = Start.StartGerbil.control.gamePlaying.instructions.get(i).instruction;
-			model.addElement( Start.StartGerbil.control.gamePlaying.instructions.get(i).instruction);
+		for(int i =0; i< Start.StartGerbil.controller.gamePlaying.instructions.size(); i++){
+			String test = Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction;
+			model.addElement( Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction);
 		}
 		
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
-	}
+	} */
 
 	public static void setPlaySelected(){
 		stopB.setBackground(Color.black);
