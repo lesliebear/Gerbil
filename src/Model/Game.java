@@ -87,9 +87,16 @@ public class Game implements Serializable{
 	public Grid getGrid(){
 		return grid;
 	}
-	fadfdffd
-	public void setName(String gameName) {
-		
+	
+	/**
+	 * SEts the name of the Game
+	 * @param gameName Name of the game 
+	 * 
+	 * @assumes game exist
+	 * @exception none
+	 * @postcondition name of the game gets set/ changed
+	 */
+	public void setName(String gameName) {	
 		name = gameName;
 	}
 	/**
