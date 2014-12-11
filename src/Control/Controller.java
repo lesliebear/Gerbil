@@ -2127,4 +2127,9 @@ public class Controller {
 		return -1;
 	}
 
+	public void setCurrentGame(Game g) {
+		this.gamePlaying=g;
+		
+	}
+
 }
