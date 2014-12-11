@@ -27,7 +27,7 @@ public class Controller {
 	/**Holds the current user */
 	User userPlaying;
 	/**Holds the current game being played */
-	Game gamePlaying;
+	public Game gamePlaying;
 	/**Holds the list of built in functions = eat move, turn left
 	 * And user created are added to the end of this arraylist when game is initialized first
 	 * and then reloaded to the backend when finished game*/
@@ -61,6 +61,12 @@ public class Controller {
 		runtimeGerbil = gamePlaying.getGerbil();
 		initTempGrid();
 	}
+	
+	
+	public void setCurrentGame(Game game){
+		gamePlaying = game; 
+	}
+	
 
 	//////////////////////////////////DEBUGGIN METHODS BEGIN/////////////////////////////////////
 	/**
@@ -1145,6 +1151,7 @@ public class Controller {
 		}else{ 
 			nested = pare.getNestedBlocks();
 		}
+		
 		nested.remove(b.getlineBegin(),b);
 		cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, b);//MAKE SURE -1*currDIFF!!!!!
 		if(b.getType()==3){//if statement so remove all subsequent ifs and elses
