@@ -1,22 +1,34 @@
 package Start;
 import Control.*;
+import Model.Backend;
   
 /**
  * Main program.
  *
  */
 public class StartGerbil {
-
-	/** 
-	 * Main method.
-	 * @param args
-	 */
-	public static void main(String[] args) {
+	public static Backend backend;
+	 public static Controller controller;
+	 public static ActionListenersControl alc;
+	 /** 
+	  * Main method.
+	  * @param args
+	  */
+	 public static void main(String[] args) {
+	  backend = new Backend();
+	  controller = new Controller();
+	  alc = new ActionListenersControl();
+	  
+	  try{
+	   backend.setGameList(backend.loadSavedGames());
+	  }catch (Exception e1) { //if txt file stuff is cleared, it has issues so make a dummy user, and delete the dummy user for it to work
+	   System.out.println("There are no saved games.");
+	  }
+	 
 		//Backend bk = new Backend();
 		//System.out.println(bk.saveGames());
 		//Main main = new Main();
 		//checks{"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
-		Controller controller = new Controller();
 		controller.createBlocks(0, 1, 0, null); //eat
 		controller.createBlocks('e', 1, 1, null);
 		controller.createBlocks(6, 2, 0, null); //a while

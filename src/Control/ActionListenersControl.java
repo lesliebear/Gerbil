@@ -3,18 +3,9 @@ package Control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import Model.Block;
-import Model.Game;
-import View.DeleteFunction;
-import View.ErrorDialog;
-import View.Finish;
-import View.Instructions;
-import View.Main;
-import View.NewGame;
-import View.Play;
-import View.PlayOptions;
-import View.SavedGames;
-import View.UserFunction;
+import Model.*;
+
+import View.*;
 
 public class ActionListenersControl {
 	static NewGame newGame;
@@ -182,7 +173,7 @@ public class ActionListenersControl {
 						newGame.hide();
 						errorDialog.show();
 					}else{
-						Game g = new Game(text);
+						Game g = new Game();
 						Start.StartGerbil.backend.addGame(g); // not sure what add game does in this version - kat
 						Start.StartGerbil.controller.setCurrentGame(g);
 						initGrid();
@@ -222,6 +213,10 @@ public class ActionListenersControl {
 		});
 	}
 	
+
+	/**
+	 * Add event handlers for the Play screen
+	 */
 
 	/**
 	 * Add event handlers for the Play screen
