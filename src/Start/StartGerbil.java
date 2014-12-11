@@ -18,7 +18,7 @@ public class StartGerbil {
 	 public static void main(String[] args) {
 	  backend = new Backend();
 	  controller = new Controller();
-	  alc = new ActionListenersControl();
+	  //alc = new ActionListenersControl();
 	  
 	  try{
 	   backend.setGameList(backend.loadSavedGames());
@@ -45,15 +45,15 @@ public class StartGerbil {
 		controller.createBlocks(5,12,0,null); //else
 		controller.createBlocks(3,14,0,null);  //if inside else
 		controller.createBlocks(2, 16, 0, null); //move inside if inside else
-		controller.createBlocks('e', 16, 2, null); 
+		controller.createBlocks('e', 16, 1, null); 
 		controller.createBlocks('e',14,4,"There'sNoFood"); //end if inside else
 		controller.createBlocks(0,18,0,null); //eat
 		controller.createBlocks('e',18,1,null);//end eat
-		controller.createBlocks('e',19,4,null); //end else
-		controller.createBlocks('e', 2, 22, "There'sNoWall");
+		controller.createBlocks('e',12,8,null); //end else
+		controller.createBlocks('e', 2, 19, "There'sNoWall");
  
-		controller.createBlocks(1, 1, 0, null); //turnleft = put infront of everything!
-		controller.createBlocks('e', 1, 1, null);
+		//controller.createBlocks(1, 1, 0, null); //turnleft = put infront of everything!
+		//controller.createBlocks('e', 1, 1, null);
 //		System.out.println("____________________________AFTER TURN LEFT AT 0____________________");
 		/**controller.createBlocks(3, 1, 0, null); //if theres no wall
 		controller.createBlocks(2, 3, 0, null); //move

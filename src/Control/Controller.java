@@ -94,7 +94,12 @@ public class Controller {
 		for(int i =0; i<tab; i++){
 			tabStr+='\t';
 		} 
-		for(Integer b: blocks.keySet()){
+		ArrayList<Integer> kList = new ArrayList<Integer>();
+		for(Integer z: blocks.keySet()){
+			kList.add(z);
+		}
+		Collections.sort(kList);
+		for(Integer b: kList){
 			Block block = blocks.get(b);
 			list.add(Integer.toString(block.getlineBegin()));
 			type = block.getType();
@@ -212,7 +217,12 @@ public class Controller {
 		for(int i =0; i<tab; i++){
 			tabStr+='\t';
 		}
-		for(Integer b: blocks.keySet()){
+		ArrayList<Integer> kList = new ArrayList<Integer>();
+		for(Integer z: blocks.keySet()){
+			kList.add(z);
+		}
+		Collections.sort(kList);
+		for(Integer b: kList){
 			Block block = blocks.get(b);
 			System.out.print(block.getlineBegin());
 			type = block.getType();
