@@ -1272,7 +1272,7 @@ public class Controller {
 		}else{ 
 			nested = pare.getNestedBlocks();
 		}
-		nested.remove(b.getlineBegin(),b);
+		nested.remove(b.getlineBegin());
 		cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, b);//MAKE SURE -1*currDIFF!!!!!
 		if(b.getType()==3){//if statement so remove all subsequent ifs and elses
 			java.util.Iterator<Integer> it =nested.keySet().iterator();
