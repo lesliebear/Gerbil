@@ -49,6 +49,7 @@ public class ActionListenersControl {
 		addUserFunctionEventHandlers();
 	}
 	
+	
 	/**
 	 * Add event handlers for the Main screen
 	 */

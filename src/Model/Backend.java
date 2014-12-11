@@ -91,7 +91,8 @@ public class Backend implements Serializable {
 			this.setGameList(temp);
 			return true;
 		}catch (Exception e1){
-			Game newGame =new Game("FileEmpty"); //if serializable file is empty, causes problems
+			Game newGame =new Game(); //if serializable file is empty, causes problems
+			newGame.setName("FileEmpty");
 			this.addGame(newGame); //add new game
 			this.saveGames(); //save that game
 			this.deleteGame("FileEmpty"); //delete added game

@@ -2,7 +2,7 @@ package Model;
  
 import java.io.Serializable;
 import java.util.HashMap;
-
+ 
 /**
  * Function class to hold user created functions
  * Cannot edit functions. can only create and use them. If 
