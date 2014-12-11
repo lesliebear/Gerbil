@@ -8,12 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
-import Model.Backend;
-import Model.Block;
-import Model.Function;
-import Model.Game;
-import Model.Gerbil;
-import Model.User;
+import Model.*;
 
 /**
  * Controller class will make all necessary modifications to data in order to send it to the control. 
@@ -22,15 +17,15 @@ import Model.User;
  */
 public class Controller {
 
-	
+
 	/**Holds the current user */
 	User userPlaying;
 	/**Holds the current game being played */
-	Game gamePlaying;
+	public Game gamePlaying;
 	/**Holds the list of built in functions = eat move, turn left
 	 * And user created are added to the end of this arraylist when game is initialized first
 	 * and then reloaded to the backend when finished game*/
-	ArrayList<Function> functions = new ArrayList<Function>();
+	public ArrayList<Function> functions = new ArrayList<Function>();
 	//Note eat fruit must be for that fruit only!! else error popup.
 	Backend backend= new Backend();
 
@@ -44,15 +39,15 @@ public class Controller {
 	Block parentFunction = null;
 	Block userCodingNowFunction = null;
 	Gerbil runtimeGerbil;//= gamePlaying.getGerbil(); //Gerbil used for animation/runtime only
-	
-	
+
+
 
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
 	boolean isFunction=false;
 
 	int countblocks=1;
- 
+
 	/**assumes, returns, exceptions**/
 	/**
 	 * Constructors
@@ -63,19 +58,29 @@ public class Controller {
 		initFields();
 		initTempGrid();
 	}
-	
+
 	public void initFields() {
-		
+
 		functions = gamePlaying.getfunction();
 	}
-	
+
 	public String[] JListString(){
 		ArrayList<String> temp = new ArrayList<String>(); 
 		temp = getJList(0,this.gamePlaying.getBlocks(),temp);
 		return (String[]) temp.toArray();
 	}
-	
-	
+
+	public ArrayList<String> getUserDefinedFunctionsStringArray(){
+		ArrayList<String> toReturn = new ArrayList<String>(); 
+
+		for(int i=0; i<functions.size(); i++){
+			toReturn.add(i, functions.get(i).getName());
+		}
+
+		return toReturn;
+	}
+
+
 	/**
 	 * Prints the hashmap of the blocks based on the indentation level(nesting level)
 	 * @param tab The indentation level of the block to be printed out
@@ -188,8 +193,8 @@ public class Controller {
 			System.out.println(); //new line for new row. 
 		}
 	}
-	
-	
+
+
 	public Game getCurrGame(){
 		return this.gamePlaying;
 	}
@@ -344,7 +349,7 @@ public class Controller {
 			} //we ended this so parent is now the currBlock coded
 			this.userCodingNow=parent;
 			if(this.parent!=null){
-					this.parent=this.userCodingNow.getParent();
+				this.parent=this.userCodingNow.getParent();
 			}
 			return;
 		}else{ //first time making a block
@@ -405,7 +410,7 @@ public class Controller {
 			return;
 		}
 	}
-	
+
 	/**
 	 * Deletes/clears all blocks in the main
 	 */
@@ -471,7 +476,7 @@ public class Controller {
 		Block turnLeftBlock= new Block();
 		turnLeftBlock.setType(1);
 		turnLeft.getBlockInstructions().put(1, turnLeftBlock);
-		
+
 		functions.add(eat);
 		functions.add(turnLeft);
 		functions.add(moveAhead);
@@ -506,7 +511,7 @@ public class Controller {
 	 * @return newly created and instantiated Game object
 	 */
 	public void createGame(){
-			gamePlaying = new Game();
+		gamePlaying = new Game();
 	}
 
 	/**
@@ -636,32 +641,32 @@ public class Controller {
 		//parse unvisited blocks
 		for(int i=0; i<sortedkeys.size(); i++){
 			//if(visited.get(sortedkeys.get(i))){
-				//continue;
+			//continue;
 			//}else{
-				Block block= blocklist.get(sortedkeys.get(i));
-				int success=parseBlock(block);
-				if(success==-1){
-					System.out.println("error in parsing");
-					return -1;   //error in parsing
-				}
-				if(success==-2){//infinite loop error
-					System.out.println("infinite loop error");
-					return -2;
-				}
-				if(success==1){//if or else if so skip rest of else if or else statements
-					if(i+1<sortedkeys.size()){
-						int j;
-						for(j=i+1; j<sortedkeys.size(); j++){
-							if(blocklist.get(sortedkeys.get(j)).getType()!=4 || blocklist.get(sortedkeys.get(j)).getType()!=5){
-								break;
-							}
-						}
-						i=j;
-						if(blocklist.get(sortedkeys.get(i)).getType()==4 || blocklist.get(sortedkeys.get(i)).getType()==5){
-							break; //this means last block is else if or else block
+			Block block= blocklist.get(sortedkeys.get(i));
+			int success=parseBlock(block);
+			if(success==-1){
+				System.out.println("error in parsing");
+				return -1;   //error in parsing
+			}
+			if(success==-2){//infinite loop error
+				System.out.println("infinite loop error");
+				return -2;
+			}
+			if(success==1){//if or else if so skip rest of else if or else statements
+				if(i+1<sortedkeys.size()){
+					int j;
+					for(j=i+1; j<sortedkeys.size(); j++){
+						if(blocklist.get(sortedkeys.get(j)).getType()!=4 || blocklist.get(sortedkeys.get(j)).getType()!=5){
+							break;
 						}
 					}
+					i=j;
+					if(blocklist.get(sortedkeys.get(i)).getType()==4 || blocklist.get(sortedkeys.get(i)).getType()==5){
+						break; //this means last block is else if or else block
+					}
 				}
+			}
 			//}
 		}
 		return 0;
@@ -678,9 +683,9 @@ public class Controller {
 	 */
 	public int parseBlock(Block block){
 		//if(!isFunction){
-			//int num= block.getlineBegin();
-			//visited.remove(block.getlineBegin());
-			//visited.put(num,true);
+		//int num= block.getlineBegin();
+		//visited.remove(block.getlineBegin());
+		//visited.put(num,true);
 		//}
 		if(this.finalblocks.size()>1000){
 			boolean loop=true;
@@ -1250,8 +1255,8 @@ public class Controller {
 		Block pare = b.getParent();
 		HashMap<Integer,Block> nested = null;
 		//UPDATE: new cascade method updates line numbers, and creates new hashmap for each
-		//		  level based on all existing blocks(before and after pos), so should delete first, then cascade
-		
+		//    level based on all existing blocks(before and after pos), so should delete first, then cascade
+
 		if(pare==null){ //no nesting level
 			nested = gamePlaying.getBlocks();
 		}else{ 
@@ -1272,12 +1277,7 @@ public class Controller {
 					break;
 				}
 			}
-		} 
-
-		return true;
-		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
-		//Question: should we have something that asks them if they want to delete = view asks for sure or not
-		//if invalidates = do not delete code...
+		}
 	}
 
 
@@ -1490,7 +1490,7 @@ public class Controller {
 		b.getParent().setNestedBlocks(tempnb); //replace original nested hashmap with new/updated nested hashmap
 		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
 	}
-	
+
 	/**
 	 * cascadesNumberingChanges Inward to nested blocks
 	 * @param lineBegin The block that was changed, inserted, deleted etc's line begin. 
@@ -1709,20 +1709,20 @@ public class Controller {
 				main, if it does, we cascade, then insert to not delete the current 
 				block at that number. else we simply add = works for both between lines 
 				and end of code.*/
-			
-					for (int key: this.tempFunctionBlockInstructions.keySet()){
-						if(key==begin){
-							cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction);
-							this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);
-							this.userCodingNowFunction=null;
-							return;
-						}
-					}//get past this means, end of lines!
-					this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);	
+
+				for (int key: this.tempFunctionBlockInstructions.keySet()){
+					if(key==begin){
+						cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction);
+						this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);
+						this.userCodingNowFunction=null;
+						return;
+					}
+				}//get past this means, end of lines!
+				this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);	
 			} //we ended this so parent is now the currBlock coded
 			this.userCodingNowFunction=parentFunction;
 			if(this.parentFunction!=null){
-					this.parentFunction=this.userCodingNowFunction.getParent();
+				this.parentFunction=this.userCodingNowFunction.getParent();
 			}
 			return;
 		}else{ //first time making a block
@@ -1735,11 +1735,11 @@ public class Controller {
 			if((type==4) || (type==5)){ //SPECIAL FOR ELSE IF AND ELSE!!!
 				Block parIf = null; 
 				if(this.userCodingNowFunction==null){//find in main level = no nesting
-						for(int k: this.tempFunctionBlockInstructions.keySet()){
-							if(this.tempFunctionBlockInstructions.get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
-								parIf = this.tempFunctionBlockInstructions.get(k);
-							}
+					for(int k: this.tempFunctionBlockInstructions.keySet()){
+						if(this.tempFunctionBlockInstructions.get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
+							parIf = this.tempFunctionBlockInstructions.get(k);
 						}
+					}
 				}else{ //find in parent's level!
 					for(int k: this.userCodingNowFunction.getNestedBlocks().keySet()){
 						int tempTP = this.userCodingNowFunction.getNestedBlocks().get(k).getType();
@@ -1783,7 +1783,7 @@ public class Controller {
 			return;
 		}
 	}
-	
+
 	/**
 	 * Creates a new Function object, stores createdFunctionBlocks in this function, and adds it to functions list
 	 */
@@ -1825,7 +1825,7 @@ public class Controller {
 				return 2;
 			}
 		}
-		
+
 		return 3;
 	}
 
@@ -2059,7 +2059,7 @@ public class Controller {
 	 * @return True if save is successful, otherwise False 
 	 */
 	public boolean saveGame() {
-		
+
 		for(int i=0; i<functions.size();i++){
 			gamePlaying.getfunction().add(functions.get(i));
 		}  
@@ -2129,7 +2129,7 @@ public class Controller {
 
 	public void setCurrentGame(Game g) {
 		this.gamePlaying=g;
-		
+
 	}
 
 }
