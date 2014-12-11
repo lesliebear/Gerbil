@@ -1,6 +1,7 @@
 package View;
  
 import java.awt.event.ActionListener;
+ 
 
 /**
  * This class creates a GUI for the Confirmation screen.

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import Model.*;
-
+ 
 /**
  * Controller class will make all necessary modifications to data in order to send it to the control. 
  * It will concern itself with the data of one user and one game at any given point, provided

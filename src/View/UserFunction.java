@@ -28,7 +28,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionListener;
 
-
 /**
  * This class creates a GUI for the Function Screen.
  *

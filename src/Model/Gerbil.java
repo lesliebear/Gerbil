@@ -1,8 +1,9 @@
 package Model;
  
+
 import java.io.Serializable;
   
-/**
+/** 
  * The Gerbil Avatar object that stores the information about where the Gerbil is located
  * @author Amulya
  * */

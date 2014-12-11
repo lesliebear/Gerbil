@@ -24,6 +24,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+ 
 
 /**
  * This class create the GUI for Delete Function Screen.
