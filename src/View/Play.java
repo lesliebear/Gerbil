@@ -329,11 +329,10 @@ public class Play extends Screen{
 		model=new DefaultListModel();
 		
 		//Controler.gamePlaying.getBlocks
-
-		for(int i=0; i< Start.StartGerbil.controller.gamePlaying.instructions.size();i++){
-			Start.StartGerbil.controller.gamePlaying.instructions.get(i);
-			String test = Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction;
-			model.addElement(Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction);
+		String [] temp = Start.StartGerbil.controller.JListString();
+		for(int i=0; i< temp.length;i++){
+			String test = temp[i];
+			model.addElement(test);
 		}
 
 		playcodeList = new JList(model);
@@ -559,7 +558,7 @@ public class Play extends Screen{
 
 		//userFunctionsDD = new JComboBox();
 		//userFunctionsDD.setModel(new DefaultComboBoxModel(arrayList.toArray()));
-		userFunctionsDD = new JComboBox(Start.StartGerbil.controller.gamePlaying.userDefinedFunctions.toArray());
+		userFunctionsDD = new JComboBox(Start.StartGerbil.controller.getUserDefinedFunctionsStringArray().toArray());
 		checksDD = new JComboBox(checks);
 		numsDD = new JComboBox(nums);
 
@@ -641,16 +640,16 @@ public class Play extends Screen{
 	protected void createScreen() {	
 
 	}	
-	
+
 	public static void refreshCodeList(){
 		model.clear();
-		String tmp;
 
-		for(int i=0; i<Start.StartGerbil.controller.gamePlaying.instructions.size();i++){
-			tmp = Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction;
-			model.addElement(Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction);
+		String [] temp = Start.StartGerbil.controller.JListString();
+		for(int i=0; i< temp.length;i++){
+			String test = temp[i];
+			model.addElement(test);
 		}
-
+		
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
 
 		/*if(beforeIsConditional()){
@@ -938,4 +937,19 @@ public class Play extends Screen{
 
 		saveB.setBackground(Color.yellow);
 	}
+	
+	public static void clearAll(){
+		//Start.StartGerbil.controller.gamePlaying.instructions.clear();
+		//Start.StartGerbil.controller.gamePlaying.instructions.add(new Block(" ", false, false,1));
+
+		model.clear();
+		
+		//for(int i =0; i< Start.StartGerbil.controller.gamePlaying.instructions.size(); i++){
+			//String test = Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction;
+			//model.addElement( Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction);
+		//}
+		
+		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
+	}
+	
 }
