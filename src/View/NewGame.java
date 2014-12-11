@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+
 /**
  * This class creates a GUI for the Confirmation screen.
  *

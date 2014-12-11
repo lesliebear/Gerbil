@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+
 /**
  * Abstract class that includes 4 methods: createScreen, show, hide, addEventListeners. All must be implemented.
  *

@@ -23,8 +23,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
+ 
 /**
+ * 
  * This screen creates a GUI for the Conditional Screen. 
  */
 

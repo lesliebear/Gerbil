@@ -26,7 +26,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-
 /**
  * This class creates a GUI for the Instruction Screen (Help screen).
  *

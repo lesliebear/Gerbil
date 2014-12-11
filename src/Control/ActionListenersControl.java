@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import Model.*;
 
 import View.*;
-
+ 
 public class ActionListenersControl {
 	static NewGame newGame;
 	static DeleteFunction deleteFunction;
