@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Model.*;
-
+import Start.StartGerbil;
 import View.*;
  
 public class ActionListenersControl {
@@ -38,6 +38,7 @@ public class ActionListenersControl {
 	boolean stop;
 	boolean play;
 	int prevBegin=-1;
+	String conditional;
 	
 	static int parentScreen;
 
@@ -280,6 +281,18 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				inserting = true;
 				playScreen.setInsertSelected();
+				String selected = ;
+				if(selected.equals("If")){
+					
+				}else if(selected.equals("Else if")){
+					
+				}else if(selected.equals("Else")){
+					
+				}else if(selected.equals("While")){
+					
+				}else {// so if(selected.equals("Repeat")){
+					
+				}
 				
 				
 			}	
@@ -289,8 +302,6 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				if(inserting==true){
 					playScreen.setDoneSelected();
-					//get the info we need from the stuff to fill into the insert blocks
-					Start.StartGerbil.controller.createBlocks('e', prevBegin, numLines, cond);
 				}
 				
 			}	
