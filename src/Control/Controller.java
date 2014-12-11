@@ -1,7 +1,5 @@
 package Control;
 
-import View.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,8 +7,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 import Model.Backend;
 import Model.Block;
@@ -67,6 +63,103 @@ public class Controller {
 	
 	public void initFields() {
 		functions = gamePlaying.getfunction();
+	}
+	
+	public String[] JListString(){
+		ArrayList<String> temp = new ArrayList<String>(); 
+		temp = getJList(0,this.gamePlaying.getBlocks(),temp);
+		return (String[]) temp.toArray();
+	}
+	
+	
+	/**
+	 * Prints the hashmap of the blocks based on the indentation level(nesting level)
+	 * @param tab The indentation level of the block to be printed out
+	 * @param blocks Takes hashmap to print out the contents of the hashmap
+	 * @return String array of instructions from the blocks to display in view
+	 *  
+	 */
+	public ArrayList<String> getJList(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
+		int type;
+		String tabStr="";
+		for(int i =0; i<tab; i++){
+			tabStr+='\t';
+		}
+		for(Integer b: blocks.keySet()){
+			Block block = blocks.get(b);
+			list.add(Integer.toString(block.getlineBegin()));
+			type = block.getType();
+			if(type==0){ //eat = terminal so no nesting
+				list.add(tabStr+"Eat");
+			}else if(type==1){ //turn left  = terminal so no nesting
+				list.add(tabStr+"TurnLeft");
+			}else if(type==2){ //move = terminal so no nesting
+				list.add(tabStr+"Move");
+			}else if(type==3){ //if
+				list.add(tabStr+"If "+block.getCond());
+				tabStr+='\t';
+				list.add(block.getlineBegin()+1+tabStr+"begin");
+				if(!(block.getNestedBlocks().isEmpty())){
+					int tempTab = tab+1;
+					getJList(tempTab,block.getNestedBlocks(),list);
+				}
+				if(block.getlineEnd()!=-1){
+					list.add(block.getlineEnd()+tabStr+"end");
+				}
+			}else if(type==4){ //else if
+				list.add(tabStr+"ElseIf "+block.getCond());
+				tabStr+='\t';
+				list.add(block.getlineBegin()+1+tabStr+"begin");
+				if(!(block.getNestedBlocks().isEmpty())){
+					int tempTab = tab+1;
+					getJList(tempTab,block.getNestedBlocks(),list);
+				}
+				if(block.getlineEnd()!=-1){
+					list.add(block.getlineEnd()+tabStr+"end");
+				}
+			}else if(type==5){//else
+				list.add(tabStr+"Else ");
+				tabStr+='\t';
+				list.add(block.getlineBegin()+1+tabStr+"begin");
+				if(!(block.getNestedBlocks().isEmpty())){
+					int tempTab = tab+1;
+					getJList(tempTab,block.getNestedBlocks(),list);
+				}
+				if(block.getlineEnd()!=-1){
+					list.add(block.getlineEnd()+tabStr+"end");
+				}
+			}else if(type==6){//while
+				list.add(tabStr+"While "+block.getCond());
+				tabStr+='\t';
+				list.add(block.getlineBegin()+1+tabStr+"begin");
+				if(!(block.getNestedBlocks().isEmpty())){
+					int tempTab = tab+1;
+					getJList(tempTab,block.getNestedBlocks(),list);
+				}
+				if(block.getlineEnd()!=-1){
+					list.add(block.getlineEnd()+tabStr+"end");;
+				}
+			}else if(type==7){//repeat
+				list.add(tabStr+"Repeat "+block.getRepeat());
+				tabStr+='\t';
+				list.add(block.getlineBegin()+1+tabStr+"begin");
+				if(!(block.getNestedBlocks().isEmpty())){
+					int tempTab = tab+1;
+					getJList(tempTab,block.getNestedBlocks(),list);
+				}
+				if(block.getlineEnd()!=-1){
+					list.add(block.getlineEnd()+tabStr+"end");
+				}
+			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
+				Function f = this.functions.get(block.getFunctionNum());
+				list.add(tabStr+f.getName());
+			}	
+			tabStr="";
+			for(int j =0; j<tab; j++){//reset the tabs
+				tabStr+='\t';
+			}
+		}
+		return null;
 	}
 
 	//////////////////////////////////DEBUGGIN METHODS BEGIN/////////////////////////////////////
