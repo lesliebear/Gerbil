@@ -1,5 +1,7 @@
 package Control;
 
+import View.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -22,18 +24,17 @@ import Model.User;
  */
 public class Controller {
 
-	
 	/**Holds the current user */
 	User userPlaying;
 	/**Holds the current game being played */
-	Game gamePlaying;
+	public Game gamePlaying;
 	/**Holds the list of built in functions = eat move, turn left
 	 * And user created are added to the end of this arraylist when game is initialized first
 	 * and then reloaded to the backend when finished game*/
 	ArrayList<Function> functions = new ArrayList<Function>();
 	//Note eat fruit must be for that fruit only!! else error popup.
 	Backend backend= new Backend();
-
+	Play play;
 	ArrayList<String> finalblocks= new ArrayList<String>();
 	//HashMap<Integer,Boolean> visited;
 	HashMap<Integer,Block> tempFunctionBlockInstructions= new HashMap<Integer,Block>();
@@ -44,8 +45,6 @@ public class Controller {
 	Block parentFunction = null;
 	Block userCodingNowFunction = null;
 	Gerbil runtimeGerbil;//= gamePlaying.getGerbil(); //Gerbil used for animation/runtime only
-	
-	
 
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
@@ -58,113 +57,16 @@ public class Controller {
 	 * Constructors
 	 */
 	public Controller() {
-		gamePlaying = new Game();
+		gamePlaying = new Game("Test");
 		runtimeGerbil = gamePlaying.getGerbil();
-		initFields();
 		initTempGrid();
 	}
 	
-	public void initFields() {
-		
-		functions = gamePlaying.getfunction();
+	
+	public void setCurrentGame(Game game){
+		gamePlaying = game; 
 	}
 	
-	public String[] JListString(){
-		ArrayList<String> temp = new ArrayList<String>(); 
-		temp = getJList(0,this.gamePlaying.getBlocks(),temp);
-		return (String[]) temp.toArray();
-	}
-	
-	
-	/**
-	 * Prints the hashmap of the blocks based on the indentation level(nesting level)
-	 * @param tab The indentation level of the block to be printed out
-	 * @param blocks Takes hashmap to print out the contents of the hashmap
-	 * @return String array of instructions from the blocks to display in view
-	 *  
-	 */
-	public ArrayList<String> getJList(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
-		int type;
-		String tabStr="";
-		for(int i =0; i<tab; i++){
-			tabStr+='\t';
-		}
-		for(Integer b: blocks.keySet()){
-			Block block = blocks.get(b);
-			list.add(Integer.toString(block.getlineBegin()));
-			type = block.getType();
-			if(type==0){ //eat = terminal so no nesting
-				list.add(tabStr+"Eat");
-			}else if(type==1){ //turn left  = terminal so no nesting
-				list.add(tabStr+"TurnLeft");
-			}else if(type==2){ //move = terminal so no nesting
-				list.add(tabStr+"Move");
-			}else if(type==3){ //if
-				list.add(tabStr+"If "+block.getCond());
-				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
-				if(!(block.getNestedBlocks().isEmpty())){
-					int tempTab = tab+1;
-					getJList(tempTab,block.getNestedBlocks(),list);
-				}
-				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
-				}
-			}else if(type==4){ //else if
-				list.add(tabStr+"ElseIf "+block.getCond());
-				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
-				if(!(block.getNestedBlocks().isEmpty())){
-					int tempTab = tab+1;
-					getJList(tempTab,block.getNestedBlocks(),list);
-				}
-				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
-				}
-			}else if(type==5){//else
-				list.add(tabStr+"Else ");
-				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
-				if(!(block.getNestedBlocks().isEmpty())){
-					int tempTab = tab+1;
-					getJList(tempTab,block.getNestedBlocks(),list);
-				}
-				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
-				}
-			}else if(type==6){//while
-				list.add(tabStr+"While "+block.getCond());
-				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
-				if(!(block.getNestedBlocks().isEmpty())){
-					int tempTab = tab+1;
-					getJList(tempTab,block.getNestedBlocks(),list);
-				}
-				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");;
-				}
-			}else if(type==7){//repeat
-				list.add(tabStr+"Repeat "+block.getRepeat());
-				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
-				if(!(block.getNestedBlocks().isEmpty())){
-					int tempTab = tab+1;
-					getJList(tempTab,block.getNestedBlocks(),list);
-				}
-				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
-				}
-			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
-				Function f = this.functions.get(block.getFunctionNum());
-				list.add(tabStr+f.getName());
-			}	
-			tabStr="";
-			for(int j =0; j<tab; j++){//reset the tabs
-				tabStr+='\t';
-			}
-		}
-		return null;
-	}
 
 	//////////////////////////////////DEBUGGIN METHODS BEGIN/////////////////////////////////////
 	/**
@@ -332,15 +234,15 @@ public class Controller {
 				main, if it does, we cascade, then insert to not delete the current 
 				block at that number. else we simply add = works for both between lines 
 				and end of code.*/
-				for (int key: this.gamePlaying.getBlocks().keySet()){
-					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow);
-						this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
-						this.userCodingNow=null;
-						return;
-					}
-				}//get past this means, end of lines!
-				this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
+					for (int key: this.gamePlaying.getBlocks().keySet()){
+						if(key==begin){
+							cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow);
+							this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
+							this.userCodingNow=null;
+							return;
+						}
+					}//get past this means, end of lines!
+					this.gamePlaying.getBlocks().put(begin, this.userCodingNow);	
 			} //we ended this so parent is now the currBlock coded
 			this.userCodingNow=parent;
 			if(this.parent!=null){
@@ -356,12 +258,12 @@ public class Controller {
 			}
 			if((type==4) || (type==5)){ //SPECIAL FOR ELSE IF AND ELSE!!!
 				Block parIf = null; 
-				if(this.userCodingNow==null){ //find in main level = no nesting
-					for(int k: this.gamePlaying.getBlocks().keySet()){
-						if(this.gamePlaying.getBlocks().get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
-							parIf = gamePlaying.getBlocks().get(k);
+				if(this.userCodingNow==null){//find in main level = no nesting
+						for(int k: this.gamePlaying.getBlocks().keySet()){
+							if(this.gamePlaying.getBlocks().get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
+								parIf = gamePlaying.getBlocks().get(k);
+							}
 						}
-					}
 				}else{ //find in parent's level!
 					for(int k: this.userCodingNow.getNestedBlocks().keySet()){
 						int tempTP = this.userCodingNow.getNestedBlocks().get(k).getType();
@@ -404,13 +306,6 @@ public class Controller {
 			}
 			return;
 		}
-	}
-	
-	/**
-	 * Deletes/clears all blocks in the main
-	 */
-	public void clearBlocks(){
-		gamePlaying.setBlocks(new HashMap<Integer,Block>());
 	}
 
 	/**
@@ -505,8 +400,19 @@ public class Controller {
 	 * @param name User provided game name, must be unique/valid
 	 * @return newly created and instantiated Game object
 	 */
-	public void createGame(){
-			gamePlaying = new Game();
+	public Game createGame(String name){
+		int temp = validGameName(name);
+		if(temp==3){
+			Game newgame= new Game(name);
+			return newgame;		
+		}else if(temp==1){
+			/////////////////Error: Game names must consist of letters and numbers only//////////
+
+			return null;
+		}else{
+			//Error: Cannot create Game because game name exists////////////////////////
+			return null;
+		}
 	}
 
 	/**
@@ -562,18 +468,9 @@ public class Controller {
 	 * (2)-error wall/cannot move forward bc there is wall
 	 * (3)-error turning left OR miscellaneous error on runBlocks()
 	 * (4)-error failure to reach goal/water
-	 * 
-	 * (-1)-error in parsing/could not parse
-	 * (-2)-error INFINITE LOOP 
 	 */
 	public int runBlocks(){
-		int success=compileBlocks();
-		if(success==-1){// error in parsing
-			return -1;
-		}
-		if(success==-2){ // infinite loop error
-			return -2;
-		}
+		compileBlocks();
 		String command;
 		for(int i=0; i<finalblocks.size(); i++){
 			command=finalblocks.get(i);
@@ -616,7 +513,7 @@ public class Controller {
 	 * number of times they will be executed for play
 	 * (compiles blocks)
 	 */
-	public int compileBlocks(){
+	public boolean compileBlocks(){
 		//clears finalblocks arraylist in case it's not empty
 		finalblocks.clear();
 		//resets tempgrid and tempgerbil to original states
@@ -642,11 +539,7 @@ public class Controller {
 				int success=parseBlock(block);
 				if(success==-1){
 					System.out.println("error in parsing");
-					return -1;   //error in parsing
-				}
-				if(success==-2){//infinite loop error
-					System.out.println("infinite loop error");
-					return -2;
+					return false;   //error in parsing
 				}
 				if(success==1){//if or else if so skip rest of else if or else statements
 					if(i+1<sortedkeys.size()){
@@ -664,7 +557,7 @@ public class Controller {
 				}
 			//}
 		}
-		return 0;
+		return true;
 	}
 
 	/**
@@ -693,8 +586,9 @@ public class Controller {
 			}
 			if(loop){
 				//ERROR infiniteLoop() error
+				System.out.println("Error: Infinite Loop");
 				this.finalblocks= new ArrayList<String>(); //clear finalblocks arraylist
-				return -2;
+				return -1;
 			}
 		}
 		HashMap<Integer,Block> nestedblocklist= block.getNestedBlocks();
@@ -1257,6 +1151,7 @@ public class Controller {
 		}else{ 
 			nested = pare.getNestedBlocks();
 		}
+		
 		nested.remove(b.getlineBegin(),b);
 		cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, b);//MAKE SURE -1*currDIFF!!!!!
 		if(b.getType()==3){//if statement so remove all subsequent ifs and elses
@@ -1272,7 +1167,7 @@ public class Controller {
 					break;
 				}
 			}
-		} 
+		}
 
 		return true;
 		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
@@ -2041,9 +1936,6 @@ public class Controller {
 	 */
 	public boolean loadGame(String gameName) {
 		this.gamePlaying= backend.getGame(gameName);
-		if(gamePlaying == null) {
-			return false;
-		}
 		backend.deleteGame(gameName);
 		if(!gamePlaying.getfunction().isEmpty()){
 			ArrayList<Integer> keylist= new ArrayList<Integer>();
