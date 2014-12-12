@@ -29,7 +29,7 @@ public class SavedGames extends Screen{
 	private JFrame frame;
 	private JPanel panel, listPanel, buttonPanel;
 	private JButton openGame, deleteGame, cancel;
-	private JComboBox gamesList;
+	public  JComboBox gamesList;
 	private JLabel gamesLabel;
 	private BufferedImage image;
 	

@@ -79,6 +79,8 @@ public class ActionListenersControl {
 		initEventHandlers();
 		main.show();
 		//userFunction.show();
+		
+		
 	}
 
 	private void initGrid() {
@@ -210,20 +212,36 @@ public class ActionListenersControl {
 		
 		savedGames.addOpenGameEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Start.StartGerbil.controller.loadGame(gameName);
-				
+				String oGame= (String) savedGames.gamesList.getSelectedItem();
+				if(oGame==null){
+					parentScreen=6;
+					errorDialog.errorL.setText("Must Select a Game");
+					errorDialog.show();
+				}else{
+					Start.StartGerbil.controller.loadGame(oGame);
+					playScreen.show();
+					savedGames.hide();
+				}
 			}		
 		});
 
 		savedGames.addDeleteGameEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				String dGame= (String) savedGames.gamesList.getSelectedItem();
+				if(dGame==null){
+					parentScreen=6;
+					errorDialog.errorL.setText("Must Select a Game");
+					errorDialog.show();
+				}else{
+					Start.StartGerbil.controller.deleteGame(dGame);
+				}
 			}		
 		});
 		
 		savedGames.addCancelEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				savedGames.hide();
+				playOptions.show();
 			}		
 		});
 	}
@@ -250,6 +268,7 @@ public class ActionListenersControl {
 
 						newGame.hide();
 						playScreen.show();
+						playScreen.enableCreateFunction();
 					}
 				}else{
 					errorDialog.errorL.setText("Please enter a valid Game name");
@@ -567,6 +586,8 @@ public class ActionListenersControl {
 
 			}	
 		});
+		
+		
 
 		/**JComboBoxes**/
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
