@@ -34,7 +34,7 @@ public class Controller {
 	Block parentEdit = null;
 	Block parentFunction = null;
 	Block userCodingNowFunction = null;
-	public boolean bad = false;
+
 
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
@@ -449,7 +449,7 @@ public class Controller {
 			if(currType==7){//repeat block so turn cond into int and store in repeat
 				int repeat=-1;
 				if(cond==null){
-					bad=true;
+					
 					///////////////////ERROR: Number of repetitions was not selected!//////////////
 					return 1;
 				}else{ //no need to check if cond is int or not since view will provide int for it 
@@ -460,7 +460,7 @@ public class Controller {
 			}else if(currType==8){//user-defined FUNCTION block so find int for cond and store int in functionNum
 				int functionNum=-1;
 				if(cond==null){
-					bad=true;
+					
 					///////////ERROR: Function not selected////////////////////////////
 					return 2;
 				}else{
@@ -472,7 +472,7 @@ public class Controller {
 					}
 				}
 				if(functionNum==-1){ //despite searching for it!! 
-					bad=true;
+				
 					///////////////ERROR: Illegal funciton entered!!!!!/////////////
 					return 3;
 				}
@@ -528,12 +528,12 @@ public class Controller {
 					}
 				}
 				if(parIf==null){
-					bad=true;
+				
 					//////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
 					//not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
 					return 4;
 				}else if(parIf.getlineEnd()+1!=begin){
-					bad=true;
+					
 					//So we are trying to insert the else if or else after the if for else if OR if/else if for ELSE!!!
 					////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
 					return 5;

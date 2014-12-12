@@ -639,6 +639,7 @@ public class ActionListenersControl {
 							errorDialog.show();
 						}else if(ret==5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
 							parentScreen = 4;
+
 							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
 							errorDialog.show();
 							
@@ -762,12 +763,12 @@ public class ActionListenersControl {
 				int begin = conditionals.getBegin();
 				int numLines = conditionals.getEndLineNumber();
 				String cond = conditionals.getCond();
-				if(Start.StartGerbil.controller.bad==false){ //if not bad, then close
+				//if(Start.StartGerbil.controller.bad==false){ //if not bad, then close
 					Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
-				}else{ //true so set to false.
-					Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
-					Start.StartGerbil.controller.bad=false;
-				}
+				//}else{ //true so set to false.
+					//Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
+					//Start.StartGerbil.controller.bad=false;
+				//}
 
 				playScreen.refreshCodeList();
 				conditionals.hide();	
