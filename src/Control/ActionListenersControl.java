@@ -47,7 +47,6 @@ public class ActionListenersControl {
 	boolean play;
 
 	boolean deleteCurrGame;
-	boolean addtomain;
 
 	static int parentScreen;
 	String backT="     ";
@@ -301,15 +300,15 @@ public class ActionListenersControl {
 
 
 	private void addUserFunctionEventHandlers(){
+		boolean addtomain;
+		
 		userFunction.addFunctionListListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(addtomain){
 					String funcName = (String) userFunction.userDefinedFunctions.getSelectedItem();
 					Start.StartGerbil.controller.createFunctionBlocks(8, userFunction.getSelectedLineNumber(), 1, null);
 					Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(), 1, funcName);
 					userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-				}
 			}
 		});
 
@@ -419,6 +418,7 @@ public class ActionListenersControl {
 
 
 		userFunction.addOkEventHandler(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				String functionName = userFunction.getFunctionName();
 				parentScreen=7;
@@ -438,10 +438,12 @@ public class ActionListenersControl {
 					}else{
 						parentScreen=4;
 						userFunction.userDefinedFunctions.addItem(functionName);
-						addtomain=false;
-						userFunction.refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 						userFunction.hide();
-						showParent();
+						userFunction.dontAddToMain(0);
+					    playScreen.refreshUserFunctions();
+					    userFunction.hide();
+					    showParent();
+
 					}
 				}else{
 					errorDialog.errorL.setText("You Must Enter a Function Name");

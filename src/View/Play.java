@@ -32,6 +32,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import Control.ActionListenersControl;
 import Model.Block;
 
 /**
@@ -133,6 +134,14 @@ public class Play extends Screen{
 			}
 		}
 	}
+	
+	public void refreshUserFunctions(){
+		  userFunctionsDD.removeAllItems();
+
+		  for(String s: Start.StartGerbil.controller.getFunctions()){
+		   userFunctionsDD.addItem(s);
+		  }
+		 }
 	
 	public static  void refreshGrid(){
 		deleteGridComponents();
