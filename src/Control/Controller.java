@@ -538,7 +538,7 @@ public class Controller {
 								parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 							}else{ 
 								HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
-			asdf					cascadeNumberingChanges(begin, 1, b); //cascade first then put into it!!
+								cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks()); //cascade first then put into it!!
 								parent.getNestedBlocks().put(begin, b);
 							}
 						}
@@ -557,7 +557,7 @@ public class Controller {
 							parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 						}else{ 
 							HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
-		asdf					cascadeNumberingChanges(begin, 1, b); //cascade first then put into it!!
+							cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks()); //cascade first then put into it!!
 							parent.getNestedBlocks().put(begin, b);
 						}
 					}
