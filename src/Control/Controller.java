@@ -482,7 +482,7 @@ public class Controller {
 				and end of code.*/
 				for (int key: this.gamePlaying.getBlocks().keySet()){
 					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow);
+						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow, gamePlaying.getBlocks());
 						this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
 						this.userCodingNow=null;
 						return;
@@ -1378,7 +1378,7 @@ public class Controller {
 				and end of code.*/
 				for (int key: this.gamePlaying.getBlocks().keySet()){
 					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNowEdit.getlineEnd()-this.userCodingNowEdit.getlineBegin()+1, this.userCodingNowEdit);
+						cascadeNumberingChanges(begin, this.userCodingNowEdit.getlineEnd()-this.userCodingNowEdit.getlineBegin()+1, this.userCodingNowEdit, gamePlaying.getBlocks());
 						this.gamePlaying.getBlocks().put(begin, this.userCodingNowEdit);
 						this.userCodingNowEdit=null;
 						return 'g';
@@ -1443,7 +1443,7 @@ public class Controller {
 			nested = pare.getNestedBlocks();
 		}
 		nested.remove(b.getlineBegin());
-		cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, b);//MAKE SURE -1*currDIFF!!!!!
+		cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, b, gamePlaying.getBlocks());//MAKE SURE -1*currDIFF!!!!!
 		if(b.getType()==3){//if statement so remove all subsequent ifs and elses
 			java.util.Iterator<Integer> it =nested.keySet().iterator();
 			int k;
@@ -1532,7 +1532,7 @@ public class Controller {
 		}
 		int currdiff= this.countblocks; //number of blocks/lines in block to insert
 		this.countblocks=1; //reset countblocks
-		cascadeNumberingChanges(id,currdiff, reference);
+		cascadeNumberingChanges(id,currdiff, reference, gamePlaying.getBlocks());
 		//after cascade, should have a free spot in hashmap with key=id since moved original id block down to diff key
 		parent.getNestedBlocks().put(id, b);
 
@@ -1591,13 +1591,13 @@ public class Controller {
 			parent.getNestedBlocks().put(b.getlineBegin(), b); 
 			//Will call searchForBlock to find block of the given id and insert insert b to it
 			int currDiff = b.getlineEnd()-b.getlineBegin();
-			cascadeNumberingChanges(b.getlineBegin(),currDiff,b);
+			cascadeNumberingChanges(b.getlineBegin(),currDiff,b, gamePlaying.getBlocks());
 			insertBlockToMain(b.getlineBegin()+b.getlineEnd(), temp);
 		}
 		parent.getNestedBlocks().put(b.getlineBegin(), b); 
 		//Will call searchForBlock to find block of the given id and insert insert b to it
 		int currDiff = b.getlineEnd()-b.getlineBegin();
-		cascadeNumberingChanges(b.getlineBegin(),currDiff,b);
+		cascadeNumberingChanges(b.getlineBegin(),currDiff,b, gamePlaying.getBlocks());
 	}
 
 	public int[] callHighlight(int line){
@@ -1649,7 +1649,7 @@ public class Controller {
 	 * @param b Block that the change occurred in
 	 * @assumes have checked if prevDiff==currDiff to make sure we don't use this method if it is
 	 */
-	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b){
+	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b, HashMap<Integer,Block> mainblocks){
 		if(b.getParent()!=null){
 			b.getParent().setLineEnd(b.getParent().getlineEnd()+currDiff);
 		}
@@ -1657,7 +1657,8 @@ public class Controller {
 		HashMap<Integer,Block> tempnb= new HashMap<Integer,Block>();
 		boolean lastBlocks=false;
 		if(b.getParent()==null){
-			nb= gamePlaying.getBlocks();
+			nb= mainblocks;
+			//nb= gamePlaying.getBlocks();
 			lastBlocks=true;
 		}else{
 			nb = b.getParent().getNestedBlocks();//get hashmap containing b and sister blocks
@@ -1680,12 +1681,14 @@ public class Controller {
 			}
 		} 
 		if(lastBlocks==true){
-			gamePlaying.setBlocks(tempnb); //replace original MAIN hashmap with new/updated MAIN hashmap
+			mainblocks=tempnb; //replace original MAIN hashmap with new/updated MAIN hashmap
 			return; //no more higher level to get to
 		}
 		b.getParent().setNestedBlocks(tempnb); //replace original nested hashmap with new/updated nested hashmap
-		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
+		cascadeNumberingChanges(lineBegin,currDiff,b.getParent(),mainblocks); //recurse to go higher
 	}
+	
+	
 
 	/**
 	 * cascadesNumberingChanges Inward to nested blocks
@@ -1908,7 +1911,7 @@ public class Controller {
 
 				for (int key: this.tempFunctionBlockInstructions.keySet()){
 					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction);
+						cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction, this.tempFunctionBlockInstructions);
 						this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);
 						this.userCodingNowFunction=null;
 						return;
