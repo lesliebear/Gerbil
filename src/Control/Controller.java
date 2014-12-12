@@ -23,7 +23,7 @@ public class Controller {
 	 * and then reloaded to the backend when finished game*/
 	public ArrayList<Function> functions = new ArrayList<Function>();
 	//Note eat fruit must be for that fruit only!! else error popup.
-	Backend backend= new Backend();
+	//Backend backend= new Backend();
 
 	ArrayList<String> finalblocks= new ArrayList<String>();
 	//HashMap<Integer,Boolean> visited;
@@ -41,9 +41,26 @@ public class Controller {
 	boolean isFunction=false;
 
 	int countblocks=1;
+	
+	/**
+	 * Save current game
+	 * @return True if save is successful, otherwise False 
+	 */
+	public boolean saveGame() {
+		for(int i=0; i<functions.size();i++){
+			gamePlaying.getfunction().add(functions.get(i));
+		}
+		
+		for(int j=0; j<Start.StartGerbil.backend.getGameList().size(); j++){
+			if(Start.StartGerbil.backend.getGameList().get(j).getName().equals(this.gamePlaying.getName())){
+				return true;
+			}
+		}
+		Start.StartGerbil.backend.addGame(this.gamePlaying);
+		return true;
+	}
 
 	/**assumes, returns, exceptions**/
-
 	public void testingStuff() { // not sure what this is for.. Kat
 		tempgerbil = gamePlaying.getGerbil();
 		initTempGrid();
@@ -63,8 +80,6 @@ public class Controller {
 			return ins.toArray(new String[ins.size()]);
 		}
 	}
-
-
 
 	public String[] FunctionUnFin(){
 		Block tempPar=null;
@@ -695,7 +710,7 @@ public class Controller {
 
 			}
 		}
-		ArrayList<Game> gamelist= backend.getGameList();
+		ArrayList<Game> gamelist= Start.StartGerbil.backend.getGameList();
 		for(int j=0; j<gamelist.size();j++){
 			if(gamelist.get(j).getName().equals(name)){
 				return 2;
@@ -2254,7 +2269,7 @@ public class Controller {
 	 * @return True if deletion is successful, otherwise False
 	 */
 	public boolean deleteGame(String gameName) {
-		return backend.deleteGame(gameName);
+		return Start.StartGerbil.backend.deleteGame(gameName);
 	}
 
 
@@ -2264,11 +2279,11 @@ public class Controller {
 	 * @return True if loading is successful, otherwise False
 	 */
 	public boolean loadGame(String gameName) {
-		this.gamePlaying= backend.getGame(gameName);
+		this.gamePlaying= Start.StartGerbil.backend.getGame(gameName);
 		if(gamePlaying == null) {
 			return false;
 		}
-		backend.deleteGame(gameName);
+		Start.StartGerbil.backend.deleteGame(gameName);
 		if(!gamePlaying.getfunction().isEmpty()){
 			ArrayList<Integer> keylist= new ArrayList<Integer>();
 			for(int i=0; i<keylist.size(); i++){
@@ -2277,26 +2292,6 @@ public class Controller {
 		}
 		return true;
 	}
-
-	/**
-	 * Save current game
-	 * @return True if save is successful, otherwise False 
-	 */
-	public boolean saveGame() {
-
-		for(int i=0; i<functions.size();i++){
-			gamePlaying.getfunction().add(functions.get(i));
-		}
-		for(int j=0; j<backend.getGameList().size(); j++){
-			if(backend.getGameList().get(j).getName().equals(this.gamePlaying.getName())){
-				//skip adding the game to backend bc already exists
-				return true;
-			}
-		}
-		backend.addGame(this.gamePlaying);
-		return true;
-	}
-
 
 	/**
 	 * This method will return a list of instructions of the current game

@@ -45,6 +45,8 @@ public class ActionListenersControl {
 	boolean editing;
 	boolean stop;
 	boolean play;
+	
+	boolean creatingFunction;
 
 	boolean deleteCurrGame;
 
@@ -79,8 +81,6 @@ public class ActionListenersControl {
 		initEventHandlers();
 		main.show();
 		//userFunction.show();
-
-
 	}
 
 	private void initGrid() {
@@ -100,8 +100,8 @@ public class ActionListenersControl {
 		addPlayEventHandlers();
 		addUserFunctionEventHandlers();
 		addOkYesDialogEventHandlers();
-		addSavedGamesEventHandlers();
 		addConditionalsEventHandlers();
+		addSavedGamesEventHandlers();
 	}
 
 	/**
@@ -191,12 +191,14 @@ public class ActionListenersControl {
 
 		okNoDialog.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				Start.StartGerbil.controller.saveGame();
+
 				try{
-					Start.StartGerbil.controller.saveGame();
-				}catch(Exception ex){
+					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
+				}catch(Exception es){
 					System.out.println("Unable to save game.");
 				}
-
 				okNoDialog.hide();
 				playOptions.show();
 			}		
@@ -582,9 +584,12 @@ public class ActionListenersControl {
 		});
 
 		playScreen.addSaveEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {	
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Start.StartGerbil.controller.saveGame();
+				
 				try{
-					Start.StartGerbil.controller.saveGame();
+					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
 				}catch(Exception e){
 					System.out.println("Unable to save game.");
 				}
@@ -604,8 +609,6 @@ public class ActionListenersControl {
 
 			}	
 		});
-
-
 
 		/**JComboBoxes**/
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
@@ -684,9 +687,6 @@ public class ActionListenersControl {
 						playScreen.hide();
 					}
 				}
-				
-				
-				
 				
 			}	
 		});
@@ -830,7 +830,6 @@ public class ActionListenersControl {
 	 * SavedGame 6
 	 * UserFunction 7
 	 */
-
 	private static void showParent(){ 
 		switch(parentScreen){
 		case 1:

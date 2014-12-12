@@ -23,7 +23,7 @@ import java.util.HashMap;
 public class Grid implements Serializable{
 
 	/**Serial Version UID to stop the error we get. = used during deserialization to verify */
-	private static final long serialVersionUID = 1L;
+	private final long serialVersionUID = 1L;
 	/**17x17 grid size because the outer edges will have walls  
 	 * Grid does not have gerbil location = gerbil object has the location info.*/
 	private char[][] grid={{'w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w','w'},
