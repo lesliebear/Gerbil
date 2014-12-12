@@ -427,6 +427,17 @@ public class Conditionals {
 		conditionalscodeList.setSelectedIndex(conditionalscodeList.getModel().getSize()-1);
 	}
 	
+	public void refreshConditionalsJList(String [] newList){ 
+		listModel.clear();
+		listModel.add(0," ");
+		
+		for(int i=0; i<newList.length; i++){
+			listModel.add(i,newList[i]);
+		}
+		
+		conditionalscodeList.setSelectedIndex(conditionalscodeList.getModel().getSize()-1);
+	}
+	
 	public String getCond(){
 		return conditionalDD.getSelectedItem().toString();
 	}
