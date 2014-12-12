@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import Model.Game;
+import Start.StartGerbil;
 import View.Conditionals;
 import View.DeleteFunction;
 import View.ErrorDialog;
@@ -373,7 +374,20 @@ public class ActionListenersControl {
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
-				
+				String newType = Play.conditionalsDD.getSelectedItem().toString();
+				//if(3),elseif(4),else(5),while(6),repeat(7), 
+				//String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
+				if(newType.equals("If")){
+					StartGerbil.controller.createBlocks(3,selectedIndexPlayCodeList, 0, null);
+				}else if(newType.equals("Else")){
+					StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
+				}else if(newType.equals("Else if")){
+					StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
+				}else if(newType.equals("While")){
+					StartGerbil.controller.createBlocks(6,selectedIndexPlayCodeList, 0, null);
+				}else {//if(newType.equals("Repeat")){
+					StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
+				}
 				
 			}	
 		});
