@@ -351,28 +351,15 @@ public class ActionListenersControl {
 				playScreen.clearAll();
 				
 				playScreen.setClearAllSelected();
+				
+				Start.StartGerbil.controller.clearBlocks();
 			}	
 		});
 
 		playScreen.addSaveEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(Start.StartGerbil.controller.getCurrGame().getName()!=null){
-					Start.StartGerbil.controller.saveGame();
-				}else{
-					//LINK TO ENTER NAME FOR GAME SCREEN
-					String name; //set this to the name that user enters
-					if(Start.StartGerbil.controller.validGameName(name)==1){
-						//ERROR: insert DialogueBox name must consist of letters/numbers
-					}else if(Start.StartGerbil.controller.validGameName(name)==2){
-						//ERROR: insert DialogueBox name already exists for another game, enter another name
-					}else{
-						//set game name, and then save
-						Start.StartGerbil.controller.getCurrGame().setName(name);
-						Start.StartGerbil.controller.saveGame();
-					}
-				}	
+			public void actionPerformed(ActionEvent arg0) {	
 				try{
-					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
+					Start.StartGerbil.controller.saveGame();
 				}catch(Exception e){
 					System.out.println("Unable to save game.");
 				}
