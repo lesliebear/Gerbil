@@ -614,10 +614,11 @@ public class ActionListenersControl {
 				if(inserting==true){
 					int lineS = Play.playcodeList.getSelectedIndex();
 					Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
-					if(bTemp==null){
+					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+						selectedIndexPlayCodeList = lineS;
+					}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
 						selectedIndexPlayCodeList = 0;
-					}
-					else{
+					}else{ //get the block's line begin
 						selectedIndexPlayCodeList = bTemp.getlineBegin();
 					}
 					String newType = Play.conditionalsDD.getSelectedItem().toString();
