@@ -137,6 +137,9 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				parentScreen =5;
 				playOptions.hide();
+				
+				//wanna update the list b4 displaying!
+				savedGames.refreshGamesList();
 
 				savedGames.show(); 
 			}	
