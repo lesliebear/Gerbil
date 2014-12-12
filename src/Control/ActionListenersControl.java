@@ -66,6 +66,7 @@ public class ActionListenersControl {
 
 		playOptions = new PlayOptions();
 		savedGames = new SavedGames();
+		okNoDialog = new OkYesDialog();
 
 		userFunction = new UserFunction();
 		playScreen = new Play();
@@ -258,6 +259,8 @@ public class ActionListenersControl {
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
+		
+		
 		userFunction.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				errorDialog.hide();
@@ -627,11 +630,21 @@ public class ActionListenersControl {
 		});
 	}
 	
+	/**
+	 * DeleteFunction 1
+	 * Main 2
+	 * NewGame 3
+	 * Play 4
+	 * PlayOptions 5
+	 * SavedGame 6
+	 * UserFunction 7
+	 */
+	
+	
 	public void addConditionalsEventHandlers(){
 		conditionals.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				selectedCreateFunctionFirst=true;
-				parentScreen = 4; 
+				
 				int begin = conditionals.getBegin();
 				int numLines = conditionals.getEndLineNumber();
 				String cond = conditionals.getCond();
@@ -645,13 +658,32 @@ public class ActionListenersControl {
 		
 		conditionals.addCancelEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				selectedCreateFunctionFirst=true;
-				parentScreen = 4; 
+				
 				Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
 
 
 				userFunction.show();
 				playScreen.hide();
+			}	
+		});
+
+		conditionals.addMoveEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+			}	
+		});
+		
+		conditionals.addEatEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				 
+				
+			}	
+		});
+		
+		conditionals.addTurnLeftEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
 			}	
 		});
 	}
