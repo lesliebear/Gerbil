@@ -39,7 +39,7 @@ import Model.Block;
  */
 public class Play extends Screen{
 	static DefaultListModel model;
-
+	
 	private static JFrame frame;
 
 	/**Panels**/
@@ -638,7 +638,6 @@ public class Play extends Screen{
 
 	/**
 	 * Creates the screen by putting the GUI components together.
-	 * 
 	 */
 	protected void createScreen() {	
 
@@ -672,7 +671,6 @@ public class Play extends Screen{
 
 	/**
 	 * Shows the screen.
-	 * 
 	 */
 	public void show() {
 		frame.setVisible(true);
@@ -680,7 +678,6 @@ public class Play extends Screen{
 
 	/**
 	 * Hides the screen.
-	 * 
 	 */
 	public void hide() {
 		frame.setVisible(false);

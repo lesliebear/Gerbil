@@ -40,7 +40,7 @@ public class UserFunction extends Screen{
 	static JPanel rightPanel = new JPanel();
 	private int startLineNumber;
 	private int endLineNumber;
-	private DefaultListModel instructions;
+	private DefaultListModel listModel;
 	public boolean addtomain;
 	/**Right side panel: labels, buttons, other**/
 	JLabel conditionalsL = new JLabel("Conditional Statements"); 	
@@ -76,7 +76,8 @@ public class UserFunction extends Screen{
 	
 	JTextField functionName; /*get from control*/ 
 	
-	private static JList<ArrayList<String>> functionsCodeList;
+	private static JList functionsCodeList;
+	//private static JList<ArrayList<String>> functionsCodeList;
 	private static JScrollPane scrollpane;
 	
 	/** Repeat stuff **/
@@ -87,7 +88,6 @@ public class UserFunction extends Screen{
 	 * Constructor that creates all necessary GUI components.
 	 */
 	public UserFunction () {
-		instructions = new DefaultListModel();
 		createButtons();
 		setRightComponents();
 		setLeftComponents();
@@ -403,9 +403,10 @@ public class UserFunction extends Screen{
 		
 		bodyL.setFont(new Font("Serif", Font.BOLD, 20));
 		
-		instructions.add(0," ");
+		listModel = new DefaultListModel();
+		listModel.add(0," ");
 		
-		functionsCodeList = new JList(instructions);
+		functionsCodeList = new JList(listModel);
 		startLineNumber = 0;
 		
 		functionsCodeList.setSelectedIndex(functionsCodeList.getModel().getSize()-1);
@@ -559,7 +560,7 @@ public class UserFunction extends Screen{
 	}
 
 	public int getEndLineNumber() {
-		endLineNumber = instructions.size() + 1;
+		endLineNumber = listModel.size() + 1;
 		return endLineNumber;
 	}
 	
@@ -578,10 +579,11 @@ public class UserFunction extends Screen{
 	}
 
 	public void updateInstructionsList(String[] instructions) {
-		this.instructions.clear();
-		this.instructions.add(0," ");
+		listModel.clear();
+		listModel.add(0," ");
+		
 		for(int i = 0; i < instructions.length; i++) {
-			this.instructions.add(i,instructions[i]);
+			listModel.add(i,instructions[i]);
 		}
 		
 		functionsCodeList.setSelectedIndex(functionsCodeList.getModel().getSize()-1);
