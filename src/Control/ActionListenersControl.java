@@ -597,7 +597,7 @@ public class ActionListenersControl {
 				int numLines = conditionals.getEndLineNumber();
 				String cond = conditionals.getCond();
 
-				Start.StartGerbil.controller.createFunctionBlocks('e', begin, numLines, cond);
+				Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
 
 
 				userFunction.show();
@@ -610,7 +610,7 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedCreateFunctionFirst=true;
 				parentScreen = 4; 
-				Start.StartGerbil.controller.createFunctionBlocks('c', 0, 0, null);
+				Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
 
 
 				userFunction.show();
