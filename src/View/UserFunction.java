@@ -71,7 +71,7 @@ public class UserFunction extends Screen{
 	JButton okB;
 	JButton cancelB; 
 	
-	JTextField conditionalDropdown; /*get from control*/ 
+	JTextField functionName; /*get from control*/ 
 	
 	private static JList<ArrayList<String>> functionsCodeList;
 	private static JScrollPane scrollpane;
@@ -410,7 +410,7 @@ public class UserFunction extends Screen{
 		
 		functionsCodeList.setVisibleRowCount(20);
 		
-		conditionalDropdown = new JTextField();
+		functionName = new JTextField();
 		
 		gc.gridx = 0;
 		gc.gridy = 0;
@@ -426,7 +426,7 @@ public class UserFunction extends Screen{
 		gc.gridwidth = 2;
 		gc.gridx = 1; 
 		gc.gridy=0; 
-		leftPanel.add(conditionalDropdown, gc);
+		leftPanel.add(functionName, gc);
 		
 		gc.insets = new Insets(0,0,0,0);
 		
@@ -568,6 +568,10 @@ public class UserFunction extends Screen{
 	
 	public void addIfEventHandler(ActionListener listener) {
 		ifB.addActionListener(listener);
+	}
+	
+	public String getFunctionName() {
+		return functionName.getText().trim();
 	}
 	
 	public void addElseIfEventHandler(ActionListener listener) {
