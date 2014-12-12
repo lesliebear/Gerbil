@@ -25,6 +25,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import Start.StartGerbil;
 
@@ -56,8 +58,8 @@ public class Conditionals {
 	private int endLineNumber;
 	private DefaultListModel<String> instructions;
 	
-	static DefaultComboBoxModel model = new DefaultComboBoxModel();  
-	static DefaultListModel listModel = new DefaultListModel();
+	static DefaultComboBoxModel model; 
+	static DefaultListModel listModel;
 
 	JComboBox userDefinedFunctions; /*get from control*/ 
 
@@ -276,6 +278,17 @@ public class Conditionals {
 		
 		conditionalscodeList = new JList(listModel);
 		startLineNumber=0;
+
+		conditionalscodeList.setSelectedIndex(conditionalscodeList.getModel().getSize()-1);
+		conditionalscodeList.addListSelectionListener(new ListSelectionListener() {
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+		});
+
 		scrollpane = new JScrollPane(conditionalscodeList);
 
 		conditionalscodeList.setVisibleRowCount(20);
@@ -410,6 +423,8 @@ public class Conditionals {
 	
 	public void refreshConditionalsJList(){ 
 		listModel.clear();
+		listModel.add(0," ");
+		conditionalscodeList.setSelectedIndex(conditionalscodeList.getModel().getSize()-1);
 	}
 	
 	public String getCond(){
