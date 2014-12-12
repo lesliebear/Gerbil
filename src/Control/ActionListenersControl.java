@@ -622,10 +622,15 @@ public class ActionListenersControl {
 			public void valueChanged(ListSelectionEvent e) {
 				if(deleting == true){
 					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
+					int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
+					playScreen.setMultipleSelectionMode();
+					Play.playcodeList.setSelectedIndices(highLight);
 					Start.StartGerbil.controller.deleteBlock(selectedIndexPlayCodeList);
-					
 					Play.refreshCodeList(); // refreshes the code list in Play screen
+				}else{
+					playScreen.setSingleSelectionMode();
 				}
+
 			}	
 		});
 	}
@@ -669,21 +674,29 @@ public class ActionListenersControl {
 
 		conditionals.addMoveEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
+				String funcName = (String) playScreen.userFunctionsDD.getSelectedItem();
+				Start.StartGerbil.controller.createBlocks(2,Play.playcodeList.getSelectedIndex(),1, null);
+				Start.StartGerbil.controller.createBlocks('e',Play.playcodeList.getSelectedIndex(),1,funcName);
+				playScreen.refreshCodeList();
 			}	
 		});
 		
 		conditionals.addEatEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				 
+				String funcName = (String) playScreen.userFunctionsDD.getSelectedItem();
+				Start.StartGerbil.controller.createBlocks(0,Play.playcodeList.getSelectedIndex(),1, null);
+				Start.StartGerbil.controller.createBlocks('e',Play.playcodeList.getSelectedIndex(),1,funcName);
+				playScreen.refreshCodeList();
 				
 			}	
 		});
 		
 		conditionals.addTurnLeftEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				String funcName = (String) playScreen.userFunctionsDD.getSelectedItem();
+				Start.StartGerbil.controller.createBlocks(1,Play.playcodeList.getSelectedIndex(),1, null);
+				Start.StartGerbil.controller.createBlocks('e',Play.playcodeList.getSelectedIndex(),1,funcName);
+				playScreen.refreshCodeList();
 			}	
 		});
 	}

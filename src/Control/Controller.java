@@ -1569,6 +1569,7 @@ public class Controller {
 		return bInfo;
 	}
 
+
 	/**
 	 * Figures out the given line number's parent block's line number = good for highlighting
 	 * 
