@@ -40,8 +40,6 @@ public class Controller {
 	Block userCodingNowFunction = null;
 	Gerbil runtimeGerbil;//= gamePlaying.getGerbil(); //Gerbil used for animation/runtime only
 
-
-
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
 	boolean isFunction=false;
@@ -60,14 +58,19 @@ public class Controller {
 	}
 
 	public void initFields() {
-
 		functions = gamePlaying.getfunction();
 	}
 
 	public String[] JListString(){
 		ArrayList<String> temp = new ArrayList<String>(); 
-		temp = getJList(0,this.gamePlaying.getBlocks(),temp);
-		return (String[]) temp.toArray();
+		getJList(0,this.gamePlaying.getBlocks(),temp);
+		String [] toReturn = new String[temp.size()];
+		
+		for(int i=0; i< toReturn.length; i++){
+			toReturn[i] = temp.get(i);
+		}
+		
+		return toReturn;
 	}
 
 	public ArrayList<String> getUserDefinedFunctionsStringArray(){
@@ -79,8 +82,7 @@ public class Controller {
 
 		return toReturn;
 	}
-
-
+	
 	/**
 	 * Prints the hashmap of the blocks based on the indentation level(nesting level)
 	 * @param tab The indentation level of the block to be printed out
@@ -88,7 +90,7 @@ public class Controller {
 	 * @return String array of instructions from the blocks to display in view
 	 *  
 	 */
-	public ArrayList<String> getJList(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
+	public int getJList(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
 		int type;
 		String tabStr="";
 		for(int i =0; i<tab; i++){
@@ -173,7 +175,7 @@ public class Controller {
 				tabStr+='\t';
 			}
 		}
-		return null;
+		return 0;
 	}
 
 	//////////////////////////////////DEBUGGIN METHODS BEGIN/////////////////////////////////////

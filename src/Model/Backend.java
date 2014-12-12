@@ -121,6 +121,14 @@ public class Backend implements Serializable {
 	} 
 	
 	
+	public void saveGames(ArrayList<Game> users) throws IOException { 
+		@SuppressWarnings("resource")
+		ObjectOutputStream oos = new ObjectOutputStream( 
+				new FileOutputStream(storeFile)); 
+		oos.writeObject(users); 
+		return;
+	} 
+	
 	/**
 	 * Saves the games array list from backend to a serialized file for the single user (in kernel/standard)
 	 * 
@@ -141,16 +149,6 @@ public class Backend implements Serializable {
 			return true;
 		} catch (Exception e) {return false;} 
 	} */
-	
-	
-	
-	public void saveGames(ArrayList<Game> users) throws IOException { //kat
-		@SuppressWarnings("resource")
-		ObjectOutputStream oos = new ObjectOutputStream( 
-				new FileOutputStream(storeFile)); 
-		oos.writeObject(users); 
-		return;
-	} 
 	
 
 	/**
@@ -199,145 +197,14 @@ public class Backend implements Serializable {
 		this.games = games;
 	}
 
-	//////////////////////////////////////FANCY SYSTEM//////////////////////////////////////////////////////////////////////////////////
-
-	/**Array List that holds games of the user */
-	ArrayList<User> users = new ArrayList<User>();
-
-	/**
-	 * Adds a user to the arraylist of the users(in Fancy)
-	 * 
-	 * @assumes List to hold users already exists and 
-	 * error checking has been done to ensure same named users are not added.
-	 * @exception none
-	 * @postcondition  Places user into user list
-	 * 
-	 * @param u User object to add to the list
-	 * @return True if successful, else false
-	 */
-	public boolean addUser(User u){
-		for (User user: this.users){
-			if(user.getUserName().equals(u.getUserName())){
-				return false;
-			}
+	
+	public ArrayList<String> getGamesStringArray(){
+		ArrayList<String> toReturn= new ArrayList<String>(); 
+		
+		for(int i=0; i<games.size(); i++){
+			toReturn.add(i, games.get(i).getName());
 		}
-		users.add(u);
-		return true;
+		
+		return toReturn;
 	}
-
-	/**
-	 * Deletes a user from the arraylist of the users(in Fancy) 
-	 * 
-	 * @assumes User may not exist
-	 * @exception none
-	 * @postcondition Deletes a user
-	 * 
-	 * @param u User's name to get user from the arraylist of the users to delete
-	 * @return True if successful, else false
-	 */
-	public boolean deleteUser(String name){
-		for(int i = 0; i<this.users.size();i++){
-			if((this.users.get(i).getUserName().compareTo(name))==0){
-				this.users.remove(i);
-				return true;
-			}
-		}
-		return false;
-
-	}
-
-	/**
-	 * Loads the users arraylist in backend(in Fancy)
-	 * 
-	 * @assumes Users have been previously saved
-	 * @exception IOException, ClassNotFoundException
-	 * @postcondition Loads Saved users into the system
-	 * 
-	 * @return True if successful, else false 
-	 * @throws IOException If error encountered with the serialized file
-	 * @throws ClassNotFoundException If error encountered with class not found
-	 */
-	@SuppressWarnings({ "resource", "unchecked" })
-	public boolean loadSavedUsers()throws IOException, ClassNotFoundException {		
-		ObjectInputStream ois;
-		try {
-			ois = new ObjectInputStream(new FileInputStream(storeDir+"\\"+storeFile));
-			ArrayList<User> temp = ((ArrayList<User>)ois.readObject());
-			this.setUsersList(temp);
-			return true;
-		}catch (Exception e1){
-			User newUser =new User("FileEmpty", "tempPass"); //if serializable file is empty, causes problems
-			this.addUser(newUser); //add new user
-			this.saveUsers(); //save that user
-			this.deleteUser("FileEmpty");//delete added user
-			this.saveUsers();//save the empty list
-		}
-		return false;	
-	}
-
-	/**
-	 * Saves the users array list from backend to a serialized file (in Fancy)
-	 * 
-	 * @assumes Users list exists
-	 * @exception IOException
-	 * @postcondition Saves users to file using serialization
-	 * 
-	 * @throws IOException If error encountered with the serialized file
-	 */
-	@SuppressWarnings("resource")
-	public boolean saveUsers() throws IOException { 
-		ObjectOutputStream oos;
-		try {
-			oos = new ObjectOutputStream(new FileOutputStream(storeDir+"\\"+storeFile));
-			oos.writeObject(users);
-			return true;
-		} catch (FileNotFoundException e) {return false;} catch (IOException e) {return false;}
-		//This does create file if not found in that location!
-	}
-
-	/**
-	 * Gets the User from the arraylist of users based on the name the user gave for him/herself
-	 * 
-	 * @assumes User may not exist
-	 * @exception none
-	 * @postcondition User object retrieved iff user exists
-	 * 
-	 * @param in_name Name of the the user gave when he/she created an account
-	 * @return The user object if named user does  exist, else return null 
-	 */
-	public User getUser(String name){
-		for(User u: this.users){
-			if((u.getUserName().compareTo(name))==0){
-				return u;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Returns the users arraylist
-	 * 
-	 * @assumes user list exists
-	 * @exception none
-	 * @postcondition Retrieves user list
-	 * 
-	 * @return The array list stored in backend that has all the users. 
-	 */
-	public ArrayList<User> getUserList(){
-		return this.users;
-	}
-
-	/**
-	 * Sets the user list to backend. 
-	 * 
-	 * @assumes User list space exists
-	 * @exception none
-	 * @postcondition User list is set
-	 * 
-	 * @param u The user list that you want to use in the program is set in the backend.
-	 */
-	public void setUsersList(ArrayList<User> u){
-		this.users= u;
-	}
-
 }

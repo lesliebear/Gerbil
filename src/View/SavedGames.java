@@ -3,13 +3,11 @@ package View;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
@@ -17,22 +15,21 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 
 public class SavedGames extends Screen{
 
 	private JFrame frame;
 	private JPanel panel, listPanel, buttonPanel;
 	private JButton openGame, deleteGame, cancel;
-	private JComboBox<String> gamesList;
+	private JComboBox gamesList;
 	private JLabel gamesLabel;
 	private BufferedImage image;
 	
@@ -41,10 +38,11 @@ public class SavedGames extends Screen{
 
 		createButtons();
 		gamesLabel = new JLabel("Saved Games");
-		gamesList = new JComboBox<String>();
+		ArrayList<String> test = Start.StartGerbil.backend.getGamesStringArray();
+		gamesList = new JComboBox(Start.StartGerbil.backend.getGamesStringArray().toArray());
 		frame = new JFrame("Saved Games");
 		try {
-			image = ImageIO.read(new File("1960811_10204553653977557_1367600592125664392_o.jpg"));
+			image = ImageIO.read(new File("pics/background.jpg"));
 		} catch (Exception ex) {
 			System.out.println("Couldn't load image");
 		} 
@@ -144,11 +142,11 @@ private void createButtons(){
 		deleteGame.setFont(new Font(null, Font.BOLD,20));
 		cancel.setFont(new Font(null, Font.BOLD,20));
 		Dimension dimension = new Dimension(1024, 768);
-		gamesList.setMinimumSize(new Dimension(200,25));
+		
 		listPanel.add(gamesList);
 		buttonPanel.setLayout(new GridBagLayout());
 		c.fill = GridBagConstraints.BOTH;
-		c.insets = new Insets(0,50,0,20);
+		c.insets = new Insets(0,60,0,20);
 		c.gridx = 0;
 		c.gridy = 0;
 		c.ipady = 35;
@@ -166,7 +164,7 @@ private void createButtons(){
 		buttonPanel.add(cancel,c);
 		
 		panel.setLayout(new GridBagLayout());
-		c.insets = new Insets(0,250,45,0);
+		c.insets = new Insets(0,350,45,0);
 		c.gridx = 0;
 		c.gridy = 0;
 		panel.add(gamesLabel,c);
@@ -185,7 +183,7 @@ private void createButtons(){
 		frame.setMinimumSize(dimension);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+		frame.setVisible(false);
 	}
 
 	/**

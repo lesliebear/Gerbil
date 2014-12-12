@@ -21,7 +21,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
- 
 
 /**
  * This class creates a GUI for the Finish Screen.
@@ -51,7 +50,7 @@ public class Finish extends Screen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		try {
-			image = ImageIO.read(new File("1960811_10204553653977557_1367600592125664392_o.jpg"));
+			image = ImageIO.read(new File("pics/background.jpg"));
 		} catch (Exception ex) {
 			System.out.println("Couldn't load image");
 		}
@@ -68,7 +67,7 @@ public class Finish extends Screen {
 		
 		frame.pack();
 		frame.setResizable(false);
-		frame.setVisible(true);
+		frame.setVisible(false);
 	}
 	
 	public static void setPanel(){
