@@ -1,7 +1,7 @@
 package Start;
 import Control.*;
 import Model.Backend;
-  
+
 
 /**
  * Main program.
@@ -9,23 +9,25 @@ import Model.Backend;
  */
 public class StartGerbil {
 	public static Backend backend;
-	 public static Controller controller;
-	 public static ActionListenersControl alc;
-	 /** 
-	  * Main method.
-	  * @param args
-	  */
-	 public static void main(String[] args) {
-	  backend = new Backend();
-	  controller = new Controller();
-	  //alc = new ActionListenersControl();
-	  
-	  try{
-	   backend.setGameList(backend.loadSavedGames());
-	  }catch (Exception e1) { //if txt file stuff is cleared, it has issues so make a dummy user, and delete the dummy user for it to work
-	   System.out.println("There are no saved games.");
-	  }
-	 
+	public static Controller controller;
+	public static ActionListenersControl alc;
+	/** 
+	 * Main method.
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		backend = new Backend();
+		//alc = new ActionListenersControl();
+
+		try{
+			backend.setGameList(backend.loadSavedGames());
+		}catch (Exception e1) { //if txt file stuff is cleared, it has issues so make a dummy user, and delete the dummy user for it to work
+			System.out.println("There are no saved games.");
+		}
+
+		controller = new Controller();
+		alc = new ActionListenersControl();
+
 		//Backend bk = new Backend();
 		//System.out.println(bk.saveGames());
 		//Main main = new Main();
@@ -33,7 +35,7 @@ public class StartGerbil {
 		controller.createBlocks(0, 1, 0, null); //eat
 		controller.createBlocks('e', 1, 1, null);
 		controller.createBlocks(6, 2, 0, null); //a while
-		
+
 		controller.createBlocks(3, 4, 0, null);// if statement
 		controller.createBlocks(0, 6, 0, null); //add eat
 		controller.createBlocks('e', 6, 1, null); //add eat
@@ -51,10 +53,10 @@ public class StartGerbil {
 		controller.createBlocks('e',18,1,null);//end eat
 		controller.createBlocks('e',12,8,null); //end else
 		controller.createBlocks('e', 2, 19, "There'sNoWall");
- 
+
 		//controller.createBlocks(1, 1, 0, null); //turnleft = put infront of everything!
 		//controller.createBlocks('e', 1, 1, null);
-//		System.out.println("____________________________AFTER TURN LEFT AT 0____________________");
+		//		System.out.println("____________________________AFTER TURN LEFT AT 0____________________");
 		/**controller.createBlocks(3, 1, 0, null); //if theres no wall
 		controller.createBlocks(2, 3, 0, null); //move
 		controller.createBlocks('e', 3, 1, null);
@@ -63,14 +65,14 @@ public class StartGerbil {
 		controller.createBlocks(0,6,0,null); //add eat to the else if
 		controller.createBlocks('e',6,1,null);
 		controller.createBlocks('e', 5, 4, "There'sWall?"); //else if inserted!!
-		
+
 		controller.createBlocks(1, 0, 0, null); //insert turn left at line 0
 		controller.createBlocks('e', 0, 1, null);*/
 		controller.printBlocks(0,controller.getCurrGame().getBlocks());
 		//System.out.println("_______________deleteblockstuff____________________________");
 		//System.out.println(controller.deleteBlock(16));
 		//controller.printBlocks(0,controller.getCurrGame().getBlocks());
-		
+
 		//Conditionals conditionals = new Conditionals("if");
 		//Grid g = new Grid(17,17);		
 		//SavedGames sg = new SavedGames();
