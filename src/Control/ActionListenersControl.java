@@ -47,6 +47,7 @@ public class ActionListenersControl {
 	boolean play;
 
 	boolean deleteCurrGame;
+	boolean addtomain;
 
 	static int parentScreen;
 	String backT="     ";
@@ -300,24 +301,25 @@ public class ActionListenersControl {
 
 
 	private void addUserFunctionEventHandlers(){
-		
 		userFunction.addFunctionListListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String funcName = (String) userFunction.userDefinedFunctions.getSelectedItem();
-				Start.StartGerbil.controller.createFunctionBlocks(8, userFunction.getSelectedLineNumber(), 1, null);
-				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(), 1, funcName);
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+				if(addtomain){
+					String funcName = (String) userFunction.userDefinedFunctions.getSelectedItem();
+					Start.StartGerbil.controller.createFunctionBlocks(8, userFunction.getSelectedLineNumber(), 1, null);
+					Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(), 1, funcName);
+					userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+				}
 			}
 		});
 		
 		
-		userFunction.addBackEventHandler(new ActionListener() {
+		userFunction.addCancelEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				parentScreen=4;
+				Start.StartGerbil.controller.clearTempFunctionBlockInstructions();
 				errorDialog.hide();
 				showParent();
-				
 			}		
 		});
 		
@@ -397,10 +399,9 @@ public class ActionListenersControl {
 				Start.StartGerbil.controller.createFunctionBlocks(2, userFunction.getSelectedLineNumber(),1, null);
 				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(),1, null);
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-				
 			}});
 		
-		userFunction.addEatEventHandler(new ActionListener(){
+		userFunction.addEatEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Start.StartGerbil.controller.createFunctionBlocks(0, userFunction.getSelectedLineNumber(), 1, null);
 				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(), 1, null);
@@ -408,18 +409,19 @@ public class ActionListenersControl {
 			}
 		});
 		
-		userFunction.addTurnLeftEventHandler(new ActionListener(){
+		userFunction.addTurnLeftEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Start.StartGerbil.controller.createFunctionBlocks(1,userFunction.getSelectedLineNumber(),1, null);
 				Start.StartGerbil.controller.createFunctionBlocks('e',userFunction.getSelectedLineNumber(),1, null);
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+				
 			}});
 		
 		
 		userFunction.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String functionName = userFunction.getFunctionName();
-				
+				parentScreen=7;
 				if(!functionName.equals("")) {
 					
 					errorDialog.hide();
@@ -434,7 +436,12 @@ public class ActionListenersControl {
 						errorDialog.errorL.setText("Name already exists, enter another name");
 						errorDialog.show();
 					}else{
+						parentScreen=4;
+						userFunction.userDefinedFunctions.addItem(functionName);
+						addtomain=false;
+						userFunction.refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 						userFunction.hide();
+						showParent();
 					}
 				}else{
 					errorDialog.errorL.setText("You Must Enter a Function Name");
@@ -451,6 +458,7 @@ public class ActionListenersControl {
 	private void addPlayEventHandlers() {
 		/**Button Listeners**/
 
+		
 		playScreen.addMenuEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				parentScreen = 4; 
@@ -466,6 +474,7 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				Thread thread = new Thread() {
 					public void run() {
+						parentScreen=4;
 						Start.StartGerbil.controller.resetTempGrid();//just in case, resetting grid and gerbil object
 						int errortype= Start.StartGerbil.controller.runBlocks();
 						ArrayList<String> instructions = Start.StartGerbil.controller.getFinalBlocks();
