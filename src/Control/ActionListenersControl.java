@@ -268,6 +268,8 @@ public class ActionListenersControl {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(7, uSelect,0, null);
 				conditionals.setText("Repeat");
+				int tempLine = uSelect+2; //for the current statement and begin
+				conditionals.setBegin(tempLine);
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
@@ -279,6 +281,8 @@ public class ActionListenersControl {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(6, uSelect,0, null);
 				conditionals.setText("While");
+				int tempLine = uSelect+2; //for the current statement and begin
+				conditionals.setBegin(tempLine);
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
@@ -290,6 +294,8 @@ public class ActionListenersControl {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(5, uSelect,0, null);
 				conditionals.setText("Else");
+				int tempLine = uSelect+2; //for the current statement and begin
+				conditionals.setBegin(tempLine);
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
@@ -302,6 +308,8 @@ public class ActionListenersControl {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(4, uSelect,0, null);
 				conditionals.setText("Else If");
+				int tempLine = uSelect+2; //for the current statement and begin
+				conditionals.setBegin(tempLine);
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
@@ -312,6 +320,8 @@ public class ActionListenersControl {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(3, uSelect,0, null);
 				conditionals.setText("If");
+				int tempLine = uSelect+2; //for the current statement and begin
+				conditionals.setBegin(tempLine);
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
@@ -528,26 +538,32 @@ public class ActionListenersControl {
 						Start.StartGerbil.controller.createBlocks(3,selectedIndexPlayCodeList, 0, null);
 						
 						conditionals.setText("If");
-						
+						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+						conditionals.setBegin(tempLine);
 					}else if(newType.equals("Else")){
 						Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
 						
 						conditionals.setText("Else");
-						
+						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+						conditionals.setBegin(tempLine);
 					}else if(newType.equals("Else if")){
 						Start.StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
 						
 						conditionals.setText("Else if");
-						
+						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+						conditionals.setBegin(tempLine);
 					}else if(newType.equals("While")){
 						Start.StartGerbil.controller.createBlocks(6,selectedIndexPlayCodeList, 0, null);
 						
 						conditionals.setText("While");
-						
+						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+						conditionals.setBegin(tempLine);
 					}else {//if(newType.equals("Repeat")){
 						Start.StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
 						
 						conditionals.setText("Repeat");
+						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+						conditionals.setBegin(tempLine);
 					}
 					
 					conditionals.show();
