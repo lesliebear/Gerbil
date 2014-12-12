@@ -198,11 +198,12 @@ public class Backend implements Serializable {
 	
 	public ArrayList<String> getGamesStringArray(){
 		ArrayList<String> toReturn= new ArrayList<String>(); 
+		int j = games.size(); 
 		
 		for(int i=0; i<games.size(); i++){
 			toReturn.add(i, games.get(i).getName());
 		}
-		
+		//System.out.println("i is: "+j);
 		return toReturn;
 	}
 }
