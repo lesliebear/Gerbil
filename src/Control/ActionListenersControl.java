@@ -176,15 +176,21 @@ public class ActionListenersControl {
 	}
 	
 	private void addOkYesDialogEventHandlers(){
-		okNoDialog.addBackEventHandler(new ActionListener() {
+		okNoDialog.addNoEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				main.show();
 			}		
 		});
 		
 		okNoDialog.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+				try{
+					Start.StartGerbil.controller.saveGame();
+				}catch(Exception ex){
+					System.out.println("Unable to save game.");
+				}
+				
+				main.show();
 			}		
 		});
 	}
@@ -380,7 +386,7 @@ public class ActionListenersControl {
 			}	
 		});
 
-	/*playScreen.addPlayEventHandler(new ActionListener() {
+		/*playScreen.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Thread thread = new Thread() {
 					public void run() {
@@ -435,7 +441,7 @@ public class ActionListenersControl {
 				};
 				thread.start();
 			}
-		});  */
+		});*/
 
 		playScreen.addStopEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -538,11 +544,7 @@ public class ActionListenersControl {
 					}
 					
 					conditionals.show();
-				}else{
-					
 				}
-				
-			
 			}	
 		});
 
@@ -586,6 +588,8 @@ public class ActionListenersControl {
 				if(deleting == true){
 					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
 					Start.StartGerbil.controller.deleteBlock(selectedIndexPlayCodeList);
+					
+					Play.refreshCodeList(); // refreshes the code list in Play screen
 				}
 			}	
 		});
@@ -602,10 +606,8 @@ public class ActionListenersControl {
 
 				Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
 
-
 				userFunction.show();
 				playScreen.hide();
-
 			}	
 		});
 		
@@ -621,7 +623,6 @@ public class ActionListenersControl {
 			}	
 		});
 	}
-	
 	
 	/**
 	 * DeleteFunction 1

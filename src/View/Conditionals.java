@@ -420,7 +420,7 @@ public class Conditionals {
 			conditionalDD.addItem(i);
 		}
 	}
-
+	
 	public void refreshConditionalsJList(){ 
 		listModel.clear();
 	}
