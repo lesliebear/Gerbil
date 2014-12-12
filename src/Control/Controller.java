@@ -17,7 +17,6 @@ import Model.*;
  */
 public class Controller {
 
-
 	/**Holds the current user */
 	User userPlaying;
 	/**Holds the current game being played */
@@ -47,11 +46,8 @@ public class Controller {
 	int countblocks=1;
 
 	/**assumes, returns, exceptions**/
-	/**
-	 * Constructors
-	 */
-	public Controller() {
-		gamePlaying = new Game();
+
+	public void testingStuff() { // not sure what this is for.. Kat
 		runtimeGerbil = gamePlaying.getGerbil();
 		initFields();
 		initTempGrid();
@@ -522,8 +518,8 @@ public class Controller {
 	 * @param name User provided game name, must be unique/valid
 	 * @return newly created and instantiated Game object
 	 */
-	public void createGame(){
-		gamePlaying = new Game();
+	public void createGame(String name){
+		gamePlaying = new Game(name);
 	}
 
 	/**

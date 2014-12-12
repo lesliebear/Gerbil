@@ -37,12 +37,12 @@ public class Game implements Serializable{
 	 * 
 	 * @param name The name of the game
 	 */
-	public Game(){
+	public Game(String name){
 		this.gerbil= new Gerbil();
 		this.grid = new Grid(17,17);
 		this.functions= new ArrayList<Function>();
 		this.blocks= new HashMap<Integer,Block>();
-		
+		this.name = name;
 	}
 	
 

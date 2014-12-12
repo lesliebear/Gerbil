@@ -124,6 +124,23 @@ public class Play extends Screen{
 		row = x;
 		column = y;
 	}
+	
+	public static  void deleteGridComponents(){
+		for(int i = 0; i < grid.length; i++) {
+			for(int j = 0; j < grid[0].length; j++) {
+				gridBoxes[i][j].removeAll();
+				gridPanel.remove(gridBoxes[i][j]);
+			}
+		}
+	}
+	
+	public static  void refreshGrid(){
+		deleteGridComponents();
+		setGridComponents();
+	}
+
+	
+	
 
 	/**
 	 * Creates the screen by putting the GUI components together.
