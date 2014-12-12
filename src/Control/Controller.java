@@ -96,69 +96,69 @@ public class Controller {
 			//list.add(Integer.toString(block.getlineBegin()));
 			type = block.getType();
 			if(type==0){ //eat = terminal so no nesting
-				list.add(lBeg +tabStr+"Eat");
+				list.add(lBeg +" "+tabStr+"Eat");
 			}else if(type==1){ //turn left  = terminal so no nesting
-				list.add(lBeg +tabStr+"TurnLeft");
+				list.add(lBeg +" "+tabStr+"TurnLeft");
 			}else if(type==2){ //move = terminal so no nesting
-				list.add(lBeg +tabStr+"Move");
+				list.add(lBeg +" "+tabStr+"Move");
 			}else if(type==3){ //if
-				list.add(lBeg +tabStr+"If "+block.getCond());
+				list.add(lBeg +" "+tabStr+"If "+block.getCond());
 				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
+				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					printNotDoneBlock(tempTab,block.getNestedBlocks(),list);
 				}
 				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
+					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==4){ //else if
-				list.add(lBeg +tabStr+"ElseIf "+block.getCond());
+				list.add(lBeg +" "+tabStr+"ElseIf "+block.getCond());
 				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
+				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					printNotDoneBlock(tempTab,block.getNestedBlocks(),list);
 				}
 				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
+					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==5){//else
-				list.add(lBeg +tabStr+"Else ");
+				list.add(lBeg +" "+tabStr+"Else ");
 				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
+				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					printNotDoneBlock(tempTab,block.getNestedBlocks(),list);
 				}
 				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
+					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==6){//while
-				list.add(lBeg +tabStr+"While "+block.getCond());
+				list.add(lBeg +" "+tabStr+"While "+block.getCond());
 				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
+				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					printNotDoneBlock(tempTab,block.getNestedBlocks(),list);
 				}
 				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");;
+					list.add(block.getlineEnd()+" "+tabStr+"end");;
 				}
 			}else if(type==7){//repeat
-				list.add(lBeg +tabStr+"Repeat "+block.getRepeat());
+				list.add(lBeg +" "+tabStr+"Repeat "+block.getRepeat());
 				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
+				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					printNotDoneBlock(tempTab,block.getNestedBlocks(),list);
 				}
 				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
+					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
 				Function f = this.functions.get(block.getFunctionNum());
-				list.add(lBeg +tabStr+f.getName());
+				list.add(lBeg +" "+tabStr+f.getName());
 			}	
 			tabStr="";
 			for(int j =0; j<tab; j++){//reset the tabs
@@ -213,69 +213,69 @@ public class Controller {
 			//list.add(Integer.toString(block.getlineBegin()));
 			type = block.getType();
 			if(type==0){ //eat = terminal so no nesting
-				list.add(lBeg+tabStr+"Eat");
+				list.add(lBeg+" "+tabStr+"Eat");
 			}else if(type==1){ //turn left  = terminal so no nesting
-				list.add(lBeg+tabStr+"TurnLeft");
+				list.add(lBeg+" "+tabStr+"TurnLeft");
 			}else if(type==2){ //move = terminal so no nesting
-				list.add(lBeg+tabStr+"Move");
+				list.add(lBeg+" "+tabStr+"Move");
 			}else if(type==3){ //if
-				list.add(lBeg+tabStr+"If "+block.getCond());
+				list.add(lBeg+" "+tabStr+"If "+block.getCond());
 				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
+				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					getJList(tempTab,block.getNestedBlocks(),list);
 				}
 				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
+					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==4){ //else if
-				list.add(lBeg+tabStr+"ElseIf "+block.getCond());
+				list.add(lBeg+" "+tabStr+"ElseIf "+block.getCond());
 				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
+				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					getJList(tempTab,block.getNestedBlocks(),list);
 				}
 				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
+					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==5){//else
-				list.add(lBeg+tabStr+"Else ");
+				list.add(lBeg+" "+tabStr+"Else ");
 				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
+				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					getJList(tempTab,block.getNestedBlocks(),list);
 				}
 				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
+					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==6){//while
-				list.add(lBeg+tabStr+"While "+block.getCond());
+				list.add(lBeg+" "+tabStr+"While "+block.getCond());
 				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
+				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					getJList(tempTab,block.getNestedBlocks(),list);
 				}
 				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");;
+					list.add(block.getlineEnd()+" "+tabStr+"end");;
 				}
 			}else if(type==7){//repeat
-				list.add(lBeg+tabStr+"Repeat "+block.getRepeat());
+				list.add(lBeg+" "+tabStr+"Repeat "+block.getRepeat());
 				tabStr+='\t';
-				list.add(block.getlineBegin()+1+tabStr+"begin");
+				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
 					getJList(tempTab,block.getNestedBlocks(),list);
 				}
 				if(block.getlineEnd()!=-1){
-					list.add(block.getlineEnd()+tabStr+"end");
+					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
 				Function f = this.functions.get(block.getFunctionNum());
-				list.add(lBeg+tabStr+f.getName());
+				list.add(lBeg+" "+tabStr+f.getName());
 			}	
 			tabStr="";
 			for(int j =0; j<tab; j++){//reset the tabs
