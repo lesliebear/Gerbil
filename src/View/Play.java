@@ -37,7 +37,6 @@ import Model.Block;
  * This class creates a GUI for the Play screen.
  */
 public class Play extends Screen{
-
 	static DefaultListModel model;
 
 	private static JFrame frame;
@@ -820,14 +819,42 @@ public class Play extends Screen{
 	} */
 
 
-	public static void disableAllPlayDDButChecks(){
+	public void initialPlayScreen(){//only insert, save, menu should be active
+		playB.setEnabled(false);
+		stopB.setEnabled(false);
+		editB.setEnabled(false);
+		deleteB.setEnabled(false);
+		clearAllB.setEnabled(false);
+		createFunctionB.setEnabled(false);
+		
+		conditionalsDD.setEnabled(false);
+		givenFunctionsDD.setEnabled(false);
+		userFunctionsDD.setEnabled(false);
+		checksDD.setEnabled(false);
+		numsDD.setEnabled(false);
+	}
+	
+	public void enableAllButtons(){
+		menuB.setEnabled(true);
+		playB.setEnabled(true);
+		stopB.setEnabled(true);
+		insertB.setEnabled(true);
+		editB.setEnabled(true);
+		deleteB.setEnabled(true);
+		clearAllB.setEnabled(true);
+		saveB.setEnabled(true);
+		createFunctionB.setEnabled(true);
+		deleteFunctionB.setEnabled(true);
+	}
+	
+	public  void disableAllPlayDDButChecks(){
 		conditionalsDD.setEnabled(false);
 		givenFunctionsDD.setEnabled(false);
 		userFunctionsDD.setEnabled(false);
 		numsDD.setEnabled(false);
 	}
 
-	public static void enableAllPlayDD(){
+	public  void enableAllPlayDD(){
 		conditionalsDD.setEnabled(true);
 		givenFunctionsDD.setEnabled(true);
 		userFunctionsDD.setEnabled(true);
@@ -835,7 +862,7 @@ public class Play extends Screen{
 		numsDD.setEnabled(true);
 	}
 
-	public static void disableAllPlayDD(){
+	public  void disableAllPlayDD(){
 		conditionalsDD.setEnabled(false);
 		givenFunctionsDD.setEnabled(false);
 		userFunctionsDD.setEnabled(false);
@@ -843,20 +870,20 @@ public class Play extends Screen{
 		numsDD.setEnabled(false);
 	}
 
-	public static void enableCreateFunction(){
+	public  void enableCreateFunction(){
 		createFunctionB.setEnabled(true);
 	}
 
-	public static void disableCreateFunction(){
+	public  void disableCreateFunction(){
 		createFunctionB.setEnabled(false);
 	}
 
 
-	public static void enableDeleteFunction(){
+	public  void enableDeleteFunction(){
 		deleteFunctionB.setEnabled(true);
 	}
 	
-	public static void disableDeleteFunction(){
+	public  void disableDeleteFunction(){
 		deleteFunctionB.setEnabled(false);
 	}
 	
@@ -873,8 +900,8 @@ public class Play extends Screen{
 		
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
 	} */
-
-	public static void setPlaySelected(){
+	
+	public  void setPlaySelected(){
 		stopB.setBackground(Color.black);
 		insertB.setBackground(Color.black);
 		editB.setBackground(Color.black);
@@ -886,7 +913,7 @@ public class Play extends Screen{
 		playB.setBackground(Color.yellow);
 	}
 
-	public static void setStopSelected(){
+	public  void setStopSelected(){
 		playB.setBackground(Color.black);
 		insertB.setBackground(Color.black);
 		editB.setBackground(Color.black);
@@ -897,7 +924,7 @@ public class Play extends Screen{
 		stopB.setBackground(Color.yellow);
 	}
 
-	public static void setInsertSelected(){
+	public  void setInsertSelected(){
 		playB.setBackground(Color.black);
 		stopB.setBackground(Color.black);
 		editB.setBackground(Color.black);
@@ -909,7 +936,7 @@ public class Play extends Screen{
 		insertB.setBackground(Color.yellow);
 	}
 
-	public static void setEditSelected(){
+	public  void setEditSelected(){
 		playB.setBackground(Color.black);
 		stopB.setBackground(Color.black);
 		insertB.setBackground(Color.black);
@@ -921,7 +948,7 @@ public class Play extends Screen{
 	}
 
 
-	public static void setDeleteSelected(){
+	public  void setDeleteSelected(){
 		playB.setBackground(Color.black);
 		stopB.setBackground(Color.black);
 		editB.setBackground(Color.black);
@@ -933,7 +960,7 @@ public class Play extends Screen{
 		deleteB.setBackground(Color.yellow);
 	}
 
-	public static void setClearAllSelected(){
+	public  void setClearAllSelected(){
 		playB.setBackground(Color.black);
 		stopB.setBackground(Color.black);
 		editB.setBackground(Color.black);
@@ -944,7 +971,7 @@ public class Play extends Screen{
 		clearAllB.setBackground(Color.yellow);
 	}
 
-	public static void setSaveSelected(){
+	public  void setSaveSelected(){
 		playB.setBackground(Color.black);
 		stopB.setBackground(Color.black);
 		editB.setBackground(Color.black);
@@ -956,7 +983,23 @@ public class Play extends Screen{
 		saveB.setBackground(Color.yellow);
 	}
 	
-	public static void clearAll(){
+	public void setSaveUnselected(){
+		saveB.setBackground(Color.black);
+	}
+	
+	public void resetAllHighlighting(){
+		menuB.setBackground(Color.black);
+		playB.setBackground(Color.black);
+		stopB.setBackground(Color.black);
+		editB.setBackground(Color.black);
+		deleteB.setBackground(Color.black);
+		clearAllB.setBackground(Color.black);
+		insertB.setBackground(Color.black);
+
+		saveB.setBackground(Color.yellow);
+	}
+	
+	public  void clearAll(){
 		//Start.StartGerbil.controller.gamePlaying.instructions.clear();
 		//Start.StartGerbil.controller.gamePlaying.instructions.add(new Block(" ", false, false,1));
 

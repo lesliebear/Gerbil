@@ -25,16 +25,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
  
 /**
- * 
  * This screen creates a GUI for the Conditional Screen. 
  */
 
-////eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), function(8),
 public class Conditionals {
 	public static Conditionals conditionalsScreen;
 
 	/**Type of conditional frame**/
-	static String type;
+	static String type= "";
 	int currentLineNumber;
 	public static Conditionals conditionals;
 	
@@ -47,7 +45,6 @@ public class Conditionals {
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
 	JLabel userDefinedL = new JLabel("User Defined Functions");
 	
-
 	JButton ifB;
 	JButton elseB;
 	JButton elseifB;
@@ -67,6 +64,9 @@ public class Conditionals {
 	JLabel whileL = new JLabel("While :");
 	JLabel bodyL = new JLabel("Body :");
 	 
+	JLabel beginL = new JLabel("Begin");
+	JLabel endL = new JLabel("End");
+	
 	JButton okB;
 	JButton cancelB; 
 	
@@ -322,7 +322,6 @@ public class Conditionals {
 		}; 
 	}
 	
-	
 	public void setRightComponents(){
 		rightPanel.setLayout(new GridBagLayout());
 		rightPanel.setOpaque(true);
@@ -347,52 +346,28 @@ public class Conditionals {
 		//gc.anchor = GridBagConstraints.WEST;
 		
 		gc.gridx = 0;
-		gc.gridy = 1; 
-		rightPanel.add(conditionalsL, gc);
-		
-		gc.gridx = 0;
-		gc.gridy = 2;
-		rightPanel.add(ifB, gc);
-		
-		gc.gridx = 0;
-		gc.gridy = 3;
-		rightPanel.add(elseB, gc);
-		
-		gc.gridx = 0;
-		gc.gridy = 4;
-		rightPanel.add(elseifB, gc);
-		
-		gc.gridx = 0;
-		gc.gridy = 5;
-		rightPanel.add(whileB, gc);
-		
-		gc.gridx = 0;
-		gc.gridy = 6;
-		rightPanel.add(repeatB, gc);
-		
-		gc.gridx = 0;
-		gc.gridy = 7;
+		gc.gridy = 1;
 		rightPanel.add(givenFunctionsL, gc);
 		
 		gc.gridx = 0;
-		gc.gridy = 8;
+		gc.gridy = 2;
 		rightPanel.add(moveForwardB, gc);
 		
 		gc.gridx = 0;
-		gc.gridy = 9;
+		gc.gridy = 3;
 		rightPanel.add(turnLeftB, gc);
 		
 		gc.gridx = 0;
-		gc.gridy = 10;
+		gc.gridy = 4;
 		rightPanel.add(eatB, gc);
 		
 		gc.gridx = 0;
-		gc.gridy = 11;
+		gc.gridy = 5;
 		rightPanel.add(userDefinedL, gc);
 		
 		gc.fill = GridBagConstraints.HORIZONTAL;
 		gc.gridx = 0;
-		gc.gridy = 12;
+		gc.gridy = 6;
 		rightPanel.add(userDefinedFunctions, gc); //placeholder */
 	}
 	
@@ -442,10 +417,6 @@ public class Conditionals {
 		}else if(type.equals("Repeat")){
 			repeatL.setFont(new Font("Serif", Font.BOLD, 35));
 			leftPanel.add(repeatL, gc);
-		
-			gc.gridx = 0; 
-			gc.gridy=1;  
-			leftPanel.add(repeatNumTimes, gc);
 		}
 		
 		gc.insets = new Insets(10,0,0,20);
