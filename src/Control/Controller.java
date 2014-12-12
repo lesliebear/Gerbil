@@ -72,10 +72,10 @@ public class Controller {
 			tempPar = p;
 		}//get to main nesting level
 		if(tempPar==null){
-			return (String[]) ins.toArray();
+			return ins.toArray(new String[ins.size()]);
 		}else{
 			printNotDoneBlock(0,tempPar.getNestedBlocks(), ins);
-			return (String[]) ins.toArray();
+			return ins.toArray(new String[ins.size()]);
 		}
 	}
 
@@ -2003,6 +2003,12 @@ public class Controller {
 		this.tempFunctionBlockInstructions= new HashMap<Integer,Block>();//reset to empty
 		addFunction(newfunction); //add to this.functions list
 		return 0;
+	}
+	/**
+	 * Deletes the tempFunctionBlockInstructions
+	 */
+	public void clearTempFunctionBlockInstructions(){
+		this.tempFunctionBlockInstructions= new HashMap<Integer,Block>();
 	}
 
 	/**
