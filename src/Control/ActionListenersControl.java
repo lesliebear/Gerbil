@@ -612,18 +612,15 @@ public class ActionListenersControl {
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(inserting==true){
-					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
+					int lineS = Play.playcodeList.getSelectedIndex();
+					Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
+					if(bTemp==null){
+						selectedIndexPlayCodeList = 0;
+					}
+					else{
+						selectedIndexPlayCodeList = bTemp.getlineBegin();
+					}
 					String newType = Play.conditionalsDD.getSelectedItem().toString();
-					/*
-					 * 0 is good
-					 * 1 is ///////////////////ERROR: Number of repetitions was not selected!//////////////
-					 * 2 is ///////////ERROR: Function not selected////////////////////////////
-					 * 3 is ///////////////ERROR: Illegal funciton entered!!!!!/////////////
-					 * 4 is //////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
-					 * 5 is ////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
-					 * */
-					//if(3),elseif(4),else(5),while(6),repeat(7), 
-					//String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
 					if(newType.equals("If")){
 						Start.StartGerbil.controller.createBlocks(3,selectedIndexPlayCodeList, 0, null);
 
