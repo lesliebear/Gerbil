@@ -43,17 +43,17 @@ public class ActionListenersControl {
 	boolean editing;
 	boolean stop;
 	boolean play;
-	
+
 	boolean deleteCurrGame;
-	
+
 	static int parentScreen;
 	String backT="     ";
-	
+
 	public ActionListenersControl(){
 		//Set up GAME - idk...need so screen models aren't null...
 		Start.StartGerbil.controller.setCurrentGame(new Game("setUpGame")); // DO NOT remove. kthx.
 		initGrid();
-		
+
 		newGame = new NewGame();
 		deleteFunction = new DeleteFunction();
 		errorDialog = new ErrorDialog();
@@ -61,14 +61,14 @@ public class ActionListenersControl {
 		instructionsScreen = new Instructions();
 		main = new Main(); 
 		conditionals = new Conditionals(" ");
-		
+
 		playOptions = new PlayOptions();
 		savedGames = new SavedGames();
-		
+
 		userFunction = new UserFunction();
 		playScreen = new Play();
 		playScreen.initialPlayScreen();
-		
+
 		inserting = false;
 		deleting = false;
 		editing = false;
@@ -76,7 +76,7 @@ public class ActionListenersControl {
 		initEventHandlers();
 		main.show();
 	}
-	
+
 	private void initGrid() {
 		Play.setNewGrid(Start.StartGerbil.controller.gamePlaying.getGrid().getGridRepresentation());
 		Play.setGerbilLocation(Start.StartGerbil.controller.gamePlaying.getGerbil().getY(), Start.StartGerbil.controller.gamePlaying.getGerbil().getX());
@@ -130,7 +130,7 @@ public class ActionListenersControl {
 	 * SavedGame 6
 	 * UserFunction 7
 	 */
-	
+
 	/**
 	 * Add event handlers for the PlayOptions screen
 	 */
@@ -139,25 +139,25 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				parentScreen =5;
 				playOptions.hide();
-				
+
 				savedGames.show(); 
 			}	
 		});
-		
+
 		playOptions.addNewGameEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
+
 				parentScreen = 5;
 				playOptions.hide();
-				
+
 				newGame.show();
 			}	
 		});
-		
+
 		playOptions.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				playOptions.hide();
-				
+
 				showParent();
 				parentScreen = 5;
 			}
@@ -173,17 +173,17 @@ public class ActionListenersControl {
 			}		
 		});
 	}
-	
+
 	private void addNewGameEventHandlers() {
 		newGame.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String text = newGame.textF.getText(); 
-	
+
 				parentScreen = 3;
-				
+
 				if(!text.isEmpty()){
 					newGame.textF.setText(""); //must reset the text line
-					
+
 					if(Start.StartGerbil.backend.gameExists(text)){
 						errorDialog.errorL.setText("Please enter a Game name that doesn't already exist.");
 						newGame.hide();
@@ -192,10 +192,10 @@ public class ActionListenersControl {
 						Game g = new Game(text);
 						Start.StartGerbil.backend.addGame(g);
 						Start.StartGerbil.controller.setCurrentGame(g);
-						
+
 						initGrid();
 						Play.refreshGrid();
-						
+
 						newGame.hide();
 						playScreen.show();
 					}
@@ -206,7 +206,7 @@ public class ActionListenersControl {
 				}
 			}		
 		});
-		
+
 		newGame.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				newGame.textF.setText("");
@@ -215,7 +215,7 @@ public class ActionListenersControl {
 			}		
 		});
 	}
-	
+
 	private void addErrorDialogEventHandlers() {
 		errorDialog.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -224,8 +224,8 @@ public class ActionListenersControl {
 			}		
 		});
 	}
-	
-	
+
+
 	private void addUserFunctionEventHandlers(){
 		userFunction.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -233,7 +233,7 @@ public class ActionListenersControl {
 				showParent();
 			}		
 		});
-		
+
 		userFunction.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				errorDialog.hide();
@@ -241,7 +241,7 @@ public class ActionListenersControl {
 			}		
 		});
 	}
-	
+
 
 	/**
 	 * Add event handlers for the Play screen
@@ -255,11 +255,11 @@ public class ActionListenersControl {
 	 */
 	private void addPlayEventHandlers() {
 		/**Button Listeners**/
-		
+
 		playScreen.addMenuEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				parentScreen = 4; 
-				
+
 				playOptions.show();
 				playScreen.hide();
 			}	
@@ -316,7 +316,7 @@ public class ActionListenersControl {
 
 		playScreen.addStopEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				playScreen.setStopSelected();
 			}	
 		});
@@ -333,7 +333,7 @@ public class ActionListenersControl {
 		playScreen.addEditEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				editing = true;
-				
+
 				playScreen.setEditSelected();
 			}	
 		});
@@ -341,7 +341,7 @@ public class ActionListenersControl {
 		playScreen.addDeleteEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				deleting = true;
-				
+
 				playScreen.setDeleteSelected();
 			}
 		});
@@ -349,7 +349,7 @@ public class ActionListenersControl {
 		playScreen.addClearAllEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				playScreen.clearAll();
-				
+
 				playScreen.setClearAllSelected();
 			}	
 		});
@@ -376,7 +376,7 @@ public class ActionListenersControl {
 				}catch(Exception e){
 					System.out.println("Unable to save game.");
 				}
-				
+
 				playScreen.setSaveSelected();
 				playScreen.setSaveUnselected();
 			}	
@@ -386,41 +386,45 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedCreateFunctionFirst=true;
 				parentScreen = 4; 
-				
-			//First, create BLOCKS(instructions) that goes in the function
+
+				//First, create BLOCKS(instructions) that goes in the function
 				int type; //get block type
 				int begin; //get line begin
 				int numLines; //get number of lines
 				String cond; //get cond
-				
+
 				//Start.StartGerbil.controller.createFunctionBlocks(type, begin, numLines, cond);
-				
-				
+
+
 				userFunction.show();
 				playScreen.hide();
-				
+
 			}	
 		});
 
 		/**JComboBoxes**/
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
-				String newType = Play.conditionalsDD.getSelectedItem().toString();
-				//if(3),elseif(4),else(5),while(6),repeat(7), 
-				//String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
-				if(newType.equals("If")){
-					Start.StartGerbil.controller.createBlocks(3,selectedIndexPlayCodeList, 0, null);
-				}else if(newType.equals("Else")){
-					Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
-				}else if(newType.equals("Else if")){
-					Start.StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
-				}else if(newType.equals("While")){
-					Start.StartGerbil.controller.createBlocks(6,selectedIndexPlayCodeList, 0, null);
-				}else {//if(newType.equals("Repeat")){
-					Start.StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
+				if(inserting==true){
+					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
+					String newType = Play.conditionalsDD.getSelectedItem().toString();
+					//if(3),elseif(4),else(5),while(6),repeat(7), 
+					//String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
+					if(newType.equals("If")){
+						Start.StartGerbil.controller.createBlocks(3,selectedIndexPlayCodeList, 0, null);
+					}else if(newType.equals("Else")){
+						Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
+					}else if(newType.equals("Else if")){
+						Start.StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
+					}else if(newType.equals("While")){
+						Start.StartGerbil.controller.createBlocks(6,selectedIndexPlayCodeList, 0, null);
+					}else {//if(newType.equals("Repeat")){
+						Start.StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
+					}
+				}else{
+					
 				}
-				
+
 			}	
 		});
 
@@ -453,17 +457,19 @@ public class ActionListenersControl {
 
 			}	
 		});
-		
-		
+
+
 		playScreen.addCodeListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				// TODO Auto-generated method stub
-				
+				if(deleting == true){
+					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
+					Start.StartGerbil.controller.deleteBlock(selectedIndexPlayCodeList);
+				}
 			}	
 		});
 	}
-	
+
 	/**
 	 * DeleteFunction 1
 	 * Main 2
@@ -473,7 +479,7 @@ public class ActionListenersControl {
 	 * SavedGame 6
 	 * UserFunction 7
 	 */
-	
+
 	private static void showParent(){ 
 		switch(parentScreen){
 		case 1:
