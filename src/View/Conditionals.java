@@ -12,6 +12,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.RenderingHints;
+import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
@@ -27,14 +28,10 @@ import javax.swing.JScrollPane;
 /**
  * This screen creates a GUI for the Conditional Screen. 
  */
-
 public class Conditionals {
-	public static Conditionals conditionalsScreen;
-
 	/**Type of conditional frame**/
-	static String type= "";
+	public static String type= "";
 	int currentLineNumber;
-	public static Conditionals conditionals;
 	
 	/**LHS and RHS panels**/
 	static JPanel leftPanel = new JPanel(); 
@@ -103,113 +100,6 @@ public class Conditionals {
 	
 	void createButtons(){
 		/**Right side panel**/
-		ifB= new JButton("If"){
-			public void paint(Graphics g) {
-				ifB.setFont(new Font("Serif", Font.PLAIN, 18)); 
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-		
-		elseB= new JButton("Else"){
-			public void paint(Graphics g) {
-				elseB.setFont(new Font("Serif", Font.PLAIN, 18)); 
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-		elseifB= new JButton("Else if"){
-			public void paint(Graphics g) {
-				elseifB.setFont(new Font("Serif", Font.PLAIN, 18)); 
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-		whileB = new JButton("While"){
-			public void paint(Graphics g) {
-				whileB.setFont(new Font("Serif", Font.PLAIN, 18)); 
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-		repeatB= new JButton("Repeat"){
-			public void paint(Graphics g) {
-				repeatB.setFont(new Font("Serif", Font.PLAIN, 18)); 
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
-
 		moveForwardB= new JButton("Move Forward"){
 			public void paint(Graphics g) {
 				moveForwardB.setFont(new Font("Serif", Font.PLAIN, 18)); 
@@ -384,8 +274,7 @@ public class Conditionals {
 		bodyL.setFont(new Font("Serif", Font.BOLD, 20));
 		
 		// EDIT: this should be called from somewhere else...
-		String placeholder[] = { "Begin",
-		        "End",  "INSERT NEW" };
+		String placeholder[] = {" " };
 		
 		conditionalscodeList = new JList(placeholder);
 		scrollpane = new JScrollPane(conditionalscodeList);
@@ -467,8 +356,8 @@ public class Conditionals {
 	 * Creates the screen by putting the GUI components together.
 	 */
 	protected static void createAndShowGUI() { 
-		conditionals = new Conditionals("Repeat");
-		JFrame frame = new JFrame("If");
+		//conditionals = new Conditionals("Repeat");
+		frame = new JFrame(type);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.setLayout(new GridBagLayout());
@@ -496,5 +385,18 @@ public class Conditionals {
 	
 	public JComponent getRightComponent(){
 		return rightPanel;
+	}
+	
+	
+	public void show() {
+		frame.setVisible(true);
+	}
+	
+	public void addCancelEventHandler(ActionListener listener) {
+		cancelB.addActionListener(listener);
+	}
+	
+	public void addOkEventHandler(ActionListener listener) {
+		okB.addActionListener(listener);
 	}
 }

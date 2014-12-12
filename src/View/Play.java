@@ -743,9 +743,9 @@ public class Play extends Screen{
 	}
 
 	/**Code List**/
-	//public void addCodeListSelectionListener(ActionListener listener) {
-	//codeList.addListSelectionListener(listener);
-	//}
+	public void addCodeListSelectionListener(ListSelectionListener listener) {
+		playcodeList.addListSelectionListener(listener);
+	}
 
 	/**JComboBoxes**/
 	public void addConditionalsListSelectionListener(ActionListener listener) {
@@ -761,6 +761,7 @@ public class Play extends Screen{
 		userFunctionsDD.addActionListener(listener);
 
 	}
+	
 	/*
 	public static boolean beforeIsConditional(){
 		if(Start.StartGerbil.control.instructions.get(Play.playcodeList.getSelectedIndex()) == "If"){
