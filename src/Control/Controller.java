@@ -1436,22 +1436,23 @@ public class Controller {
 	 * @return Block at that line Number in the main
 	 */
 	public Block getBlockByLine(int line){
-		Block ans;
 		for(int k: this.gamePlaying.getBlocks().keySet()){
 			Block temp = this.gamePlaying.getBlocks().get(k);
 			if(line>=temp.getlineBegin()&& line <=temp.getlineEnd()){
-				ans = temp.getNestedBlocks().get(line);
-				if(ans == null){
-					return temp;
-				}else{
-					return ans;
+				for(int z: temp.getNestedBlocks().keySet()){
+					Block b = temp.getNestedBlocks().get(z);
+					if(line>=b.getlineBegin() && line <=b.getlineEnd()){
+						return b;
+					}
 				}
+				return temp;
 			}
 		}
 		return null;
 	}
 	
 	public void deleteBlock(Block toDel) {
+		
 		if(toDel.getParent()==null){ //in main nesting 
 			int currDiff = toDel.getlineEnd()-toDel.getlineBegin()+1;
 			this.gamePlaying.getBlocks().remove(toDel.getlineBegin());
