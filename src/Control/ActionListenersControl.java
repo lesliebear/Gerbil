@@ -98,6 +98,7 @@ public class ActionListenersControl {
 		addPlayEventHandlers();
 		addUserFunctionEventHandlers();
 		addOkYesDialogEventHandlers();
+		addSavedGamesEventHandlers();
 	}
 
 	/**
@@ -193,6 +194,35 @@ public class ActionListenersControl {
 				}
 				
 				main.show();
+			}		
+		});
+	}
+	
+	
+	private void addSavedGamesEventHandlers(){
+		
+		savedGames.addGameListSelectionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}		
+		});
+		
+		savedGames.addOpenGameEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//Start.StartGerbil.controller.loadGame(gameName);
+				
+			}		
+		});
+
+		savedGames.addDeleteGameEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}		
+		});
+		
+		savedGames.addCancelEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
 			}		
 		});
 	}
