@@ -2,7 +2,6 @@ package Control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -15,6 +14,7 @@ import View.Finish;
 import View.Instructions;
 import View.Main;
 import View.NewGame;
+import View.OkYesDialog;
 import View.Play;
 import View.PlayOptions;
 import View.SavedGames;
@@ -32,6 +32,7 @@ public class ActionListenersControl {
 	static SavedGames savedGames;
 	static UserFunction userFunction;
 	static Conditionals conditionals;
+	static OkYesDialog okNoDialog;
 
 	int selectedIndexPlayScreen; /*Code list in Play Screen*/
 	static int selectedIndexPlayCodeList;
@@ -94,6 +95,7 @@ public class ActionListenersControl {
 		addErrorDialogEventHandlers();
 		addPlayEventHandlers();
 		addUserFunctionEventHandlers();
+		addOkYesDialogEventHandlers();
 	}
 
 	/**
@@ -165,11 +167,24 @@ public class ActionListenersControl {
 	}
 
 	private void addInstructionsEventHandlers() {
-
 		instructionsScreen.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				instructionsScreen.hide();
 				main.show();
+			}		
+		});
+	}
+	
+	private void addOkYesDialogEventHandlers(){
+		okNoDialog.addBackEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+		
+			}		
+		});
+		
+		okNoDialog.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
 			}		
 		});
 	}

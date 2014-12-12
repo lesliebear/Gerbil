@@ -44,11 +44,7 @@ public class Conditionals {
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
 	JLabel userDefinedL = new JLabel("User Defined Functions");
 
-	JButton ifB;
-	JButton elseB;
-	JButton elseifB;
-	JButton whileB;
-	JButton repeatB;
+	String cond=null;
 
 	JButton moveForwardB;
 	JButton turnLeftB;
@@ -61,6 +57,7 @@ public class Conditionals {
 	private DefaultListModel<String> instructions;
 	
 	static DefaultComboBoxModel model = new DefaultComboBoxModel();  
+	static DefaultListModel listModel = new DefaultListModel();
 
 	JComboBox userDefinedFunctions; /*get from control*/ 
 
@@ -276,7 +273,18 @@ public class Conditionals {
 
 		// EDIT: this should be called from somewhere else...
 		String placeholder[] = {"  "};
+		
+		listModel=new DefaultListModel();
+		
+		//Controler.gamePlaying.getBlocks
+		String [] temp = Start.StartGerbil.controller.getUnFinIns();
+		for(int i=0; i< temp.length;i++){
+			String test = temp[i];
+			listModel.addElement(test);
+		}
 
+		conditionalscodeList = new JList(listModel);
+		
 		conditionalscodeList = new JList(placeholder);
 		startLineNumber=0;
 		scrollpane = new JScrollPane(conditionalscodeList);
@@ -372,6 +380,8 @@ public class Conditionals {
 	}
 	//"If", "Else", "Else if", "While", "Repeat"
 	public void setText(String type){
+		refreshConditionalsJList(); // refresh the JList
+		
 		if(type == "If"){
 			label.setText("If");
 			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
@@ -407,10 +417,16 @@ public class Conditionals {
 		}
 	}
 
-
+	public void refreshConditionalsJList(){ 
+		listModel.clear();
+	}
+	
+	public String getCond(){
+		return conditionalDD.getSelectedItem().toString();
+	}
+	
 	/**
 	 * Shows the screen.
-	 * 
 	 */
 	public void show() {
 		frame.setVisible(true);
@@ -434,6 +450,14 @@ public class Conditionals {
 
 	public void resetLineNumber() {
 		startLineNumber = 0;
+	}
+	
+	public void setBegin(int num){
+		startLineNumber = num;
+	}
+	
+	public void getBegin(){
+		startLineNumber;
 	}
 
 	public int getEndLineNumber() {
