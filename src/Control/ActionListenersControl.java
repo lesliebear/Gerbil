@@ -707,7 +707,7 @@ public class ActionListenersControl {
 				int lineSelect  = conditionals.getSelectedLineNumber();
 				Start.StartGerbil.controller.createBlocks(2,lineSelect,1, null);
 				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
-				conditionals.refreshConditionalsJList();
+				conditionals.updateInstructionsList(Start.StartGerbil.controller.getUnFinIns());
 			}	
 		});
 		
@@ -716,8 +716,7 @@ public class ActionListenersControl {
 				int lineSelect  = conditionals.getSelectedLineNumber();
 				Start.StartGerbil.controller.createBlocks(0,lineSelect,1, null);
 				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
-				conditionals.refreshConditionalsJList();
-				
+				conditionals.updateInstructionsList(Start.StartGerbil.controller.getUnFinIns());
 			}	
 		});
 		
@@ -726,7 +725,7 @@ public class ActionListenersControl {
 				int lineSelect  = conditionals.getSelectedLineNumber();
 				Start.StartGerbil.controller.createBlocks(1,lineSelect,1, null);
 				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
-				conditionals.refreshConditionalsJList();
+				conditionals.updateInstructionsList(Start.StartGerbil.controller.getUnFinIns());
 			}	
 		});
 	}
