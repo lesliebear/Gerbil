@@ -572,7 +572,10 @@ public class ActionListenersControl {
 
 		playScreen.addUserFunctionsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				String funcName = (String) playScreen.userFunctionsDD.getSelectedItem();
+				Start.StartGerbil.controller.createBlocks(8,Play.playcodeList.getSelectedIndex(),1, null);
+				Start.StartGerbil.controller.createBlocks('e',Play.playcodeList.getSelectedIndex(),1,funcName);
+				playScreen.refreshCodeList();
 			}	
 		});
 
