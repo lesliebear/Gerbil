@@ -82,8 +82,8 @@ public class Controller {
 	public void printNotDoneBlock(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
 		int type;
 		String tabStr="";
-		for(int i =0; i<tab; i++){
-			tabStr+='\t';
+		for(int i =0; i<tab*5; i++){
+			tabStr+=" ";
 		} 
 		ArrayList<Integer> kList = new ArrayList<Integer>();
 		for(Integer z: blocks.keySet()){
@@ -161,8 +161,8 @@ public class Controller {
 				list.add(lBeg +" "+tabStr+f.getName());
 			}	
 			tabStr="";
-			for(int j =0; j<tab; j++){//reset the tabs
-				tabStr+='\t';
+			for(int j =0; j<tab*5; j++){//reset the tabs
+				tabStr+=" ";
 			}
 		}
 	}
@@ -199,8 +199,8 @@ public class Controller {
 	public int getJList(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
 		int type;
 		String tabStr="";
-		for(int i =0; i<tab; i++){
-			tabStr+='\t';
+		for(int i =0; i<tab*5; i++){
+			tabStr+=" ";
 		} 
 		ArrayList<Integer> kList = new ArrayList<Integer>();
 		for(Integer z: blocks.keySet()){
@@ -278,8 +278,8 @@ public class Controller {
 				list.add(lBeg+" "+tabStr+f.getName());
 			}	
 			tabStr="";
-			for(int j =0; j<tab; j++){//reset the tabs
-				tabStr+='\t';
+			for(int j =0; j<tab*5; j++){//reset the tabs
+				tabStr+=" ";
 			}
 		}
 		return 0;
