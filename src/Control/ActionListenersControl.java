@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import Model.Block;
 import Model.Game;
 import View.Conditionals;
 import View.DeleteFunction;
@@ -743,10 +744,11 @@ public class ActionListenersControl {
 			public void valueChanged(ListSelectionEvent e) {
 				if(deleting == true){
 					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
-					int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
-					playScreen.setMultipleSelectionMode();
-					Play.playcodeList.setSelectedIndices(highLight);
-					Start.StartGerbil.controller.deleteBlock(selectedIndexPlayCodeList);
+					Block blockToDel= Start.StartGerbil.controller.getBlockByLine(selectedIndexPlayCodeList);
+					//int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
+					//playScreen.setMultipleSelectionMode();
+					//Play.playcodeList.setSelectedIndices(highLight);
+					Start.StartGerbil.controller.deleteBlock(blockToDel);
 					Play.refreshCodeList(); // refreshes the code list in Play screen
 				}else if(inserting==true){
 					playScreen.setSingleSelectionMode();
