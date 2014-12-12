@@ -236,8 +236,18 @@ public class ActionListenersControl {
 
 		userFunction.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				errorDialog.hide();
-				showParent();
+				String functionName = userFunction.getFunctionName();
+				
+				if(!functionName.equals("")) {
+					
+					/* Do something here with function name*/
+					errorDialog.hide();
+					showParent();
+				}
+				else {
+					/* show the error that function name isn't inputted yet */
+				}
+			
 			}		
 		});
 	}
@@ -464,7 +474,8 @@ public class ActionListenersControl {
 			}	
 		});
 	}
-
+	
+	
 	/**
 	 * DeleteFunction 1
 	 * Main 2

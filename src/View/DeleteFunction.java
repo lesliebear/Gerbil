@@ -211,6 +211,10 @@ public class DeleteFunction extends Screen{
 		}
 	}
 	
+	public String getSelectedFunction() {
+		return (String)functionsList.getSelectedItem();
+	}
+	
 	public void addDeleteEventHandler(ActionListener listener) {
 		
 		delete.addActionListener(listener);
