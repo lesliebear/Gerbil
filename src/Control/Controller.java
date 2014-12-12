@@ -16,9 +16,6 @@ import Model.*;
  *  by the Backend.
  */
 public class Controller {
-
-	/**Holds the current user */
-	User userPlaying;
 	/**Holds the current game being played */
 	public Game gamePlaying;
 	/**Holds the list of built in functions = eat move, turn left
@@ -624,7 +621,7 @@ public class Controller {
 	 * @return newly created and instantiated Game object
 	 */
 	public void createGame(String name){
-		gamePlaying = new Game(name);
+		this.gamePlaying = new Game(name);
 	}
 
 	/**
@@ -645,7 +642,7 @@ public class Controller {
 
 			}
 		}
-		ArrayList<Game> gamelist= userPlaying.getGameList();
+		ArrayList<Game> gamelist= backend.getGameList();
 		for(int j=0; j<gamelist.size();j++){
 			if(gamelist.get(j).getName().equals(name)){
 				return 2;
@@ -2210,7 +2207,13 @@ public class Controller {
 
 		for(int i=0; i<functions.size();i++){
 			gamePlaying.getfunction().add(functions.get(i));
-		}  
+		}
+		for(int j=0; j<backend.getGameList().size(); j++){
+			if(backend.getGameList().get(j).getName().equals(this.gamePlaying.getName())){
+				//skip adding the game to backend bc already exists
+				return true;
+			}
+		}
 		backend.addGame(this.gamePlaying);
 		return true;
 	}
