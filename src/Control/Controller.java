@@ -1456,10 +1456,7 @@ public class Controller {
 	}
 	
 	public void deleteBlock(Block toDel) {
-		if(toDel==null){
-			System.out.println("NULL OH NO!!");
-			return;
-		}
+		
 		if(toDel.getParent()==null){ //in main nesting 
 			int currDiff = toDel.getlineEnd()-toDel.getlineBegin()+1;
 			this.gamePlaying.getBlocks().remove(toDel.getlineBegin());
