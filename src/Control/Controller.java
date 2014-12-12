@@ -103,7 +103,9 @@ public class Controller {
 				list.add(lBeg +" "+tabStr+"Move");
 			}else if(type==3){ //if
 				list.add(lBeg +" "+tabStr+"If "+block.getCond());
-				tabStr+='\t';
+				for(int i =0; i<(tab+1)*5; i++){
+					tabStr+=" ";
+				} 
 				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
@@ -114,7 +116,9 @@ public class Controller {
 				}
 			}else if(type==4){ //else if
 				list.add(lBeg +" "+tabStr+"ElseIf "+block.getCond());
-				tabStr+='\t';
+				for(int i =0; i<(tab+1)*5; i++){
+					tabStr+=" ";
+				} 
 				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
@@ -125,7 +129,9 @@ public class Controller {
 				}
 			}else if(type==5){//else
 				list.add(lBeg +" "+tabStr+"Else ");
-				tabStr+='\t';
+				for(int i =0; i<(tab+1)*5; i++){
+					tabStr+=" ";
+				} 
 				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
@@ -136,7 +142,9 @@ public class Controller {
 				}
 			}else if(type==6){//while
 				list.add(lBeg +" "+tabStr+"While "+block.getCond());
-				tabStr+='\t';
+				for(int i =0; i<(tab+1)*5; i++){
+					tabStr+=" ";
+				} 
 				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
@@ -147,7 +155,9 @@ public class Controller {
 				}
 			}else if(type==7){//repeat
 				list.add(lBeg +" "+tabStr+"Repeat "+block.getRepeat());
-				tabStr+='\t';
+				for(int i =0; i<(tab+1)*5; i++){
+					tabStr+=" ";
+				} 
 				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
@@ -220,7 +230,9 @@ public class Controller {
 				list.add(lBeg+" "+tabStr+"Move");
 			}else if(type==3){ //if
 				list.add(lBeg+" "+tabStr+"If "+block.getCond());
-				tabStr+='\t';
+				for(int i =0; i<(tab+1)*5; i++){
+					tabStr+=" ";
+				} 
 				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
@@ -231,7 +243,9 @@ public class Controller {
 				}
 			}else if(type==4){ //else if
 				list.add(lBeg+" "+tabStr+"ElseIf "+block.getCond());
-				tabStr+='\t';
+				for(int i =0; i<(tab+1)*5; i++){
+					tabStr+=" ";
+				} 
 				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
@@ -242,7 +256,9 @@ public class Controller {
 				}
 			}else if(type==5){//else
 				list.add(lBeg+" "+tabStr+"Else ");
-				tabStr+='\t';
+				for(int i =0; i<(tab+1)*5; i++){
+					tabStr+=" ";
+				} 
 				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
@@ -253,7 +269,9 @@ public class Controller {
 				}
 			}else if(type==6){//while
 				list.add(lBeg+" "+tabStr+"While "+block.getCond());
-				tabStr+='\t';
+				for(int i =0; i<(tab+1)*5; i++){
+					tabStr+=" ";
+				} 
 				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
@@ -264,7 +282,9 @@ public class Controller {
 				}
 			}else if(type==7){//repeat
 				list.add(lBeg+" "+tabStr+"Repeat "+block.getRepeat());
-				tabStr+='\t';
+				for(int i =0; i<(tab+1)*5; i++){
+					tabStr+=" ";
+				} 
 				list.add(block.getlineBegin()+1+" "+tabStr+"begin");
 				if(!(block.getNestedBlocks().isEmpty())){
 					int tempTab = tab+1;
