@@ -59,7 +59,7 @@ public class UserFunction extends Screen{
 	JButton turnLeftB;
 	JButton eatB;
 	
-	JComboBox userDefinedFunctions; /*get from control*/ 
+	
 	
 	/**Left side panel: labels, buttons, other**/
 	JLabel ifL = new JLabel("If :");
@@ -80,8 +80,7 @@ public class UserFunction extends Screen{
 	JLabel repeatL= new JLabel("Function Name:"); 
 	String[] nums = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"};
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	JComboBox repeatNumTimes = new JComboBox(nums);
+	
 
 	
 	/**
@@ -332,8 +331,7 @@ public class UserFunction extends Screen{
 		givenFunctionsL.setFont(new Font("Serif", Font.BOLD, 18)); 
 		userDefinedL.setFont(new Font("Serif", Font.BOLD, 18));
 		
-		String[] drop = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"}; // EDIT : should come from somewhere else
-		userDefinedFunctions = new JComboBox(drop);
+	
 		
 		//top, left, botton, right <- insets
 		gc.insets = new Insets(5,0,10,5);
@@ -379,15 +377,6 @@ public class UserFunction extends Screen{
 		gc.gridx = 0;
 		gc.gridy = 10;
 		rightPanel.add(eatB, gc);
-		
-		gc.gridx = 0;
-		gc.gridy = 11;
-		rightPanel.add(userDefinedL, gc);
-		
-		gc.fill = GridBagConstraints.HORIZONTAL;
-		gc.gridx = 0;
-		gc.gridy = 12;
-		rightPanel.add(userDefinedFunctions, gc); //placeholder */
 	}
 	
 	public void setLeftComponents(){

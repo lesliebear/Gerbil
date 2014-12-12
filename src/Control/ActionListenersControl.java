@@ -60,7 +60,7 @@ public class ActionListenersControl {
 		finish = new Finish();
 		instructionsScreen = new Instructions();
 		main = new Main(); 
-		conditionals = new Conditionals(" ");
+		conditionals = new Conditionals("If");
 
 		playOptions = new PlayOptions();
 		savedGames = new SavedGames();
@@ -74,7 +74,8 @@ public class ActionListenersControl {
 		editing = false;
 
 		initEventHandlers();
-		main.show();
+		//main.show();
+		userFunction.show();
 	}
 
 	private void initGrid() {
@@ -92,7 +93,7 @@ public class ActionListenersControl {
 		addInstructionsEventHandlers();
 		addErrorDialogEventHandlers();
 		addPlayEventHandlers();
-		addUserFunctionEventHandlers();
+	//	addUserFunctionEventHandlers();
 	}
 
 	/**
@@ -226,7 +227,7 @@ public class ActionListenersControl {
 	}
 
 
-	private void addUserFunctionEventHandlers(){
+	/*private void addUserFunctionEventHandlers(){
 		userFunction.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				errorDialog.hide();
@@ -315,16 +316,16 @@ public class ActionListenersControl {
 				if(!functionName.equals("")) {
 					
 					/* Do something here with function name*/
-					errorDialog.hide();
-					showParent();
-				}
-				else {
+				//	errorDialog.hide();
+				//	showParent();
+			//	}
+				//else {
 					/* show the error that function name isn't inputted yet */
-				}
+			//	}
 			
-			}		
-		});
-	}
+		//	}		
+		//});
+//	}
 
 
 	/**
