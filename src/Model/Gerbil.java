@@ -47,7 +47,7 @@ public class Gerbil implements Serializable{
 	 * @postcondition none
 	 * @param c Character to set the compass to = must be 'n','s','e', or 'w'
 	 */
-	public int setCompass(char c){
+	public char setCompass(char c){
 		return this.compass=c;
 	}
 	
@@ -60,7 +60,7 @@ public class Gerbil implements Serializable{
 	 * 
 	 * @return X value of Gerbil's direction
 	 */
-	public int getCompass(){
+	public char getCompass(){
 		return this.compass;
 	}
 	

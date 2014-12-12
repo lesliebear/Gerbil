@@ -2,6 +2,7 @@ package Control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -273,6 +274,7 @@ public class ActionListenersControl {
 				int tempLine = uSelect+2; //for the current statement and begin
 				conditionals.setBegin(tempLine);
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				userFunction.hide();
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
@@ -286,6 +288,7 @@ public class ActionListenersControl {
 				int tempLine = uSelect+2; //for the current statement and begin
 				conditionals.setBegin(tempLine);
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				userFunction.hide();
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
@@ -299,6 +302,7 @@ public class ActionListenersControl {
 				int tempLine = uSelect+2; //for the current statement and begin
 				conditionals.setBegin(tempLine);
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				userFunction.hide();
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
@@ -313,6 +317,7 @@ public class ActionListenersControl {
 				int tempLine = uSelect+2; //for the current statement and begin
 				conditionals.setBegin(tempLine);
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				userFunction.hide();
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
@@ -325,6 +330,7 @@ public class ActionListenersControl {
 				int tempLine = uSelect+2; //for the current statement and begin
 				conditionals.setBegin(tempLine);
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				userFunction.hide();
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}});
@@ -363,20 +369,21 @@ public class ActionListenersControl {
 					
 					errorDialog.hide();
 					showParent();
-				}
-				else {
 					int error= Start.StartGerbil.controller.createFunction(functionName);
 					if(error==1){
 						//error: function names can only consist of letters/numbers
 						errorDialog.errorL.setText("Name must consist of letters/numbers");
 						errorDialog.show();
 					}else if(error==2){
-						//error: funciton name already exists, choose another
+						//error: function name already exists, choose another
 						errorDialog.errorL.setText("Name already exists, enter another name");
 						errorDialog.show();
 					}else{
 						userFunction.hide();
 					}
+				}else{
+					errorDialog.errorL.setText("You Must Enter a Function Name");
+					errorDialog.show();
 				}
 			
 			}		
@@ -398,7 +405,7 @@ public class ActionListenersControl {
 			}	
 		});
 
-		/*playScreen.addPlayEventHandler(new ActionListener() {
+		playScreen.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Thread thread = new Thread() {
 					public void run() {
@@ -414,8 +421,7 @@ public class ActionListenersControl {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
 								int currY = Start.StartGerbil.controller.getTempGerbil().getY();
 								Start.StartGerbil.controller.moveForward(Start.StartGerbil.controller.getTempGerbil());
-								playScreen.showMove(currY, currX, Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.tempgrid[currY][currX]);
-
+								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getCompass());
 							}
 							else if(instructions.get(i).equals("eat")) {
 								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
@@ -453,7 +459,7 @@ public class ActionListenersControl {
 				};
 				thread.start();
 			}
-		});*/
+		});
 
 		playScreen.addStopEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
