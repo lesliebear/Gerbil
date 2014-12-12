@@ -64,6 +64,7 @@ public class Conditionals {
 	/**Left side panel: labels, buttons, other**/
 
 	JLabel label = new JLabel();
+	
 	JLabel bodyL = new JLabel("Body :");
 
 	JLabel beginL = new JLabel("Begin");
@@ -91,7 +92,6 @@ public class Conditionals {
 		type = typeIn; 
 		createButtons();
 		setRightComponents();
-
 		setLeftComponents();
 		createAndShowGUI();
 	}
@@ -284,8 +284,6 @@ public class Conditionals {
 		}
 
 		conditionalscodeList = new JList(listModel);
-		
-		conditionalscodeList = new JList(placeholder);
 		startLineNumber=0;
 		scrollpane = new JScrollPane(conditionalscodeList);
 
@@ -316,7 +314,7 @@ public class Conditionals {
 		gc.gridx = 0; 
 		gc.gridy=1; 
 		leftPanel.add(bodyL, gc);
-
+	
 		gc.fill = GridBagConstraints.HORIZONTAL;
 
 		gc.insets = new Insets(10,0,0,20);
@@ -406,7 +404,6 @@ public class Conditionals {
 	}
 	
 	public void refreshUserFunctionsList(String[] newFunctions){
-		
 		userDefinedFunctions.removeAllItems();
 		for(int i = 0; i < newFunctions.length; i++) {
 			userDefinedFunctions.addItem(newFunctions[i]);
@@ -414,7 +411,6 @@ public class Conditionals {
 	}
 	
 	public void refreshUserFunctionsList_Repeat(String[] newFunctions){
-		
 		conditionalDD.removeAllItems();
 		for(int i = 1; i < 16; i++) {
 			conditionalDD.addItem(i);
@@ -438,7 +434,6 @@ public class Conditionals {
 
 	/**
 	 * Hides the screen.
-	 * 
 	 */
 	public void hide() {
 		frame.setVisible(false);
@@ -487,5 +482,17 @@ public class Conditionals {
 
 	public void addOkEventHandler(ActionListener listener) {
 		okB.addActionListener(listener);
+	}
+	
+	public void addMoveEventHandler(ActionListener listener) {
+		moveForwardB.addActionListener(listener);
+	}
+	
+	public void addEatEventHandler(ActionListener listener) {
+		eatB.addActionListener(listener);
+	}
+	
+	public void addTurnLeftEventHandler(ActionListener listener) {
+		turnLeftB.addActionListener(listener);
 	}
 }

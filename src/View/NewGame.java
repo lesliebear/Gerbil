@@ -37,7 +37,7 @@ public class NewGame extends Screen {
 		frame = new JFrame("New Game");
 		panel = new JPanel();
 		textF = new JTextField();
-		newGameNameL = new JLabel();
+		newGameNameL = new JLabel("Enter new game name: ");
 		
 		cancelB = new JButton("Cancel") {
 			public void paint(Graphics g) {
@@ -134,13 +134,11 @@ public class NewGame extends Screen {
 	@Override
 	public void enable() {
 		frame.setEnabled(true);
-		
 	}
 	
 	@Override
 	public void disable() {
 		frame.setEnabled(false);
-		
 	}
 	
 	public void addBackEventHandler(ActionListener listener) {
