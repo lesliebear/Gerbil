@@ -139,9 +139,6 @@ public class Play extends Screen{
 		setGridComponents();
 	}
 
-	
-	
-
 	/**
 	 * Creates the screen by putting the GUI components together.
 	 */
@@ -653,7 +650,6 @@ public class Play extends Screen{
 
 	/**
 	 * Creates the screen by putting the GUI components together.
-	 * 
 	 */
 	protected void createScreen() {	
 
@@ -669,10 +665,6 @@ public class Play extends Screen{
 		}
 		
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
-
-		/*if(beforeIsConditional()){
-			disableAllPlayDDButChecks();
-		} */
 	}
 
 	public void setSingleSelectionMode(){
@@ -771,8 +763,7 @@ public class Play extends Screen{
 
 	}
 	
-	/*
-	public static boolean beforeIsConditional(){
+	/* public static boolean beforeIsConditional(){
 		if(Start.StartGerbil.control.instructions.get(Play.playcodeList.getSelectedIndex()) == "If"){
 			return true;
 		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Else if"){
@@ -804,8 +795,7 @@ public class Play extends Screen{
 
 		return false;
 	}
-
-
+	
 	public static boolean givenFunctionSelected(){
 		if(Play.instructions.get(Play.playcodeList.getSelectedIndex()).substring(0,1) == "Move Forward"){
 			return true;
@@ -827,8 +817,7 @@ public class Play extends Screen{
 
 		return false;
 	} */
-
-
+	
 	public void initialPlayScreen(){//only insert, save, menu should be active
 		playB.setEnabled(false);
 		stopB.setEnabled(false);
@@ -1023,6 +1012,4 @@ public class Play extends Screen{
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
 	}
 
-	
-	
 }
