@@ -761,8 +761,8 @@ public class ActionListenersControl {
 		conditionals.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				int begin = conditionals.getBegin();
-				int numLines = conditionals.getEndLineNumber();
+				int begin = conditionals.getBegin()-2;
+				int numLines = conditionals.getEndLineNumber()+2;
 				String cond = conditionals.getCond();
 				//if(Start.StartGerbil.controller.bad==false){ //if not bad, then close
 					Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);

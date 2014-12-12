@@ -1034,17 +1034,10 @@ public class Play extends Screen{
 		saveB.setBackground(Color.yellow);
 	}
 
-	public  void clearAll(){
-		//Start.StartGerbil.controller.gamePlaying.instructions.clear();
-		//Start.StartGerbil.controller.gamePlaying.instructions.add(new Block(" ", false, false,1));
-
+	public void clearAll(){
+		Start.StartGerbil.controller.clearBlocks();
 		model.clear();
-
-		//for(int i =0; i< Start.StartGerbil.controller.gamePlaying.instructions.size(); i++){
-		//String test = Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction;
-		//model.addElement( Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction);
-		//}
-
+		Play.refreshCodeList();
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
 	}
 }
