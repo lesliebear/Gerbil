@@ -178,7 +178,7 @@ public class ActionListenersControl {
 	private void addOkYesDialogEventHandlers(){
 		okNoDialog.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		
+				
 			}		
 		});
 		
@@ -365,14 +365,6 @@ public class ActionListenersControl {
 		});
 	}
 
-
-	/**
-	 * Add event handlers for the Play screen
-	 */
-
-	/**
-	 * Add event handlers for the Play screen
-	 */
 	/**
 	 * Add event handlers for the Play screen
 	 */

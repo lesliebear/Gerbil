@@ -401,6 +401,10 @@ public class Conditionals {
 		}
 	}
 	
+	public String getText(){
+		return label.getText();
+	}
+	
 	public void refreshUserFunctionsList(String[] newFunctions){
 		
 		userDefinedFunctions.removeAllItems();
@@ -456,8 +460,8 @@ public class Conditionals {
 		startLineNumber = num;
 	}
 	
-	public void getBegin(){
-		startLineNumber;
+	public int getBegin(){
+		return startLineNumber;
 	}
 
 	public int getEndLineNumber() {
