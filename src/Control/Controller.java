@@ -1423,7 +1423,16 @@ public class Controller {
 
 		}
 	}
-
+	public Block getBlockByLineMain(int line){
+		for(int k: this.gamePlaying.getBlocks().keySet()){
+			Block temp = this.gamePlaying.getBlocks().get(k);
+			if(line>=temp.getlineBegin()&& line <=temp.getlineEnd()){
+				return temp;
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * For any line number selected, it will return the block in that position
 	 * @param line Line Number
