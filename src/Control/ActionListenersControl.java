@@ -588,12 +588,12 @@ public class ActionListenersControl {
 				parentScreen = 4; 
 
 				//First, create BLOCKS(instructions) that goes in the function
-				int type; //get block type
-				int begin; //get line begin
-				int numLines; //get number of lines
-				String cond; //get cond
+				int type = conditionals.getType();
+				int begin = conditionals.getBegin();
+				int numLines = conditionals.getEndLineNumber();
+				String cond = conditonals.getCond();
 
-				//Start.StartGerbil.controller.createFunctionBlocks(type, begin, numLines, cond);
+				Start.StartGerbil.controller.createFunctionBlocks('e', begin, numLines, cond);
 
 
 				userFunction.show();
@@ -606,14 +606,7 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedCreateFunctionFirst=true;
 				parentScreen = 4; 
-
-				//First, create BLOCKS(instructions) that goes in the function
-				int type; //get block type
-				int begin; //get line begin
-				int numLines; //get number of lines
-				String cond; //get cond
-
-				//Start.StartGerbil.controller.createFunctionBlocks(type, begin, numLines, cond);
+				Start.StartGerbil.controller.createFunctionBlocks('c', 0, 0, null);
 
 
 				userFunction.show();
