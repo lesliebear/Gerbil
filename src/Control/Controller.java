@@ -64,8 +64,6 @@ public class Controller {
 		}
 	}
 
-
-
 	public String[] FunctionUnFin(){
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
@@ -435,8 +433,6 @@ public class Controller {
 	 * 3 is ///////////////ERROR: Illegal funciton entered!!!!!/////////////
 	 * 4 is //////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
 	 * 5 is ////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
-	 * 
-	 * 
 	 */
 	public int createBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
