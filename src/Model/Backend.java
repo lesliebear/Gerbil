@@ -197,6 +197,7 @@ public class Backend implements Serializable {
 	}
 
 	
+	
 	public ArrayList<String> getGamesStringArray(){
 		ArrayList<String> toReturn= new ArrayList<String>(); 
 		

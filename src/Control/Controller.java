@@ -496,6 +496,7 @@ public class Controller {
 						this.userCodingNow=null;
 						return 0;
 					}
+					
 				}//get past this means, end of lines!
 				this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
 			} //we ended this so parent is now the currBlock coded
