@@ -707,7 +707,8 @@ public class ActionListenersControl {
 				String cond = conditionals.getCond();
 
 				Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
-	
+				
+				playScreen.refreshCodeList();
 				conditionals.hide();	
 				playScreen.show();
 			}	
@@ -725,15 +726,17 @@ public class ActionListenersControl {
 		conditionals.addMoveEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int lineSelect  = conditionals.getSelectedLineNumber();
-
+				//System.out.println("lineSelect: "+lineSelect);
 				Start.StartGerbil.controller.createBlocks(2,lineSelect,1, null);
 				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
-				System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT NOW!!!");
+				
+				/*System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT NOW!!!");
 				String[] temp = Start.StartGerbil.controller.getUnFinIns();
 				for(int i =0 ;i<temp.length;i++){
 					System.out.println(temp[i]);
 				}
-				System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT DONE!!!!!");
+				System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT DONE!!!!!");*/
+				
 				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
 			}	
 		});
