@@ -473,7 +473,6 @@ public class Play extends Screen{
 		}
 	} */
 
-
 	public static void setGridComponents(){
 		gridPanel.setLayout(new GridLayout(grid.length, grid[0].length));	
 		Dimension size= gridPanel.getPreferredSize();
@@ -503,9 +502,6 @@ public class Play extends Screen{
 		}
 		gridBoxes[row][column].setIcon(imageGerbilNorth);
 	}
-
-
-
 
 	public static void setLowerComponents(){
 		lowerPanel.setLayout(new GridBagLayout());
