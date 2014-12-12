@@ -46,6 +46,8 @@ public class ActionListenersControl {
 	boolean editing;
 	boolean stop;
 	boolean play;
+	
+	boolean creatingFunction;
 
 	boolean deleteCurrGame;
 
@@ -81,8 +83,6 @@ public class ActionListenersControl {
 		initEventHandlers();
 		main.show();
 		//userFunction.show();
-
-
 	}
 
 	private void initGrid() {
@@ -102,8 +102,8 @@ public class ActionListenersControl {
 		addPlayEventHandlers();
 		addUserFunctionEventHandlers();
 		addOkYesDialogEventHandlers();
-		addSavedGamesEventHandlers();
 		addConditionalsEventHandlers();
+		addSavedGamesEventHandlers();
 	}
 
 	/**
@@ -193,12 +193,14 @@ public class ActionListenersControl {
 
 		okNoDialog.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				Start.StartGerbil.controller.saveGame();
+
 				try{
-					Start.StartGerbil.controller.saveGame();
-				}catch(Exception ex){
+					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
+				}catch(Exception es){
 					System.out.println("Unable to save game.");
 				}
-
 				okNoDialog.hide();
 				playOptions.show();
 			}		
@@ -486,18 +488,19 @@ public class ActionListenersControl {
 						int errortype= Start.StartGerbil.controller.runBlocks();
 						ArrayList<String> instructions = Start.StartGerbil.controller.getFinalBlocks();
 						for(int i = 0; i < instructions.size(); i++) {
-							if(instructions.get(i).equals("turn left")) {
+							if(instructions.get(i).equals("Turn Left")) {
 								Start.StartGerbil.controller.turnLeft(Start.StartGerbil.controller.getTempGerbil());
-								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX());
+								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
 							}
-							else if(instructions.get(i).equals("move")) {
+							else if(instructions.get(i).equals("Move Forward")) {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
 								int currY = Start.StartGerbil.controller.getTempGerbil().getY();
 								Start.StartGerbil.controller.moveForward(Start.StartGerbil.controller.getTempGerbil());
-								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getCompass());
+								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getFrontX(), Start.StartGerbil.controller.getTempGerbil().getFrontY(), Start.StartGerbil.controller.getTempGerbil().getCompass());
 							}
-							else if(instructions.get(i).equals("eat")) {
+							else if(instructions.get(i).equals("Eat")) {
 								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
+								//playScreen.showEat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
 							}
 							try {
 								sleep(500);
@@ -528,6 +531,7 @@ public class ActionListenersControl {
 							errorDialog.errorL.setText("Infinite Loop was created, please edit your code");
 							errorDialog.show();
 						}
+						Start.StartGerbil.controller.resetTempGrid();
 					}
 				};
 				thread.start();
@@ -584,9 +588,12 @@ public class ActionListenersControl {
 		});
 
 		playScreen.addSaveEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {	
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Start.StartGerbil.controller.saveGame();
+				
 				try{
-					Start.StartGerbil.controller.saveGame();
+					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
 				}catch(Exception e){
 					System.out.println("Unable to save game.");
 				}
@@ -606,8 +613,6 @@ public class ActionListenersControl {
 
 			}	
 		});
-
-
 
 		/**JComboBoxes**/
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
@@ -686,9 +691,6 @@ public class ActionListenersControl {
 					}
 				}
 				
-				
-				
-				
 			}	
 		});
 
@@ -761,8 +763,8 @@ public class ActionListenersControl {
 		conditionals.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				int begin = conditionals.getBegin();
-				int numLines = conditionals.getEndLineNumber();
+				int begin = conditionals.getBegin()-2;
+				int numLines = conditionals.getEndLineNumber()+2;
 				String cond = conditionals.getCond();
 				//if(Start.StartGerbil.controller.bad==false){ //if not bad, then close
 					Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
@@ -832,7 +834,6 @@ public class ActionListenersControl {
 	 * SavedGame 6
 	 * UserFunction 7
 	 */
-
 	private static void showParent(){ 
 		switch(parentScreen){
 		case 1:

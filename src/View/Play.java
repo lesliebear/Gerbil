@@ -786,6 +786,10 @@ public class Play extends Screen{
 		break;
 		}
 	}
+	
+	public void showEat(int gerbilX, int gerbilY){
+		//gridBoxes[gerbilY][gerbilX].set
+	}
 
 
 	public void refreshUserFunctions(){
