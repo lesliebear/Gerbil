@@ -363,7 +363,7 @@ public class Conditionals {
 	 */
 	protected static void createAndShowGUI() { 
 		//conditionals = new Conditionals("Repeat");
-		frame = new JFrame(type);
+		frame = new JFrame("apple");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		frame.setLayout(new GridBagLayout());
@@ -382,7 +382,7 @@ public class Conditionals {
 		
 		frame.pack();
 		frame.setResizable(false);
-		frame.setVisible(true);
+		frame.setVisible(false);
 	}
 
 	public JComponent getLeftComponent() {

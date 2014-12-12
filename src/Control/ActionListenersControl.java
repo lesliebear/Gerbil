@@ -275,7 +275,7 @@ public class ActionListenersControl {
 			}	
 		});
 
-		playScreen.addPlayEventHandler(new ActionListener() {
+	/*	playScreen.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Thread thread = new Thread() {
 					public void run() {
@@ -330,7 +330,7 @@ public class ActionListenersControl {
 				};
 				thread.start();
 			}
-		}); 
+		});  */
 
 		playScreen.addStopEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -417,6 +417,9 @@ public class ActionListenersControl {
 					//String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
 					if(newType.equals("If")){
 						Start.StartGerbil.controller.createBlocks(3,selectedIndexPlayCodeList, 0, null);
+						
+						conditionals.type = "If";
+						
 					}else if(newType.equals("Else")){
 						Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
 					}else if(newType.equals("Else if")){
@@ -429,6 +432,8 @@ public class ActionListenersControl {
 				}else{
 					
 				}
+				
+				conditionals.show();
 
 			}	
 		});
