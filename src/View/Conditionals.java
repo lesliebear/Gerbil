@@ -477,7 +477,7 @@ public class Conditionals {
 	}
 
 	public int getEndLineNumber() {
-		endLineNumber = instructions.size() + 1;
+		endLineNumber = listModel.size() + 1;
 		return endLineNumber;
 	}
 
@@ -486,13 +486,6 @@ public class Conditionals {
 		return conditionalscodeList.getSelectedIndex();
 	}
 	
-	public void updateInstructionsList(String[] instructions) {
-		this.instructions.clear();
-		for(int i = 0; i < instructions.length; i++) {
-			this.instructions.addElement(instructions[i]);
-		}
-	}
-
 	public void addCancelEventHandler(ActionListener listener) {
 		cancelB.addActionListener(listener);
 	}
