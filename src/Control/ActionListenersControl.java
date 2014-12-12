@@ -723,7 +723,7 @@ public class ActionListenersControl {
 
 		conditionals.addMoveEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int lineSelect  = conditionals.getSelectedLineNumber();
+				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
 				//System.out.println("lineSelect: "+lineSelect);
 				Start.StartGerbil.controller.createBlocks(2,lineSelect,1, null);
 				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
@@ -741,7 +741,7 @@ public class ActionListenersControl {
 		
 		conditionals.addEatEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int lineSelect  = conditionals.getSelectedLineNumber();
+				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
 				Start.StartGerbil.controller.createBlocks(0,lineSelect,1, null);
 				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
 				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
@@ -750,7 +750,7 @@ public class ActionListenersControl {
 		
 		conditionals.addTurnLeftEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int lineSelect  = conditionals.getSelectedLineNumber();
+				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
 				Start.StartGerbil.controller.createBlocks(1,lineSelect,1, null);
 				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
 				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
