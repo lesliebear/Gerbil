@@ -41,7 +41,7 @@ public class UserFunction extends Screen{
 	private int startLineNumber;
 	private int endLineNumber;
 	private DefaultListModel instructions;
-	boolean addtomain;
+	public boolean addtomain;
 	/**Right side panel: labels, buttons, other**/
 	JLabel conditionalsL = new JLabel("Conditional Statements"); 	
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
@@ -548,6 +548,10 @@ public class UserFunction extends Screen{
 			this.addtomain= true;
 		}
 		this.addtomain= false;
+	}
+	
+	public void clearLabels(){
+		this.functionName.setText("");;
 	}
 	
 	public void resetLineNumber() {
