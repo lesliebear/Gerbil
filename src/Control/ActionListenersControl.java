@@ -60,7 +60,7 @@ public class ActionListenersControl {
 		finish = new Finish();
 		instructionsScreen = new Instructions();
 		main = new Main(); 
-		conditionals = new Conditionals("If");
+		conditionals = new Conditionals(" ");
 
 		playOptions = new PlayOptions();
 		savedGames = new SavedGames();
@@ -74,8 +74,8 @@ public class ActionListenersControl {
 		editing = false;
 
 		initEventHandlers();
-		//main.show();
-		userFunction.show();
+		main.show();
+		//userFunction.show();
 	}
 
 	private void initGrid() {
@@ -245,7 +245,7 @@ public class ActionListenersControl {
 			}		
 		});
 		
-		userFunction.addReapeatEventHanderl(new ActionListener(){
+		/*userFunction.addReapeatEventHanderl(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(7, uSelect,0, null);
@@ -293,6 +293,7 @@ public class ActionListenersControl {
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,numberoflines here, cond here);
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}});
+			
 		
 		
 		userFunction.addMoveAheadEventHandler(new ActionListener(){
@@ -317,7 +318,7 @@ public class ActionListenersControl {
 				Start.StartGerbil.controller.createBlocks('e',userFunction.getSelectedLineNumber(),1, null);
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}});
-		
+		*/
 		
 		userFunction.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -502,27 +503,27 @@ public class ActionListenersControl {
 					if(newType.equals("If")){
 						Start.StartGerbil.controller.createBlocks(3,selectedIndexPlayCodeList, 0, null);
 						
-						conditionals.type = "If";
+						conditionals.setText("If");
 						
 					}else if(newType.equals("Else")){
 						Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
 						
-						conditionals.type = "Else";
+						conditionals.setText("Else");
 						
 					}else if(newType.equals("Else if")){
 						Start.StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
 						
-						conditionals.type = "Else if";
+						conditionals.setText("Else if");
 						
 					}else if(newType.equals("While")){
 						Start.StartGerbil.controller.createBlocks(6,selectedIndexPlayCodeList, 0, null);
 						
-						conditionals.type = "While";
+						conditionals.setText("While");
 						
 					}else {//if(newType.equals("Repeat")){
 						Start.StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
 						
-						conditionals.type = "Repeat";
+						conditionals.setText("Repeat");
 					}
 				}else{
 					

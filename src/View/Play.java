@@ -575,7 +575,7 @@ public class Play extends Screen{
 
 		//userFunctionsDD = new JComboBox();
 		//userFunctionsDD.setModel(new DefaultComboBoxModel(arrayList.toArray()));
-		userFunctionsDD = new JComboBox(Start.StartGerbil.controller.getUserDefinedFunctionsStringArray().toArray());
+		userFunctionsDD = new JComboBox(Start.StartGerbil.controller.getFunctions()); // changed: getUserDefinedFunctionsStringArray().toArray()); kat
 		checksDD = new JComboBox(checks);
 		numsDD = new JComboBox(nums);
 
