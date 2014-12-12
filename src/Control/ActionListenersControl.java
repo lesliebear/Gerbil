@@ -453,6 +453,9 @@ public class ActionListenersControl {
 		playScreen.addInsertEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				inserting = true;
+				editing = false;
+				deleting = false; 
+				
 				playScreen.enableAllPlayDD();	
 				playScreen.enableAllButtons();
 				playScreen.setInsertSelected();
@@ -462,6 +465,8 @@ public class ActionListenersControl {
 		playScreen.addEditEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				editing = true;
+				inserting = false;
+				deleting = false;
 
 				playScreen.setEditSelected();
 			}	
@@ -470,6 +475,8 @@ public class ActionListenersControl {
 		playScreen.addDeleteEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				deleting = true;
+				inserting = false;
+				editing = false;
 
 				playScreen.setDeleteSelected();
 			}
@@ -544,6 +551,7 @@ public class ActionListenersControl {
 					}
 					
 					conditionals.show();
+					playScreen.hide();
 				}
 			}	
 		});
