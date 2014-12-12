@@ -758,9 +758,18 @@ public class Play extends Screen{
 
 	}
 
-	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass) {
+	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass, char oldGridSpotType) {
 
-		gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageGrass);
+		switch(oldGridSpotType) {
+		case '0': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageGrass);
+		break;
+		case 'k': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePear);
+		break;
+		case 'p': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePumpkin);
+		break;
+		case 'a': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageApple);
+		break;
+		}
 		switch(compass) {
 		case'n':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilNorth);
 		break;
