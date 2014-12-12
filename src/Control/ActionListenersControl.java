@@ -696,8 +696,6 @@ public class ActionListenersControl {
 	 * SavedGame 6
 	 * UserFunction 7
 	 */
-	
-	
 	public void addConditionalsEventHandlers(){
 		conditionals.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
