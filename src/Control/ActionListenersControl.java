@@ -2,6 +2,7 @@ package Control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -268,21 +269,23 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				Thread thread = new Thread() {
 					public void run() {
-						String[] instructions = controller.getTerminals();
-						for(int i = 0; i < instructions.length; i++) {
-							if(instructions[i].equals("turn left")) {
-								controller.turnLeft(controller.tempgerbil);
-								play.showTurnLeft(controller.tempgerbil.getCompass(), controller.tempgerbil.getY(), controller.tempgerbil.getX());
+						Start.StartGerbil.controller.resetTempGrid();//just in case, resetting grid and gerbil object
+						int errortype= Start.StartGerbil.controller.runBlocks();
+						ArrayList<String> instructions = Start.StartGerbil.controller.getFinalBlocks();
+						for(int i = 0; i < instructions.size(); i++) {
+							if(instructions.get(i).equals("turn left")) {
+								Start.StartGerbil.controller.turnLeft(Start.StartGerbil.controller.getTempGerbil());
+								play.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX());
 							}
-							else if(instructions[i].equals("move")) {
-								int currX = controller.tempgerbil.getX();
-								int currY = controller.tempgerbil.getY();
-								controller.moveForward(controller.tempgerbil);
-								play.showMove(currY, currX, controller.tempgerbil.getY(), controller.tempgerbil.getX(), controller.tempgerbil.getCompass(), controller.tempgrid[currY][currX]);
+							else if(instructions.get(i).equals("move")) {
+								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
+								int currY = Start.StartGerbil.controller.getTempGerbil.getY();
+								Start.StartGerbil.controller.moveForward(Start.StartGerbil.controller.getTempGerbil());
+								play.showMove(currY, currX, Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil.getX(), Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.tempgrid[currY][currX]);
 
 							}
-							else if(instructions[i].equals("eat")) {
-								controller.eat(controller.tempgerbil.getFrontX(), controller.tempgerbil.getY());
+							else if(instructions.get(i).equals("eat")) {
+								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
 							}
 							try {
 								sleep(500);
@@ -290,6 +293,20 @@ public class ActionListenersControl {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+						}
+						if(errortype==1){
+							//ERROR: insert Dialogue BoxCannot Eat because no food here
+						}else if(errortype==2){
+							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
+						}else if(errortype==3){
+							//miscellaneous error, could not compile code(this shouldn't happen)
+						}else if(errortype==4){
+							//ERROR: insert Dialogue BoxDid not reach water/goal
+						}else if(errortype==-1){
+							//parsing error(this shouldn't happen)
+						}else if(errortype==-2){
+							//ERROR: insert Dialogue BoxInfiniteLoop was created, cannot run code
+							//this does not run/animate the gerbil
 						}
 					}
 				};
@@ -339,6 +356,21 @@ public class ActionListenersControl {
 
 		playScreen.addSaveEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(Start.StartGerbil.controller.getCurrGame().getName()!=null){
+					Start.StartGerbil.controller.saveGame();
+				}else{
+					//LINK TO ENTER NAME FOR GAME SCREEN
+					String name; //set this to the name that user enters
+					if(Start.StartGerbil.controller.validGameName(name)==1){
+						//ERROR: insert DialogueBox name must consist of letters/numbers
+					}else if(Start.StartGerbil.controller.validGameName(name)==2){
+						//ERROR: insert DialogueBox name already exists for another game, enter another name
+					}else{
+						//set game name, and then save
+						Start.StartGerbil.controller.getCurrGame().setName(name);
+						Start.StartGerbil.controller.saveGame();
+					}
+				}	
 				try{
 					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
 				}catch(Exception e){
