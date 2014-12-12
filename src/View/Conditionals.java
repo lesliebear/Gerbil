@@ -477,7 +477,7 @@ public class Conditionals {
 	}
 
 	public int getEndLineNumber() {
-		endLineNumber = listModel.size() + 1;
+		endLineNumber = listModel.size();
 		return endLineNumber;
 	}
 
