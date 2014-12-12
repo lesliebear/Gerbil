@@ -647,6 +647,7 @@ public class Play extends Screen{
 	public static void refreshCodeList(){
 		model.clear();
 
+		
 		String [] temp = Start.StartGerbil.controller.JListString();
 
 		model.add(0, " ");

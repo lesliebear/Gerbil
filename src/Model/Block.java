@@ -121,6 +121,7 @@ public class Block implements Serializable{
 	 */
 	public void setLineEnd(int line){
 		this.lineEnd=line;
+
 	}
 	/**
 	 * Gets the block's type based on innumeration
