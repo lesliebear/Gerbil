@@ -330,7 +330,18 @@ public class ActionListenersControl {
 					showParent();
 				}
 				else {
-			
+					int error= Start.StartGerbil.controller.createFunction(functionName);
+					if(error==1){
+						//error: function names can only consist of letters/numbers
+						errorDialog.errorL.setText("Name must consist of letters/numbers");
+						errorDialog.show();
+					}else if(error==2){
+						//error: funciton name already exists, choose another
+						errorDialog.errorL.setText("Name already exists, enter another name");
+						errorDialog.show();
+					}else{
+						userFunction.hide();
+					}
 				}
 			
 			}		
