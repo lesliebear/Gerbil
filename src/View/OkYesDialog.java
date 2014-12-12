@@ -26,16 +26,14 @@ public class OkYesDialog extends Screen{
 	private JPanel panel;
 	private static JButton yesB;
 	public static JButton noB;
-	private JLabel newGameNameL; 
-	public static JTextField textF;
+	public JLabel okNoDialogL; 
 	
 	public OkYesDialog() {
-		frame = new JFrame("New Game");
+		frame = new JFrame("Confirm");
 		panel = new JPanel();
-		textF = new JTextField();
-		newGameNameL = new JLabel();
+		okNoDialogL = new JLabel();
 		
-		yesB = new JButton("Cancel") {
+		yesB = new JButton("Yes") {
 			public void paint(Graphics g) {
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
@@ -86,23 +84,20 @@ public class OkYesDialog extends Screen{
 		panel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
-		c.gridx = 0;
-		c.gridy = 0;
-		panel.add(newGameNameL, c);
-		
-		c.gridwidth = 2;
+		c.insets = new Insets(0,100,0,0);
 		c.fill = GridBagConstraints.BOTH;
 		c.gridx = 0;
-		c.gridy = 1;
-		panel.add(textF, c);
-		
-		c.gridwidth = 1;
-		c.insets = new Insets(40,0,0,0);
+		c.gridy = 0;
+		panel.add(okNoDialogL, c);
+
+		//c.fill = GridBagConstraints.NONE;
+		c.insets = new Insets(0,0,0,0);
 		c.gridx = 0;
 		c.gridy = 2;
 		panel.add(yesB, c);
 		
-		c.insets = new Insets(40,0,0,0);
+		//c.insets = new Insets(0,0,0,150);
+		//c.weightx=1;
 		c.gridx = 1;
 		c.gridy = 2;
 		panel.add(noB, c);

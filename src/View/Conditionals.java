@@ -280,15 +280,6 @@ public class Conditionals {
 		startLineNumber=0;
 
 		conditionalscodeList.setSelectedIndex(conditionalscodeList.getModel().getSize()-1);
-		conditionalscodeList.addListSelectionListener(new ListSelectionListener() {
-
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				// TODO Auto-generated method stub
-
-			}
-		});
-
 		scrollpane = new JScrollPane(conditionalscodeList);
 
 		conditionalscodeList.setVisibleRowCount(20);
@@ -321,11 +312,23 @@ public class Conditionals {
 	
 		gc.fill = GridBagConstraints.HORIZONTAL;
 
-		gc.insets = new Insets(10,0,0,20);
+		gc.insets = new Insets(10,0,0,0);
 		gc.gridwidth = 2;
 		gc.gridx = 1; 
 		gc.gridy=1; 
+		leftPanel.add(beginL, gc);
+		
+		gc.insets = new Insets(0,0,0,20);
+		gc.gridwidth = 2;
+		gc.gridx = 1; 
+		gc.gridy=2; 
 		leftPanel.add(scrollpane, gc);
+		
+		gc.insets = new Insets(0,0,0,0);
+		gc.gridwidth = 2;
+		gc.gridx = 1; 
+		gc.gridy=3; 
+		leftPanel.add(endL, gc);
 
 		gc.fill = GridBagConstraints.NONE;
 
