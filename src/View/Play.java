@@ -776,15 +776,15 @@ public class Play extends Screen{
 	
 public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass) {
 		
-		gridBoxes[gerbilCurrX][gerbilCurrY].setIcon(imageGrass);
+		gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageGrass);
 		switch(compass) {
-		case'n':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilNorth);
+		case'n':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilNorth);
 				break;
-		case's':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilSouth);
+		case's':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilSouth);
 				break;
-		case'w':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilWest);
+		case'w':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilWest);
 				break;
-		case'e':gridBoxes[gerbilNewX][gerbilNewY].setIcon(imageGerbilEast);
+		case'e':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilEast);
 				break;
 		}
 	}
@@ -792,13 +792,13 @@ public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbi
 	public void showTurnLeft(char compass, int gerbilX, int gerbilY) {
 		
 		switch(compass) {
-			case'n':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilNorth);
+			case'n':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilNorth);
 					break;
-			case's':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilSouth);
+			case's':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilSouth);
 					break;
-			case'w':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilWest);
+			case'w':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilWest);
 					break;
-			case'e':gridBoxes[gerbilX][gerbilY].setIcon(imageGerbilEast);
+			case'e':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilEast);
 					break;
 		}
 	}
