@@ -184,7 +184,8 @@ public class ActionListenersControl {
 	private void addOkYesDialogEventHandlers(){
 		okNoDialog.addNoEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				main.show();
+				okNoDialog.hide();
+				playOptions.show();
 			}		
 		});
 		
@@ -196,7 +197,8 @@ public class ActionListenersControl {
 					System.out.println("Unable to save game.");
 				}
 				
-				main.show();
+				okNoDialog.hide();
+				playOptions.show();
 			}		
 		});
 	}
@@ -452,8 +454,10 @@ public class ActionListenersControl {
 		playScreen.addMenuEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				parentScreen = 4; 
-
-				playOptions.show();
+				
+				okNoDialog.okNoDialogL.setText("Would you like to save your current game?");
+				okNoDialog.show();
+				
 				playScreen.hide();
 			}	
 		});

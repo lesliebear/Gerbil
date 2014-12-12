@@ -40,7 +40,7 @@ public class UserFunction extends Screen{
 	static JPanel rightPanel = new JPanel();
 	private int startLineNumber;
 	private int endLineNumber;
-	private DefaultListModel<String> instructions;
+	private DefaultListModel instructions;
 	/**Right side panel: labels, buttons, other**/
 	JLabel conditionalsL = new JLabel("Conditional Statements"); 	
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
@@ -86,7 +86,7 @@ public class UserFunction extends Screen{
 	 * Constructor that creates all necessary GUI components.
 	 */
 	public UserFunction () {
-		instructions = new DefaultListModel<String>();
+		instructions = new DefaultListModel();
 		createButtons();
 		setRightComponents();
 		setLeftComponents();
@@ -402,10 +402,12 @@ public class UserFunction extends Screen{
 		
 		bodyL.setFont(new Font("Serif", Font.BOLD, 20));
 		
-		// EDIT: this should be called from somewhere else...
+		instructions.add(0," ");
 		
 		functionsCodeList = new JList(instructions);
 		startLineNumber = 0;
+		
+		functionsCodeList.setSelectedIndex(functionsCodeList.getModel().getSize()-1);
 		scrollpane = new JScrollPane(functionsCodeList);
 		
 		functionsCodeList.setVisibleRowCount(20);
@@ -565,9 +567,12 @@ public class UserFunction extends Screen{
 
 	public void updateInstructionsList(String[] instructions) {
 		this.instructions.clear();
+		this.instructions.add(0," ");
 		for(int i = 0; i < instructions.length; i++) {
-			this.instructions.addElement(instructions[i]);
+			this.instructions.add(i,instructions[i]);
 		}
+		
+		functionsCodeList.setSelectedIndex(functionsCodeList.getModel().getSize()-1);
 	}
 	
 	public void addFunctionListListener(ActionListener listener) {
