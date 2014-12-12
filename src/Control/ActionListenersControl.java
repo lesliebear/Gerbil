@@ -233,7 +233,73 @@ public class ActionListenersControl {
 				showParent();
 			}		
 		});
-
+		
+		userFunction.addWhileEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				int uSelect = userFunction.getSelectedLineNumber();
+				Start.StartGerbil.controller.createFunctionBlocks(7, uSelect,0, null);
+				//GET CONDITIONALS SCREEN STUFF HERE!! WHEN THAT RETURNS BY CLICKING OK!!
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,numberoflines here, cond here);
+			}
+		});
+		
+		userFunction.addWhileEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				int uSelect = userFunction.getSelectedLineNumber();
+				Start.StartGerbil.controller.createFunctionBlocks(6, uSelect,0, null);
+				//GET CONDITIONALS SCREEN STUFF HERE!! WHEN THAT RETURNS BY CLICKING OK!!
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,numberoflines here, cond here);
+			}
+		});
+		
+		userFunction.addElseEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				int uSelect = userFunction.getSelectedLineNumber();
+				Start.StartGerbil.controller.createFunctionBlocks(5, uSelect,0, null);
+				//GET CONDITIONALS SCREEN STUFF HERE!! WHEN THAT RETURNS BY CLICKING OK!!
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,numberoflines here, cond here);
+			}
+		});
+		
+		
+		userFunction.addElseIfEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				int uSelect = userFunction.getSelectedLineNumber();
+				Start.StartGerbil.controller.createFunctionBlocks(4, uSelect,0, null);
+				//GET CONDITIONALS SCREEN STUFF HERE!! WHEN THAT RETURNS BY CLICKING OK!!
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,numberoflines here, cond here);
+			}
+		});
+		userFunction.addIfEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				int uSelect = userFunction.getSelectedLineNumber();
+				Start.StartGerbil.controller.createFunctionBlocks(3, uSelect,0, null);
+				//GET CONDITIONALS SCREEN STUFF HERE!! WHEN THAT RETURNS BY CLICKING OK!!
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,numberoflines here, cond here);	
+			}});
+		
+		
+		userFunction.addMoveAheadEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				Start.StartGerbil.controller.createFunctionBlocks(2, userFunction.getSelectedLineNumber(),1, null);
+				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(),1, null);
+				
+			}});
+		
+		userFunction.addEatEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				Start.StartGerbil.controller.createFunctionBlocks(0, userFunction.getSelectedLineNumber(), 1, null);
+				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(), 1, null);
+			}
+		});
+		
+		userFunction.addTurnLeftEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				Start.StartGerbil.controller.createBlocks(1,userFunction.getSelectedLineNumber(),1, null);
+				Start.StartGerbil.controller.createBlocks('e',userFunction.getSelectedLineNumber(),1, null);
+			}});
+		
+		
 		userFunction.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String functionName = userFunction.getFunctionName();
