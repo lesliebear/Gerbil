@@ -159,8 +159,7 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				playOptions.hide();
 
-				showParent();
-				parentScreen = 5;
+				main.show();
 			}
 		});
 	}
@@ -190,9 +189,7 @@ public class ActionListenersControl {
 						newGame.hide();
 						errorDialog.show();
 					}else{
-						Game g = new Game(text);
-						Start.StartGerbil.backend.addGame(g);
-						Start.StartGerbil.controller.setCurrentGame(g);
+						Start.StartGerbil.controller.createGame(text);
 
 						initGrid();
 						Play.refreshGrid();
@@ -234,9 +231,9 @@ public class ActionListenersControl {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(userFunction.userDefinedFunctions.getSelectedItem());
+				//String funcName = userFunction.userDefinedFunctions.getSelectedItem();
 				
 			}
-			
 		});
 		userFunction.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -536,11 +533,13 @@ public class ActionListenersControl {
 						
 						conditionals.setText("Repeat");
 					}
+					
+					conditionals.show();
 				}else{
 					
 				}
 				
-				conditionals.show();
+			
 			}	
 		});
 
@@ -582,6 +581,47 @@ public class ActionListenersControl {
 					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
 					Start.StartGerbil.controller.deleteBlock(selectedIndexPlayCodeList);
 				}
+			}	
+		});
+	}
+	
+	public void addConditionalsEventHandlers(){
+		conditionals.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				selectedCreateFunctionFirst=true;
+				parentScreen = 4; 
+
+				//First, create BLOCKS(instructions) that goes in the function
+				int type; //get block type
+				int begin; //get line begin
+				int numLines; //get number of lines
+				String cond; //get cond
+
+				//Start.StartGerbil.controller.createFunctionBlocks(type, begin, numLines, cond);
+
+
+				userFunction.show();
+				playScreen.hide();
+
+			}	
+		});
+		
+		conditionals.addCancelEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				selectedCreateFunctionFirst=true;
+				parentScreen = 4; 
+
+				//First, create BLOCKS(instructions) that goes in the function
+				int type; //get block type
+				int begin; //get line begin
+				int numLines; //get number of lines
+				String cond; //get cond
+
+				//Start.StartGerbil.controller.createFunctionBlocks(type, begin, numLines, cond);
+
+
+				userFunction.show();
+				playScreen.hide();
 			}	
 		});
 	}

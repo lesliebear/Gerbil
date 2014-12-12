@@ -16,6 +16,7 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -59,7 +60,8 @@ public class UserFunction extends Screen{
 	JButton turnLeftB;
 	JButton eatB;
 	
-	public JComboBox userDefinedFunctions; /*get from control*/ 
+	DefaultComboBoxModel model = new DefaultComboBoxModel();
+	public JComboBox<String> userDefinedFunctions; /*get from control*/ 
 	
 	/**Left side panel: labels, buttons, other**/
 	JLabel ifL = new JLabel("If :");
@@ -79,9 +81,6 @@ public class UserFunction extends Screen{
 	/** Repeat stuff **/
 	JLabel repeatL= new JLabel("Function Name:"); 
 	String[] nums = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"};
-	
-	
-
 	
 	/**
 	 * Constructor that creates all necessary GUI components.
@@ -333,6 +332,7 @@ public class UserFunction extends Screen{
 		userDefinedL.setFont(new Font("Serif", Font.BOLD, 18));
 		
 		String[] drop = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"}; // EDIT : should come from somewhere else
+		
 		userDefinedFunctions = new JComboBox();
 		
 		//top, left, botton, right <- insets
@@ -554,6 +554,16 @@ public class UserFunction extends Screen{
 		
 		return functionsCodeList.getSelectedIndex();
 	}
+	
+	
+	public void refreshUserFunctionsList(String[] newFunctions){
+		
+		userDefinedFunctions.removeAllItems();
+		for(int i = 0; i < newFunctions.length; i++) {
+			userDefinedFunctions.addItem(newFunctions[i]);
+		}
+	}
+
 	public void updateInstructionsList(String[] instructions) {
 		this.instructions.clear();
 		for(int i = 0; i < instructions.length; i++) {
