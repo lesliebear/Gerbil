@@ -75,7 +75,7 @@ public class Conditionals {
 	JButton okB;
 	JButton cancelB; 
 
-	JComboBox conditionalDropdown; /*get from control*/ 
+	JComboBox conditionalDD; /*get from control*/ 
 
 	private static JList conditionalscodeList;
 	private static JScrollPane scrollpane;
@@ -284,7 +284,7 @@ public class Conditionals {
 		conditionalscodeList.setVisibleRowCount(20);
 
 		String [] checks = {"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
-		conditionalDropdown = new JComboBox(checks);
+		conditionalDD = new JComboBox(checks);
 
 		gc.gridx = 0;
 		gc.gridy = 0;
@@ -298,7 +298,7 @@ public class Conditionals {
 		gc.gridwidth = 2;
 		gc.gridx = 1; 
 		gc.gridy=0; 
-		leftPanel.add(conditionalDropdown, gc);
+		leftPanel.add(conditionalDD, gc);
 
 		gc.insets = new Insets(0,0,0,0);
 
@@ -374,22 +374,22 @@ public class Conditionals {
 	public void setText(String type){
 		if(type == "If"){
 			label.setText("If");
-		//	 refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
+			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 		}else if(type == "Else"){
 			label.setText("Else");
-		//	 refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
+			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 		}else if(type == "Else if"){
 			label.setText("Else if");
-		//	refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
+			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 		}else if(type == "While"){
 			label.setText("While");
-		//	refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
+			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 		}else if(type == "Repeat"){
 			label.setText("Repeat");
-		//	refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
+			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
+			refreshUserFunctionsList_Repeat(Start.StartGerbil.controller.getFunctions());
 		}
 	}
-	
 	
 	public void refreshUserFunctionsList(String[] newFunctions){
 		
@@ -398,6 +398,15 @@ public class Conditionals {
 			userDefinedFunctions.addItem(newFunctions[i]);
 		}
 	}
+	
+	public void refreshUserFunctionsList_Repeat(String[] newFunctions){
+		
+		conditionalDD.removeAllItems();
+		for(int i = 1; i < 16; i++) {
+			conditionalDD.addItem(i);
+		}
+	}
+
 
 	/**
 	 * Shows the screen.
