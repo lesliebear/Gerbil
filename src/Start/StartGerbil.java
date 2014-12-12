@@ -20,7 +20,7 @@ public class StartGerbil {
 		//alc = new ActionListenersControl();
 
 		try{
-			backend.loadSavedGames();
+			backend.setGameList(backend.loadSavedGames());
 		}catch (Exception e1) { //if txt file stuff is cleared, it has issues so make a dummy user, and delete the dummy user for it to work
 			System.out.println("There are no saved games.");
 		}

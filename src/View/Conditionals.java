@@ -385,24 +385,31 @@ public class Conditionals {
 	}
 	//"If", "Else", "Else if", "While", "Repeat"
 	public void setText(String type){
+		String [] conditions = {"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
+	
 		refreshConditionalsJList(); // refresh the JList
 		
 		if(type == "If"){
 			label.setText("If");
+			
 			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
+			refreshUserFunctionsList_Other(conditions);
 		}else if(type == "Else"){
 			label.setText("Else");
 			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
+			refreshUserFunctionsList_Other(conditions);
 		}else if(type == "Else if"){
 			label.setText("Else if");
 			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
+			refreshUserFunctionsList_Other(conditions);
 		}else if(type == "While"){
 			label.setText("While");
 			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
+			refreshUserFunctionsList_Other(conditions);
 		}else if(type == "Repeat"){
 			label.setText("Repeat");
 			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
-			refreshUserFunctionsList_Repeat(Start.StartGerbil.controller.getFunctions());
+			refreshUserFunctionsList_Repeat();
 		}
 	}
 	
@@ -417,10 +424,17 @@ public class Conditionals {
 		}
 	}
 	
-	public void refreshUserFunctionsList_Repeat(String[] newFunctions){
+	public void refreshUserFunctionsList_Repeat(){
 		conditionalDD.removeAllItems();
 		for(int i = 1; i < 16; i++) {
 			conditionalDD.addItem(i);
+		}
+	}
+	
+	public void refreshUserFunctionsList_Other(String[] conditions){
+		conditionalDD.removeAllItems();
+		for(int i = 0; i < conditions.length; i++) {
+			conditionalDD.addItem(conditions[i]);
 		}
 	}
 	

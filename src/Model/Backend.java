@@ -90,7 +90,7 @@ public class Backend implements Serializable {
 	 * @return True if successful, else false 
 	 * @throws IOException If error encountered with the serialized file
 	 * @throws ClassNotFoundException If error encountered with class not found
-	 */
+	 
 	@SuppressWarnings({ "unchecked", "resource" })
 	public boolean loadSavedGames(){
 		ObjectInputStream ois;
@@ -139,16 +139,23 @@ public class Backend implements Serializable {
 	 * @throws IOException If error encountered with the serialized file
 	 * @throws FileNotFoundException If file to store the file could not been found.
 	 */
-	@SuppressWarnings("resource")
-	public boolean saveGames() { 
-		ObjectOutputStream oos;
-		try {
-			oos = new ObjectOutputStream(new FileOutputStream(storeFile));
-			oos.writeObject(games);
-			return true;
-		} catch (Exception e) {return false;} 
-	}
+	@SuppressWarnings("unchecked")
+	public ArrayList<Game> loadSavedGames() 
+			throws IOException, ClassNotFoundException { 
+		@SuppressWarnings("resource")
+		ObjectInputStream ois = new ObjectInputStream( 
+				new FileInputStream(storeFile)); 
+		return (ArrayList<Game>)ois.readObject(); 
+		 
+	} 
 	
+	public void saveGames(ArrayList<Game> users) throws IOException { 
+		@SuppressWarnings("resource")
+		ObjectOutputStream oos = new ObjectOutputStream( 
+				new FileOutputStream(storeFile)); 
+		oos.writeObject(users); 
+		return;
+	} 
 
 	/**
 	 * Gets the game from the arraylist of user's games based on the name the user gave for the game

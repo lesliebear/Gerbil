@@ -32,8 +32,7 @@ public class SavedGames extends Screen{
 	public  JComboBox gamesList;
 	private JLabel gamesLabel;
 	private BufferedImage image;
-	
-	
+
 	public SavedGames(){
 
 		createButtons();
@@ -46,22 +45,23 @@ public class SavedGames extends Screen{
 		} catch (Exception ex) {
 			System.out.println("Couldn't load image");
 		} 
-		
+
 		panel = new JPanel() {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 			}
 		};
+		
 		listPanel = new JPanel();
 		listPanel.setOpaque(false);
 		buttonPanel = new JPanel();
 		buttonPanel.setOpaque(false);
 		createScreen();
 	}
-	
-private void createButtons(){
-		
+
+	private void createButtons(){
+
 		openGame = new JButton("Open Game") {
 			public void paint(Graphics g) {
 				openGame.setFont(new Font(null, Font.PLAIN, 30)); 
@@ -104,7 +104,7 @@ private void createButtons(){
 				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
 			}
 		};
-		
+
 		cancel  = new JButton("Cancel") {
 			public void paint(Graphics g) {
 				cancel.setFont(new Font(null, Font.PLAIN, 30)); 
@@ -126,9 +126,9 @@ private void createButtons(){
 				g2d.drawString(getText(), xMargin, (float)getFont().getSize()+yMargin);
 			}
 		};
-		
+
 	}
-	
+
 	/**
 	 * Creates the screen by putting the GUI components together.
 	 */
@@ -142,7 +142,7 @@ private void createButtons(){
 		deleteGame.setFont(new Font(null, Font.BOLD,20));
 		cancel.setFont(new Font(null, Font.BOLD,20));
 		Dimension dimension = new Dimension(1024, 768);
-		
+
 		listPanel.add(gamesList);
 		buttonPanel.setLayout(new GridBagLayout());
 		c.fill = GridBagConstraints.BOTH;
@@ -162,7 +162,7 @@ private void createButtons(){
 		c.ipady = 35;
 		c.ipadx = 30;
 		buttonPanel.add(cancel,c);
-		
+
 		panel.setLayout(new GridBagLayout());
 		c.insets = new Insets(0,350,45,0);
 		c.gridx = 0;
@@ -215,14 +215,14 @@ private void createButtons(){
 	public void disable() {
 		frame.setEnabled(false);
 	}
-	
+
 	/*List Selection Handler*/
 	public void addGameListSelectionListener(ActionListener listener) {
 		gamesList.addActionListener(listener);
 	}
-	
+
 	/*Button Handlers*/
-	
+
 	public void addOpenGameEventHandler(ActionListener listener) {
 
 		openGame.addActionListener(listener);
@@ -232,7 +232,7 @@ private void createButtons(){
 
 		deleteGame.addActionListener(listener);
 	}
-	
+
 	public void addCancelEventHandler(ActionListener listener) {
 
 		cancel.addActionListener(listener);

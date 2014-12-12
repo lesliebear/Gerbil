@@ -2094,6 +2094,17 @@ public class Controller {
 		}
 		return returnstring;
 	}
+	
+	
+	public ArrayList<String> getFunctionsArrayList(){
+		ArrayList<String> functionnames= new ArrayList<String>();
+		for(int i=0; i<functions.size(); i++){
+			functionnames.add(functions.get(i).getName());
+		}
+		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
+		
+		return sortedfunctions;
+	}
 
 	/**
 	 * Will return an alphabetically sorted ArrayList of strings for the drop down menu items
