@@ -54,7 +54,7 @@ public class Play extends Screen{
 	private static JButton stopB; 
 	private static JButton insertB; 
 	private static JButton editB; 
-	private static JButton deleteB;
+	public static JButton deleteB;
 	private static JButton clearAllB; 
 	private static JButton saveB;
 
