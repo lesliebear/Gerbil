@@ -59,6 +59,7 @@ public class ActionListenersControl {
 		Start.StartGerbil.controller.setCurrentGame(new Game("setUpGame")); // DO NOT remove. kthx.
 		initGrid();
 
+		
 		newGame = new NewGame();
 		deleteFunction = new DeleteFunction();
 		errorDialog = new ErrorDialog();
