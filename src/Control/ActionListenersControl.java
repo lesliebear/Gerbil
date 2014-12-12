@@ -704,29 +704,29 @@ public class ActionListenersControl {
 
 		conditionals.addMoveEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String funcName = (String) playScreen.userFunctionsDD.getSelectedItem();
-				Start.StartGerbil.controller.createBlocks(2,Play.playcodeList.getSelectedIndex(),1, null);
-				Start.StartGerbil.controller.createBlocks('e',Play.playcodeList.getSelectedIndex(),1,funcName);
-				playScreen.refreshCodeList();
+				int lineSelect  = conditionals.getSelectedLineNumber();
+				Start.StartGerbil.controller.createBlocks(2,lineSelect,1, null);
+				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
+				conditionals.refreshConditionalsJList();
 			}	
 		});
 		
 		conditionals.addEatEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String funcName = (String) playScreen.userFunctionsDD.getSelectedItem();
-				Start.StartGerbil.controller.createBlocks(0,Play.playcodeList.getSelectedIndex(),1, null);
-				Start.StartGerbil.controller.createBlocks('e',Play.playcodeList.getSelectedIndex(),1,funcName);
-				playScreen.refreshCodeList();
+				int lineSelect  = conditionals.getSelectedLineNumber();
+				Start.StartGerbil.controller.createBlocks(0,lineSelect,1, null);
+				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
+				conditionals.refreshConditionalsJList();
 				
 			}	
 		});
 		
 		conditionals.addTurnLeftEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String funcName = (String) playScreen.userFunctionsDD.getSelectedItem();
-				Start.StartGerbil.controller.createBlocks(1,Play.playcodeList.getSelectedIndex(),1, null);
-				Start.StartGerbil.controller.createBlocks('e',Play.playcodeList.getSelectedIndex(),1,funcName);
-				playScreen.refreshCodeList();
+				int lineSelect  = conditionals.getSelectedLineNumber();
+				Start.StartGerbil.controller.createBlocks(1,lineSelect,1, null);
+				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
+				conditionals.refreshConditionalsJList();
 			}	
 		});
 	}
