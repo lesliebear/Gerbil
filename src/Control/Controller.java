@@ -1931,20 +1931,20 @@ public class Controller {
 	/**
 	 * Creates a new Function object, stores createdFunctionBlocks in this function, and adds it to functions list
 	 */
-	public void createFunction(String name){
+	public int createFunction(String name){
 		int temp = validFunctionName(name);
 		if(temp==1){
 			/////////////Error: Functions names can only consists of letters or numbers///////////
-			return;
+			return 1;
 		}else if(temp==2){
 			///////////////////////////Error: Function name already exists////////////////
-			return;
+			return 2;
 		}
 		Function newfunction= new Function(name);
 		newfunction.setBlockInstructions(this.tempFunctionBlockInstructions);
 		this.tempFunctionBlockInstructions= new HashMap<Integer,Block>();//reset to empty
 		addFunction(newfunction); //add to this.functions list
-		return;
+		return 0;
 	}
 
 	/**
