@@ -3,6 +3,7 @@ package Control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -613,9 +614,13 @@ public class ActionListenersControl {
 			public void valueChanged(ListSelectionEvent e) {
 				if(deleting == true){
 					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
+					int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
+					playScreen.setMultipleSelectionMode();
+					Play.playcodeList.setSelectedIndices(highLight);
 					Start.StartGerbil.controller.deleteBlock(selectedIndexPlayCodeList);
-					
 					Play.refreshCodeList(); // refreshes the code list in Play screen
+				}else{
+					playScreen.setSingleSelectionMode();
 				}
 			}	
 		});

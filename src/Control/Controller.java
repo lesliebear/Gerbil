@@ -1555,6 +1555,16 @@ public class Controller {
 		int currDiff = b.getlineEnd()-b.getlineBegin();
 		cascadeNumberingChanges(b.getlineBegin(),currDiff,b);
 	}
+	
+	public int[] callHighlight(int line){
+		int[] bInfo;
+		Block b = getHighlighting(line,this.gamePlaying.getBlocks());
+		bInfo = new int[b.getlineEnd()-b.getlineBegin()+1];
+		for(int index =0, i =b.getlineBegin();index<bInfo.length;index++,i++){
+			bInfo[index]=i;
+		}
+		return bInfo;
+	}
 
 	/**
 	 * Figures out the given line number's parent block's line number = good for highlighting
