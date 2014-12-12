@@ -47,6 +47,12 @@ public class StartGerbil {
 		controller.createBlocks(5,12,0,null); //else
 		controller.createBlocks(3,14,0,null);  //if inside else
 		controller.createBlocks(2, 16, 0, null); //move inside if inside else
+		System.out.println("--------------------------Test the unfinins!");
+		String[] temp = controller.getUnFinIns();
+		for(int i =0 ;i<temp.length;i++){
+			System.out.println(temp[i]);
+		}
+		System.out.println("--------------------------done the unfinins!");
 		controller.createBlocks('e', 16, 1, null); 
 		controller.createBlocks('e',14,4,"There'sNoFood"); //end if inside else
 		controller.createBlocks(0,18,0,null); //eat
