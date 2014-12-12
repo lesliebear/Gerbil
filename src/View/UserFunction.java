@@ -60,7 +60,7 @@ public class UserFunction extends Screen{
 	JButton turnLeftB;
 	JButton eatB;
 	
-	DefaultComboBoxModel model = new DefaultComboBoxModel();
+	//DefaultComboBoxModel model = new DefaultComboBoxModel();
 	public JComboBox<String> userDefinedFunctions; /*get from control*/ 
 	
 	/**Left side panel: labels, buttons, other**/

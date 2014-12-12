@@ -686,20 +686,18 @@ public class ActionListenersControl {
 				String cond = conditionals.getCond();
 
 				Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
-
-				userFunction.show();
-				playScreen.hide();
+	
+				conditionals.hide();	
+				playScreen.show();
 			}	
 		});
 		
 		conditionals.addCancelEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
 				Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
 
-
-				userFunction.show();
-				playScreen.hide();
+				conditionals.hide();	
+				playScreen.show();
 			}	
 		});
 
