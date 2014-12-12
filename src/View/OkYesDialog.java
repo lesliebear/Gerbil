@@ -138,11 +138,11 @@ public class OkYesDialog extends Screen{
 		
 	}
 	
-	public void addBackEventHandler(ActionListener listener) {
-		yesB.addActionListener(listener);
+	public void addNoEventHandler(ActionListener listener) {
+		noB.addActionListener(listener);
 	}
 	
 	public void addOkEventHandler(ActionListener listener) {
-		noB.addActionListener(listener);
+		yesB.addActionListener(listener);
 	}
 }
