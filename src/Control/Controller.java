@@ -48,19 +48,22 @@ public class Controller {
 		initTempGrid();
 	}
 	
-	public String[] getUnFinIns(){
+	public String[] getUnFinIns(){ // unfinished insertion
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
+	
 		for(Block p = this.parent; p!=null; p=p.getParent()){
 			tempPar = p;
 		}//get to main nesting level
 		if(tempPar==null){
-			return (String[]) ins.toArray();
+			return ins.toArray(new String[ins.size()]);
 		}else{
 			printNotDoneBlock(0,tempPar.getNestedBlocks(), ins);
-			return (String[]) ins.toArray();
+			return ins.toArray(new String[ins.size()]);
 		}
 	}
+	
+	
 	
 	public String[] FunctionUnFin(){
 		Block tempPar=null;
