@@ -407,8 +407,6 @@ public class UserFunction extends Screen{
 		repeatL.setFont(new Font(null, Font.BOLD, 25));
 		leftPanel.add(repeatL, gc);
 		
-
-		
 		gc.insets = new Insets(10,0,0,20);
 
 		gc.fill = GridBagConstraints.HORIZONTAL;

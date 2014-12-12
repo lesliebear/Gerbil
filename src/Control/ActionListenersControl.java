@@ -497,19 +497,29 @@ public class ActionListenersControl {
 						
 					}else if(newType.equals("Else")){
 						Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
+						
+						conditionals.type = "Else";
+						
 					}else if(newType.equals("Else if")){
 						Start.StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
+						
+						conditionals.type = "Else if";
+						
 					}else if(newType.equals("While")){
 						Start.StartGerbil.controller.createBlocks(6,selectedIndexPlayCodeList, 0, null);
+						
+						conditionals.type = "While";
+						
 					}else {//if(newType.equals("Repeat")){
 						Start.StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
+						
+						conditionals.type = "Repeat";
 					}
 				}else{
 					
 				}
 				
 				conditionals.show();
-
 			}	
 		});
 
