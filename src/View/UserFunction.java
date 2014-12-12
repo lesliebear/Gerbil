@@ -574,6 +574,14 @@ public class UserFunction extends Screen{
 		return functionName.getText().trim();
 	}
 	
+	public void addReapeatEventHanderl(ActionListener listener) {
+		repeatB.addActionListener(listener);
+	}
+	
+	public void addWhileEventHandler(ActionListener listener) {
+		whileB.addActionListener(listener);
+	}
+	
 	public void addElseIfEventHandler(ActionListener listener) {
 		elseifB.addActionListener(listener);
 	}
