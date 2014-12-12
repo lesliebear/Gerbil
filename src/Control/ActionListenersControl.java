@@ -309,7 +309,7 @@ public class ActionListenersControl {
 				userFunction.dontAddToMain(false);	
 			}
 		});
-
+/*
 		userFunction.addListSelectionEventHandler(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -390,7 +390,7 @@ public class ActionListenersControl {
 		});
 
 
-
+*/
 
 
 		userFunction.addCancelEventHandler(new ActionListener() {
