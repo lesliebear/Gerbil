@@ -3,10 +3,21 @@ package Control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import Model.*;
+import javax.swing.DefaultComboBoxModel;
 
-import View.*;
- 
+import Model.Block;
+import Model.Game;
+import View.DeleteFunction;
+import View.ErrorDialog;
+import View.Finish;
+import View.Instructions;
+import View.Main;
+import View.NewGame;
+import View.Play;
+import View.PlayOptions;
+import View.SavedGames;
+import View.UserFunction;
+
 public class ActionListenersControl {
 	static NewGame newGame;
 	static DeleteFunction deleteFunction;
@@ -29,7 +40,6 @@ public class ActionListenersControl {
 	static int selectedIndexPlayCodeList;
 
 	int selectedIndexOther;
-
 	boolean selectedCreateFunctionFirst;
 
 	boolean inserting;
@@ -39,8 +49,13 @@ public class ActionListenersControl {
 	boolean play;
 	
 	static int parentScreen;
-
+	String backT="     ";
+	
 	public ActionListenersControl(){
+		//Set up GAME - idk...need so screen models aren't null...
+		Start.StartGerbil.controller.setCurrentGame(new Game());
+		initGrid();
+		
 		newGame = new NewGame();
 		deleteFunction = new DeleteFunction();
 		errorDialog = new ErrorDialog();
@@ -50,7 +65,10 @@ public class ActionListenersControl {
 		
 		playOptions = new PlayOptions();
 		savedGames = new SavedGames();
-
+		
+		userFunction = new UserFunction();
+		playScreen = new Play();
+		
 		inserting = false;
 		deleting = false;
 		editing = false;
@@ -73,7 +91,10 @@ public class ActionListenersControl {
 		addPlayOptionsEventHandlers();
 		addInstructionsEventHandlers();
 		addErrorDialogEventHandlers();
+		addPlayEventHandlers();
+		addUserFunctionEventHandlers();
 	}
+
 
 	/**
 	 * Add event handlers for the Main screen
@@ -163,26 +184,24 @@ public class ActionListenersControl {
 	private void addNewGameEventHandlers() {
 		newGame.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
 				String text = newGame.textF.getText(); 
+	
 				parentScreen = 3;
 				
 				if(!text.isEmpty()){
+					newGame.textF.setText(""); //must reset the text line
+					
 					if(Start.StartGerbil.backend.gameExists(text)){
 						errorDialog.errorL.setText("Please enter a Game name that doesn't already exist.");
 						newGame.hide();
 						errorDialog.show();
 					}else{
-						Game g = new Game();
-						Start.StartGerbil.backend.addGame(g); // not sure what add game does in this version - kat
-						Start.StartGerbil.controller.setCurrentGame(g);
+						Game g = new Game(text);
+						Start.StartGerbil.backend.addGame(g);
+						Start.StartGerbil.control.setCurrentGame(g);
+						
 						initGrid();
-						
-						playScreen = new Play();
-						userFunction = new UserFunction();
-						
-						addPlayEventHandlers();
-						
+						Play.refreshGrid();
 						
 						newGame.hide();
 						playScreen.show();
@@ -206,6 +225,23 @@ public class ActionListenersControl {
 	
 	private void addErrorDialogEventHandlers() {
 		errorDialog.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				errorDialog.hide();
+				showParent();
+			}		
+		});
+	}
+	
+	
+	private void addUserFunctionEventHandlers(){
+		userFunction.addBackEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				errorDialog.hide();
+				showParent();
+			}		
+		});
+		
+		userFunction.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				errorDialog.hide();
 				showParent();

@@ -592,6 +592,10 @@ public class UserFunction extends Screen{
 		cancelB.addActionListener(listener);
 	}
 	
+	public void addBackEventHandler(ActionListener listener) {
+		cancelB.addActionListener(listener);
+	}
+	
 	public void addOkEventHandler(ActionListener listener) {
 		okB.addActionListener(listener);
 	}
