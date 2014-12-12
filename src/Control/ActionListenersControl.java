@@ -359,7 +359,7 @@ public class ActionListenersControl {
 			}	
 		});
 
-	/*	playScreen.addPlayEventHandler(new ActionListener() {
+	/*playScreen.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Thread thread = new Thread() {
 					public void run() {
