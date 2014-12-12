@@ -428,12 +428,21 @@ public class Controller {
 	 * @param cond This is for while and if statements AND it also sends the integer for Repeat!!
 	 * @assumes if same function is called with c, the function was cancelled at some point so we ignore what we have currently 
 	 * @assuems if same function is called with e, the function was finished so we add to the list
+	 * 
+	 * 0 is good
+	 * 1 is ///////////////////ERROR: Number of repetitions was not selected!//////////////
+	 * 2 is ///////////ERROR: Function not selected////////////////////////////
+	 * 3 is ///////////////ERROR: Illegal funciton entered!!!!!/////////////
+	 * 4 is //////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
+	 * 5 is ////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
+	 * 
+	 * 
 	 */
-	public void createBlocks(int type, int begin, int numLines, String cond){
+	public int createBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
 			this.userCodingNow=null;//this is all that needs to be done here!
 			this.userCodingNow=this.parent;
-			return;
+			return 0;
 		}else if((type=='e') && (this.userCodingNow!=null)){//finished coding for the block so put into the correct spot
 			this.userCodingNow.setLineEnd(begin+numLines-1);	
 			int currType= this.userCodingNow.getType();
@@ -442,7 +451,7 @@ public class Controller {
 				if(cond==null){
 					bad=true;
 					///////////////////ERROR: Number of repetitions was not selected!//////////////
-					return;
+					return 1;
 				}else{ //no need to check if cond is int or not since view will provide int for it 
 					repeat =Integer.valueOf(cond);
 				}
@@ -453,7 +462,7 @@ public class Controller {
 				if(cond==null){
 					bad=true;
 					///////////ERROR: Function not selected////////////////////////////
-					return;
+					return 2;
 				}else{
 					for(int i=0; i<this.functions.size(); i++){
 						if(functions.get(i).getName().equals(cond)){
@@ -465,7 +474,7 @@ public class Controller {
 				if(functionNum==-1){ //despite searching for it!! 
 					bad=true;
 					///////////////ERROR: Illegal funciton entered!!!!!/////////////
-					return;
+					return 3;
 				}
 				this.userCodingNow.setFunctionNum(functionNum);	
 			}else if(currType==3 || currType==6){ //if and while loops
@@ -485,7 +494,7 @@ public class Controller {
 						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow, gamePlaying.getBlocks());
 						this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
 						this.userCodingNow=null;
-						return;
+						return 0;
 					}
 				}//get past this means, end of lines!
 				this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
@@ -494,13 +503,13 @@ public class Controller {
 			if(this.parent!=null){
 				this.parent=this.userCodingNow.getParent();
 			}
-			return;
+			return 0;
 		}else{ //first time making a block
 			Block b = new Block();
 			b.setlineBegin(begin);
 			b.setType(type);
 			if(type=='e'){
-				return;
+				return 0;
 			}
 			if((type==4) || (type==5)){ //SPECIAL FOR ELSE IF AND ELSE!!!
 				Block parIf = null; 
@@ -522,12 +531,12 @@ public class Controller {
 					bad=true;
 					//////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
 					//not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
-					return;
+					return 4;
 				}else if(parIf.getlineEnd()+1!=begin){
 					bad=true;
 					//So we are trying to insert the else if or else after the if for else if OR if/else if for ELSE!!!
 					////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
-					return;
+					return 5;
 				}else{
 					if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
 						b.setParent(parIf.getParent()); //set else if or else stuff's parent to the parent of if block!!
@@ -565,7 +574,7 @@ public class Controller {
 					this.userCodingNow=b; //don't put in if its in main's nesting
 				}
 			}
-			return;
+			return 0;
 		}
 	}
 
@@ -1620,6 +1629,7 @@ public class Controller {
 	 */
 	public Block getHighlighting(int line, HashMap<Integer,Block> blocks){
 		Block b = searchForBlock(line, blocks); //gets the block the line is in
+		
 		int type = b.getType();
 
 		//eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), function(8),
@@ -1767,13 +1777,7 @@ public class Controller {
 				return blocks.get(curr);
 			}else if(blocks.get(curr).getlineBegin()<=id && blocks.get(curr).getlineEnd()>=id){ 
 				//the block contains the line number in it so search inside
-				tempCurr=curr;
-				Block temp = searchForBlock(id,blocks.get(curr).getNestedBlocks());
-				if (temp==null){
-					return blocks.get(tempCurr);
-				}else{
-					return temp;
-				}
+				return blocks.get(curr);
 			}
 		}
 		//exit out without finding it meaning it is not a particular block's begin line.

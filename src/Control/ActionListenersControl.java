@@ -439,7 +439,7 @@ public class ActionListenersControl {
 						parentScreen=4;
 						userFunction.userDefinedFunctions.addItem(functionName);
 						userFunction.hide();
-						userFunction.dontAddToMain(0);
+					//	userFunction.dontAddToMain(0);
 					    playScreen.refreshUserFunctions();
 					    userFunction.hide();
 					    showParent();
@@ -610,6 +610,14 @@ public class ActionListenersControl {
 				if(inserting==true){
 					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
 					String newType = Play.conditionalsDD.getSelectedItem().toString();
+					/*
+					 * 0 is good
+					 * 1 is ///////////////////ERROR: Number of repetitions was not selected!//////////////
+					 * 2 is ///////////ERROR: Function not selected////////////////////////////
+					 * 3 is ///////////////ERROR: Illegal funciton entered!!!!!/////////////
+					 * 4 is //////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
+					 * 5 is ////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
+					 * */
 					//if(3),elseif(4),else(5),while(6),repeat(7), 
 					//String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
 					if(newType.equals("If")){
@@ -618,61 +626,89 @@ public class ActionListenersControl {
 						conditionals.setText("If");
 						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 						conditionals.setBegin(tempLine);
+						conditionals.show();
+						playScreen.hide();
 					}else if(newType.equals("Else")){
-						Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
-
-						conditionals.setText("Else");
-						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
-						conditionals.setBegin(tempLine);
+						int ret = Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
+						if(ret == 4){ //DO NOT OPEN CONDITIONALS = show error dialog!!!!
+							parentScreen = 4;
+							errorDialog.errorL.setText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
+							errorDialog.show();
+						}else if(ret==5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
+							parentScreen = 4;
+							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
+							errorDialog.show();
+							
+						}else{
+							conditionals.setText("Else");
+							int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+							conditionals.setBegin(tempLine);
+							conditionals.show();
+							playScreen.hide();
+						}
 					}else if(newType.equals("Else if")){
-						Start.StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
-
-						conditionals.setText("Else if");
-						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
-						conditionals.setBegin(tempLine);
+						int ret = Start.StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
+						if(ret==4){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
+							parentScreen = 4;
+							errorDialog.errorL.setText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
+							errorDialog.show();
+						}else if(ret == 5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
+							parentScreen = 4;
+							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
+							errorDialog.show();
+						}else{
+							conditionals.setText("Else if");
+							int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+							conditionals.setBegin(tempLine);
+							conditionals.show();
+							playScreen.hide();
+						}
 					}else if(newType.equals("While")){
 						Start.StartGerbil.controller.createBlocks(6,selectedIndexPlayCodeList, 0, null);
 
 						conditionals.setText("While");
 						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 						conditionals.setBegin(tempLine);
+						conditionals.show();
+						playScreen.hide();
 					}else {//if(newType.equals("Repeat")){
 						Start.StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
 
 						conditionals.setText("Repeat");
 						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 						conditionals.setBegin(tempLine);
+						conditionals.show();
+						playScreen.hide();
 					}
-
-					conditionals.show();
-					playScreen.hide();
 				}
+				
+				
+				
+				
 			}	
 		});
 
-		/*playScreen.addGivenFunctionsListSelectionListener(new ActionListener() {
+		playScreen.addGivenFunctionsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
-
 				if(inserting == true){
-					Play.enableAllPlayDD();
-					Play.instructions.add(selectedIndexPlayCodeList, Play.givenFunctionsDD.getSelectedItem().toString());
+					int begin = selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
+					String term = (String) playScreen.givenFunctionsDD.getSelectedItem();
+					int type = -1;
+					if(term.equals("Move Forward")){
+						type = 2;
+					}else if(term.equals("Turn Left")){
+						type = 1;
+					}else {//if(term.equals("Eat")){
+						type = 0;
+						
+					}
+					Start.StartGerbil.controller.createBlocks(type, begin,0, null);
+					Start.StartGerbil.controller.createBlocks('e', begin,1, null);
 					Play.refreshCodeList();
 					Play.playcodeList.setSelectedIndex(Play.playcodeList.getModel().getSize()-2);
-
-				}else if(editing == true){
-					if(Play.conditionalSelected()){
-						System.out.println(Play.instructions.get(selectedIndexPlayCodeList).substring(0,6));
-						if(Play.instructions.get(selectedIndexPlayCodeList).substring(0,6) == "Repeat"){
-
-						}
-
-					}else if(){
-
-					}
-				}
 			}
-		});	*/
+		}});	
 
 		playScreen.addUserFunctionsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
