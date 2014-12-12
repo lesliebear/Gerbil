@@ -441,8 +441,8 @@ public class ActionListenersControl {
 						userFunction.clearLabels();
 						userFunction.userDefinedFunctions.addItem(functionName);
 						userFunction.hide();
-					//	userFunction.dontAddToMain(0);
 						userFunction.dontAddToMain(true);
+						inserting=false;
 					    playScreen.refreshUserFunctions();
 					    userFunction.hide();
 					    showParent();
@@ -727,10 +727,12 @@ public class ActionListenersControl {
 
 		playScreen.addUserFunctionsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String funcName = (String) playScreen.userFunctionsDD.getSelectedItem();
-				Start.StartGerbil.controller.createBlocks(8,Play.playcodeList.getSelectedIndex(),1, null);
-				Start.StartGerbil.controller.createBlocks('e',Play.playcodeList.getSelectedIndex(),1,funcName);
-				playScreen.refreshCodeList();
+				if(inserting==true){
+					String funcName = (String) playScreen.userFunctionsDD.getSelectedItem();
+					Start.StartGerbil.controller.createBlocks(8,Play.playcodeList.getSelectedIndex(),1, null);
+					Start.StartGerbil.controller.createBlocks('e',Play.playcodeList.getSelectedIndex(),1,funcName);
+					playScreen.refreshCodeList();
+				}
 			}	
 		});
 
@@ -745,7 +747,7 @@ public class ActionListenersControl {
 					Play.playcodeList.setSelectedIndices(highLight);
 					Start.StartGerbil.controller.deleteBlock(selectedIndexPlayCodeList);
 					Play.refreshCodeList(); // refreshes the code list in Play screen
-				}else{
+				}else if(inserting==true){
 					playScreen.setSingleSelectionMode();
 				}
 
