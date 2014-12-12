@@ -1,5 +1,6 @@
 package Control;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -759,7 +760,8 @@ public class ActionListenersControl {
 				//	Play.playcodeList.setSelectedIndices(highLight);
 					Start.StartGerbil.controller.deleteBlock(bTemp);
 					deleting = false;
-					playScreen.deleteB.setEnabled(false);
+					playScreen.deleteB.setBackground(Color.BLACK);
+					//playScreen.deleteB.setEnabled(b);(false);
 					Play.refreshCodeList(); // refreshes the code list in Play screen
 					
 					
