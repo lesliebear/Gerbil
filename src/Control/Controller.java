@@ -2021,13 +2021,17 @@ public class Controller {
 	 * 
 	 * @return ArrayList of strings with all functions that have been created in the program
 	 */
-	public ArrayList<String> getFunctions(){
+	public String[] getFunctions(){
 		ArrayList<String> functionnames= new ArrayList<String>();
 		for(int i=0; i<functions.size(); i++){
 			functionnames.add(functions.get(i).getName());
 		}
 		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
-		return sortedfunctions;
+		String[] returnstring= new String[functions.size()];
+		for(int j=0; j<functions.size(); j++){
+			returnstring[j]= sortedfunctions.get(j);
+		}
+		return returnstring;
 	}
 
 	/**
@@ -2236,7 +2240,7 @@ public class Controller {
 	 * @param function
 	 * @return True if add is successful, otherwise False
 	 */
-	public boolean addFunctionToBlock(int begin, Function function, Block block) {
+	/*public boolean addFunctionToBlock(int begin, Function function, Block block) {
 		//Note: A function is a one liner!! thus i set currDifference in cascadeNumbering Changes to 1
 		Block functionblock= new Block();
 		functionblock.setType(8); 
@@ -2249,7 +2253,7 @@ public class Controller {
 		cascadeNumberingChanges(begin,1,functionblock);
 		return true;
 
-	}
+	}*/
 
 	/**
 	 * Finds functions in array list of functions. First built in functions exist in that arraylist
