@@ -37,7 +37,6 @@ public class Controller {
 	Block parentEdit = null;
 	Block parentFunction = null;
 	Block userCodingNowFunction = null;
-	Gerbil runtimeGerbil;//= gamePlaying.getGerbil(); //Gerbil used for animation/runtime only
 
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
@@ -48,7 +47,7 @@ public class Controller {
 	/**assumes, returns, exceptions**/
 
 	public void testingStuff() { // not sure what this is for.. Kat
-		runtimeGerbil = gamePlaying.getGerbil();
+		tempgerbil = gamePlaying.getGerbil();
 		initFields();
 		initTempGrid();
 	}
@@ -665,6 +664,12 @@ public class Controller {
 	public void resetTempGrid(){
 		initTempGrid();
 		this.tempgerbil= new Gerbil();
+	}
+	/**
+	 * returns tempgerbil
+	 */
+	public Gerbil getTempGerbil(){
+		return this.tempgerbil;
 	}
 	/**
 	 * runs the user written code by first
