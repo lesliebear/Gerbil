@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
@@ -31,7 +32,6 @@ import javax.swing.JScrollPane;
 public class Conditionals {
 	/**Type of conditional frame**/
 	public static String type= "";
-	int currentLineNumber;
 	
 	/**LHS and RHS panels**/
 	static JPanel leftPanel = new JPanel(); 
@@ -51,6 +51,12 @@ public class Conditionals {
 	JButton moveForwardB;
 	JButton turnLeftB;
 	JButton eatB;
+	
+	static JFrame frame; 
+	
+	private int startLineNumber;
+	private int endLineNumber;
+	private DefaultListModel<String> instructions;
 	
 	JComboBox userDefinedFunctions; /*get from control*/ 
 	
@@ -388,8 +394,48 @@ public class Conditionals {
 	}
 	
 	
+	/**
+	 * Shows the screen.
+	 * 
+	 */
 	public void show() {
 		frame.setVisible(true);
+	}
+	
+	/**
+	 * Hides the screen.
+	 * 
+	 */
+	public void hide() {
+		frame.setVisible(false);
+	}
+
+	public void enable() {
+		frame.setEnabled(true);
+	}
+
+	public void disable() {
+		frame.setEnabled(false);
+	}
+	
+	public void resetLineNumber() {
+		startLineNumber = 0;
+	}
+
+	public int getEndLineNumber() {
+		endLineNumber = instructions.size() + 1;
+		return endLineNumber;
+	}
+	
+	public int getSelectedLineNumber() {
+		
+		return conditionalscodeList.getSelectedIndex();
+	}
+	public void updateInstructionsList(String[] instructions) {
+		this.instructions.clear();
+		for(int i = 0; i < instructions.length; i++) {
+			this.instructions.addElement(instructions[i]);
+		}
 	}
 	
 	public void addCancelEventHandler(ActionListener listener) {
