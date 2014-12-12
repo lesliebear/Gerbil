@@ -742,13 +742,26 @@ public class ActionListenersControl {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(deleting == true){
-					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
-					Block blockToDel= Start.StartGerbil.controller.getBlockByLine(selectedIndexPlayCodeList);
-					//int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
-					//playScreen.setMultipleSelectionMode();
-					//Play.playcodeList.setSelectedIndices(highLight);
-					Start.StartGerbil.controller.deleteBlock(blockToDel);
+					
+					int lineS = Play.playcodeList.getSelectedIndex();
+					Block bTemp = Start.StartGerbil.controller.getBlockByLine(lineS);
+					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+						selectedIndexPlayCodeList = lineS;
+					}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
+						selectedIndexPlayCodeList = 0;
+					}else{ //get the block's line begin
+						selectedIndexPlayCodeList = bTemp.getlineBegin();
+					}					
+					//Block blockToDel= Start.StartGerbil.controller.getBlockByLine(selectedIndexPlayCodeList);
+				//	int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
+			//		playScreen.setMultipleSelectionMode();
+				//	Play.playcodeList.setSelectedIndices(highLight);
+					Start.StartGerbil.controller.deleteBlock(bTemp);
+					deleting = false;
+					playScreen.deleteB.setEnabled(false);
 					Play.refreshCodeList(); // refreshes the code list in Play screen
+					
+					
 				}else if(inserting==true){
 					playScreen.setSingleSelectionMode();
 				}
