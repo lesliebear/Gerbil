@@ -53,7 +53,7 @@ public class ActionListenersControl {
 	
 	public ActionListenersControl(){
 		//Set up GAME - idk...need so screen models aren't null...
-		Start.StartGerbil.controller.setCurrentGame(new Game());
+		Start.StartGerbil.controller.setCurrentGame(new Game("setUpGame")); // DO NOT remove. kthx.
 		initGrid();
 		
 		newGame = new NewGame();
@@ -148,12 +148,6 @@ public class ActionListenersControl {
 		playOptions.addNewGameEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			
-				
-				if(parentScreen == 4){ // the person clicked the menu button from an old play screen and now wants to start a new game
-					playScreen.getPlayFrame().dispose();
-					System.out.println("THIS RANTHISRANTHISRAN!!!!!!!!!!!!!!!!!!");
-				}
-				
 				parentScreen = 5;
 				playOptions.hide();
 				
@@ -198,7 +192,7 @@ public class ActionListenersControl {
 					}else{
 						Game g = new Game(text);
 						Start.StartGerbil.backend.addGame(g);
-						Start.StartGerbil.control.setCurrentGame(g);
+						Start.StartGerbil.controller.setCurrentGame(g);
 						
 						initGrid();
 						Play.refreshGrid();
