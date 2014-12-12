@@ -95,7 +95,6 @@ public class ActionListenersControl {
 		addUserFunctionEventHandlers();
 	}
 
-
 	/**
 	 * Add event handlers for the Main screen
 	 */
@@ -353,6 +352,15 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedCreateFunctionFirst=true;
 				parentScreen = 4; 
+				
+			//First, create BLOCKS(instructions) that goes in the function
+				int type; //get block type
+				int begin; //get line begin
+				int numLines; //get number of lines
+				String cond; //get cond
+				
+				Start.StartGerbil.controller.createFunctionBlocks(type, begin, numLines, cond);
+				
 				
 				userFunction.show();
 				playScreen.hide();
