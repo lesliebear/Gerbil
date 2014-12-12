@@ -265,7 +265,7 @@ public class ActionListenersControl {
 			}	
 		});
 
-		/*play.addPlayEventHandler(new ActionListener() {
+		playScreen.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Thread thread = new Thread() {
 					public void run() {
@@ -275,13 +275,13 @@ public class ActionListenersControl {
 						for(int i = 0; i < instructions.size(); i++) {
 							if(instructions.get(i).equals("turn left")) {
 								Start.StartGerbil.controller.turnLeft(Start.StartGerbil.controller.getTempGerbil());
-								play.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX());
+								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX());
 							}
 							else if(instructions.get(i).equals("move")) {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
-								int currY = Start.StartGerbil.controller.getTempGerbil.getY();
+								int currY = Start.StartGerbil.controller.getTempGerbil().getY();
 								Start.StartGerbil.controller.moveForward(Start.StartGerbil.controller.getTempGerbil());
-								play.showMove(currY, currX, Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil.getX(), Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.tempgrid[currY][currX]);
+								playScreen.showMove(currY, currX, Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.tempgrid[currY][currX]);
 
 							}
 							else if(instructions.get(i).equals("eat")) {
@@ -296,23 +296,31 @@ public class ActionListenersControl {
 						}
 						if(errortype==1){
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
+							errorDialog.errorL.setText("Cannot Eat: there is no food at square");
+							errorDialog.show();
 						}else if(errortype==2){
 							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
+							errorDialog.errorL.setText("Cannot Move Forward: there is a wall ahead");
+							errorDialog.show();
 						}else if(errortype==3){
 							//miscellaneous error, could not compile code(this shouldn't happen)
 						}else if(errortype==4){
 							//ERROR: insert Dialogue BoxDid not reach water/goal
+							errorDialog.errorL.setText("Did not reach water, Try Again!");
+							errorDialog.show();
 						}else if(errortype==-1){
 							//parsing error(this shouldn't happen)
 						}else if(errortype==-2){
 							//ERROR: insert Dialogue BoxInfiniteLoop was created, cannot run code
 							//this does not run/animate the gerbil
+							errorDialog.errorL.setText("Infinite Loop was created, please edit your code");
+							errorDialog.show();
 						}
 					}
 				};
 				thread.start();
 			}
-		}); */
+		}); 
 
 		playScreen.addStopEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
