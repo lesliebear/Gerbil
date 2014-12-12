@@ -21,8 +21,8 @@ import java.util.ArrayList;
 @SuppressWarnings("serial")
 public class Backend implements Serializable {
 
-	/**Directory in which user data file is stored*/
-	public static final String storeDir = "data"; 
+	///**Directory in which user data file is stored*/
+	//public static final String storeDir = "data"; 
 	/**File to store user data*/
 	public static final String storeFile = "games.dat"; 
 	/**Array List that holds games of the user */
@@ -90,18 +90,17 @@ public class Backend implements Serializable {
 	 * @return True if successful, else false 
 	 * @throws IOException If error encountered with the serialized file
 	 * @throws ClassNotFoundException If error encountered with class not found
-	 
+	 */
 	@SuppressWarnings({ "unchecked", "resource" })
 	public boolean loadSavedGames(){
 		ObjectInputStream ois;
 		try {
-			ois = new ObjectInputStream(new FileInputStream(storeDir+"\\"+storeFile));
+			ois = new ObjectInputStream(new FileInputStream(storeFile));
 			ArrayList<Game> temp = ((ArrayList<Game>)ois.readObject());
 			this.setGameList(temp);
 			return true;
 		}catch (Exception e1){
-			Game newGame =new Game(); //if serializable file is empty, causes problems
-			newGame.setName("FileEmpty");
+			Game newGame =new Game("FileEmpty"); //if serializable file is empty, causes problems
 			this.addGame(newGame); //add new game
 			this.saveGames(); //save that game
 			this.deleteGame("FileEmpty"); //delete added game
@@ -109,9 +108,9 @@ public class Backend implements Serializable {
 		}
 		return false;
 		//creates arraylist of games to store here in backend.	
-	} */
+	} 
 
-	@SuppressWarnings("unchecked")
+	/*@SuppressWarnings("unchecked")
 	public ArrayList<Game> loadSavedGames() // kat
 			throws IOException, ClassNotFoundException { 
 		@SuppressWarnings("resource")
@@ -127,7 +126,7 @@ public class Backend implements Serializable {
 				new FileOutputStream(storeFile)); 
 		oos.writeObject(users); 
 		return;
-	} 
+	} */
 	
 	/**
 	 * Saves the games array list from backend to a serialized file for the single user (in kernel/standard)
@@ -139,16 +138,16 @@ public class Backend implements Serializable {
 	 * @return True if successful in saving games else false
 	 * @throws IOException If error encountered with the serialized file
 	 * @throws FileNotFoundException If file to store the file could not been found.
-	 
+	 */
 	@SuppressWarnings("resource")
 	public boolean saveGames() { 
 		ObjectOutputStream oos;
 		try {
-			oos = new ObjectOutputStream(new FileOutputStream(storeDir+"\\"+storeFile));
+			oos = new ObjectOutputStream(new FileOutputStream(storeFile));
 			oos.writeObject(games);
 			return true;
 		} catch (Exception e) {return false;} 
-	} */
+	}
 	
 
 	/**
