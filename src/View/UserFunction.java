@@ -34,7 +34,6 @@ import javax.swing.event.ListSelectionListener;
  */
 public class UserFunction extends Screen{
  
-	
 	/**LHS and RHS panels**/
 	static JPanel leftPanel = new JPanel(); 
 	static JPanel rightPanel = new JPanel();

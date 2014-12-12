@@ -3,10 +3,8 @@ package Control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.DefaultComboBoxModel;
-
-import Model.Block;
 import Model.Game;
+import View.Conditionals;
 import View.DeleteFunction;
 import View.ErrorDialog;
 import View.Finish;
@@ -29,17 +27,11 @@ public class ActionListenersControl {
 	static PlayOptions playOptions;
 	static SavedGames savedGames;
 	static UserFunction userFunction;
-	
-	int selectedIndexPlayScreen; /*Code list*/
+	static Conditionals conditionals;
 
-	/*ComboBoxes*/
-	static int selectedIndexConditionals;
-	static int selectedIndexGivenFunctions;
-	static int selectedIndexUserFunctions;
-
+	int selectedIndexPlayScreen; /*Code list in Play Screen*/
 	static int selectedIndexPlayCodeList;
 
-	int selectedIndexOther;
 	boolean selectedCreateFunctionFirst;
 
 	boolean inserting;
@@ -47,6 +39,8 @@ public class ActionListenersControl {
 	boolean editing;
 	boolean stop;
 	boolean play;
+	
+	boolean deleteCurrGame;
 	
 	static int parentScreen;
 	String backT="     ";
@@ -62,12 +56,14 @@ public class ActionListenersControl {
 		finish = new Finish();
 		instructionsScreen = new Instructions();
 		main = new Main(); 
+		conditionals = new Conditionals(" ");
 		
 		playOptions = new PlayOptions();
 		savedGames = new SavedGames();
 		
 		userFunction = new UserFunction();
 		playScreen = new Play();
+		playScreen.initialPlayScreen();
 		
 		inserting = false;
 		deleting = false;
@@ -259,6 +255,7 @@ public class ActionListenersControl {
 		playScreen.addMenuEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				parentScreen = 4; 
+				
 				playOptions.show();
 				playScreen.hide();
 			}	
@@ -307,7 +304,8 @@ public class ActionListenersControl {
 		playScreen.addInsertEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				inserting = true;
-				
+				playScreen.enableAllPlayDD();	
+				playScreen.enableAllButtons();
 				playScreen.setInsertSelected();
 			}	
 		});
@@ -330,7 +328,7 @@ public class ActionListenersControl {
 
 		playScreen.addClearAllEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Play.clearAll();
+				playScreen.clearAll();
 				
 				playScreen.setClearAllSelected();
 			}	
@@ -345,6 +343,7 @@ public class ActionListenersControl {
 				}
 				
 				playScreen.setSaveSelected();
+				playScreen.setSaveUnselected();
 			}	
 		});
 
@@ -374,6 +373,7 @@ public class ActionListenersControl {
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
+				
 				
 			}	
 		});
