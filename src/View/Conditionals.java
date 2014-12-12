@@ -392,22 +392,29 @@ public class Conditionals {
 		if(type == "If"){
 			label.setText("If");
 			
+			conditionalDD.setEnabled(true);
 			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 			refreshUserFunctionsList_Other(conditions);
 		}else if(type == "Else"){
 			label.setText("Else");
 			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
-			refreshUserFunctionsList_Other(conditions);
+			refreshUserFunctionsList_Else();
 		}else if(type == "Else if"){
 			label.setText("Else if");
+			
+			conditionalDD.setEnabled(true);
 			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 			refreshUserFunctionsList_Other(conditions);
 		}else if(type == "While"){
 			label.setText("While");
+			
+			conditionalDD.setEnabled(true);
 			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 			refreshUserFunctionsList_Other(conditions);
 		}else if(type == "Repeat"){
 			label.setText("Repeat");
+			
+			conditionalDD.setEnabled(true);
 			refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 			refreshUserFunctionsList_Repeat();
 		}
@@ -436,6 +443,11 @@ public class Conditionals {
 		for(int i = 0; i < conditions.length; i++) {
 			conditionalDD.addItem(conditions[i]);
 		}
+	}
+	
+	public void refreshUserFunctionsList_Else(){
+		//conditionalDD.setVisble(false);
+		conditionalDD.setEnabled(false);
 	}
 	
 	public void refreshConditionalsJList(){ 

@@ -34,7 +34,7 @@ public class Controller {
 	Block parentEdit = null;
 	Block parentFunction = null;
 	Block userCodingNowFunction = null;
-	public boolean bad = false;
+
 
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
@@ -464,7 +464,7 @@ public class Controller {
 			if(currType==7){//repeat block so turn cond into int and store in repeat
 				int repeat=-1;
 				if(cond==null){
-					bad=true;
+					
 					///////////////////ERROR: Number of repetitions was not selected!//////////////
 					return 1;
 				}else{ //no need to check if cond is int or not since view will provide int for it 
@@ -475,7 +475,7 @@ public class Controller {
 			}else if(currType==8){//user-defined FUNCTION block so find int for cond and store int in functionNum
 				int functionNum=-1;
 				if(cond==null){
-					bad=true;
+					
 					///////////ERROR: Function not selected////////////////////////////
 					return 2;
 				}else{
@@ -487,7 +487,7 @@ public class Controller {
 					}
 				}
 				if(functionNum==-1){ //despite searching for it!! 
-					bad=true;
+				
 					///////////////ERROR: Illegal funciton entered!!!!!/////////////
 					return 3;
 				}
@@ -543,12 +543,12 @@ public class Controller {
 					}
 				}
 				if(parIf==null){
-					bad=true;
+				
 					//////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
 					//not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
 					return 4;
 				}else if(parIf.getlineEnd()+1!=begin){
-					bad=true;
+					
 					//So we are trying to insert the else if or else after the if for else if OR if/else if for ELSE!!!
 					////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
 					return 5;
@@ -1438,8 +1438,51 @@ public class Controller {
 
 		}
 	}
-
-
+	public Block getBlockByLineMain(int line){
+		for(int k: this.gamePlaying.getBlocks().keySet()){
+			Block temp = this.gamePlaying.getBlocks().get(k);
+			if(line>=temp.getlineBegin()&& line <=temp.getlineEnd()){
+				return temp;
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * For any line number selected, it will return the block in that position
+	 * @param line Line Number
+	 * @return Block at that line Number in the main
+	 */
+	public Block getBlockByLine(int line){
+		Block ans;
+		for(int k: this.gamePlaying.getBlocks().keySet()){
+			Block temp = this.gamePlaying.getBlocks().get(k);
+			if(line>=temp.getlineBegin()&& line <=temp.getlineEnd()){
+				ans = temp.getNestedBlocks().get(line);
+				if(ans == null){
+					return temp;
+				}else{
+					return ans;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public void deleteBlock(Block toDel) {
+		if(toDel.getParent()==null){ //in main nesting 
+			int currDiff = toDel.getlineEnd()-toDel.getlineBegin()+1;
+			this.gamePlaying.getBlocks().remove(toDel.getlineBegin());
+			cascadeNumberingChanges(toDel.getlineBegin(),-1*currDiff, toDel, gamePlaying.getBlocks());//MAKE SURE -1*currDIFF!!!!!
+		}else{ //some other blocks's nesting
+			Block p = toDel.getParent();
+			p.getNestedBlocks().remove(toDel.getlineBegin());
+			int currDiff = toDel.getlineEnd()-toDel.getlineBegin()+1;
+			cascadeNumberingChanges(toDel.getlineBegin(),-1*currDiff, toDel, gamePlaying.getBlocks());//MAKE SURE -1*currDIFF!!!!!
+		}
+		
+	}
+	
 	/**
 	 * Will delete a block of code at a given index/position selected by the user 
 	 * 
@@ -1449,9 +1492,10 @@ public class Controller {
 	 * 
 	 * @param pos index/position of block to be deleted by user = line number in the play screen
 	 * @return true/false; false if failure to delete, true if deletion succeeds
-	 */
-	public boolean deleteBlock(int pos){
-		Block b = searchForBlock(pos, gamePlaying.getBlocks()); //gets the block we want to delete
+	 
+	public boolean deleteBlock(Block b){
+		//Block b = searchForBlock(pos, gamePlaying.getBlocks()); //gets the block we want to delete
+		
 		if(b==null){
 			return false; //failure to find block
 		}
@@ -1476,8 +1520,8 @@ public class Controller {
 				Block temB = nested.get(k);
 				int temTp =temB.getType(); 
 				if((temTp==4) || (temTp==5)){
-					deleteBlock(temB.getlineBegin()); 
-				}else /*if(temTp==3)*/{//different if block so exit loop
+					deleteBlock(temB); 
+				}else {///if(temTp==3){//different if block so exit loop
 					break;
 				}
 			}
@@ -1487,7 +1531,7 @@ public class Controller {
 		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
 		//Question: should we have something that asks them if they want to delete = view asks for sure or not
 		//if invalidates = do not delete code...
-	}
+	}*/
 
 
 
@@ -2356,5 +2400,7 @@ public class Controller {
 		this.gamePlaying=g;
 
 	}
+
+	
 
 }

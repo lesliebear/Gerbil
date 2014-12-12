@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import Model.Block;
 import Model.Game;
 import View.Conditionals;
 import View.DeleteFunction;
@@ -614,18 +615,16 @@ public class ActionListenersControl {
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(inserting==true){
-					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
+					int lineS = Play.playcodeList.getSelectedIndex();
+					Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
+					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+						selectedIndexPlayCodeList = lineS;
+					}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
+						selectedIndexPlayCodeList = 0;
+					}else{ //get the block's line begin
+						selectedIndexPlayCodeList = bTemp.getlineBegin();
+					}
 					String newType = Play.conditionalsDD.getSelectedItem().toString();
-					/*
-					 * 0 is good
-					 * 1 is ///////////////////ERROR: Number of repetitions was not selected!//////////////
-					 * 2 is ///////////ERROR: Function not selected////////////////////////////
-					 * 3 is ///////////////ERROR: Illegal funciton entered!!!!!/////////////
-					 * 4 is //////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
-					 * 5 is ////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
-					 * */
-					//if(3),elseif(4),else(5),while(6),repeat(7), 
-					//String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
 					if(newType.equals("If")){
 						Start.StartGerbil.controller.createBlocks(3,selectedIndexPlayCodeList, 0, null);
 
@@ -642,6 +641,7 @@ public class ActionListenersControl {
 							errorDialog.show();
 						}else if(ret==5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
 							parentScreen = 4;
+
 							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
 							errorDialog.show();
 							
@@ -742,10 +742,11 @@ public class ActionListenersControl {
 			public void valueChanged(ListSelectionEvent e) {
 				if(deleting == true){
 					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
-					int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
-					playScreen.setMultipleSelectionMode();
-					Play.playcodeList.setSelectedIndices(highLight);
-					Start.StartGerbil.controller.deleteBlock(selectedIndexPlayCodeList);
+					Block blockToDel= Start.StartGerbil.controller.getBlockByLine(selectedIndexPlayCodeList);
+					//int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
+					//playScreen.setMultipleSelectionMode();
+					//Play.playcodeList.setSelectedIndices(highLight);
+					Start.StartGerbil.controller.deleteBlock(blockToDel);
 					Play.refreshCodeList(); // refreshes the code list in Play screen
 				}else if(inserting==true){
 					playScreen.setSingleSelectionMode();
@@ -762,12 +763,12 @@ public class ActionListenersControl {
 				int begin = conditionals.getBegin();
 				int numLines = conditionals.getEndLineNumber();
 				String cond = conditionals.getCond();
-				if(Start.StartGerbil.controller.bad==false){ //if not bad, then close
+				//if(Start.StartGerbil.controller.bad==false){ //if not bad, then close
 					Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
-				}else{ //true so set to false.
-					Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
-					Start.StartGerbil.controller.bad=false;
-				}
+				//}else{ //true so set to false.
+					//Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
+					//Start.StartGerbil.controller.bad=false;
+				//}
 
 				playScreen.refreshCodeList();
 				conditionals.hide();	
