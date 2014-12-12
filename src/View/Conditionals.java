@@ -37,6 +37,9 @@ public class Conditionals {
 	static JPanel leftPanel = new JPanel(); 
 	static JPanel rightPanel = new JPanel();
 	
+	
+	JLabel label = new JLabel();
+	JComboBox<String> comboBox = new JComboBox<String>();
 	/**Right side panel: labels, buttons, other**/
 	JLabel conditionalsL = new JLabel("Conditional Statements"); 	
 	JLabel givenFunctionsL = new JLabel("Given Functions"); 
@@ -102,6 +105,7 @@ public class Conditionals {
 		createButtons();
 		setRightComponents();
 		setLeftComponents();
+		createAndShowGUI();
 	}
 	
 	void createButtons(){
@@ -402,6 +406,13 @@ public class Conditionals {
 		frame.setVisible(true);
 	}
 	
+	public void setType(String type) {
+		
+		if(type.equals("If")){
+			label.setText("If");
+			
+		}
+	}
 	/**
 	 * Hides the screen.
 	 * 
