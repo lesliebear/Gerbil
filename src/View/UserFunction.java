@@ -544,7 +544,6 @@ public class UserFunction extends Screen{
 		startLineNumber = 0;
 	}
 
-	
 	public int getEndLineNumber() {
 		endLineNumber = instructions.size() + 1;
 		return endLineNumber;

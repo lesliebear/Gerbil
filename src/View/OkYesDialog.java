@@ -1,5 +1,5 @@
 package View;
- 
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -19,27 +19,23 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
-/**
- * This class creates a GUI for the Confirmation screen.
- */
-public class NewGame extends Screen {
+public class OkYesDialog extends Screen{
 
 
 	private JFrame frame;
 	private JPanel panel;
-	private JButton cancelB;
-	public static JButton okB;
+	private static JButton yesB;
+	public static JButton noB;
 	private JLabel newGameNameL; 
 	public static JTextField textF;
 	
-	public NewGame() {
+	public OkYesDialog() {
 		frame = new JFrame("New Game");
 		panel = new JPanel();
 		textF = new JTextField();
 		newGameNameL = new JLabel();
 		
-		cancelB = new JButton("Cancel") {
+		yesB = new JButton("Cancel") {
 			public void paint(Graphics g) {
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
@@ -60,7 +56,7 @@ public class NewGame extends Screen {
 			}
 		};
 		
-		okB = new JButton("OK") {
+		noB = new JButton("No") {
 			public void paint(Graphics g) {
 				this.setContentAreaFilled(false);
 				this.setBorderPainted(false);
@@ -104,13 +100,12 @@ public class NewGame extends Screen {
 		c.insets = new Insets(40,0,0,0);
 		c.gridx = 0;
 		c.gridy = 2;
-		panel.add(okB, c);
-		
+		panel.add(yesB, c);
 		
 		c.insets = new Insets(40,0,0,0);
 		c.gridx = 1;
 		c.gridy = 2;
-		panel.add(cancelB, c);
+		panel.add(noB, c);
 		
 		frame.add(panel);
 		frame.setSize(dimension);
@@ -144,10 +139,10 @@ public class NewGame extends Screen {
 	}
 	
 	public void addBackEventHandler(ActionListener listener) {
-		cancelB.addActionListener(listener);
+		yesB.addActionListener(listener);
 	}
 	
 	public void addOkEventHandler(ActionListener listener) {
-		okB.addActionListener(listener);
+		noB.addActionListener(listener);
 	}
 }
