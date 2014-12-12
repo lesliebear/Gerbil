@@ -711,7 +711,7 @@ public class ActionListenersControl {
 					Play.refreshCodeList();
 					Play.playcodeList.setSelectedIndex(Play.playcodeList.getModel().getSize()-2);
 
-				}else if(editing == true){
+			/*	}else if(editing == true){
 					if(Play.conditionalSelected()){
 						System.out.println(Play.instructions.get(selectedIndexPlayCodeList).substring(0,6));
 						if(Play.instructions.get(selectedIndexPlayCodeList).substring(0,6) == "Repeat"){
@@ -721,7 +721,7 @@ public class ActionListenersControl {
 					}else if(){
 
 					}
-				}
+				}*/
 			}
 		}});	
 
