@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import Model.*;
- 
+
 /**
  * Controller class will make all necessary modifications to data in order to send it to the control. 
  * It will concern itself with the data of one user and one game at any given point, provided
@@ -47,11 +47,11 @@ public class Controller {
 		tempgerbil = gamePlaying.getGerbil();
 		initTempGrid();
 	}
-	
+
 	public String[] getUnFinIns(){ // unfinished insertion
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
-	
+
 		for(Block p = this.userCodingNow; p!=null; p=p.getParent()){
 			tempPar = p;
 		}//get to main nesting level
@@ -62,9 +62,9 @@ public class Controller {
 			return ins.toArray(new String[ins.size()]);
 		}
 	}
-	
-	
-	
+
+
+
 	public String[] FunctionUnFin(){
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
@@ -166,16 +166,16 @@ public class Controller {
 			}
 		}
 	}
-	
+
 	public String[] JListString(){
 		ArrayList<String> temp = new ArrayList<String>(); 
 		getJList(0,this.gamePlaying.getBlocks(),temp);
 		String [] toReturn = new String[temp.size()];
-		
+
 		for(int i=0; i< toReturn.length; i++){
 			toReturn[i] = temp.get(i);
 		}
-		
+
 		return toReturn;
 	}
 
@@ -188,7 +188,7 @@ public class Controller {
 
 		return toReturn;
 	}*/
-	
+
 	/**
 	 * Prints the hashmap of the blocks based on the indentation level(nesting level)
 	 * @param tab The indentation level of the block to be printed out
@@ -520,7 +520,32 @@ public class Controller {
 					this.parent=this.userCodingNow;
 					this.userCodingNow=b;
 					if(this.parent!=null){ //inserting into parent's block
-						parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+						if(parent.getNestedBlocks().get(begin)==null){ //nothing exists there so it's ok
+							parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+						}else{ //something already exists there! =>
+							ArrayList<Integer> kList = new ArrayList<Integer>();
+							for(Integer z: parent.getNestedBlocks().keySet()){
+								kList.add(z);
+							}
+							Collections.sort(kList);
+							HashMap<Integer,Block> cascadeBlocks = new HashMap<Integer,Block>();
+							for(int d = 0; d<kList.size();d++){
+								Block casB = parent.getNestedBlocks().get(d);
+								if(casB!=null){
+									if(d>=begin){ //the thing already there in the same location => we have to move it and all the subsequent stuff down\
+										int tempNumPlus = casB.getlineBegin()+1;
+										casB.setlineBegin(tempNumPlus);
+										tempNumPlus =casB.getlineEnd()+1;
+										casB.setLineEnd(tempNumPlus);
+										cascadeBlocks.put(tempNumPlus, casB);
+									}else{
+										cascadeBlocks.put(casB.getlineBegin(), casB);
+									}
+								}
+							}
+							cascadeBlocks.put(begin, b);
+							parent.setNestedBlocks(cascadeBlocks);
+						}
 					}
 				}else{
 					this.userCodingNow=b; //don't put in if its in main's nesting
@@ -1560,7 +1585,7 @@ public class Controller {
 		int currDiff = b.getlineEnd()-b.getlineBegin();
 		cascadeNumberingChanges(b.getlineBegin(),currDiff,b);
 	}
-	
+
 	public int[] callHighlight(int line){
 		int[] bInfo;
 		Block b = getHighlighting(line,this.gamePlaying.getBlocks());
