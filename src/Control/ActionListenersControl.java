@@ -601,9 +601,6 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedCreateFunctionFirst=true;
 				parentScreen = 4; 
-
-				//First, create BLOCKS(instructions) that goes in the function
-				int type = conditionals.getType();
 				int begin = conditionals.getBegin();
 				int numLines = conditionals.getEndLineNumber();
 				String cond = conditonals.getCond();
