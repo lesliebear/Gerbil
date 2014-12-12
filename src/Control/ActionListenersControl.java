@@ -235,7 +235,7 @@ public class ActionListenersControl {
 			}		
 		});
 		
-		userFunction.addWhileEventHandler(new ActionListener(){
+		userFunction.addReapeatEventHanderl(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(7, uSelect,0, null);

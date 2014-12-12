@@ -48,18 +48,27 @@ public class Controller {
 
 	public void testingStuff() { // not sure what this is for.. Kat
 		tempgerbil = gamePlaying.getGerbil();
-		initFields();
 		initTempGrid();
-	}
-
-	public void initFields() {
-		functions = gamePlaying.getfunction();
 	}
 	
 	public String[] getUnFinIns(int begin){
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
 		for(Block p = this.parent; p!=null; p=p.getParent()){
+			tempPar = p;
+		}//get to main nesting level
+		if(tempPar==null){
+			return (String[]) ins.toArray();
+		}else{
+			printNotDoneBlock(0,tempPar.getNestedBlocks(), ins);
+			return (String[]) ins.toArray();
+		}
+	}
+	
+	public String[] FunctionUnFin(int begin){
+		Block tempPar=null;
+		ArrayList<String> ins = new ArrayList<String>();
+		for(Block p = this.parentFunction; p!=null; p=p.getParent()){
 			tempPar = p;
 		}//get to main nesting level
 		if(tempPar==null){
@@ -169,7 +178,7 @@ public class Controller {
 		return toReturn;
 	}
 
-	public ArrayList<String> getUserDefinedFunctionsStringArray(){
+	/*public ArrayList<String> getUserDefinedFunctionsStringArray(){
 		ArrayList<String> toReturn = new ArrayList<String>(); 
 
 		for(int i=0; i<functions.size(); i++){
@@ -177,7 +186,7 @@ public class Controller {
 		}
 
 		return toReturn;
-	}
+	}*/
 	
 	/**
 	 * Prints the hashmap of the blocks based on the indentation level(nesting level)
@@ -569,7 +578,7 @@ public class Controller {
 	 * @postcondition initializes built in functions into the program
 	 * 
 	 * */
-	public void initBuiltIn (){
+	/*public void initBuiltIn (){
 		Function moveAhead= new Function("Move Forward");
 		Block moveAheadBlock= new Block();
 		moveAheadBlock.setType(2);
@@ -584,11 +593,7 @@ public class Controller {
 		Block turnLeftBlock= new Block();
 		turnLeftBlock.setType(1);
 		turnLeft.getBlockInstructions().put(1, turnLeftBlock);
-
-		functions.add(eat);
-		functions.add(turnLeft);
-		functions.add(moveAhead);
-	}
+	}*/
 
 
 
@@ -601,12 +606,12 @@ public class Controller {
 	 * @postcondition stores built in functions in the controller
 	 * 
 	 */
-	public void createBuiltIn(){
+	/*public void createBuiltIn(){
 		if(this.functions.isEmpty()){
 			this.functions = new ArrayList<Function>();
 			initBuiltIn();
 		}
-	}
+	}*/
 
 	/**
 	 * Creates a new Game object
