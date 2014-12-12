@@ -406,10 +406,20 @@ public class ActionListenersControl {
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
-				
-				String selectedItem = Play.conditionalsDD.getSelectedItem().toString();
-				conditionals.type = selectedItem;
-				
+				String newType = Play.conditionalsDD.getSelectedItem().toString();
+				//if(3),elseif(4),else(5),while(6),repeat(7), 
+				//String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
+				if(newType.equals("If")){
+					Start.StartGerbil.controller.createBlocks(3,selectedIndexPlayCodeList, 0, null);
+				}else if(newType.equals("Else")){
+					Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
+				}else if(newType.equals("Else if")){
+					Start.StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
+				}else if(newType.equals("While")){
+					Start.StartGerbil.controller.createBlocks(6,selectedIndexPlayCodeList, 0, null);
+				}else {//if(newType.equals("Repeat")){
+					Start.StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
+				}
 				
 			}	
 		});
