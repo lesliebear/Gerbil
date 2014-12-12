@@ -251,15 +251,17 @@ public class ActionListenersControl {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				System.out.println(userFunction.userDefinedFunctions.getSelectedItem());
-				//String funcName = userFunction.userDefinedFunctions.getSelectedItem();
-				
+				String funcName = (String) userFunction.userDefinedFunctions.getSelectedItem();
+				Start.StartGerbil.controller.createFunctionBlocks(8, userFunction.getSelectedLineNumber(), 1, null);
+				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(), 1, funcName);
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
 		userFunction.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				errorDialog.hide();
 				showParent();
+				
 			}		
 		});
 		
@@ -347,8 +349,8 @@ public class ActionListenersControl {
 		
 		userFunction.addTurnLeftEventHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				Start.StartGerbil.controller.createBlocks(1,userFunction.getSelectedLineNumber(),1, null);
-				Start.StartGerbil.controller.createBlocks('e',userFunction.getSelectedLineNumber(),1, null);
+				Start.StartGerbil.controller.createFunctionBlocks(1,userFunction.getSelectedLineNumber(),1, null);
+				Start.StartGerbil.controller.createFunctionBlocks('e',userFunction.getSelectedLineNumber(),1, null);
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}});
 		
