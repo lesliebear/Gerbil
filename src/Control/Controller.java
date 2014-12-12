@@ -581,45 +581,65 @@ public class Controller {
 	 */
 	public int runBlocks(){
 		int success=compileBlocks();
+		resetTempGrid();
 		if(success==-1){// error in parsing
 			return -1;
 		}
 		if(success==-2){ // infinite loop error
 			return -2;
 		}
+		ArrayList<String> templist= new ArrayList<String>();
 		String command;
 		for(int i=0; i<finalblocks.size(); i++){
 			command=finalblocks.get(i);
 			if(command.equals("Eat")){
-				boolean eat= eat(runtimeGerbil.getX(), runtimeGerbil.getY());
+				boolean eat= eat(tempgerbil.getX(), tempgerbil.getY(),tempgrid);
 				if(eat==false){
 					//errorEat() dialogue box??;
-					System.out.println("errorEat()");
+					for(int j=0; j<=i; j++){
+						templist.add(finalblocks.get(j));
+						finalblocks= templist;
+					}
 					return 1;
 				}
 			}else if(command.equals("Turn Left")){
-				boolean turnleft= turnLeft(runtimeGerbil);
+				boolean turnleft= turnLeft(tempgerbil);
 				if(turnleft==false){
-					System.out.println("Error turning left");
+					//error turning left, this shouldn't ever happen
+					for(int j=0; j<=i; j++){
+						templist.add(finalblocks.get(j));
+						finalblocks= templist;
+					}
 					return 3;
 				}
 			}else if(command.equals("Move Forward")){
-				boolean moveforward= moveForward(runtimeGerbil);
+				boolean moveforward= moveForward(tempgerbil);
 				if(moveforward==false){
 					//errorWall() dialogue box??
-					System.out.println("errorWall()");
+					for(int j=0; j<=i; j++){
+						templist.add(finalblocks.get(j));
+						finalblocks= templist;
+					}
 					return 2;
 				}else{
-					if(isthereWater(runtimeGerbil.getX(), runtimeGerbil.getY())){
+					if(isthereWater(tempgerbil.getX(), tempgerbil.getY())){
 						//YOU WIN THE GAME dialogue box??
+						for(int j=0; j<=i; j++){
+							templist.add(finalblocks.get(j));
+							finalblocks= templist;
+						}
 						return 0;
 					}
 				}
 			}else{
+				for(int j=0; j<=i; j++){
+					templist.add(finalblocks.get(j));
+					finalblocks= templist;
+				}
 				return 3;
 			}
 		}
-		System.out.println("errorDidNotReachWater()");
+		//error Did not reach water
 		return 4;
 
 	}
@@ -1101,7 +1121,7 @@ public class Controller {
 			return 0;	
 		}else if(block.getType()==0){//"eat"
 			finalblocks.add("Eat");
-			eat(tempgerbil.getX(),tempgerbil.getY());
+			eat(tempgerbil.getX(),tempgerbil.getY(),tempgrid);
 			return 0;
 		}else if(block.getType()==1){//"turn left"
 			finalblocks.add("Turn Left");
@@ -2024,12 +2044,12 @@ public class Controller {
 	 * @param y pos of food to eat
 	 * @return
 	 */
-	public boolean eat(int x, int y){
+	public boolean eat(int x, int y, char[][] grid){
 		//create pointer to grid
-		if(tempgrid[y][x]=='k' //if food
-				|| tempgrid[y][x]=='p'
-				|| tempgrid[y][x]=='a'){
-			tempgrid[y][x]='0'; //eat
+		if(grid[y][x]=='k' //if food
+				|| grid[y][x]=='p'
+				|| grid[y][x]=='a'){
+			grid[y][x]='0'; //eat
 			return true;
 		}
 		//will need grid from Grid.java
