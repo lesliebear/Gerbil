@@ -573,18 +573,18 @@ public class ActionListenersControl {
 						int errortype= Start.StartGerbil.controller.runBlocks();
 						ArrayList<String> instructions = Start.StartGerbil.controller.getFinalBlocks();
 						for(int i = 0; i < instructions.size(); i++) {
-							if(instructions.get(i).equals("turn left")) {
+							if(instructions.get(i).equals("Turn Left")) {
 								Start.StartGerbil.controller.turnLeft(Start.StartGerbil.controller.getTempGerbil());
-								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX());
+								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
 							}
-							else if(instructions.get(i).equals("move")) {
+							else if(instructions.get(i).equals("Move Forward")) {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
 								int currY = Start.StartGerbil.controller.getTempGerbil().getY();
 								char oldGridSpotType = Start.StartGerbil.controller.tempgrid[currY][currX];
 								Start.StartGerbil.controller.moveForward(Start.StartGerbil.controller.getTempGerbil());
-								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getCompass(), oldGridSpotType);
+								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getCompass(), oldGridSpotType);
 							}
-							else if(instructions.get(i).equals("eat")) {
+							else if(instructions.get(i).equals("Eat")) {
 								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
 							}
 							try {
