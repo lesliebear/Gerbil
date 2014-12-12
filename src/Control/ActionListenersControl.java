@@ -57,7 +57,6 @@ public class ActionListenersControl {
 		Start.StartGerbil.controller.setCurrentGame(new Game("setUpGame")); // DO NOT remove. kthx.
 		initGrid();
 
-		
 		newGame = new NewGame();
 		deleteFunction = new DeleteFunction();
 		errorDialog = new ErrorDialog();
@@ -81,8 +80,6 @@ public class ActionListenersControl {
 		initEventHandlers();
 		main.show();
 		//userFunction.show();
-
-
 	}
 
 	private void initGrid() {
@@ -131,16 +128,6 @@ public class ActionListenersControl {
 			}
 		});
 	}
-
-	/**
-	 * DeleteFunction 1
-	 * Main 2
-	 * NewGame 3
-	 * Play 4
-	 * PlayOptions 5
-	 * SavedGame 6
-	 * UserFunction 7
-	 */
 
 	/**
 	 * Add event handlers for the PlayOptions screen
@@ -193,12 +180,14 @@ public class ActionListenersControl {
 
 		okNoDialog.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Start.StartGerbil.controller.saveGame();
+
 				try{
-					Start.StartGerbil.controller.saveGame();
-				}catch(Exception ex){
+					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
+				}catch(Exception es){
 					System.out.println("Unable to save game.");
 				}
-
+				
 				okNoDialog.hide();
 				playOptions.show();
 			}		
@@ -585,9 +574,13 @@ public class ActionListenersControl {
 
 		playScreen.addSaveEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
+				
+				Start.StartGerbil.controller.saveGame();
+			//	String[] stringArray = list.toArray(new String[list.size()]);
+				
 				try{
-					Start.StartGerbil.controller.saveGame();
-				}catch(Exception e){
+					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
+				}catch(Exception es){
 					System.out.println("Unable to save game.");
 				}
 
