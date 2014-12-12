@@ -32,7 +32,7 @@ public class StartGerbil {
 		//System.out.println(bk.saveGames());
 		//Main main = new Main();
 		//checks{"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
-		controller.createBlocks(0, 1, 0, null); //eat
+		/*controller.createBlocks(0, 1, 0, null); //eat
 		controller.createBlocks('e', 1, 1, null);
 		controller.createBlocks(6, 2, 0, null); //a while
 
@@ -60,8 +60,9 @@ public class StartGerbil {
 		controller.createBlocks('e',12,8,null); //end else
 		controller.createBlocks('e', 2, 19, "There'sNoWall");
 
-		//controller.createBlocks(1, 1, 0, null); //turnleft = put infront of everything!
-		//controller.createBlocks('e', 1, 1, null);
+		controller.createBlocks(1, 1, 0, null); //turnleft = put infront of everything!
+		controller.createBlocks('e', 1, 1, null);
+		controller.printBlocks(0,controller.getCurrGame().getBlocks());*/
 		//		System.out.println("____________________________AFTER TURN LEFT AT 0____________________");
 		/**controller.createBlocks(3, 1, 0, null); //if theres no wall
 		controller.createBlocks(2, 3, 0, null); //move
@@ -74,7 +75,7 @@ public class StartGerbil {
 
 		controller.createBlocks(1, 0, 0, null); //insert turn left at line 0
 		controller.createBlocks('e', 0, 1, null);*/
-		controller.printBlocks(0,controller.getCurrGame().getBlocks());
+		
 		//System.out.println("_______________deleteblockstuff____________________________");
 		//System.out.println(controller.deleteBlock(16));
 		//controller.printBlocks(0,controller.getCurrGame().getBlocks());

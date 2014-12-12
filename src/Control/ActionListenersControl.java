@@ -80,8 +80,8 @@ public class ActionListenersControl {
 		initEventHandlers();
 		main.show();
 		//userFunction.show();
-		
-		
+
+
 	}
 
 	private void initGrid() {
@@ -181,7 +181,7 @@ public class ActionListenersControl {
 			}		
 		});
 	}
-	
+
 	private void addOkYesDialogEventHandlers(){
 		okNoDialog.addNoEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -189,7 +189,7 @@ public class ActionListenersControl {
 				playOptions.show();
 			}		
 		});
-		
+
 		okNoDialog.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try{
@@ -197,22 +197,22 @@ public class ActionListenersControl {
 				}catch(Exception ex){
 					System.out.println("Unable to save game.");
 				}
-				
+
 				okNoDialog.hide();
 				playOptions.show();
 			}		
 		});
 	}
-	
-	
+
+
 	private void addSavedGamesEventHandlers(){
-		
+
 		savedGames.addGameListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}		
 		});
-		
+
 		savedGames.addOpenGameEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String oGame= (String) savedGames.gamesList.getSelectedItem();
@@ -240,7 +240,7 @@ public class ActionListenersControl {
 				}
 			}		
 		});
-		
+
 		savedGames.addCancelEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				savedGames.hide();
@@ -312,8 +312,8 @@ public class ActionListenersControl {
 				}
 			}
 		});
-		
-		
+
+
 		userFunction.addCancelEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parentScreen=4;
@@ -322,7 +322,7 @@ public class ActionListenersControl {
 				showParent();
 			}		
 		});
-		
+
 		userFunction.addReapeatEventHanderl(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				int uSelect = userFunction.getSelectedLineNumber();
@@ -336,7 +336,7 @@ public class ActionListenersControl {
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
-		
+
 		userFunction.addWhileEventHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				int uSelect = userFunction.getSelectedLineNumber();
@@ -350,7 +350,7 @@ public class ActionListenersControl {
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
-		
+
 		userFunction.addElseEventHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				int uSelect = userFunction.getSelectedLineNumber();
@@ -364,8 +364,8 @@ public class ActionListenersControl {
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
-		
-		
+
+
 		userFunction.addElseIfEventHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				int uSelect = userFunction.getSelectedLineNumber();
@@ -391,16 +391,16 @@ public class ActionListenersControl {
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}});
-			
-		
-		
+
+
+
 		userFunction.addMoveAheadEventHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				Start.StartGerbil.controller.createFunctionBlocks(2, userFunction.getSelectedLineNumber(),1, null);
 				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(),1, null);
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}});
-		
+
 		userFunction.addEatEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Start.StartGerbil.controller.createFunctionBlocks(0, userFunction.getSelectedLineNumber(), 1, null);
@@ -408,22 +408,22 @@ public class ActionListenersControl {
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
-		
+
 		userFunction.addTurnLeftEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Start.StartGerbil.controller.createFunctionBlocks(1,userFunction.getSelectedLineNumber(),1, null);
 				Start.StartGerbil.controller.createFunctionBlocks('e',userFunction.getSelectedLineNumber(),1, null);
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-				
+
 			}});
-		
-		
+
+
 		userFunction.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String functionName = userFunction.getFunctionName();
 				parentScreen=7;
 				if(!functionName.equals("")) {
-					
+
 					errorDialog.hide();
 					showParent();
 					int error= Start.StartGerbil.controller.createFunction(functionName);
@@ -447,7 +447,7 @@ public class ActionListenersControl {
 					errorDialog.errorL.setText("You Must Enter a Function Name");
 					errorDialog.show();
 				}
-			
+
 			}		
 		});
 	}
@@ -458,14 +458,14 @@ public class ActionListenersControl {
 	private void addPlayEventHandlers() {
 		/**Button Listeners**/
 
-		
+
 		playScreen.addMenuEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				parentScreen = 4; 
-				
+
 				okNoDialog.okNoDialogL.setText("Would you like to save your current game?");
 				okNoDialog.show();
-				
+
 				playScreen.hide();
 			}	
 		});
@@ -539,7 +539,7 @@ public class ActionListenersControl {
 				inserting = true;
 				editing = false;
 				deleting = false; 
-				
+
 				playScreen.enableAllPlayDD();	
 				playScreen.enableAllButtons();
 				playScreen.setInsertSelected();
@@ -571,7 +571,7 @@ public class ActionListenersControl {
 				playScreen.clearAll();
 
 				playScreen.setClearAllSelected();
-				
+
 				Start.StartGerbil.controller.clearBlocks();
 			}	
 		});
@@ -599,8 +599,8 @@ public class ActionListenersControl {
 
 			}	
 		});
-		
-		
+
+
 
 		/**JComboBoxes**/
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
@@ -612,36 +612,36 @@ public class ActionListenersControl {
 					//String[] conditionals = { "If", "Else", "Else if", "While", "Repeat" };
 					if(newType.equals("If")){
 						Start.StartGerbil.controller.createBlocks(3,selectedIndexPlayCodeList, 0, null);
-						
+
 						conditionals.setText("If");
 						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 						conditionals.setBegin(tempLine);
 					}else if(newType.equals("Else")){
 						Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
-						
+
 						conditionals.setText("Else");
 						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 						conditionals.setBegin(tempLine);
 					}else if(newType.equals("Else if")){
 						Start.StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
-						
+
 						conditionals.setText("Else if");
 						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 						conditionals.setBegin(tempLine);
 					}else if(newType.equals("While")){
 						Start.StartGerbil.controller.createBlocks(6,selectedIndexPlayCodeList, 0, null);
-						
+
 						conditionals.setText("While");
 						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 						conditionals.setBegin(tempLine);
 					}else {//if(newType.equals("Repeat")){
 						Start.StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
-						
+
 						conditionals.setText("Repeat");
 						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 						conditionals.setBegin(tempLine);
 					}
-					
+
 					conditionals.show();
 					playScreen.hide();
 				}
@@ -699,7 +699,7 @@ public class ActionListenersControl {
 			}	
 		});
 	}
-	
+
 	/**
 	 * DeleteFunction 1
 	 * Main 2
@@ -712,19 +712,23 @@ public class ActionListenersControl {
 	public void addConditionalsEventHandlers(){
 		conditionals.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				int begin = conditionals.getBegin();
 				int numLines = conditionals.getEndLineNumber();
 				String cond = conditionals.getCond();
+				if(Start.StartGerbil.controller.bad==false){ //if not bad, then close
+					Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
+				}else{ //true so set to false.
+					Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
+					Start.StartGerbil.controller.bad=false;
+				}
 
-				Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
-				
 				playScreen.refreshCodeList();
 				conditionals.hide();	
 				playScreen.show();
 			}	
 		});
-		
+
 		conditionals.addCancelEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
@@ -740,18 +744,18 @@ public class ActionListenersControl {
 				//System.out.println("lineSelect: "+lineSelect);
 				Start.StartGerbil.controller.createBlocks(2,lineSelect,1, null);
 				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
-				
+
 				/*System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT NOW!!!");
 				String[] temp = Start.StartGerbil.controller.getUnFinIns();
 				for(int i =0 ;i<temp.length;i++){
 					System.out.println(temp[i]);
 				}
 				System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT DONE!!!!!");*/
-				
+
 				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
 			}	
 		});
-		
+
 		conditionals.addEatEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
@@ -760,7 +764,7 @@ public class ActionListenersControl {
 				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
 			}	
 		});
-		
+
 		conditionals.addTurnLeftEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
@@ -770,7 +774,7 @@ public class ActionListenersControl {
 			}	
 		});
 	}
-	
+
 	/**
 	 * DeleteFunction 1
 	 * Main 2

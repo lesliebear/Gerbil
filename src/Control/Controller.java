@@ -34,6 +34,7 @@ public class Controller {
 	Block parentEdit = null;
 	Block parentFunction = null;
 	Block userCodingNowFunction = null;
+	public boolean bad = false;
 
 	char[][] tempgrid= new char[17][17];
 	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
@@ -439,6 +440,7 @@ public class Controller {
 			if(currType==7){//repeat block so turn cond into int and store in repeat
 				int repeat=-1;
 				if(cond==null){
+					bad=true;
 					///////////////////ERROR: Number of repetitions was not selected!//////////////
 					return;
 				}else{ //no need to check if cond is int or not since view will provide int for it 
@@ -449,6 +451,7 @@ public class Controller {
 			}else if(currType==8){//user-defined FUNCTION block so find int for cond and store int in functionNum
 				int functionNum=-1;
 				if(cond==null){
+					bad=true;
 					///////////ERROR: Function not selected////////////////////////////
 					return;
 				}else{
@@ -460,6 +463,7 @@ public class Controller {
 					}
 				}
 				if(functionNum==-1){ //despite searching for it!! 
+					bad=true;
 					///////////////ERROR: Illegal funciton entered!!!!!/////////////
 					return;
 				}
@@ -515,10 +519,12 @@ public class Controller {
 					}
 				}
 				if(parIf==null){
+					bad=true;
 					//////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
 					//not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
 					return;
 				}else if(parIf.getlineEnd()+1!=begin){
+					bad=true;
 					//So we are trying to insert the else if or else after the if for else if OR if/else if for ELSE!!!
 					////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
 					return;
@@ -527,8 +533,15 @@ public class Controller {
 						b.setParent(parIf.getParent()); //set else if or else stuff's parent to the parent of if block!!
 						this.parent=parIf.getParent();
 						this.userCodingNow=b;
-						//inserting into parent's block
-						parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+						if(parent!=null){ //insert into parent's block
+							if(parent.getNestedBlocks().get(begin)==null){ //nothing there put
+								parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+							}else{ 
+								HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
+			asdf					cascadeNumberingChanges(begin, 1, b); //cascade first then put into it!!
+								parent.getNestedBlocks().put(begin, b);
+							}
+						}
 					}else{
 						b.setParent(parIf.getParent());
 						this.userCodingNow=b; //don't put in if in main;s nesting
@@ -539,32 +552,13 @@ public class Controller {
 					b.setParent(this.userCodingNow);
 					this.parent=this.userCodingNow;
 					this.userCodingNow=b;
-					if(this.parent!=null){ //inserting into parent's block
-						if(parent.getNestedBlocks().get(begin)==null){ //nothing exists there so it's ok
+					if(parent!=null){ //insert into parent's block
+						if(parent.getNestedBlocks().get(begin)==null){ //nothing there put
 							parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
-						}else{ //something already exists there! =>
-							ArrayList<Integer> kList = new ArrayList<Integer>();
-							for(Integer z: parent.getNestedBlocks().keySet()){
-								kList.add(z);
-							}
-							Collections.sort(kList);
-							HashMap<Integer,Block> cascadeBlocks = new HashMap<Integer,Block>();
-							for(int d = 0; d<kList.size();d++){
-								Block casB = parent.getNestedBlocks().get(d);
-								if(casB!=null){
-									if(d>=begin){ //the thing already there in the same location => we have to move it and all the subsequent stuff down\
-										int tempNumPlus = casB.getlineBegin()+1;
-										casB.setlineBegin(tempNumPlus);
-										tempNumPlus =casB.getlineEnd()+1;
-										casB.setLineEnd(tempNumPlus);
-										cascadeBlocks.put(tempNumPlus, casB);
-									}else{
-										cascadeBlocks.put(casB.getlineBegin(), casB);
-									}
-								}
-							}
-							cascadeBlocks.put(begin, b);
-							parent.setNestedBlocks(cascadeBlocks);
+						}else{ 
+							HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
+		asdf					cascadeNumberingChanges(begin, 1, b); //cascade first then put into it!!
+							parent.getNestedBlocks().put(begin, b);
 						}
 					}
 				}else{
