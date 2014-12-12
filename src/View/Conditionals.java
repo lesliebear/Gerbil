@@ -271,18 +271,9 @@ public class Conditionals {
 
 		bodyL.setFont(new Font("Serif", Font.BOLD, 20));
 
-		// EDIT: this should be called from somewhere else...
-		String placeholder[] = {"  "};
-		
 		listModel=new DefaultListModel();
+		listModel.add(0," ");
 		
-		//Controler.gamePlaying.getBlocks
-		String [] temp = Start.StartGerbil.controller.getUnFinIns();
-		for(int i=0; i< temp.length;i++){
-			String test = temp[i];
-			listModel.addElement(test);
-		}
-
 		conditionalscodeList = new JList(listModel);
 		startLineNumber=0;
 		scrollpane = new JScrollPane(conditionalscodeList);

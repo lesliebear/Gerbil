@@ -139,9 +139,6 @@ public class Play extends Screen{
 		setGridComponents();
 	}
 
-	
-	
-
 	/**
 	 * Creates the screen by putting the GUI components together.
 	 */
@@ -331,7 +328,6 @@ public class Play extends Screen{
 	 * Input: Word longer than screen (Horizontal)
 	 * Expected Output: Horizontal Scrollbar should pop up
 	 * Output: Horizontal Scrollbar pops up
-	 * 
 	 * */
 	public static void setLeftComponents(){
 		Dimension size= leftPanel.getPreferredSize();
@@ -342,23 +338,13 @@ public class Play extends Screen{
 		beginL = new JLabel("Begin");
 		endL = new JLabel("End");
 
-		String placeholder[] = {"INSERT NEW" };
-
 		model=new DefaultListModel();
 		
 		//Controler.gamePlaying.getBlocks
-		String [] temp = Start.StartGerbil.controller.JListString();
-		for(int i=0; i< temp.length;i++){
-			String test = temp[i];
-			model.addElement(test);
-		}
+		model.add(0," ");
 
 		playcodeList = new JList(model);
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
-
-		/*if(beforeIsConditional()){
-			disableAllPlayDDButChecks();
-		} */
 
 		playcodeList.addListSelectionListener(new ListSelectionListener() {
 
@@ -665,7 +651,7 @@ public class Play extends Screen{
 		String [] temp = Start.StartGerbil.controller.JListString();
 		for(int i=0; i< temp.length;i++){
 			String test = temp[i];
-			model.addElement(test);
+			model.add(i,test);
 		}
 		
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
