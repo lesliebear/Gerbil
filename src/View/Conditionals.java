@@ -337,13 +337,13 @@ public class Conditionals {
 
 		gc.gridwidth = 1;
 		gc.gridx = 1; 
-		gc.gridy=2; 
+		gc.gridy=4; 
 		gc.ipady = 20;
 		gc.ipadx = 20;
 		leftPanel.add(okB, gc);
 
 		gc.gridx = 2; 
-		gc.gridy=2; 
+		gc.gridy=4; 
 		gc.ipady =20;
 		gc.ipadx = 20;
 		leftPanel.add(cancelB, gc);
