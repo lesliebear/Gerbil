@@ -242,12 +242,13 @@ public class ActionListenersControl {
 			}		
 		});
 		
-		/*userFunction.addReapeatEventHanderl(new ActionListener(){
+		userFunction.addReapeatEventHanderl(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(7, uSelect,0, null);
-				//GET CONDITIONALS SCREEN STUFF HERE!! WHEN THAT RETURNS BY CLICKING OK!!
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,numberoflines here, cond here);
+				conditionals.setText("Repeat");
+				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
@@ -256,8 +257,9 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(6, uSelect,0, null);
-				//GET CONDITIONALS SCREEN STUFF HERE!! WHEN THAT RETURNS BY CLICKING OK!!
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,numberoflines here, cond here);
+				conditionals.setText("While");
+				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
@@ -266,8 +268,9 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(5, uSelect,0, null);
-				//GET CONDITIONALS SCREEN STUFF HERE!! WHEN THAT RETURNS BY CLICKING OK!!
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,numberoflines here, cond here);
+				conditionals.setText("Else");
+				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
@@ -277,8 +280,9 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(4, uSelect,0, null);
-				//GET CONDITIONALS SCREEN STUFF HERE!! WHEN THAT RETURNS BY CLICKING OK!!
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,numberoflines here, cond here);
+				conditionals.setText("Else If");
+				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
@@ -286,8 +290,9 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				int uSelect = userFunction.getSelectedLineNumber();
 				Start.StartGerbil.controller.createFunctionBlocks(3, uSelect,0, null);
-				//GET CONDITIONALS SCREEN STUFF HERE!! WHEN THAT RETURNS BY CLICKING OK!!
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,numberoflines here, cond here);
+				conditionals.setText("If");
+				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}});
 			
@@ -315,7 +320,7 @@ public class ActionListenersControl {
 				Start.StartGerbil.controller.createBlocks('e',userFunction.getSelectedLineNumber(),1, null);
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}});
-		*/
+		
 		
 		userFunction.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
