@@ -57,17 +57,17 @@ public class Controller {
 		functions = gamePlaying.getfunction();
 	}
 	
-	public ArrayList<String> getUnFinIns(int begin){
+	public String[] getUnFinIns(int begin){
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
 		for(Block p = this.parent; p!=null; p=p.getParent()){
 			tempPar = p;
 		}//get to main nesting level
 		if(tempPar==null){
-			return ins;
+			return (String[]) ins.toArray();
 		}else{
 			printNotDoneBlock(0,tempPar.getNestedBlocks(), ins);
-			return ins;
+			return (String[]) ins.toArray();
 		}
 	}
 
