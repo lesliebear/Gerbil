@@ -357,6 +357,9 @@ public class Play extends Screen{
 
 		scrollpane = new JScrollPane(playcodeList);
 
+		playcodeList.setVisibleRowCount(20);
+		
+		
 		leftPanel.setLayout(new BorderLayout());
 		leftPanel.add(scrollpane, BorderLayout.CENTER);
 		leftPanel.add(beginL, BorderLayout.NORTH);
@@ -649,16 +652,14 @@ public class Play extends Screen{
 		model.clear();
 
 		String [] temp = Start.StartGerbil.controller.JListString();
+		
+		model.add(0, " ");
 		for(int i=0; i< temp.length;i++){
 			String test = temp[i];
 			model.add(i,test);
 		}
 		
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
-
-		/*if(beforeIsConditional()){
-			disableAllPlayDDButChecks();
-		} */
 	}
 
 	public void setSingleSelectionMode(){
