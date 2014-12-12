@@ -1,5 +1,6 @@
 package Control;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -579,8 +580,9 @@ public class ActionListenersControl {
 							else if(instructions.get(i).equals("move")) {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
 								int currY = Start.StartGerbil.controller.getTempGerbil().getY();
+								char oldGridSpotType = Start.StartGerbil.controller.tempgrid[currY][currX];
 								Start.StartGerbil.controller.moveForward(Start.StartGerbil.controller.getTempGerbil());
-								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getCompass());
+								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getCompass(), oldGridSpotType);
 							}
 							else if(instructions.get(i).equals("eat")) {
 								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
@@ -832,13 +834,27 @@ public class ActionListenersControl {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(deleting == true){
-					selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
-					Block blockToDel= Start.StartGerbil.controller.getBlockByLine(selectedIndexPlayCodeList);
-					//int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
-					//playScreen.setMultipleSelectionMode();
-					//Play.playcodeList.setSelectedIndices(highLight);
-					Start.StartGerbil.controller.deleteBlock(blockToDel);
+					
+					int lineS = Play.playcodeList.getSelectedIndex();
+					Block bTemp = Start.StartGerbil.controller.getBlockByLine(lineS);
+					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+						selectedIndexPlayCodeList = lineS;
+					}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
+						selectedIndexPlayCodeList = 0;
+					}else{ //get the block's line begin
+						selectedIndexPlayCodeList = bTemp.getlineBegin();
+					}					
+					//Block blockToDel= Start.StartGerbil.controller.getBlockByLine(selectedIndexPlayCodeList);
+				//	int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
+			//		playScreen.setMultipleSelectionMode();
+				//	Play.playcodeList.setSelectedIndices(highLight);
+					Start.StartGerbil.controller.deleteBlock(bTemp);
+					deleting = false;
+					playScreen.deleteB.setBackground(Color.BLACK);
+					//playScreen.deleteB.setEnabled(b);(false);
 					Play.refreshCodeList(); // refreshes the code list in Play screen
+					
+					
 				}else if(inserting==true){
 					playScreen.setSingleSelectionMode();
 				}
