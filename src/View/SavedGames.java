@@ -191,9 +191,7 @@ private void createButtons(){
 	 * 
 	 */
 	public void show() {
-		
 		frame.setVisible(true);
-		
 	}
 
 	/**
@@ -201,27 +199,21 @@ private void createButtons(){
 	 * 
 	 */
 	public void hide() {
-
 		frame.setVisible(false);
-		
 	}
 
 	/**
 	 * Enable the screen
 	 */
 	public void enable() {
-
 		frame.setEnabled(true);
-		
 	}
 
 	/**
 	 * Disable the screen
 	 */
 	public void disable() {
-
 		frame.setEnabled(false);
-		
 	}
 	
 	/*List Selection Handler*/
