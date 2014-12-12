@@ -595,7 +595,7 @@ public class ActionListenersControl {
 				parentScreen = 4; 
 				int begin = conditionals.getBegin();
 				int numLines = conditionals.getEndLineNumber();
-				String cond = conditonals.getCond();
+				String cond = conditionals.getCond();
 
 				Start.StartGerbil.controller.createFunctionBlocks('e', begin, numLines, cond);
 
