@@ -52,7 +52,7 @@ public class Controller {
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
 	
-		for(Block p = this.parent; p!=null; p=p.getParent()){
+		for(Block p = this.userCodingNow; p!=null; p=p.getParent()){
 			tempPar = p;
 		}//get to main nesting level
 		if(tempPar==null){
@@ -68,7 +68,7 @@ public class Controller {
 	public String[] FunctionUnFin(){
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
-		for(Block p = this.parentFunction; p!=null; p=p.getParent()){
+		for(Block p = this.userCodingNowFunction; p!=null; p=p.getParent()){
 			tempPar = p;
 		}//get to main nesting level
 		if(tempPar==null){
