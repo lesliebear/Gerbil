@@ -493,8 +493,9 @@ public class ActionListenersControl {
 							else if(instructions.get(i).equals("move")) {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
 								int currY = Start.StartGerbil.controller.getTempGerbil().getY();
+								char gridSpot = Start.StartGerbil.controller.tempgrid[currY][currX];
 								Start.StartGerbil.controller.moveForward(Start.StartGerbil.controller.getTempGerbil());
-								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getCompass());
+								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getCompass(), gridSpot);
 							}
 							else if(instructions.get(i).equals("eat")) {
 								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
