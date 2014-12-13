@@ -760,9 +760,9 @@ public class Play extends Screen{
 		switch(oldGridSpotType) {
 		case '0': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageGrass);
 		break;
-		case 'k': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePear);
+		case 'p': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePear);
 		break;
-		case 'p': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePumpkin);
+		case 'k': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePumpkin);
 		break;
 		case 'a': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageApple);
 		break;
