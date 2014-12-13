@@ -715,7 +715,7 @@ public class Controller {
 	 */
 	public void resetTempGrid(){
 		initTempGrid();
-		this.tempgerbil= new Gerbil();
+		this.tempgerbil = new Gerbil();
 	}
 	/**
 	 * returns tempgerbil

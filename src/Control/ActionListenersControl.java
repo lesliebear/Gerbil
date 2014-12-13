@@ -10,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 
 import Model.Block;
 import Model.Game;
+import Model.Gerbil;
 import View.Conditionals;
 import View.DeleteFunction;
 import View.ErrorDialog;
@@ -568,13 +569,16 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				Thread thread = new Thread() {
 					public void run() {
-						parentScreen=4;
-						Start.StartGerbil.controller.resetTempGrid();//just in case, resetting grid and gerbil object
+						parentScreen=4;	
 						int errortype= Start.StartGerbil.controller.runBlocks();
 						ArrayList<String> instructions = Start.StartGerbil.controller.getFinalBlocks();
+						Start.StartGerbil.controller.resetTempGrid();//just in case, resetting grid and gerbil object
 						for(int i = 0; i < instructions.size(); i++) {
+							System.out.println(instructions.get(i));
 							if(instructions.get(i).equals("Turn Left")) {
+								System.out.println(Start.StartGerbil.controller.getTempGerbil().getCompass());
 								Start.StartGerbil.controller.turnLeft(Start.StartGerbil.controller.getTempGerbil());
+								System.out.println(Start.StartGerbil.controller.getTempGerbil().getCompass());
 								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
 							}
 							else if(instructions.get(i).equals("Move Forward")) {
