@@ -31,7 +31,6 @@ import javax.swing.event.ListSelectionListener;
 
 /**
  * This class creates a GUI for the Function Screen.
- *
  */
 public class UserFunction extends Screen{
  
@@ -518,6 +517,7 @@ public class UserFunction extends Screen{
 		// TODO Auto-generated method stub
 		
 	}
+	
 	/**
 	 * Shows the screen.
 	 * 
@@ -568,7 +568,6 @@ public class UserFunction extends Screen{
 		
 		return functionsCodeList.getSelectedIndex();
 	}
-	
 	
 	public void refreshUserFunctionsList(String[] newFunctions){
 		

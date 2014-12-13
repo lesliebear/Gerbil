@@ -874,6 +874,22 @@ public class Play extends Screen{
 		checksDD.setEnabled(false);
 		numsDD.setEnabled(false);
 	}
+	
+	public void inUsePlayScreen(){//only insert, save, menu should be active
+		playB.setEnabled(true);
+		stopB.setEnabled(true);
+		editB.setEnabled(true);
+		deleteB.setEnabled(true);
+		clearAllB.setEnabled(true);
+		createFunctionB.setEnabled(true);
+
+		conditionalsDD.setEnabled(true);
+		givenFunctionsDD.setEnabled(true);
+		userFunctionsDD.setEnabled(true);
+		checksDD.setEnabled(true);
+		numsDD.setEnabled(true);
+	}
+	
 
 	public void enableAllButtons(){
 		menuB.setEnabled(true);
