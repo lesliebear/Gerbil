@@ -607,13 +607,6 @@ public class Play extends Screen{
 		gc.gridy=0;
 		lowerPanel.add(userDefinedFunctionsL, gc);
 
-		gc.gridx=4;
-		gc.gridy=0;
-		lowerPanel.add(checksL, gc);
-
-		gc.gridx=5;
-		gc.gridy=0;
-		lowerPanel.add(numsL, gc);
 
 		//gc.insets = new Insets(0,30,0,80);
 		/*Dropdowns*/
@@ -629,13 +622,6 @@ public class Play extends Screen{
 		gc.gridy=1;
 		lowerPanel.add(userFunctionsDD, gc);
 
-		gc.gridx=4;
-		gc.gridy=1;
-		lowerPanel.add(checksDD, gc);
-
-		gc.gridx=5;
-		gc.gridy=1;
-		lowerPanel.add(numsDD, gc);
 
 	}
 

@@ -120,6 +120,88 @@ public class ActionListenersControl {
 		addConditionalsEventHandlers();
 	}
 
+	public void addConditionalsEventHandlers(){
+		conditionals.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				int begin = conditionals.getBegin()-2;
+				int numLines = conditionals.getEndLineNumber()+2;
+				String cond = conditionals.getCond();
+
+				Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
+		
+				playScreen.refreshCodeList();
+				conditionals.hide();	
+				showParent();
+			}	
+		});
+
+		conditionals.addCancelEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
+
+				conditionals.hide();	
+				showParent();
+			}	
+		});
+
+		conditionals.addMoveEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
+				//System.out.println("lineSelect: "+lineSelect);
+				Start.StartGerbil.controller.createBlocks(2,lineSelect,1, null);
+				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
+
+				/*System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT NOW!!!");
+				String[] temp = Start.StartGerbil.controller.getUnFinIns();
+				for(int i =0 ;i<temp.length;i++){
+					System.out.println(temp[i]);
+				}
+				System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT DONE!!!!!");*/
+
+				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
+			}	
+		});
+
+		conditionals.addEatEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
+				Start.StartGerbil.controller.createBlocks(0,lineSelect,1, null);
+				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
+				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
+			}	
+		});
+
+		conditionals.addTurnLeftEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
+				Start.StartGerbil.controller.createBlocks(1,lineSelect,1, null);
+				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
+				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
+			}	
+		});
+	}
+	
+	
+	private void addErrorDialogEventHandlers() {
+		errorDialog.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				errorDialog.hide();
+				showParent();
+			}		
+		});
+	}
+	
+	private void addInstructionsEventHandlers() {
+		instructionsScreen.addBackEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				instructionsScreen.hide();
+				main.show();
+			}		
+		});
+	}
+	
+	
 	/**
 	 * Add event handlers for the Main screen
 	 */
@@ -145,6 +227,75 @@ public class ActionListenersControl {
 			}
 		});
 	}
+	
+	
+	private void addNewGameEventHandlers() {
+		newGame.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String text = newGame.textF.getText(); 
+
+				if(!text.isEmpty()){
+					newGame.textF.setText(""); //must reset the text line
+
+					if(Start.StartGerbil.backend.gameExists(text)){
+						errorDialog.errorL.setText("Please enter a Game name that doesn't already exist.");
+						newGame.hide();
+						errorDialog.show();
+					}else{
+						Start.StartGerbil.controller.createGame(text);
+
+						initGrid();
+						Play.refreshGrid();
+						playScreen.refreshUserFunctions();
+						playScreen.refreshCodeList();
+
+						newGame.hide();
+						playScreen.show();
+						playScreen.enableCreateFunction();
+					}
+				}else{
+					errorDialog.errorL.setText("Please enter a valid Game name");
+					newGame.hide();
+					errorDialog.show();
+				}
+				
+				parentScreen = 3;
+			}
+		});
+
+		newGame.addBackEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				newGame.textF.setText("");
+				newGame.hide();
+				showParent();
+			}		
+		});
+	}
+	
+	private void addOkYesDialogEventHandlers(){
+		okNoDialog.addNoEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				okNoDialog.hide();
+				playOptions.show();
+			}		
+		});
+
+		okNoDialog.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Start.StartGerbil.controller.saveGame();
+
+				try{
+					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
+				}catch(Exception es){
+					System.out.println("Unable to save game.");
+				}
+
+				okNoDialog.hide();
+				playOptions.show();
+			}		
+		});
+	}
+
 
 	/**
 	 * Add event handlers for the PlayOptions screen
@@ -173,6 +324,8 @@ public class ActionListenersControl {
 
 		playOptions.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				parentScreen = 5;
+				
 				playOptions.hide();
 
 				main.show();
@@ -180,376 +333,7 @@ public class ActionListenersControl {
 		});
 	}
 
-	private void addInstructionsEventHandlers() {
-		instructionsScreen.addBackEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				instructionsScreen.hide();
-				main.show();
-			}		
-		});
-	}
-
-	private void addOkYesDialogEventHandlers(){
-		okNoDialog.addNoEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				okNoDialog.hide();
-				playOptions.show();
-			}		
-		});
-
-		okNoDialog.addOkEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Start.StartGerbil.controller.saveGame();
-
-				try{
-					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
-				}catch(Exception es){
-					System.out.println("Unable to save game.");
-				}
-
-				okNoDialog.hide();
-				playOptions.show();
-			}		
-		});
-	}
-
-	private void addSavedGamesEventHandlers(){
-		savedGames.addOpenGameEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String oGame= (String) savedGames.gamesList.getSelectedItem();
-				if(oGame==null){
-					parentScreen=6;
-					errorDialog.errorL.setText("Must Select a Game");
-					errorDialog.show();
-				}else{
-					Game temp = Start.StartGerbil.controller.loadGame(oGame);
-					playScreen.refreshCodeList();
-					playScreen.refreshUserFunctions();
-					
-					playScreen.show();
-					savedGames.hide();
-				}
-			}		
-		});
-
-		savedGames.addDeleteGameEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String dGame= (String) savedGames.gamesList.getSelectedItem();
-				if(dGame==null){
-					parentScreen=6;
-					errorDialog.errorL.setText("Must Select a Game");
-					errorDialog.show();
-				}else{
-					Start.StartGerbil.controller.deleteGame(dGame);
-				}
-			}		
-		});
-
-		savedGames.addCancelEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				savedGames.hide();
-				playOptions.show();
-			}		
-		});
-	}
-
-	private void addNewGameEventHandlers() {
-		newGame.addOkEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String text = newGame.textF.getText(); 
-
-				parentScreen = 3;
-
-				if(!text.isEmpty()){
-					newGame.textF.setText(""); //must reset the text line
-
-					if(Start.StartGerbil.backend.gameExists(text)){
-						errorDialog.errorL.setText("Please enter a Game name that doesn't already exist.");
-						newGame.hide();
-						errorDialog.show();
-					}else{
-						Start.StartGerbil.controller.createGame(text);
-
-						initGrid();
-						Play.refreshGrid();
-						playScreen.refreshUserFunctions();
-						playScreen.refreshCodeList();
-
-						newGame.hide();
-						playScreen.show();
-						playScreen.enableCreateFunction();
-					}
-				}else{
-					errorDialog.errorL.setText("Please enter a valid Game name");
-					newGame.hide();
-					errorDialog.show();
-				}
-			}		
-		});
-
-		newGame.addBackEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				newGame.textF.setText("");
-				newGame.hide();
-				main.show();
-			}		
-		});
-	}
-
-	private void addErrorDialogEventHandlers() {
-		errorDialog.addOkEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				errorDialog.hide();
-				showParent();
-			}		
-		});
-	}
-
-
-	private void addUserFunctionEventHandlers(){
-		userFunction.addFunctionListListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(userFunction.addtomain){
-					String funcName = (String) userFunction.userDefinedFunctions.getSelectedItem();
-					Start.StartGerbil.controller.createFunctionBlocks(8, userFunction.getSelectedLineNumber(), 1, null);
-					Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(), 1, funcName);
-					userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-				}
-				userFunction.dontAddToMain(false);	
-			}
-		});
 	
-		/*
-		userFunction.addListSelectionEventHandler(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				if(inserting==true){
-					int lineS = Play.playcodeList.getSelectedIndex();
-					Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
-					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
-						selectedIndexPlayCodeList = lineS;
-					}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
-						selectedIndexPlayCodeList = 0;
-					}else{ //get the block's line begin
-						selectedIndexPlayCodeList = bTemp.getlineBegin();
-					}
-					String newType = Play.conditionalsDD.getSelectedItem().toString();
-					if(newType.equals("If")){
-						Start.StartGerbil.controller.createFunctionBlocks(3,selectedIndexPlayCodeList, 0, null);
-
-						userFunction.setText("If");
-						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
-						conditionals.setBegin(tempLine);
-						conditionals.show();
-						playScreen.hide();
-					}else if(newType.equals("Else")){
-						int ret = Start.StartGerbil.controller.createFunctionBlocks(5,selectedIndexPlayCodeList , 0, null);
-						if(ret == 4){ //DO NOT OPEN CONDITIONALS = show error dialog!!!!
-							parentScreen = 4;
-							errorDialog.errorL.setText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
-							errorDialog.show();
-						}else if(ret==5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
-							parentScreen = 4;
-
-							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
-							errorDialog.show();
-
-						}else{
-							conditionals.setText("Else");
-							int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
-							conditionals.setBegin(tempLine);
-							conditionals.show();
-							playScreen.hide();
-						}
-					}else if(newType.equals("Else if")){
-						int ret = Start.StartGerbil.controller.createFunctionBlocks(4,selectedIndexPlayCodeList, 0, null);
-						if(ret==4){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
-							parentScreen = 4;
-							errorDialog.errorL.setText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
-							errorDialog.show();
-						}else if(ret == 5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
-							parentScreen = 4;
-							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
-							errorDialog.show();
-						}else{
-							conditionals.setText("Else if");
-							int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
-							conditionals.setBegin(tempLine);
-							conditionals.show();
-							playScreen.hide();
-						}
-					}else if(newType.equals("While")){
-						Start.StartGerbil.controller.createFunctionBlocks(6,selectedIndexPlayCodeList, 0, null);
-
-						conditionals.setText("While");
-						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
-						conditionals.setBegin(tempLine);
-						conditionals.show();
-						playScreen.hide();
-					}else {//if(newType.equals("Repeat")){
-						Start.StartGerbil.controller.createFunctionBlocks(7,selectedIndexPlayCodeList, 0, null);
-
-						conditionals.setText("Repeat");
-						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
-						conditionals.setBegin(tempLine);
-						conditionals.show();
-						playScreen.hide();
-					}
-				}
-			}
-		});
-		*/
-		userFunction.addCancelEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				parentScreen=4;
-				Start.StartGerbil.controller.clearTempFunctionBlockInstructions();
-				errorDialog.hide();
-				showParent();
-			}		
-		});
-
-		userFunction.addReapeatEventHanderl(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				parentScreen = 7;
-
-				int uSelect = userFunction.getSelectedLineNumber();
-				Start.StartGerbil.controller.createFunctionBlocks(7, uSelect,0, null);
-				conditionals.setText("Repeat");
-				int tempLine = uSelect+2; //for the current statement and begin
-				conditionals.setBegin(tempLine);
-				conditionals.show(); //shows the conditionals screen so when they return we get back here
-				userFunction.hide();
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-			}
-		});
-
-		userFunction.addWhileEventHandler(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				parentScreen = 7;
-
-				int uSelect = userFunction.getSelectedLineNumber();
-				Start.StartGerbil.controller.createFunctionBlocks(6, uSelect,0, null);
-				conditionals.setText("While");
-				int tempLine = uSelect+2; //for the current statement and begin
-				conditionals.setBegin(tempLine);
-				conditionals.show(); //shows the conditionals screen so when they return we get back here
-				userFunction.hide();
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-			}
-		});
-
-		userFunction.addElseEventHandler(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				parentScreen = 7;
-
-				int uSelect = userFunction.getSelectedLineNumber();
-				Start.StartGerbil.controller.createFunctionBlocks(5, uSelect,0, null);
-				conditionals.setText("Else");
-				int tempLine = uSelect+2; //for the current statement and begin
-				conditionals.setBegin(tempLine);
-				conditionals.show(); //shows the conditionals screen so when they return we get back here
-				userFunction.hide();
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-			}
-		});
-
-		userFunction.addElseIfEventHandler(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				parentScreen = 7;
-
-				int uSelect = userFunction.getSelectedLineNumber();
-				Start.StartGerbil.controller.createFunctionBlocks(4, uSelect,0, null);
-				conditionals.setText("Else If");
-				int tempLine = uSelect+2; //for the current statement and begin
-				conditionals.setBegin(tempLine);
-				conditionals.show(); //shows the conditionals screen so when they return we get back here
-				userFunction.hide();
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-			}
-		});
-		userFunction.addIfEventHandler(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				parentScreen = 7;
-
-				int uSelect = userFunction.getSelectedLineNumber();
-				Start.StartGerbil.controller.createFunctionBlocks(3, uSelect,0, null);
-				conditionals.setText("If");
-				int tempLine = uSelect+2; //for the current statement and begin
-				conditionals.setBegin(tempLine);
-				conditionals.show(); //shows the conditionals screen so when they return we get back here
-				userFunction.hide();
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-			}});
-
-		userFunction.addMoveAheadEventHandler(new ActionListener(){
-			public void actionPerformed(ActionEvent e) {
-				Start.StartGerbil.controller.createFunctionBlocks(2, userFunction.getSelectedLineNumber(),1, null);
-				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(),1, null);
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-			}});
-
-		userFunction.addEatEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Start.StartGerbil.controller.createFunctionBlocks(0, userFunction.getSelectedLineNumber(), 1, null);
-				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(), 1, null);
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-			}
-		});
-
-		userFunction.addTurnLeftEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Start.StartGerbil.controller.createFunctionBlocks(1,userFunction.getSelectedLineNumber(),1, null);
-				Start.StartGerbil.controller.createFunctionBlocks('e',userFunction.getSelectedLineNumber(),1, null);
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
-
-			}});
-
-
-		userFunction.addOkEventHandler(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-				String functionName = userFunction.getFunctionName();
-				parentScreen=7;
-				if(!functionName.equals("")) {
-
-					errorDialog.hide();
-					showParent();
-					int error= Start.StartGerbil.controller.createFunction(functionName);
-					if(error==1){
-						//error: function names can only consist of letters/numbers
-						errorDialog.errorL.setText("Name must consist of letters/numbers");
-						errorDialog.show();
-					}else if(error==2){
-						//error: function name already exists, choose another
-						errorDialog.errorL.setText("Name already exists, enter another name");
-						errorDialog.show();
-					}else{
-						parentScreen=4;
-						userFunction.clearLabels();
-						userFunction.userDefinedFunctions.addItem(functionName);
-						userFunction.hide();
-						userFunction.dontAddToMain(true);
-						inserting=false;
-						playScreen.refreshUserFunctions();
-						userFunction.hide();
-						showParent();
-
-					}
-				}else{
-					errorDialog.errorL.setText("You Must Enter a Function Name");
-					errorDialog.show();
-				}
-
-			}		
-		});
-	}
-
 	/**
 	 * Add event handlers for the Play screen
 	 */
@@ -703,8 +487,6 @@ public class ActionListenersControl {
 
 			}	
 		});
-
-
 
 		/**JComboBoxes**/
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
@@ -867,69 +649,293 @@ public class ActionListenersControl {
 		});
 	}
 
-	public void addConditionalsEventHandlers(){
-		conditionals.addOkEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-				int begin = conditionals.getBegin()-2;
-				int numLines = conditionals.getEndLineNumber()+2;
-				String cond = conditionals.getCond();
-
-				Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
-		
-				
-
-				playScreen.refreshCodeList();
-				conditionals.hide();	
-				playScreen.show();
-			}	
-		});
-
-		conditionals.addCancelEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
-
-				conditionals.hide();	
-				playScreen.show();
-			}	
-		});
-
-		conditionals.addMoveEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
-				//System.out.println("lineSelect: "+lineSelect);
-				Start.StartGerbil.controller.createBlocks(2,lineSelect,1, null);
-				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
-
-				/*System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT NOW!!!");
-				String[] temp = Start.StartGerbil.controller.getUnFinIns();
-				for(int i =0 ;i<temp.length;i++){
-					System.out.println(temp[i]);
+	private void addSavedGamesEventHandlers(){
+		savedGames.addOpenGameEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String oGame= (String) savedGames.gamesList.getSelectedItem();
+				if(oGame==null){
+					parentScreen=6;
+					errorDialog.errorL.setText("Must Select a Game");
+					errorDialog.show();
+				}else{
+					Game temp = Start.StartGerbil.controller.loadGame(oGame);
+					playScreen.refreshCodeList();
+					playScreen.refreshUserFunctions();
+					
+					playScreen.show();
+					savedGames.hide();
 				}
-				System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT DONE!!!!!");*/
-
-				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
-			}	
+			}		
 		});
 
-		conditionals.addEatEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
-				Start.StartGerbil.controller.createBlocks(0,lineSelect,1, null);
-				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
-				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
-			}	
+		savedGames.addDeleteGameEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String dGame= (String) savedGames.gamesList.getSelectedItem();
+				if(dGame==null){
+					parentScreen=6;
+					errorDialog.errorL.setText("Must Select a Game");
+					errorDialog.show();
+				}else{
+					Start.StartGerbil.controller.deleteGame(dGame);
+				}
+			}		
 		});
 
-		conditionals.addTurnLeftEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
-				Start.StartGerbil.controller.createBlocks(1,lineSelect,1, null);
-				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
-				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
-			}	
+		savedGames.addCancelEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				savedGames.hide();
+				playOptions.show();
+			}		
 		});
 	}
+
+
+
+
+	private void addUserFunctionEventHandlers(){
+		userFunction.addFunctionListListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(userFunction.addtomain){
+					String funcName = (String) userFunction.userDefinedFunctions.getSelectedItem();
+					Start.StartGerbil.controller.createFunctionBlocks(8, userFunction.getSelectedLineNumber(), 1, null);
+					Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(), 1, funcName);
+					userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+				}
+				userFunction.dontAddToMain(false);	
+			}
+		});
+	
+		/*
+		userFunction.addListSelectionEventHandler(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(inserting==true){
+					int lineS = Play.playcodeList.getSelectedIndex();
+					Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
+					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+						selectedIndexPlayCodeList = lineS;
+					}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
+						selectedIndexPlayCodeList = 0;
+					}else{ //get the block's line begin
+						selectedIndexPlayCodeList = bTemp.getlineBegin();
+					}
+					String newType = Play.conditionalsDD.getSelectedItem().toString();
+					if(newType.equals("If")){
+						Start.StartGerbil.controller.createFunctionBlocks(3,selectedIndexPlayCodeList, 0, null);
+
+						userFunction.setText("If");
+						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+						conditionals.setBegin(tempLine);
+						conditionals.show();
+						playScreen.hide();
+					}else if(newType.equals("Else")){
+						int ret = Start.StartGerbil.controller.createFunctionBlocks(5,selectedIndexPlayCodeList , 0, null);
+						if(ret == 4){ //DO NOT OPEN CONDITIONALS = show error dialog!!!!
+							parentScreen = 4;
+							errorDialog.errorL.setText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
+							errorDialog.show();
+						}else if(ret==5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
+							parentScreen = 4;
+
+							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
+							errorDialog.show();
+
+						}else{
+							conditionals.setText("Else");
+							int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+							conditionals.setBegin(tempLine);
+							conditionals.show();
+							playScreen.hide();
+						}
+					}else if(newType.equals("Else if")){
+						int ret = Start.StartGerbil.controller.createFunctionBlocks(4,selectedIndexPlayCodeList, 0, null);
+						if(ret==4){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
+							parentScreen = 4;
+							errorDialog.errorL.setText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
+							errorDialog.show();
+						}else if(ret == 5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
+							parentScreen = 4;
+							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
+							errorDialog.show();
+						}else{
+							conditionals.setText("Else if");
+							int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+							conditionals.setBegin(tempLine);
+							conditionals.show();
+							playScreen.hide();
+						}
+					}else if(newType.equals("While")){
+						Start.StartGerbil.controller.createFunctionBlocks(6,selectedIndexPlayCodeList, 0, null);
+
+						conditionals.setText("While");
+						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+						conditionals.setBegin(tempLine);
+						conditionals.show();
+						playScreen.hide();
+					}else {//if(newType.equals("Repeat")){
+						Start.StartGerbil.controller.createFunctionBlocks(7,selectedIndexPlayCodeList, 0, null);
+
+						conditionals.setText("Repeat");
+						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
+						conditionals.setBegin(tempLine);
+						conditionals.show();
+						playScreen.hide();
+					}
+				}
+			}
+		});
+		*/
+		userFunction.addCancelEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				parentScreen=4;
+				Start.StartGerbil.controller.clearTempFunctionBlockInstructions();
+				errorDialog.hide();
+				showParent();
+			}		
+		});
+		
+		userFunction.addOkEventHandler(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				String functionName = userFunction.getFunctionName();
+				parentScreen=7;
+				if(!functionName.equals("")) {
+
+					errorDialog.hide();
+					showParent();
+					int error= Start.StartGerbil.controller.createFunction(functionName);
+					if(error==1){
+						//error: function names can only consist of letters/numbers
+						errorDialog.errorL.setText("Name must consist of letters/numbers");
+						errorDialog.show();
+					}else if(error==2){
+						//error: function name already exists, choose another
+						errorDialog.errorL.setText("Name already exists, enter another name");
+						errorDialog.show();
+					}else{
+						parentScreen=4;
+						userFunction.clearLabels();
+						userFunction.userDefinedFunctions.addItem(functionName);
+						userFunction.hide();
+						userFunction.dontAddToMain(true);
+						inserting=false;
+						playScreen.refreshUserFunctions();
+						userFunction.hide();
+						showParent();
+
+					}
+				}else{
+					errorDialog.errorL.setText("You Must Enter a Function Name");
+					errorDialog.show();
+				}
+
+			}		
+		});
+
+		userFunction.addReapeatEventHanderl(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				parentScreen = 7;
+
+				int uSelect = userFunction.getSelectedLineNumber();
+				Start.StartGerbil.controller.createFunctionBlocks(7, uSelect,0, null);
+				conditionals.setText("Repeat");
+				int tempLine = uSelect+2; //for the current statement and begin
+				conditionals.setBegin(tempLine);
+				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				userFunction.hide();
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+			}
+		});
+
+		userFunction.addWhileEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				parentScreen = 7;
+
+				int uSelect = userFunction.getSelectedLineNumber();
+				Start.StartGerbil.controller.createFunctionBlocks(6, uSelect,0, null);
+				conditionals.setText("While");
+				int tempLine = uSelect+2; //for the current statement and begin
+				conditionals.setBegin(tempLine);
+				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				userFunction.hide();
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+			}
+		});
+
+		userFunction.addElseEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				parentScreen = 7;
+
+				int uSelect = userFunction.getSelectedLineNumber();
+				Start.StartGerbil.controller.createFunctionBlocks(5, uSelect,0, null);
+				conditionals.setText("Else");
+				int tempLine = uSelect+2; //for the current statement and begin
+				conditionals.setBegin(tempLine);
+				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				userFunction.hide();
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+			}
+		});
+
+		userFunction.addElseIfEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				parentScreen = 7;
+
+				int uSelect = userFunction.getSelectedLineNumber();
+				Start.StartGerbil.controller.createFunctionBlocks(4, uSelect,0, null);
+				conditionals.setText("Else If");
+				int tempLine = uSelect+2; //for the current statement and begin
+				conditionals.setBegin(tempLine);
+				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				userFunction.hide();
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+			}
+		});
+		userFunction.addIfEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				parentScreen = 7;
+
+				int uSelect = userFunction.getSelectedLineNumber();
+				Start.StartGerbil.controller.createFunctionBlocks(3, uSelect,0, null);
+				conditionals.setText("If");
+				int tempLine = uSelect+2; //for the current statement and begin
+				conditionals.setBegin(tempLine);
+				conditionals.show(); //shows the conditionals screen so when they return we get back here
+				userFunction.hide();
+				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+			}});
+
+		userFunction.addMoveAheadEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				Start.StartGerbil.controller.createFunctionBlocks(2, userFunction.getSelectedLineNumber(),1, null);
+				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(),1, null);
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+			}});
+
+		userFunction.addEatEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Start.StartGerbil.controller.createFunctionBlocks(0, userFunction.getSelectedLineNumber(), 1, null);
+				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(), 1, null);
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+			}
+		});
+
+		userFunction.addTurnLeftEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Start.StartGerbil.controller.createFunctionBlocks(1,userFunction.getSelectedLineNumber(),1, null);
+				Start.StartGerbil.controller.createFunctionBlocks('e',userFunction.getSelectedLineNumber(),1, null);
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+
+			}});
+	}
+
+
 
 	/**
 	 * DeleteFunction 1
