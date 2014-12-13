@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -796,9 +797,10 @@ public class Play extends Screen{
 
 	public void refreshUserFunctions(){
 		userFunctionsDD.removeAllItems();
-
-		for(String s: Start.StartGerbil.controller.getFunctionsArrayList()){
-			userFunctionsDD.addItem(s);
+		ArrayList<String> temp = Start.StartGerbil.controller.getFunctionsArrayList();
+		
+		for(int i=0; i<temp.size(); i++){
+			userFunctionsDD.addItem(temp.get(i));
 		}
 	}
 

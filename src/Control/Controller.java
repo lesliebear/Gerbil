@@ -2145,11 +2145,16 @@ public class Controller {
 		return returnstring;
 	}
 	
-	
+	/**
+	 * Returns the functions of the current game being played
+	 * 
+	 */
 	public ArrayList<String> getFunctionsArrayList(){
 		ArrayList<String> functionnames= new ArrayList<String>();
-		for(int i=0; i<functions.size(); i++){
-			functionnames.add(functions.get(i).getName());
+		
+		ArrayList<Function> gameFunctions= gamePlaying.getfunction();
+		for(int i=0; i<gameFunctions.size(); i++){
+			functionnames.add(gameFunctions.get(i).getName());
 		}
 		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
 		
@@ -2309,19 +2314,19 @@ public class Controller {
 	 * @param gameName Name of the game to load
 	 * @return True if loading is successful, otherwise False
 	 */
-	public boolean loadGame(String gameName) {
+	public Game loadGame(String gameName) {
 		this.gamePlaying= Start.StartGerbil.backend.getGame(gameName);
 		if(gamePlaying == null) {
-			return false;
+			return null;
 		}
-		Start.StartGerbil.backend.deleteGame(gameName);
+		Start.StartGerbil.backend.deleteGame(gameName); // why is this deleting the game??? kat
 		if(!gamePlaying.getfunction().isEmpty()){
 			ArrayList<Integer> keylist= new ArrayList<Integer>();
 			for(int i=0; i<keylist.size(); i++){
 				this.functions.add(gamePlaying.getfunction().get(i));
 			}
 		}
-		return true;
+		return this.gamePlaying;
 	}
 
 	/**
