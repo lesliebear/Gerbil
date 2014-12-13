@@ -222,7 +222,10 @@ public class ActionListenersControl {
 					errorDialog.errorL.setText("Must Select a Game");
 					errorDialog.show();
 				}else{
-					Start.StartGerbil.controller.loadGame(oGame);
+					Game temp = Start.StartGerbil.controller.loadGame(oGame);
+					playScreen.refreshCodeList();
+					playScreen.refreshUserFunctions();
+					
 					playScreen.show();
 					savedGames.hide();
 				}
@@ -269,6 +272,8 @@ public class ActionListenersControl {
 
 						initGrid();
 						Play.refreshGrid();
+						playScreen.refreshUserFunctions();
+						playScreen.refreshCodeList();
 
 						newGame.hide();
 						playScreen.show();
@@ -675,9 +680,7 @@ public class ActionListenersControl {
 
 		playScreen.addSaveEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
-
 				Start.StartGerbil.controller.saveGame();
-				//	String[] stringArray = list.toArray(new String[list.size()]);
 
 				try{
 					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
