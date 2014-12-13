@@ -82,6 +82,7 @@ public class ActionListenersControl {
 		editing = false;
 
 		initEventHandlers();
+		initBooleans();
 		main.show();
 		//userFunction.show();
 	}
@@ -89,6 +90,18 @@ public class ActionListenersControl {
 	private void initGrid() {
 		Play.setNewGrid(Start.StartGerbil.controller.gamePlaying.getGrid().getGridRepresentation());
 		Play.setGerbilLocation(Start.StartGerbil.controller.gamePlaying.getGerbil().getY(), Start.StartGerbil.controller.gamePlaying.getGerbil().getX());
+	}
+	
+	private void initBooleans(){
+		 selectedCreateFunctionFirst = false;
+		 
+		 inserting = false;
+		 deleting = false;
+		 editing = false;
+		 stop = false;
+		 play = false;
+
+		 deleteCurrGame = false;
 	}
 
 	/**
@@ -120,7 +133,7 @@ public class ActionListenersControl {
 			}
 		});
 		main.addInstructionsEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent arg0) { 
 				instructionsScreen.show();
 				main.hide();
 				parentScreen = 2; 
@@ -144,8 +157,7 @@ public class ActionListenersControl {
 
 				//wanna update the list b4 displaying!
 				savedGames.refreshGamesList();
-
-				savedGames.show(); 
+				savedGames.show();
 			}	
 		});
 
@@ -302,7 +314,8 @@ public class ActionListenersControl {
 				userFunction.dontAddToMain(false);	
 			}
 		});
-/*
+	
+		/*
 		userFunction.addListSelectionEventHandler(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -381,11 +394,7 @@ public class ActionListenersControl {
 				}
 			}
 		});
-
-
-*/
-
-
+		*/
 		userFunction.addCancelEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parentScreen=4;
@@ -443,7 +452,6 @@ public class ActionListenersControl {
 			}
 		});
 
-
 		userFunction.addElseIfEventHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				parentScreen = 7;
@@ -473,8 +481,6 @@ public class ActionListenersControl {
 				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}});
-
-
 
 		userFunction.addMoveAheadEventHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -865,12 +871,10 @@ public class ActionListenersControl {
 				int begin = conditionals.getBegin()-2;
 				int numLines = conditionals.getEndLineNumber()+2;
 				String cond = conditionals.getCond();
-				//if(Start.StartGerbil.controller.bad==false){ //if not bad, then close
+
 				Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
-				//}else{ //true so set to false.
-				//Start.StartGerbil.controller.createBlocks('c', 0, 0, null);
-				//Start.StartGerbil.controller.bad=false;
-				//}
+		
+				
 
 				playScreen.refreshCodeList();
 				conditionals.hide();	
@@ -933,8 +937,7 @@ public class ActionListenersControl {
 	 * SavedGame 6
 	 * UserFunction 7
 	 */
-
-	private static void showParent(){ 
+	private  void showParent(){ 
 		switch(parentScreen){
 		case 1:
 			deleteFunction.show();
