@@ -16,6 +16,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.ImageProducer;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -96,6 +97,7 @@ public class Play extends Screen{
 	 */
 	public Play() {
 		try {
+			
 			imageApple = new ImageIcon(ImageIO.read(new File("pics/apple icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));
 			imagePear = new ImageIcon(ImageIO.read(new File("pics/pear icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
 			imageGrass = new ImageIcon(ImageIO.read(new File("pics/grass icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
@@ -892,7 +894,6 @@ public class Play extends Screen{
 		numsDD.setEnabled(true);
 	}
 	
-
 	public void enableAllButtons(){
 		menuB.setEnabled(true);
 		playB.setEnabled(true);
