@@ -240,7 +240,7 @@ public class SavedGames extends Screen{
 	
 	
 	public void refreshGamesList(){
-		ArrayList<String>  games = Start.StartGerbil.backend.getGamesStringArray();
+		//ArrayList<String>  games = Start.StartGerbil.backend.getGamesStringArray();
 		String [] temp =  Start.StartGerbil.backend.getGamesStringArray().toArray(new String[ Start.StartGerbil.backend.getGamesStringArray().size()]);
 				
 		gamesList.removeAllItems();

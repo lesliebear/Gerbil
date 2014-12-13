@@ -70,7 +70,6 @@ public class ActionListenersControl {
 		playOptions = new PlayOptions();
 
 		savedGames = new SavedGames();
-		savedGames.refreshGamesList();
 
 		okNoDialog = new OkYesDialog();
 
@@ -203,13 +202,6 @@ public class ActionListenersControl {
 	}
 
 	private void addSavedGamesEventHandlers(){
-
-		savedGames.addGameListSelectionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				String gameName = savedGames.gamesList.getSelectedItem().toString();
-			}		
-		});
-
 		savedGames.addOpenGameEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String oGame= (String) savedGames.gamesList.getSelectedItem();
