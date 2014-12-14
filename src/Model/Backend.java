@@ -26,7 +26,7 @@ public class Backend implements Serializable {
 	/**File to store user data*/
 	public static final String storeFile = "games.dat"; 
 	/**Array List that holds games of the user */
-	private ArrayList<Game> games = new ArrayList<Game>();
+	private static ArrayList<Game> games = new ArrayList<Game>();
 
 
 	/**
@@ -69,7 +69,7 @@ public class Backend implements Serializable {
 		return false;
 	}
 	
-	public  boolean gameExists(String gameIn){
+	public static boolean gameExists(String gameIn){
 		for(int i=0; i< games.size(); i++){
 			if(games.get(i).getName().equalsIgnoreCase(gameIn)){ // not sure if this works - kat
 				return true;
@@ -108,7 +108,7 @@ public class Backend implements Serializable {
 		}
 		return false;
 		//creates arraylist of games to store here in backend.	
-	} */
+	}  */
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Game> loadSavedGames() // kat
@@ -118,6 +118,7 @@ public class Backend implements Serializable {
 				new FileInputStream(storeFile)); 
 		return (ArrayList<Game>)ois.readObject(); 
 	} 
+	
 	
 	public void saveGames(ArrayList<Game> users) throws IOException { 
 		@SuppressWarnings("resource")
@@ -137,7 +138,7 @@ public class Backend implements Serializable {
 	 * @return True if successful in saving games else false
 	 * @throws IOException If error encountered with the serialized file
 	 * @throws FileNotFoundException If file to store the file could not been found.
-	
+	 
 	@SuppressWarnings("resource")
 	public boolean saveGames() { 
 		ObjectOutputStream oos;
@@ -199,12 +200,12 @@ public class Backend implements Serializable {
 	
 	public ArrayList<String> getGamesStringArray(){
 		ArrayList<String> toReturn= new ArrayList<String>(); 
-		int j = games.size(); 
 		
 		for(int i=0; i<games.size(); i++){
 			toReturn.add(i, games.get(i).getName());
 		}
-		//System.out.println("i is: "+j);
+		
 		return toReturn;
 	}
+	
 }
