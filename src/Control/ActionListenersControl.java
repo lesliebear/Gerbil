@@ -506,23 +506,21 @@ public class ActionListenersControl {
 
 		playScreen.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				editing = false;
-				inserting = false;
-				deleting = false;
-
-				playScreen.setPlaySelected();
-
-
 				Thread thread = new Thread() {
 					public void run() {
 						parentScreen=4;	
 						int errortype= Start.StartGerbil.controller.runBlocks();
 						ArrayList<String> instructions = Start.StartGerbil.controller.getFinalBlocks();
+						ArrayList<Integer> lineNumbers= Start.StartGerbil.controller.getFinalBlocksLineNumbers();
 						Start.StartGerbil.controller.resetTempGrid();//just in case, resetting grid and gerbil object
+						int error=0;
 						for(int i = 0; i < instructions.size(); i++) {
 							if(instructions.get(i).equals("Turn Left")) {
 								Start.StartGerbil.controller.turnLeft(Start.StartGerbil.controller.getTempGerbil());
 								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
+								error=i;
+								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
+								playScreen.setSeclectedIndex(lineNumbers.get(i));
 							}
 							else if(instructions.get(i).equals("Move Forward")) {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
@@ -530,9 +528,15 @@ public class ActionListenersControl {
 								char oldGridSpotType = Start.StartGerbil.controller.tempgrid[currY][currX];
 								Start.StartGerbil.controller.moveForward(Start.StartGerbil.controller.getTempGerbil());
 								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getCompass(), oldGridSpotType);
+								error=i;
+								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
+								playScreen.setSeclectedIndex(lineNumbers.get(i));
 							}
 							else if(instructions.get(i).equals("Eat")) {
 								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
+								error=i;
+								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
+								playScreen.setSeclectedIndex(lineNumbers.get(i));
 							}
 							try {
 								sleep(500);
@@ -543,21 +547,22 @@ public class ActionListenersControl {
 						}
 						if(errortype==1){
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
+							//HIGHLIGHT the error block using lineNumbers.get(error+1);
+							playScreen.setSeclectedIndex(lineNumbers.get(error+1));
 							errorDialogRun.errorL.setText("Cannot Eat: there is no food at square");
 							errorDialogRun.show();
-							parentScreen = PLAY; 
 						}else if(errortype==2){
 							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
+							//HIGHLIGHT the error block using lineNumbers.get(error+1);
+							playScreen.setSeclectedIndex(lineNumbers.get(error+1));
 							errorDialogRun.errorL.setText("Cannot Move Forward: there is a wall ahead");
 							errorDialogRun.show();
-							parentScreen = PLAY; 
 						}else if(errortype==3){
 							//miscellaneous error, could not compile code(this shouldn't happen)
 						}else if(errortype==4){
 							//ERROR: insert Dialogue BoxDid not reach water/goal
 							errorDialogRun.errorL.setText("Did not reach water, Try Again!");
 							errorDialogRun.show();
-							parentScreen = PLAY; 
 						}else if(errortype==-1){
 							//parsing error(this shouldn't happen)
 						}else if(errortype==-2){
@@ -565,9 +570,7 @@ public class ActionListenersControl {
 							//this does not run/animate the gerbil
 							errorDialogRun.errorL.setText("Infinite Loop was created, please edit your code");
 							errorDialogRun.show();
-							parentScreen = PLAY; 
 						}
-
 					}
 				};
 				thread.start();
