@@ -412,11 +412,15 @@ public class ActionListenersControl {
 						parentScreen=4;	
 						int errortype= Start.StartGerbil.controller.runBlocks();
 						ArrayList<String> instructions = Start.StartGerbil.controller.getFinalBlocks();
+						ArrayList<Integer> lineNumbers= Start.StartGerbil.controller.getFinalBlocksLineNumbers();
 						Start.StartGerbil.controller.resetTempGrid();//just in case, resetting grid and gerbil object
+						int error=0;
 						for(int i = 0; i < instructions.size(); i++) {
 							if(instructions.get(i).equals("Turn Left")) {
 								Start.StartGerbil.controller.turnLeft(Start.StartGerbil.controller.getTempGerbil());
 								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
+								error=i;
+								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
 							}
 							else if(instructions.get(i).equals("Move Forward")) {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
@@ -424,9 +428,13 @@ public class ActionListenersControl {
 								char oldGridSpotType = Start.StartGerbil.controller.tempgrid[currY][currX];
 								Start.StartGerbil.controller.moveForward(Start.StartGerbil.controller.getTempGerbil());
 								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getCompass(), oldGridSpotType);
+								error=i;
+								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
 							}
 							else if(instructions.get(i).equals("Eat")) {
 								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
+								error=i;
+								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
 							}
 							try {
 								sleep(500);
@@ -437,11 +445,13 @@ public class ActionListenersControl {
 						}
 						if(errortype==1){
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
+							//HIGHLIGHT the error block using lineNumbers.get(error+1);
 							errorDialog.errorL.setText("Cannot Eat: there is no food at square");
 							errorDialog.show();
 							Play.setGridIcons();
 						}else if(errortype==2){
 							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
+							//HIGHLIGHT the error block using lineNumbers.get(error+1);
 							errorDialog.errorL.setText("Cannot Move Forward: there is a wall ahead");
 							errorDialog.show();
 							Play.setGridIcons();
