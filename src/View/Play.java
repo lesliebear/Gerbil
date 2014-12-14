@@ -468,6 +468,8 @@ public class Play extends Screen{
 		}
 	} */
 
+	
+	
 	public static void setGridComponents(){
 		gridPanel.setLayout(new GridLayout(grid.length, grid[0].length));	
 		Dimension size= gridPanel.getPreferredSize();
@@ -478,24 +480,10 @@ public class Play extends Screen{
 		for(int i = 0; i < grid.length; i++) {
 			for(int j = 0; j < grid[0].length; j++) {
 				gridBoxes[i][j] = new JLabel();
-				switch(grid[i][j]) {
-				case'0':gridBoxes[i][j].setIcon(imageGrass);
-				break;
-				case'w':gridBoxes[i][j].setIcon(imageWall);
-				break;
-				case'a':gridBoxes[i][j].setIcon(imageApple);
-				break;
-				case'k':gridBoxes[i][j].setIcon(imagePumpkin);
-				break;
-				case'p':gridBoxes[i][j].setIcon(imagePear);
-				break;
-				case't':gridBoxes[i][j].setIcon(imageWater);
-				break;
-				}
 				gridPanel.add(gridBoxes[i][j]);
 			}
 		}
-		gridBoxes[row][column].setIcon(imageGerbilNorth);
+		setGridIcons();
 	}
 
 	public static void setLowerComponents(){
@@ -624,6 +612,67 @@ public class Play extends Screen{
 
 
 	}
+	
+	public static void setGridIcons() {
+		for(int i = 0; i < grid.length; i++) {
+			for(int j = 0; j < grid[0].length; j++) {
+				switch(grid[i][j]) {
+				case'0':gridBoxes[i][j].setIcon(imageGrass);
+				break;
+				case'w':gridBoxes[i][j].setIcon(imageWall);
+				break;
+				case'a':gridBoxes[i][j].setIcon(imageApple);
+				break;
+				case'k':gridBoxes[i][j].setIcon(imagePumpkin);
+				break;
+				case'p':gridBoxes[i][j].setIcon(imagePear);
+				break;
+				case't':gridBoxes[i][j].setIcon(imageWater);
+				break;
+				}
+			}
+		}
+		gridBoxes[row][column].setIcon(imageGerbilNorth);
+	}
+	
+
+	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass, char oldGridSpotType) {
+
+		switch(oldGridSpotType) {
+		case '0': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageGrass);
+		break;
+		case 'p': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePear);
+		break;
+		case 'k': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePumpkin);
+		break;
+		case 'a': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageApple);
+		break;
+		}
+		switch(compass) {
+		case'n':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilNorth);
+		break;
+		case's':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilSouth);
+		break;
+		case'w':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilWest);
+		break;
+		case'e':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilEast);
+		break;
+		}
+	}
+
+	public void showTurnLeft(char compass, int gerbilX, int gerbilY) {
+
+		switch(compass) {
+		case'n':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilNorth);
+		break;
+		case's':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilSouth);
+		break;
+		case'w':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilWest);
+		break;
+		case'e':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilEast);
+		break;
+		}
+	}
 
 	/**
 	 * Creates the screen by putting the GUI components together.
@@ -743,45 +792,6 @@ public class Play extends Screen{
 		userFunctionsDD.addActionListener(listener);
 
 	}
-
-	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass, char oldGridSpotType) {
-
-		switch(oldGridSpotType) {
-		case '0': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageGrass);
-		break;
-		case 'p': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePear);
-		break;
-		case 'k': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePumpkin);
-		break;
-		case 'a': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageApple);
-		break;
-		}
-		switch(compass) {
-		case'n':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilNorth);
-		break;
-		case's':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilSouth);
-		break;
-		case'w':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilWest);
-		break;
-		case'e':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilEast);
-		break;
-		}
-	}
-
-	public void showTurnLeft(char compass, int gerbilX, int gerbilY) {
-
-		switch(compass) {
-		case'n':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilNorth);
-		break;
-		case's':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilSouth);
-		break;
-		case'w':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilWest);
-		break;
-		case'e':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilEast);
-		break;
-		}
-	}
-
 
 	public void refreshUserFunctions(){
 		userFunctionsDD.removeAllItems();
