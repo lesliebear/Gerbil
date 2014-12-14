@@ -25,6 +25,7 @@ import View.PlayOptions;
 import View.SavedGames;
 import View.UserFunction;
 
+
 public class ActionListenersControl {
 	static NewGame newGame;
 	static DeleteFunction deleteFunction;
@@ -413,11 +414,8 @@ public class ActionListenersControl {
 						ArrayList<String> instructions = Start.StartGerbil.controller.getFinalBlocks();
 						Start.StartGerbil.controller.resetTempGrid();//just in case, resetting grid and gerbil object
 						for(int i = 0; i < instructions.size(); i++) {
-							System.out.println(instructions.get(i));
 							if(instructions.get(i).equals("Turn Left")) {
-								System.out.println(Start.StartGerbil.controller.getTempGerbil().getCompass());
 								Start.StartGerbil.controller.turnLeft(Start.StartGerbil.controller.getTempGerbil());
-								System.out.println(Start.StartGerbil.controller.getTempGerbil().getCompass());
 								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
 							}
 							else if(instructions.get(i).equals("Move Forward")) {
