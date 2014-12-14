@@ -17,11 +17,11 @@ import java.util.HashMap;
 @SuppressWarnings("serial")
 public class Game implements Serializable{
 	/**User written code for which each node shows up as a block of code in the GUI*/
-	private HashMap<Integer,Block> blocks; 
+	public HashMap<Integer,Block> blocks; 
 	/**Grid user is playing on for this game*/
 	private Grid grid; 
 	/**User created functions for this game that appear in drop down list for user to select*/
-	private ArrayList<Function> functions; 
+	public ArrayList<Function> functions; 
 	/**Gerbil object to give gerbil's position*/
 	private Gerbil gerbil; 
 	/**Name of the game that user designates when saving*/
@@ -124,6 +124,7 @@ public class Game implements Serializable{
 	public ArrayList<Function> getfunction(){
 		return functions;
 	}
+
 	
 	/**
 	 * Adds a function to the functions list
