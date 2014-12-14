@@ -447,13 +447,13 @@ public class Controller {
 	 * 4 is //////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
 	 * 5 is ////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
 	 */
-	public int createBlocks(int type, int begin, int numLines, String cond){
+	public int createFunctionBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
-			this.userCodingNow=this.parent;
+			this.userCodingNowFunction=this.parentFunction;
 			return 0;
-		}else if((type=='e') && (this.userCodingNow!=null)){//finished coding for the block so put into the correct spot
-			this.userCodingNow.setLineEnd(begin+numLines-1);	
-			int currType= this.userCodingNow.getType();
+		}else if((type=='e') && (this.userCodingNowFunction!=null)){//finished coding for the block so put into the correct spot
+			this.userCodingNowFunction.setLineEnd(begin+numLines-1);	
+			int currType= this.userCodingNowFunction.getType();
 			if(currType==7){//repeat block so turn cond into int and store in repeat
 				int repeat=-1;
 				if(cond==null){
@@ -463,7 +463,7 @@ public class Controller {
 				}else{ //no need to check if cond is int or not since view will provide int for it 
 					repeat =Integer.valueOf(cond);
 				}
-				this.userCodingNow.setRepeat(repeat);
+				this.userCodingNowFunction.setRepeat(repeat);
 
 			}else if(currType==8){//user-defined FUNCTION block so find int for cond and store int in functionNum
 				int functionNum=-1;
@@ -484,33 +484,33 @@ public class Controller {
 					///////////////ERROR: Illegal funciton entered!!!!!/////////////
 					return 3;
 				}
-				this.userCodingNow.setFunctionNum(functionNum);	
+				this.userCodingNowFunction.setFunctionNum(functionNum);	
 			}else if(currType==3 || currType==6){ //if and while loops
-				this.userCodingNow.setCond(cond);
+				this.userCodingNowFunction.setCond(cond);
 			}else if(currType==4){ //for else if, we need to check if parent == if => parent cannot be null
-				this.userCodingNow.setCond(cond);
+				this.userCodingNowFunction.setCond(cond);
 			}
 
-			if(parent==null){ //insert into gamePlaying.blocks and cascade!!!
+			if(parentFunction==null){ //insert into gamePlaying.blocks and cascade!!!
 				/*So insert only happens to main, the rest are edit and delete so 
 				we first check if the begin line we are given already exsits in the 
 				main, if it does, we cascade, then insert to not delete the current 
 				block at that number. else we simply add = works for both between lines 
 				and end of code.*/
-				for (int key: this.gamePlaying.getBlocks().keySet()){
+				for (int key: this.tempFunctionBlockInstructions.keySet()){
 					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow, gamePlaying.getBlocks(),true);
-						this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
-						this.userCodingNow=null;
+						cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction, this.tempFunctionBlockInstructions,true);
+						this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);
+						this.userCodingNowFunction=null;
 						return 0;
 					}
 					
 				}//get past this means, end of lines!
-				this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
+				this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);
 			} //we ended this so parent is now the currBlock coded
-			this.userCodingNow=parent;
-			if(this.parent!=null){
-				this.parent=this.userCodingNow.getParent();
+			this.userCodingNowFunction=parentFunction;
+			if(this.parentFunction!=null){
+				this.parentFunction=this.userCodingNowFunction.getParent();
 			}
 			return 0;
 		}else{ //first time making a block
@@ -522,17 +522,17 @@ public class Controller {
 			}
 			if((type==4) || (type==5)){ //SPECIAL FOR ELSE IF AND ELSE!!!
 				Block parIf = null; 
-				if(this.userCodingNow==null){ //find in main level = no nesting
-					for(int k: this.gamePlaying.getBlocks().keySet()){
-						if(this.gamePlaying.getBlocks().get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
-							parIf = gamePlaying.getBlocks().get(k);
+				if(this.userCodingNowFunction==null){ //find in main level = no nesting
+					for(int k: this.tempFunctionBlockInstructions.keySet()){
+						if(this.tempFunctionBlockInstructions.get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
+							parIf = this.tempFunctionBlockInstructions.get(k);
 						}
 					}
 				}else{ //find in parent's level!
-					for(int k: this.userCodingNow.getNestedBlocks().keySet()){
-						int tempTP = this.userCodingNow.getNestedBlocks().get(k).getType();
+					for(int k: this.userCodingNowFunction.getNestedBlocks().keySet()){
+						int tempTP = this.userCodingNowFunction.getNestedBlocks().get(k).getType();
 						if((tempTP==3 || tempTP==4) && k<begin){//after checking all of them it sets it to the last if just less than the current line
-							parIf = this.userCodingNow.getNestedBlocks().get(k);
+							parIf = this.userCodingNowFunction.getNestedBlocks().get(k);
 						}
 					}
 				}
@@ -547,40 +547,40 @@ public class Controller {
 					////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
 					return 5;
 				}else{
-					if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
+					if(this.userCodingNowFunction!=null){ //curr not null so we need to set current to user playing and parent to curr
 						b.setParent(parIf.getParent()); //set else if or else stuff's parent to the parent of if block!!
-						this.parent=parIf.getParent();
-						this.userCodingNow=b;
-						if(parent!=null){ //insert into parent's block
-							if(parent.getNestedBlocks().get(begin)==null){ //nothing there put
-								parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+						this.parentFunction=parIf.getParent();
+						this.userCodingNowFunction=b;
+						if(parentFunction!=null){ //insert into parent's block
+							if(parentFunction.getNestedBlocks().get(begin)==null){ //nothing there put
+								parentFunction.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 							}else{ 
 								HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
-								cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks(), true); //cascade first then put into it!!
-								parent.getNestedBlocks().put(begin, b);
+								cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, true); //cascade first then put into it!!
+								parentFunction.getNestedBlocks().put(begin, b);
 							}
 						}
 					}else{
 						b.setParent(parIf.getParent());
-						this.userCodingNow=b; //don't put in if in main;s nesting
+						this.userCodingNowFunction=b; //don't put in if in main;s nesting
 					}
 				}
 			}else{
-				if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
-					b.setParent(this.userCodingNow);
-					this.parent=this.userCodingNow;
-					this.userCodingNow=b;
-					if(parent!=null){ //insert into parent's block
-						if(parent.getNestedBlocks().get(begin)==null){ //nothing there put
-							parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+				if(this.userCodingNowFunction!=null){ //curr not null so we need to set current to user playing and parent to curr
+					b.setParent(this.userCodingNowFunction);
+					this.parent=this.userCodingNowFunction;
+					this.userCodingNowFunction=b;
+					if(parentFunction!=null){ //insert into parent's block
+						if(parentFunction.getNestedBlocks().get(begin)==null){ //nothing there put
+							parentFunction.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 						}else{ 
 							HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
-							cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks(), true); //cascade first then put into it!!
-							parent.getNestedBlocks().put(begin, b);
+							cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, true); //cascade first then put into it!!
+							parentFunction.getNestedBlocks().put(begin, b);
 						}
 					}
 				}else{
-					this.userCodingNow=b; //don't put in if its in main's nesting
+					this.userCodingNowFunction=b; //don't put in if its in main's nesting
 				}
 			}
 			return 0;
@@ -1922,125 +1922,143 @@ public class Controller {
 	 * 
 	 * 
 	 */
-	public void createFunctionBlocks(int type, int begin, int numLines, String cond){
+	public int createBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
-			this.userCodingNowFunction=this.parentFunction;
-			return;
-		}else if((type=='e') && (this.userCodingNowFunction!=null)){//finished coding for the block so put into the correct spot
-			this.userCodingNowFunction.setLineEnd(begin+numLines-1);	
-			int currType= this.userCodingNowFunction.getType();
+			this.userCodingNow=this.parent;
+			return 0;
+		}else if((type=='e') && (this.userCodingNow!=null)){//finished coding for the block so put into the correct spot
+			this.userCodingNow.setLineEnd(begin+numLines-1);	
+			int currType= this.userCodingNow.getType();
 			if(currType==7){//repeat block so turn cond into int and store in repeat
 				int repeat=-1;
 				if(cond==null){
+					
 					///////////////////ERROR: Number of repetitions was not selected!//////////////
-					return;
+					return 1;
 				}else{ //no need to check if cond is int or not since view will provide int for it 
 					repeat =Integer.valueOf(cond);
 				}
-				this.userCodingNowFunction.setRepeat(repeat);
+				this.userCodingNow.setRepeat(repeat);
 
 			}else if(currType==8){//user-defined FUNCTION block so find int for cond and store int in functionNum
 				int functionNum=-1;
 				if(cond==null){
+					
 					///////////ERROR: Function not selected////////////////////////////
-					return;
+					return 2;
 				}else{
 					for(int i=0; i<gamePlaying.functions.size(); i++){
-						if(gamePlaying.functions.get(i).equals(cond)){
+						if(gamePlaying.functions.get(i).getName().equals(cond)){
 							functionNum= i;
 							break;
 						}
 					}
 				}
 				if(functionNum==-1){ //despite searching for it!! 
+				
 					///////////////ERROR: Illegal funciton entered!!!!!/////////////
-					return;
+					return 3;
 				}
-				this.userCodingNowFunction.setFunctionNum(functionNum);	
+				this.userCodingNow.setFunctionNum(functionNum);	
 			}else if(currType==3 || currType==6){ //if and while loops
-				this.userCodingNowFunction.setCond(cond);
+				this.userCodingNow.setCond(cond);
 			}else if(currType==4){ //for else if, we need to check if parent == if => parent cannot be null
-				this.userCodingNowFunction.setCond(cond);
+				this.userCodingNow.setCond(cond);
 			}
 
-			if(parentFunction==null){ //insert into gamePlaying.blocks and cascade!!!
+			if(parent==null){ //insert into gamePlaying.blocks and cascade!!!
 				/*So insert only happens to main, the rest are edit and delete so 
 				we first check if the begin line we are given already exsits in the 
 				main, if it does, we cascade, then insert to not delete the current 
 				block at that number. else we simply add = works for both between lines 
 				and end of code.*/
-
-				for (int key: this.tempFunctionBlockInstructions.keySet()){
+				for (int key: this.gamePlaying.getBlocks().keySet()){
 					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction, this.tempFunctionBlockInstructions, false);
-						this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);
-						this.userCodingNowFunction=null;
-						return;
+						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow, gamePlaying.getBlocks(),true);
+						this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
+						this.userCodingNow=null;
+						return 0;
 					}
+					
 				}//get past this means, end of lines!
-				this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);	
+				this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
 			} //we ended this so parent is now the currBlock coded
-			this.userCodingNowFunction=parentFunction;
-			if(this.parentFunction!=null){
-				this.parentFunction=this.userCodingNowFunction.getParent();
+			this.userCodingNow=parent;
+			if(this.parent!=null){
+				this.parent=this.userCodingNow.getParent();
 			}
-			return;
+			return 0;
 		}else{ //first time making a block
 			Block b = new Block();
 			b.setlineBegin(begin);
 			b.setType(type);
 			if(type=='e'){
-				return;
+				return 0;
 			}
 			if((type==4) || (type==5)){ //SPECIAL FOR ELSE IF AND ELSE!!!
 				Block parIf = null; 
-				if(this.userCodingNowFunction==null){//find in main level = no nesting
-					for(int k: this.tempFunctionBlockInstructions.keySet()){
-						if(this.tempFunctionBlockInstructions.get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
-							parIf = this.tempFunctionBlockInstructions.get(k);
+				if(this.userCodingNow==null){ //find in main level = no nesting
+					for(int k: this.gamePlaying.getBlocks().keySet()){
+						if(this.gamePlaying.getBlocks().get(k).getType()==3 && k<begin){//after checking all of them it sets it to the last if just less than the current line
+							parIf = gamePlaying.getBlocks().get(k);
 						}
 					}
 				}else{ //find in parent's level!
-					for(int k: this.userCodingNowFunction.getNestedBlocks().keySet()){
-						int tempTP = this.userCodingNowFunction.getNestedBlocks().get(k).getType();
+					for(int k: this.userCodingNow.getNestedBlocks().keySet()){
+						int tempTP = this.userCodingNow.getNestedBlocks().get(k).getType();
 						if((tempTP==3 || tempTP==4) && k<begin){//after checking all of them it sets it to the last if just less than the current line
-							parIf = this.userCodingNowFunction.getNestedBlocks().get(k);
+							parIf = this.userCodingNow.getNestedBlocks().get(k);
 						}
 					}
 				}
 				if(parIf==null){
+				
 					//////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
 					//not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
-					return;
+					return 4;
 				}else if(parIf.getlineEnd()+1!=begin){
+					
 					//So we are trying to insert the else if or else after the if for else if OR if/else if for ELSE!!!
 					////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
-					return;
+					return 5;
 				}else{
-					if(this.userCodingNowFunction!=null){ //curr not null so we need to set current to user playing and parent to curr
+					if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
 						b.setParent(parIf.getParent()); //set else if or else stuff's parent to the parent of if block!!
-						this.parentFunction=parIf.getParent();
-						this.userCodingNowFunction=b;
-						//inserting into parent's block
-						parentFunction.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+						this.parent=parIf.getParent();
+						this.userCodingNow=b;
+						if(parent!=null){ //insert into parent's block
+							if(parent.getNestedBlocks().get(begin)==null){ //nothing there put
+								parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+							}else{ 
+								HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
+								cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks(), true); //cascade first then put into it!!
+								parent.getNestedBlocks().put(begin, b);
+							}
+						}
 					}else{
 						b.setParent(parIf.getParent());
-						this.userCodingNowFunction=b; //don't put in if in main;s nesting
+						this.userCodingNow=b; //don't put in if in main;s nesting
 					}
 				}
 			}else{
-				if(this.userCodingNowFunction!=null){ //curr not null so we need to set current to user playing and parent to curr
-					b.setParent(this.userCodingNowFunction);
-					this.parentFunction=this.userCodingNowFunction;
-					this.userCodingNowFunction=b;
-					if(this.parentFunction!=null){ //inserting into parent's block
-						parentFunction.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+				if(this.userCodingNow!=null){ //curr not null so we need to set current to user playing and parent to curr
+					b.setParent(this.userCodingNow);
+					this.parent=this.userCodingNow;
+					this.userCodingNow=b;
+					if(parent!=null){ //insert into parent's block
+						if(parent.getNestedBlocks().get(begin)==null){ //nothing there put
+							parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
+						}else{ 
+							HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
+							cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks(), true); //cascade first then put into it!!
+							parent.getNestedBlocks().put(begin, b);
+						}
 					}
 				}else{
-					this.userCodingNowFunction=b; //don't put in if its in main's nesting
+					this.userCodingNow=b; //don't put in if its in main's nesting
 				}
 			}
-			return;
+			return 0;
 		}
 	}
 
