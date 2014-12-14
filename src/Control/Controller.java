@@ -72,7 +72,7 @@ public class Controller {
 		for(Block p = this.userCodingNowFunction; p!=null; p=p.getParent()){
 			tempPar = p;
 		}//get to main nesting level
-		
+
 		if(tempPar!=null){
 			printNotDoneBlock(0,tempPar.getNestedBlocks(), ins);
 		}
@@ -2052,7 +2052,7 @@ public class Controller {
 			}else{
 				if(this.userCodingNowFunction!=null){ //curr not null so we need to set current to user playing and parent to curr
 					b.setParent(this.userCodingNowFunction);
-					this.parent=this.userCodingNowFunction;
+					this.parentFunction=this.userCodingNowFunction;
 					this.userCodingNowFunction=b;
 					if(parentFunction!=null){ //insert into parent's block
 						if(parentFunction.getNestedBlocks().get(begin)==null){ //nothing there put
