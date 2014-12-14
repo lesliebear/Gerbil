@@ -75,7 +75,7 @@ public class UserFunction extends Screen{
 	
 	JTextField functionName; /*get from control*/ 
 	
-	private static JList functionsCodeList;
+	public static JList functionsCodeList;
 	//private static JList<ArrayList<String>> functionsCodeList;
 	private static JScrollPane scrollpane;
 	
@@ -617,7 +617,7 @@ public class UserFunction extends Screen{
 		return functionName.getText().trim();
 	}
 	
-	public void addReapeatEventHanderl(ActionListener listener) {
+	public void addRepeatEventHandler(ActionListener listener) {
 		repeatB.addActionListener(listener);
 	}
 	
@@ -652,5 +652,9 @@ public class UserFunction extends Screen{
 	
 	public void addOkEventHandler(ActionListener listener) {
 		okB.addActionListener(listener);
+	}
+	
+	public void addUserFunctionComboBoxListener(ActionListener listener){
+		userDefinedFunctions.addActionListener(listener);
 	}
 }

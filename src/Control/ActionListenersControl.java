@@ -897,83 +897,142 @@ public class ActionListenersControl {
 
 			}		
 		});
-
-		userFunction.addReapeatEventHanderl(new ActionListener(){
+		
+		userFunction.addUserFunctionComboBoxListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				parentScreen = 7;
+				int lineS = UserFunction.functionsCodeList.getSelectedIndex();
+				Block bTemp = Start.StartGerbil.controller.getBlockByLineUserFunction(lineS);
+				if(lineS ==UserFunction.functionsCodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+					selectedIndexPlayCodeList = lineS;
+				}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
+					selectedIndexPlayCodeList = 0;
+				}else{ //get the block's line begin
+					selectedIndexPlayCodeList = bTemp.getlineBegin();
+				}
+				String funcName = (String) userFunction.userDefinedFunctions.getSelectedItem();
+				Start.StartGerbil.controller.createFunctionBlocks(8,selectedIndexPlayCodeList,1, null); // should it be using createFunctions Block? - kat 
+				Start.StartGerbil.controller.createFunctionBlocks('e',selectedIndexPlayCodeList,1,funcName);
+				userFunction.refreshCodeList();
+			}
+		});
 
-				int uSelect = userFunction.getSelectedLineNumber();
-				Start.StartGerbil.controller.createFunctionBlocks(7, uSelect,0, null);
+		userFunction.addRepeatEventHandler(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				int lineS = UserFunction.functionsCodeList.getSelectedIndex();
+				Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
+				if(lineS ==UserFunction.functionsCodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+					selectedIndexPlayCodeList = lineS;
+				}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
+					selectedIndexPlayCodeList = 0;
+				}else{ //get the block's line begin
+					selectedIndexPlayCodeList = bTemp.getlineBegin();
+				}
+				parentScreen = 7;
+				Start.StartGerbil.controller.createFunctionBlocks(7,selectedIndexPlayCodeList, 0, null);
+
 				conditionals.setText("Repeat");
-				int tempLine = uSelect+2; //for the current statement and begin
+				int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 				conditionals.setBegin(tempLine);
+				
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
 				userFunction.hide();
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
 
 		userFunction.addWhileEventHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				int lineS = UserFunction.functionsCodeList.getSelectedIndex();
+				Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
+				if(lineS ==UserFunction.functionsCodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+					selectedIndexPlayCodeList = lineS;
+				}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
+					selectedIndexPlayCodeList = 0;
+				}else{ //get the block's line begin
+					selectedIndexPlayCodeList = bTemp.getlineBegin();
+				}
 				parentScreen = 7;
+				Start.StartGerbil.controller.createFunctionBlocks(6,selectedIndexPlayCodeList, 0, null);
 
-				int uSelect = userFunction.getSelectedLineNumber();
-				Start.StartGerbil.controller.createFunctionBlocks(6, uSelect,0, null);
 				conditionals.setText("While");
-				int tempLine = uSelect+2; //for the current statement and begin
+				int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 				conditionals.setBegin(tempLine);
+				
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
 				userFunction.hide();
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
 
 		userFunction.addElseEventHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				int lineS = UserFunction.functionsCodeList.getSelectedIndex();
+				Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
+				if(lineS ==UserFunction.functionsCodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+					selectedIndexPlayCodeList = lineS;
+				}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
+					selectedIndexPlayCodeList = 0;
+				}else{ //get the block's line begin
+					selectedIndexPlayCodeList = bTemp.getlineBegin();
+				}
 				parentScreen = 7;
+				Start.StartGerbil.controller.createFunctionBlocks(5,selectedIndexPlayCodeList, 0, null);
 
-				int uSelect = userFunction.getSelectedLineNumber();
-				Start.StartGerbil.controller.createFunctionBlocks(5, uSelect,0, null);
 				conditionals.setText("Else");
-				int tempLine = uSelect+2; //for the current statement and begin
+				int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 				conditionals.setBegin(tempLine);
+				
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
 				userFunction.hide();
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 			}
 		});
 
 		userFunction.addElseIfEventHandler(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				int lineS = UserFunction.functionsCodeList.getSelectedIndex();
+				Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
+				if(lineS ==UserFunction.functionsCodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+					selectedIndexPlayCodeList = lineS;
+				}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
+					selectedIndexPlayCodeList = 0;
+				}else{ //get the block's line begin
+					selectedIndexPlayCodeList = bTemp.getlineBegin();
+				}
 				parentScreen = 7;
+				Start.StartGerbil.controller.createFunctionBlocks(4,selectedIndexPlayCodeList, 0, null);
 
-				int uSelect = userFunction.getSelectedLineNumber();
-				Start.StartGerbil.controller.createFunctionBlocks(4, uSelect,0, null);
-				conditionals.setText("Else If");
-				int tempLine = uSelect+2; //for the current statement and begin
+				conditionals.setText("Else if");
+				int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 				conditionals.setBegin(tempLine);
+				
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
 				userFunction.hide();
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+				
 			}
 		});
+		
+		
 		userFunction.addIfEventHandler(new ActionListener(){
+			
 			public void actionPerformed(ActionEvent e) {
+				int lineS = UserFunction.functionsCodeList.getSelectedIndex();
+				Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
+				if(lineS ==UserFunction.functionsCodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+					selectedIndexPlayCodeList = lineS;
+				}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
+					selectedIndexPlayCodeList = 0;
+				}else{ //get the block's line begin
+					selectedIndexPlayCodeList = bTemp.getlineBegin();
+				}
 				parentScreen = 7;
+				Start.StartGerbil.controller.createFunctionBlocks(3,selectedIndexPlayCodeList, 0, null);
 
-				int uSelect = userFunction.getSelectedLineNumber();
-				Start.StartGerbil.controller.createFunctionBlocks(3, uSelect,0, null);
 				conditionals.setText("If");
-				int tempLine = uSelect+2; //for the current statement and begin
+				int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 				conditionals.setBegin(tempLine);
+				
 				conditionals.show(); //shows the conditionals screen so when they return we get back here
 				userFunction.hide();
-				Start.StartGerbil.controller.createFunctionBlocks('e', uSelect,conditionals.getEndLineNumber(), conditionals.getCond());
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+				
+				
 			}});
 
 		userFunction.addMoveAheadEventHandler(new ActionListener(){
