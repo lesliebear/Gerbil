@@ -40,6 +40,7 @@ public class UserFunction extends Screen{
 	private int startLineNumber;
 	private int endLineNumber;
 	private DefaultListModel listModel;
+	static DefaultComboBoxModel model;
 	public boolean addtomain;
 	/**Right side panel: labels, buttons, other**/
 	JLabel conditionalsL = new JLabel("Conditional Statements"); 	
@@ -569,14 +570,19 @@ public class UserFunction extends Screen{
 		return functionsCodeList.getSelectedIndex();
 	}
 	
-	public void refreshUserFunctionsList(String[] newFunctions){
+	/* public void refreshUserFunctionsList(String[] newFunctions){
 		
 		userDefinedFunctions.removeAllItems();
 		for(int i = 0; i < newFunctions.length; i++) {
 			userDefinedFunctions.addItem(newFunctions[i]);
 		}
+	} */
+	
+	public void refreshUserFunctionsList(String [] newList){ 
+		model=new DefaultComboBoxModel(newList);
+		userDefinedFunctions.setModel(model);
 	}
-
+	
 	public void updateInstructionsList(String[] instructions) {
 		listModel.clear();
 		listModel.add(0," ");
@@ -588,10 +594,12 @@ public class UserFunction extends Screen{
 		functionsCodeList.setSelectedIndex(functionsCodeList.getModel().getSize()-1);
 	}
 	
+	
+	
 	public void refreshCodeList(){
 		listModel.clear();
 	
-		String [] temp = Start.StartGerbil.controller.FunctionUnFin();
+		String [] temp = Start.StartGerbil.controller.userFunctionShowJList();
 		listModel.add(0, " ");
 		for(int i=0; i< temp.length;i++){
 			String test = temp[i];

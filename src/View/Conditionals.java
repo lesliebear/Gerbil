@@ -37,7 +37,6 @@ public class Conditionals {
 	/**Type of conditional frame**/
 	public static String type= "";
 
-	
 	/**LHS and RHS panels**/
 	static JPanel leftPanel = new JPanel(); 
 	static JPanel rightPanel = new JPanel();
@@ -59,7 +58,7 @@ public class Conditionals {
 	private int endLineNumber;
 	private DefaultListModel<String> instructions;
 	
-	static DefaultComboBoxModel model; 
+	static DefaultComboBoxModel model;
 	static DefaultListModel listModel;
 
 	JComboBox userDefinedFunctions; /*get from control*/ 
@@ -230,6 +229,7 @@ public class Conditionals {
 
 		//String[] drop = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"}; // EDIT : should come from somewhere else
 		userDefinedFunctions = new JComboBox();
+	//	userDefinedFunctions.setModel(model);
 
 		//top, left, botton, right <- insets
 		gc.insets = new Insets(5,0,10,5);
@@ -288,6 +288,7 @@ public class Conditionals {
 		String [] checks = {"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
 		conditionalDD = new JComboBox(checks);
 
+		
 		gc.gridx = 0;
 		gc.gridy = 0;
 
@@ -424,12 +425,18 @@ public class Conditionals {
 	public String getText(){
 		return label.getText();
 	}
-	
+	/*
 	public void refreshUserFunctionsList(String[] newFunctions){
 		userDefinedFunctions.removeAllItems();
 		for(int i = 0; i < newFunctions.length; i++) {
 			userDefinedFunctions.addItem(newFunctions[i]);
 		}
+	}
+	*/
+	
+	public void refreshUserFunctionsList(String [] newList){ 
+		model=new DefaultComboBoxModel(newList);
+		userDefinedFunctions.setModel(model);
 	}
 	
 	public void refreshUserFunctionsList_Repeat(){
