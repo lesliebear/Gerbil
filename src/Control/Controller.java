@@ -22,7 +22,7 @@ public class Controller {
 	/**Holds the list of built in functions = eat move, turn left
 	 * And user created are added to the end of this arraylist when game is initialized first
 	 * and then reloaded to the backend when finished game*/
-	public ArrayList<Function> functions = new ArrayList<Function>();
+	//public ArrayList<Function> functions = new ArrayList<Function>();
 	//Note eat fruit must be for that fruit only!! else error popup.
 	//Backend backend= new Backend();
 
@@ -168,7 +168,7 @@ public class Controller {
 					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
-				Function f = this.functions.get(block.getFunctionNum());
+				Function f = gamePlaying.functions.get(block.getFunctionNum());
 				list.add(lBeg +" "+tabStr+f.getName());
 			}	
 			tabStr="";
@@ -185,6 +185,16 @@ public class Controller {
 
 		for(int i=0; i< toReturn.length; i++){
 			toReturn[i] = temp.get(i);
+		}
+
+		return toReturn;
+	}
+	
+	public String[] JListFunctions(){ 
+		String [] toReturn = new String[this.gamePlaying.functions.size()];
+
+		for(int i=0; i< this.gamePlaying.functions.size(); i++){
+			toReturn[i] = this.gamePlaying.functions.get(i).getName();
 		}
 
 		return toReturn;
@@ -295,7 +305,7 @@ public class Controller {
 					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
-				Function f = this.functions.get(block.getFunctionNum());
+				Function f = gamePlaying.functions.get(block.getFunctionNum());
 				list.add(lBeg+" "+tabStr+f.getName());
 			}	
 			tabStr="";
@@ -408,7 +418,7 @@ public class Controller {
 				}
 				System.out.println(block.getlineEnd()+tabStr+"end");
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
-				Function f = this.functions.get(block.getFunctionNum());
+				Function f = gamePlaying.functions.get(block.getFunctionNum());
 				System.out.println(tabStr+f.getName());
 			}	
 			tabStr="";
@@ -438,7 +448,6 @@ public class Controller {
 	 */
 	public int createBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
-			this.userCodingNow=null;//this is all that needs to be done here!
 			this.userCodingNow=this.parent;
 			return 0;
 		}else if((type=='e') && (this.userCodingNow!=null)){//finished coding for the block so put into the correct spot
@@ -462,8 +471,8 @@ public class Controller {
 					///////////ERROR: Function not selected////////////////////////////
 					return 2;
 				}else{
-					for(int i=0; i<this.functions.size(); i++){
-						if(functions.get(i).getName().equals(cond)){
+					for(int i=0; i<gamePlaying.functions.size(); i++){
+						if(gamePlaying.functions.get(i).getName().equals(cond)){
 							functionNum= i;
 							break;
 						}
@@ -1292,7 +1301,7 @@ public class Controller {
 			moveForward(tempgerbil);
 			return 0;
 		}else if(block.getType()==8){//user defined function
-			ArrayList<Function> functionlist= functions;
+			ArrayList<Function> functionlist= gamePlaying.functions;
 			Function function= functionlist.get(block.getFunctionNum());
 			HashMap<Integer,Block> fnestedblocklist= function.getBlockInstructions();
 			ArrayList<Integer> fnestedkeylist= new ArrayList<Integer>();
@@ -1935,8 +1944,8 @@ public class Controller {
 					///////////ERROR: Function not selected////////////////////////////
 					return;
 				}else{
-					for(int i=0; i<this.functions.size(); i++){
-						if(functions.get(i).equals(cond)){
+					for(int i=0; i<gamePlaying.functions.size(); i++){
+						if(gamePlaying.functions.get(i).equals(cond)){
 							functionNum= i;
 							break;
 						}
@@ -2076,8 +2085,8 @@ public class Controller {
 				return 1;
 			}
 		}
-		for(int j=0; j<functions.size(); j++){
-			if(functions.get(j).getName().equals(name)){
+		for(int j=0; j<gamePlaying.functions.size(); j++){
+			if(gamePlaying.functions.get(j).getName().equals(name)){
 				return 2;
 			}
 		}
@@ -2097,7 +2106,6 @@ public class Controller {
 	 * @param functionToAdd function to be added to function list
 	 */
 	public void addFunction(Function functionToAdd){
-		functions.add(functionToAdd); // not sure - don't think this is the right action...
 		gamePlaying.functions.add(functionToAdd); // +kat
 	}
 
@@ -2115,9 +2123,9 @@ public class Controller {
 	 */
 	public boolean deleteFunction(String name){
 		//Will not call any functions/classes
-		for(int i=0; i<functions.size(); i++){
-			if(functions.get(i).getName().equals(name)){
-				functions.remove(i);
+		for(int i=0; i<gamePlaying.functions.size(); i++){
+			if(gamePlaying.functions.get(i).getName().equals(name)){
+				gamePlaying.functions.remove(i);
 				return true;
 			}
 		}
@@ -2142,8 +2150,8 @@ public class Controller {
 			functionnames.add(gameFunctions.get(i).getName());
 		}
 		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
-		String[] returnstring= new String[functions.size()];
-		for(int j=0; j<functions.size(); j++){
+		String[] returnstring= new String[gamePlaying.functions.size()];
+		for(int j=0; j<gamePlaying.functions.size(); j++){
 			returnstring[j]= sortedfunctions.get(j);
 		}
 		return returnstring;
@@ -2324,12 +2332,7 @@ public class Controller {
 			return null;
 		}
 		Start.StartGerbil.backend.deleteGame(gameName); // why is this deleting the game??? kat
-		if(!gamePlaying.getfunction().isEmpty()){
-			ArrayList<Integer> keylist= new ArrayList<Integer>();
-			for(int i=0; i<keylist.size(); i++){
-				this.functions.add(gamePlaying.getfunction().get(i));
-			}
-		}
+
 		return this.gamePlaying;
 	}
 
@@ -2339,9 +2342,6 @@ public class Controller {
 	 */
 	public boolean saveGame() {
 
-		for(int i=0; i<functions.size();i++){
-			gamePlaying.getfunction().add(functions.get(i));
-		}
 		for(int j=0; j<Start.StartGerbil.backend.getGameList().size(); j++){
 			if(Start.StartGerbil.backend.getGameList().get(j).getName().equals(this.gamePlaying.getName())){
 				//skip adding the game to backend bc already exists
@@ -2404,8 +2404,8 @@ public class Controller {
 	 * @return The index of the function.
 	 */
 	private int findFunction(String name) {
-		for (int i =0; i<functions.size(); i++){
-			if (functions.get(i).getName().equals(name)){
+		for (int i =0; i<gamePlaying.functions.size(); i++){
+			if (gamePlaying.functions.get(i).getName().equals(name)){
 				return i;
 			}
 		}
