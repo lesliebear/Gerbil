@@ -200,8 +200,7 @@ public class DeleteFunction extends Screen{
 	}
 	
 	/**
-	 * Updates the list of functions in combo box
-	 * @param newFunctions Name of all user defined functions
+	 * Set new function selection in combobox
 	 */
 	public void setNewSelection() {
 		
@@ -213,6 +212,10 @@ public class DeleteFunction extends Screen{
 		}
 	}
 	
+	/**
+	 * Update list of functions in combobox
+	 * @param newFunctions List of function anems
+	 */
 	public void updateFunctionsList(String[] newFunctions){
 		
 		functionsList.removeAllItems();
@@ -221,15 +224,27 @@ public class DeleteFunction extends Screen{
 		}
 	}
 	
+	/**
+	 * Get selected function name to delete
+	 * @return Function name to delte
+	 */
 	public String getSelectedFunction() {
 		return (String)functionsList.getSelectedItem();
 	}
 	
+	/**
+	 * Add event listener for delete button
+	 * @param Event Listener
+	 */
 	public void addDeleteEventHandler(ActionListener listener) {
 		
 		delete.addActionListener(listener);
 	}
 	
+	/**
+	 * Add event listener for done button
+	 * @param listener Event Listener
+	 */
 	public void addDoneEventHandler(ActionListener listener) {
 		
 		done.addActionListener(listener);

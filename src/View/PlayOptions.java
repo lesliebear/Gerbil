@@ -21,10 +21,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-/**
- * @author Truong Pham
- * 
+/** 
  * This class creates a GUI for the PlayOptions screen.
+ * @author Truong Pham
  */
 public class PlayOptions extends Screen{
 

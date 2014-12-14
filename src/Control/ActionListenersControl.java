@@ -145,6 +145,7 @@ public class ActionListenersControl {
 		addSavedGamesEventHandlers();
 		addConditionalsEventHandlers();
 		addDeleteFunctionEventHandlers();
+		addFinishEventHandlers();
 	}
 
 
@@ -303,13 +304,17 @@ public class ActionListenersControl {
 		
 		finish.addLoadGamesButtonListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				parentScreen = 6;
+				savedGames.show();
+				finish.hide();
 			}		
 		});
 		
 		finish.addNewGamesButtonListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				parentScreen = 6;
+				newGame.show();
+				finish.hide();
 			}		
 		});
 		
@@ -394,7 +399,8 @@ public class ActionListenersControl {
 						Start.StartGerbil.controller.createGame(text);
 
 						initGrid();
-						Play.refreshGrid();
+						Play.setNewGrid(Start.StartGerbil.controller.getCurrGame().getGrid().getGridRepresentation());
+						Play.setGridIcons();
 						playScreen.refreshUserFunctions();
 						Play.refreshCodeList();
 
@@ -602,8 +608,11 @@ public class ActionListenersControl {
 							errorDialogRun.show();
 						}else if(errortype==0){
 							//WIN THE GAME
+							Start.StartGerbil.controller.resetTempGrid();
+							Play.setGridIcons();
 							finish.setFruitCount(fruitCount);
 							finish.show();
+							playScreen.hide();
 						}
 					}
 				};
@@ -626,7 +635,6 @@ public class ActionListenersControl {
 				inserting = true;
 				editing = false;
 				deleting = false; 
-
 				playScreen.enableAllPlayDD();	
 				playScreen.enableAllButtons();
 				playScreen.setInsertSelected();

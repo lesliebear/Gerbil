@@ -886,6 +886,7 @@ public class Play extends Screen{
 		saveB.setBackground(Color.yellow);
 	}
 
+	
 	public void clearAll(){
 		Start.StartGerbil.controller.clearBlocks();
 		model.clear();

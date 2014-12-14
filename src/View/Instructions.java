@@ -148,12 +148,11 @@ public class Instructions extends Screen{
 	 * Disable to screen
 	 */
 	public void disable() {
-
 		frame.setEnabled(false);
 	}
 	
 	/**
-	 * Add event listner for back button
+	 * Add event listener for back button
 	 * @param listener ActionListner 
 	 */
 	public void addBackEventHandler(ActionListener listener) {
