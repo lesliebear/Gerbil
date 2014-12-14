@@ -461,6 +461,7 @@ public class ActionListenersControl {
 							playScreen.setSeclectedIndex(lineNumbers.get(error+1));
 							errorDialogRun.setErrorText("Cannot Move Forward: there is a wall ahead");
 							errorDialogRun.show();
+							
 						}else if(errortype==3){
 							//miscellaneous error, could not compile code(this shouldn't happen)
 						}else if(errortype==4){
