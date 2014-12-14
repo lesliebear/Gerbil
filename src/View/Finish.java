@@ -84,7 +84,7 @@ public class Finish extends Screen {
 		reachedTheEnd.setFont(new Font(null, Font.BOLD, 48));
 		reachedTheEnd.setForeground(Color.WHITE);
 		
-		fruitCounter = new JLabel("Fruits Eaten: "+"4"+"/"+"4");
+		fruitCounter = new JLabel("Fruits Eaten: "+"4"+"/"+"4"); // PUT NUMBERS HERE!
 		fruitCounter.setFont(new Font(null, Font.BOLD, 32));
 		fruitCounter.setForeground(Color.WHITE);
 		
@@ -201,7 +201,7 @@ public class Finish extends Screen {
 	 * 
 	 */
 	public void show() {
-	
+		frame.setVisible(true);
 	}
 	
 	/**
@@ -209,23 +209,32 @@ public class Finish extends Screen {
 	 * 
 	 */
 	public void hide() {
+		frame.setVisible(false);
+	}
 	
-	}
-
-	public void addEventListeners(ActionListener listener) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void enable() {
-		// TODO Auto-generated method stub
-		
+		frame.setEnabled(true);
 	}
 
 	@Override
 	public void disable() {
+		frame.setEnabled(false);
+	}
+	
+
+	public void addSaveGamesButtonListener(ActionListener listener) {
+		saveGame.addActionListener(listener);
+	}
+	
+	public void addNewGamesButtonListener(ActionListener listener) {
 		// TODO Auto-generated method stub
-		
+		newGame.addActionListener(listener);
+	}
+	
+	public void addLoadGamesButtonListener(ActionListener listener) {
+		// TODO Auto-generated method stub
+		loadGame.addActionListener(listener);
 	}
 }

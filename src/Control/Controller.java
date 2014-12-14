@@ -602,7 +602,7 @@ public class Controller {
 	 * Deletes/clears all blocks in the main
 	 */
 	public void clearBlocks(){
-		gamePlaying.setBlocks(new HashMap<Integer,Block>());
+		gamePlaying.getBlocks().clear();
 	}
 
 	/**
@@ -2192,7 +2192,7 @@ public class Controller {
 		for(int i=0; i<gameFunctions.size(); i++){
 			functionnames.add(gameFunctions.get(i).getName());
 		}
-		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
+		ArrayList<String> sortedfunctions= functionnames;
 		String[] returnstring= new String[gamePlaying.functions.size()];
 		for(int j=0; j<gamePlaying.functions.size(); j++){
 			returnstring[j]= sortedfunctions.get(j);
@@ -2211,7 +2211,7 @@ public class Controller {
 		for(int i=0; i<gameFunctions.size(); i++){
 			functionnames.add(gameFunctions.get(i).getName());
 		}
-		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
+		ArrayList<String> sortedfunctions= functionnames;
 		
 		return sortedfunctions;
 	}
