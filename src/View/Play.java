@@ -895,4 +895,18 @@ public class Play extends Screen{
 	public void setSeclectedIndex(int index) {
 		playcodeList.setSelectedIndex(index);
 	}
+	public void setSelectedIndexColor(int index, char c){
+		playcodeList.setSelectedIndex(index);
+		if(c=='e'){
+			playcodeList.setSelectionBackground(Color.RED);
+		}else{
+			playcodeList.setSelectionBackground(Color.GREEN);
+		}
+		playcodeList.setSelectionForeground(Color.BLACK);
+	}
+	public void deselectIndexColor(){
+		playcodeList.clearSelection();
+		playcodeList.setSelectionBackground(Color.BLUE);
+		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
+	}
 }
