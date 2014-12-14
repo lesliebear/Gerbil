@@ -115,6 +115,7 @@ public class ActionListenersControl {
 		addMainEventHandlers();
 		addNewGameEventHandlers();
 		addPlayOptionsEventHandlers();
+		addErrorDialogRunEventHandlers();
 		addInstructionsEventHandlers();
 		addErrorDialogEventHandlers();
 		addPlayEventHandlers();
@@ -285,7 +286,7 @@ public class ActionListenersControl {
 					newGame.textF.setText(""); //must reset the text line
 
 					if(Start.StartGerbil.backend.gameExists(text)){
-						errorDialog.errorL.setText("Please enter a Game name that doesn't already exist.");
+						errorDialog.setErrorText("Please enter a Game name that doesn't already exist.");
 						newGame.hide();
 						errorDialog.show();
 					}else{
@@ -301,7 +302,7 @@ public class ActionListenersControl {
 						playScreen.enableCreateFunction();
 					}
 				}else{
-					errorDialog.errorL.setText("Please enter a valid Game name");
+					errorDialog.setErrorText("Please enter a valid Game name");
 					newGame.hide();
 					errorDialog.show();
 				}
@@ -448,25 +449,25 @@ public class ActionListenersControl {
 						if(errortype==1){
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
 							//HIGHLIGHT the error block using lineNumbers.get(error+1);
-							errorDialogRun.errorL.setText("Cannot Eat: there is no food at square");
+							errorDialogRun.setErrorText("Cannot Eat: there is no food at square");
 							errorDialogRun.show();
 						}else if(errortype==2){
 							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
 							//HIGHLIGHT the error block using lineNumbers.get(error+1);
-							errorDialogRun.errorL.setText("Cannot Move Forward: there is a wall ahead");
+							errorDialogRun.setErrorText("Cannot Move Forward: there is a wall ahead");
 							errorDialogRun.show();
 						}else if(errortype==3){
 							//miscellaneous error, could not compile code(this shouldn't happen)
 						}else if(errortype==4){
 							//ERROR: insert Dialogue BoxDid not reach water/goal
-							errorDialogRun.errorL.setText("Did not reach water, Try Again!");
+							errorDialogRun.setErrorText("Did not reach water, Try Again!");
 							errorDialogRun.show();
 						}else if(errortype==-1){
 							//parsing error(this shouldn't happen)
 						}else if(errortype==-2){
 							//ERROR: insert Dialogue BoxInfiniteLoop was created, cannot run code
 							//this does not run/animate the gerbil
-							errorDialogRun.errorL.setText("Infinite Loop was created, please edit your code");
+							errorDialogRun.setErrorText("Infinite Loop was created, please edit your code");
 							errorDialogRun.show();
 						}
 					}
@@ -578,12 +579,12 @@ public class ActionListenersControl {
 						int ret = Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
 						if(ret == 4){ //DO NOT OPEN CONDITIONALS = show error dialog!!!!
 							parentScreen = 4;
-							errorDialog.errorL.setText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
+							errorDialog.setErrorText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
 							errorDialog.show();
 						}else if(ret==5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
 							parentScreen = 4;
 
-							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
+							errorDialog.setErrorText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
 							errorDialog.show();
 							
 						}else{
@@ -598,11 +599,11 @@ public class ActionListenersControl {
 						int ret = Start.StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
 						if(ret==4){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
 							parentScreen = 4;
-							errorDialog.errorL.setText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
+							errorDialog.setErrorText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
 							errorDialog.show();
 						}else if(ret == 5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
 							parentScreen = 4;
-							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
+							errorDialog.setErrorText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
 							errorDialog.show();
 						}else{
 							parentScreen = 4;
@@ -732,7 +733,7 @@ public class ActionListenersControl {
 				String oGame= (String) savedGames.gamesList.getSelectedItem();
 				if(oGame==null){
 					parentScreen=6;
-					errorDialog.errorL.setText("Must Select a Game");
+					errorDialog.setErrorText("Must Select a Game");
 					errorDialog.show();
 				}else{
 					Game temp = Start.StartGerbil.controller.loadGame(oGame);
@@ -750,7 +751,7 @@ public class ActionListenersControl {
 				String dGame= (String) savedGames.gamesList.getSelectedItem();
 				if(dGame==null){
 					parentScreen=6;
-					errorDialog.errorL.setText("Must Select a Game");
+					errorDialog.setErrorText("Must Select a Game");
 					errorDialog.show();
 				}else{
 					Start.StartGerbil.controller.deleteGame(dGame);
@@ -881,11 +882,11 @@ public class ActionListenersControl {
 					int error= Start.StartGerbil.controller.createFunction(functionName);
 					if(error==1){
 						//error: function names can only consist of letters/numbers
-						errorDialog.errorL.setText("Name must consist of letters/numbers");
+						errorDialog.setErrorText("Name must consist of letters/numbers");
 						errorDialog.show();
 					}else if(error==2){
 						//error: function name already exists, choose another
-						errorDialog.errorL.setText("Name already exists, enter another name");
+						errorDialog.setErrorText("Name already exists, enter another name");
 						errorDialog.show();
 					}else{
 						parentScreen=4;
@@ -898,7 +899,7 @@ public class ActionListenersControl {
 						showParent();
 					}
 				}else{
-					errorDialog.errorL.setText("You Must Enter a Function Name");
+					errorDialog.setErrorText("You Must Enter a Function Name");
 					errorDialog.show();
 				}
 
