@@ -276,6 +276,7 @@ public class ActionListenersControl {
 				Play.setGridIcons();
 				Start.StartGerbil.controller.resetTempGrid();
 				showParent();
+				playScreen.deselectIndexColor();
 			}
 		});
 	}
@@ -508,19 +509,20 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				Thread thread = new Thread() {
 					public void run() {
+						int fruitCount=0;
 						parentScreen=4;	
 						int errortype= Start.StartGerbil.controller.runBlocks();
 						ArrayList<String> instructions = Start.StartGerbil.controller.getFinalBlocks();
 						ArrayList<Integer> lineNumbers= Start.StartGerbil.controller.getFinalBlocksLineNumbers();
 						Start.StartGerbil.controller.resetTempGrid();//just in case, resetting grid and gerbil object
-						int error=0;
+						int error=-1;
 						for(int i = 0; i < instructions.size(); i++) {
 							if(instructions.get(i).equals("Turn Left")) {
 								Start.StartGerbil.controller.turnLeft(Start.StartGerbil.controller.getTempGerbil());
 								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
 								error=i;
 								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
-								playScreen.setSeclectedIndex(lineNumbers.get(i));
+								playScreen.setSelectedIndexColor(lineNumbers.get(i), 'b');
 							}
 							else if(instructions.get(i).equals("Move Forward")) {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
@@ -530,13 +532,14 @@ public class ActionListenersControl {
 								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getCompass(), oldGridSpotType);
 								error=i;
 								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
-								playScreen.setSeclectedIndex(lineNumbers.get(i));
+								playScreen.setSelectedIndexColor(lineNumbers.get(i), 'b');
 							}
 							else if(instructions.get(i).equals("Eat")) {
 								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
 								error=i;
 								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
-								playScreen.setSeclectedIndex(lineNumbers.get(i));
+								playScreen.setSelectedIndexColor(lineNumbers.get(i), 'b');
+								fruitCount++;
 							}
 							try {
 								sleep(500);
@@ -545,19 +548,19 @@ public class ActionListenersControl {
 								e.printStackTrace();
 							}
 						}
-						if(error==0){
+						/*if(error==-1){
 							error=-1;
-						}
+						}*/
 						if(errortype==1){
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
 							//HIGHLIGHT the error block using lineNumbers.get(error+1);
-							playScreen.setSeclectedIndex(lineNumbers.get(error+1));
+							playScreen.setSelectedIndexColor(lineNumbers.get(error+1), 'e');
 							errorDialogRun.errorL.setText("Cannot Eat: there is no food at square");
 							errorDialogRun.show();
 						}else if(errortype==2){
 							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
 							//HIGHLIGHT the error block using lineNumbers.get(error+1);
-							playScreen.setSeclectedIndex(lineNumbers.get(error+1));
+							playScreen.setSelectedIndexColor(lineNumbers.get(error+1), 'e');
 							errorDialogRun.errorL.setText("Cannot Move Forward: there is a wall ahead");
 							errorDialogRun.show();
 						}else if(errortype==3){
@@ -573,6 +576,11 @@ public class ActionListenersControl {
 							//this does not run/animate the gerbil
 							errorDialogRun.errorL.setText("Infinite Loop was created, please edit your code");
 							errorDialogRun.show();
+						}else if(errortype==0){
+							//WIN THE GAME
+							finish.setFruitCount(fruitCount);
+							System.out.println(fruitCount);
+							finish.show();
 						}
 					}
 				};

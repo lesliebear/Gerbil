@@ -28,14 +28,17 @@ import javax.swing.JPanel;
  */
 public class Finish extends Screen {
 
-	private static JFrame frame;
-	private static JPanel panel;
-	private static BufferedImage image;
-	private static JButton saveGame;
-	private static JButton newGame;
-	private static JButton loadGame;
-	private static JLabel reachedTheEnd;
-	private static JLabel fruitCounter;
+	private JFrame frame;
+	private JPanel panel;
+	private BufferedImage image;
+	private JButton saveGame;
+	private JButton newGame;
+	private JButton loadGame;
+	private JLabel reachedTheEnd;
+	private JLabel fruitCounter;
+	
+	public int fruitCount;
+
 	
 	/**
 	 * Constructor that creates all necessary GUI components.
@@ -46,7 +49,7 @@ public class Finish extends Screen {
 	}
 	
 	
-	protected static void createAndShowGUI() { 
+	protected void createAndShowGUI() { 
 		frame = new JFrame("Finish");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -71,7 +74,7 @@ public class Finish extends Screen {
 		frame.setVisible(false);
 	}
 	
-	public static void setPanel(){
+	public void setPanel(){
 		panel.setLayout(new GridBagLayout());
 		panel.setOpaque(true);
 		GridBagConstraints gc = new GridBagConstraints();
@@ -85,7 +88,7 @@ public class Finish extends Screen {
 		reachedTheEnd.setFont(new Font(null, Font.BOLD, 48));
 		reachedTheEnd.setForeground(Color.WHITE);
 		
-		fruitCounter = new JLabel("Fruits Eaten: "+"4"+"/"+"4"); // PUT NUMBERS HERE!
+		fruitCounter = new JLabel("Fruits Eaten: "+this.fruitCount+"/"+"30"); // PUT NUMBERS HERE!
 		fruitCounter.setFont(new Font(null, Font.BOLD, 32));
 		fruitCounter.setForeground(Color.WHITE);
 		
@@ -121,7 +124,7 @@ public class Finish extends Screen {
 		panel.add(loadGame, gc);
 	}
 	
-	static void createButtons(){
+	public void createButtons(){
 		saveGame= new JButton("Save Game"){
 			public void paint(Graphics g) {
 				saveGame.setFont(new Font("Serif", Font.PLAIN, 18)); 
@@ -238,4 +241,9 @@ public class Finish extends Screen {
 		// TODO Auto-generated method stub
 		loadGame.addActionListener(listener);
 	}
+	
+	public void setFruitCount(int i){
+		this.fruitCount=i;
+	}
+	
 }

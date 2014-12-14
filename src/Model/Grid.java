@@ -274,4 +274,18 @@ public class Grid implements Serializable{
 	public char[][] getGridRepresentation() {
 		return grid;
 	}
+	/**
+	 * returns total number of fruits on this grid
+	 */
+	public int countFruits(){
+		int count=0;
+		for(int i=0; i<grid.length; i++){
+			for(int j=0; j<grid[0].length; j++){
+				if(grid[i][j]=='k' || grid[i][j]=='p' || grid[i][j]=='a'){
+					count++;
+				}
+			}
+		}
+		return count;
+	}
 }
