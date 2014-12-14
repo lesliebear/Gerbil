@@ -589,6 +589,7 @@ public class ActionListenersControl {
 							errorDialog.show();
 							
 						}else{
+							parentScreen = 4;
 							conditionals.setText("Else");
 							int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 							conditionals.setBegin(tempLine);
@@ -606,6 +607,7 @@ public class ActionListenersControl {
 							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
 							errorDialog.show();
 						}else{
+							parentScreen = 4;
 							conditionals.setText("Else if");
 							int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 							conditionals.setBegin(tempLine);
@@ -613,6 +615,7 @@ public class ActionListenersControl {
 							playScreen.hide();
 						}
 					}else if(newType.equals("While")){
+						parentScreen = 4;
 						Start.StartGerbil.controller.createBlocks(6,selectedIndexPlayCodeList, 0, null);
 
 						conditionals.setText("While");
@@ -621,6 +624,7 @@ public class ActionListenersControl {
 						conditionals.show();
 						playScreen.hide();
 					}else {//if(newType.equals("Repeat")){
+						parentScreen = 4;
 						Start.StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
 
 						conditionals.setText("Repeat");
@@ -647,10 +651,7 @@ public class ActionListenersControl {
 					}else{ //get the block's line begin
 						selectedIndexPlayCodeList = bTemp.getlineBegin();
 					}
-					
-					
-					
-					//int begin = selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
+							
 					String term = (String) playScreen.givenFunctionsDD.getSelectedItem();
 					int type = -1;
 					if(term.equals("Move Forward")){
@@ -664,17 +665,6 @@ public class ActionListenersControl {
 					Start.StartGerbil.controller.createBlocks(type, selectedIndexPlayCodeList,0, null);
 					Start.StartGerbil.controller.createBlocks('e', selectedIndexPlayCodeList,1, null);
 					Play.refreshCodeList();
-					/*	}else if(editing == true){
-					if(Play.conditionalSelected()){
-						System.out.println(Play.instructions.get(selectedIndexPlayCodeList).substring(0,6));
-						if(Play.instructions.get(selectedIndexPlayCodeList).substring(0,6) == "Repeat"){
-
-						}
-
-					}else if(){
-
-					}
-				}*/
 				}
 			}});
 		
@@ -703,7 +693,6 @@ public class ActionListenersControl {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(deleting == true){
-					
 					int lineS = Play.playcodeList.getSelectedIndex();
 					Block bTemp = Start.StartGerbil.controller.getBlockByLine(lineS);
 					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
