@@ -269,7 +269,7 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				newGame.textF.setText("");
 				newGame.hide();
-				showParent();
+				playOptions.show(); // will always be the parent...
 			}		
 		});
 	}
@@ -506,6 +506,8 @@ public class ActionListenersControl {
 		playScreen.addConditionalsListSelectionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(inserting==true){
+					
+					parentScreen = 4; 
 					int lineS = Play.playcodeList.getSelectedIndex();
 					Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
 					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
@@ -518,7 +520,7 @@ public class ActionListenersControl {
 					String newType = Play.conditionalsDD.getSelectedItem().toString();
 					if(newType.equals("If")){
 						Start.StartGerbil.controller.createBlocks(3,selectedIndexPlayCodeList, 0, null);
-
+					
 						conditionals.setText("If");
 						int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 						conditionals.setBegin(tempLine);
@@ -527,11 +529,11 @@ public class ActionListenersControl {
 					}else if(newType.equals("Else")){
 						int ret = Start.StartGerbil.controller.createBlocks(5,selectedIndexPlayCodeList , 0, null);
 						if(ret == 4){ //DO NOT OPEN CONDITIONALS = show error dialog!!!!
-							parentScreen = 4;
+							
 							errorDialog.errorL.setText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
 							errorDialog.show();
 						}else if(ret==5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
-							parentScreen = 4;
+							
 
 							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
 							errorDialog.show();
@@ -546,11 +548,11 @@ public class ActionListenersControl {
 					}else if(newType.equals("Else if")){
 						int ret = Start.StartGerbil.controller.createBlocks(4,selectedIndexPlayCodeList, 0, null);
 						if(ret==4){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
-							parentScreen = 4;
+							
 							errorDialog.errorL.setText("Error: 'If' has to exist in order to use 'Else If' or 'Else'");
 							errorDialog.show();
 						}else if(ret == 5){//DO NOT OPEN CONDITIONALS = show error dialog!!!!
-							parentScreen = 4;
+						
 							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
 							errorDialog.show();
 						}else{
