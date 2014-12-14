@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import Model.*;
 
+
 /**
  * Controller class will make all necessary modifications to data in order to send it to the control. 
  * It will concern itself with the data of one user and one game at any given point, provided
@@ -765,46 +766,46 @@ public class Controller {
 				boolean eat= eat(tempgerbil.getX(), tempgerbil.getY(),tempgrid);
 				if(eat==false){
 					//errorEat() dialogue box??;
-					for(int j=0; j<=i; j++){
+					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
-						finalblocks= templist;
 					}
+					finalblocks= templist;
 					return 1;
 				}
 			}else if(command.equals("Turn Left")){
 				boolean turnleft= turnLeft(tempgerbil);
 				if(turnleft==false){
 					//error turning left, this shouldn't ever happen
-					for(int j=0; j<=i; j++){
+					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
-						finalblocks= templist;
 					}
+					finalblocks= templist;
 					return 3;
 				}
 			}else if(command.equals("Move Forward")){
 				boolean moveforward= moveForward(tempgerbil);
 				if(moveforward==false){
 					//errorWall() dialogue box??
-					for(int j=0; j<=i; j++){
+					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
-						finalblocks= templist;
 					}
+					finalblocks= templist;
 					return 2;
 				}else{
 					if(isthereWater(tempgerbil.getX(), tempgerbil.getY())){
 						//YOU WIN THE GAME dialogue box??
 						for(int j=0; j<=i; j++){
 							templist.add(finalblocks.get(j));
-							finalblocks= templist;
 						}
+						finalblocks= templist;
 						return 0;
 					}
 				}
 			}else{
-				for(int j=0; j<=i; j++){
+				for(int j=0; j<i; j++){
 					templist.add(finalblocks.get(j));
-					finalblocks= templist;
 				}
+				finalblocks= templist;
 				return 3;
 			}
 		}
