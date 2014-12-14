@@ -793,7 +793,7 @@ public class ActionListenersControl {
 					int lineS = Play.playcodeList.getSelectedIndex();
 
 					Block bTemp = Start.StartGerbil.controller.getBlockByLine(lineS);
-					if(lineS <=Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line; fixed to fix delete -> clearall error
+					if(lineS >=Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line; changed to fix delete from <= to >= 
 						//selectedIndexPlayCodeList = lineS;
 
 					}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
