@@ -117,13 +117,10 @@ public class ActionListenersControl {
 
 	private void initBooleans(){
 		selectedCreateFunctionFirst = false;
-
 		inserting = false;
 		deleting = false;
 		editing = false;
-		stop = false;
 		play = false;
-
 		deleteCurrGame = false;
 	}
 
@@ -276,7 +273,7 @@ public class ActionListenersControl {
 				Play.setGridIcons();
 				Start.StartGerbil.controller.resetTempGrid();
 				showParent();
-				playScreen.deselectIndexColor();
+				Play.deselectIndexColor();
 			}
 		});
 	}
@@ -507,6 +504,7 @@ public class ActionListenersControl {
 
 		playScreen.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				stop = false;
 				Thread thread = new Thread() {
 					public void run() {
 						int fruitCount=0;
@@ -516,7 +514,7 @@ public class ActionListenersControl {
 						ArrayList<Integer> lineNumbers= Start.StartGerbil.controller.getFinalBlocksLineNumbers();
 						Start.StartGerbil.controller.resetTempGrid();//just in case, resetting grid and gerbil object
 						int error=-1;
-						for(int i = 0; i < instructions.size(); i++) {
+						for(int i = 0; i < instructions.size() && !stop; i++) {
 							if(instructions.get(i).equals("Turn Left")) {
 								Start.StartGerbil.controller.turnLeft(Start.StartGerbil.controller.getTempGerbil());
 								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
@@ -544,23 +542,23 @@ public class ActionListenersControl {
 							try {
 								sleep(500);
 							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
 						}
-						/*if(error==-1){
-							error=-1;
-						}*/
-						if(errortype==1){
+						if(stop) {
+							errorDialogRun.errorL.setText("Program stopped running. It will now reset");
+							errorDialogRun.show();
+						}
+						else if(errortype==1){
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
 							//HIGHLIGHT the error block using lineNumbers.get(error+1);
-							playScreen.setSelectedIndexColor(lineNumbers.get(error+1), 'e');
+							Play.setSelectedIndexColor(lineNumbers.get(error+1), 'e');
 							errorDialogRun.errorL.setText("Cannot Eat: there is no food at square");
 							errorDialogRun.show();
 						}else if(errortype==2){
 							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
 							//HIGHLIGHT the error block using lineNumbers.get(error+1);
-							playScreen.setSelectedIndexColor(lineNumbers.get(error+1), 'e');
+							Play.setSelectedIndexColor(lineNumbers.get(error+1), 'e');
 							errorDialogRun.errorL.setText("Cannot Move Forward: there is a wall ahead");
 							errorDialogRun.show();
 						}else if(errortype==3){
@@ -590,11 +588,10 @@ public class ActionListenersControl {
 
 		playScreen.addStopEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
 				editing = false;
 				inserting = false;
 				deleting = false;
-
+				stop = true;
 				playScreen.setStopSelected();
 			}	
 		});
