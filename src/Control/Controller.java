@@ -18,6 +18,7 @@ import Model.*;
 public class Controller {
 	/**Holds the current game being played */
 	public Game gamePlaying;
+	
 	/**Holds the list of built in functions = eat move, turn left
 	 * And user created are added to the end of this arraylist when game is initialized first
 	 * and then reloaded to the backend when finished game*/
@@ -2096,7 +2097,8 @@ public class Controller {
 	 * @param functionToAdd function to be added to function list
 	 */
 	public void addFunction(Function functionToAdd){
-		functions.add(functionToAdd);
+		functions.add(functionToAdd); // not sure - don't think this is the right action...
+		gamePlaying.functions.add(functionToAdd); // +kat
 	}
 
 
@@ -2134,8 +2136,10 @@ public class Controller {
 	 */
 	public String[] getFunctions(){
 		ArrayList<String> functionnames= new ArrayList<String>();
-		for(int i=0; i<functions.size(); i++){
-			functionnames.add(functions.get(i).getName());
+
+		ArrayList<Function> gameFunctions= gamePlaying.getfunction();
+		for(int i=0; i<gameFunctions.size(); i++){
+			functionnames.add(gameFunctions.get(i).getName());
 		}
 		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
 		String[] returnstring= new String[functions.size()];

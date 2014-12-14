@@ -554,6 +554,7 @@ public class ActionListenersControl {
 						conditionals.setBegin(tempLine);
 						conditionals.show();
 						playScreen.hide();
+
 					}else {//if(newType.equals("Repeat")){
 						Start.StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
 
@@ -564,10 +565,6 @@ public class ActionListenersControl {
 						playScreen.hide();
 					}
 				}
-
-
-
-
 			}	
 		});
 
@@ -816,14 +813,12 @@ public class ActionListenersControl {
 					}else{
 						parentScreen=4;
 						userFunction.clearLabels();
-						userFunction.userDefinedFunctions.addItem(functionName);
+						userFunction.userDefinedFunctions.addItem(functionName); // don't think this is needed?
 						userFunction.hide();
 						userFunction.dontAddToMain(true);
 						inserting=false;
 						playScreen.refreshUserFunctions();
-						userFunction.hide();
 						showParent();
-
 					}
 				}else{
 					errorDialog.errorL.setText("You Must Enter a Function Name");
@@ -932,7 +927,7 @@ public class ActionListenersControl {
 				Start.StartGerbil.controller.createFunctionBlocks('e',userFunction.getSelectedLineNumber(),1, null);
 				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
 
-			}});
+		}});
 	}
 
 
