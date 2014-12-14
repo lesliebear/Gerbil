@@ -840,9 +840,9 @@ public class Controller {
 		}
 		//error Did not reach water
 		return 4;
-
 	}
 
+	
 	/**
 	 * goes through user coded blocks and stores commands in arraylist finalblocks in the order and
 	 * number of times they will be executed for play
