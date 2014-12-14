@@ -86,9 +86,9 @@ public class ActionListenersControl {
 
 		initEventHandlers();
 		initBooleans();
-		//main.show();
+		main.show();
 		//userFunction.show();
-		finish.show();
+		//finish.show();
 	}
 
 	private void initGrid() {
