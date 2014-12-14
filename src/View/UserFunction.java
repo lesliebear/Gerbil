@@ -588,6 +588,19 @@ public class UserFunction extends Screen{
 		functionsCodeList.setSelectedIndex(functionsCodeList.getModel().getSize()-1);
 	}
 	
+	public void refreshCodeList(){
+		listModel.clear();
+	
+		String [] temp = Start.StartGerbil.controller.FunctionUnFin();
+		listModel.add(0, " ");
+		for(int i=0; i< temp.length;i++){
+			String test = temp[i];
+			listModel.add(i,test);
+		}
+
+		functionsCodeList.setSelectedIndex(functionsCodeList.getModel().getSize()-1);
+	}
+	
 	public void addFunctionListListener(ActionListener listener) {
 		userDefinedFunctions.addActionListener(listener);
 	}

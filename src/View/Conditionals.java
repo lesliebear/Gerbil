@@ -78,7 +78,7 @@ public class Conditionals {
 
 	JComboBox conditionalDD; /*get from control*/ 
 
-	private static JList conditionalscodeList;
+	public static JList conditionalscodeList;
 	private static JScrollPane scrollpane;
 
 	/** Repeat stuff **/
@@ -534,5 +534,9 @@ public class Conditionals {
 	
 	public void addTurnLeftEventHandler(ActionListener listener) {
 		turnLeftB.addActionListener(listener);
+	}
+	
+	public void addFunctionsEventHandler(ActionListener listener){
+		userDefinedFunctions.addActionListener(listener);
 	}
 }
