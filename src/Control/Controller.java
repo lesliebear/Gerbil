@@ -771,30 +771,56 @@ public class Controller {
 
 	/**
 	 * sort key values in ascending order
+	 * 
+	 * @assumes Provided data must be validated
+	 * @exception none
+	 * @postconditions sorts the parameter provided
+	 * 
+	 * @param keylist ArrayList of integers
+	 * @return the parameter but sorted in increasing order
+	 * @author Leslie
 	 */
 	public ArrayList<Integer> sortKeys(ArrayList<Integer> keylist){
 		Collections.sort(keylist);
 		return keylist;
 	}
+	
 	/**
 	 * resets the tempgrid to original values and tempgerbil to original position
-	 * @assumes 
+	 * 
+	 * @assumes we want to put the temp grid and gerbil back to the original positions
+	 * @exception none
+	 * @postconditions returns temp grid and temp gerbil to their original locations
+	 * 
+	 * @author Leslie
 	 */
 	public void resetTempGrid(){
 		initTempGrid();
 		this.tempgerbil = new Gerbil();
 	}
+	
 	/**
 	 * returns tempgerbil
+	 * @assumes none
+	 * @exception none
+	 * @postconditions none
+	 * 
+	 * @return the temp Gerbil object
+	 * @author Leslie
 	 */
 	public Gerbil getTempGerbil(){
 		return this.tempgerbil;
 	}
+	
 	/**
 	 * runs the user written code by first
 	 * compiling blocks (finalblocks arraylist) using tempgrid and tempgerbil
 	 * to show what is happening step by step
 	 * until error/ends at goal
+	 * 	  
+	 * @assumes Provided data must be validated and sees if there are errors in code/ what gerbil does
+	 * @exception none
+	 * @postconditions runs user written code by compiling
 	 * @return int- (0)-win the game 
 	 * (1)-error eating/no food on square trying to eat
 	 * (2)-error wall/cannot move forward bc there is wall
@@ -803,6 +829,7 @@ public class Controller {
 	 * 
 	 * (-1)-error in parsing/could not parse
 	 * (-2)-error INFINITE LOOP 
+	 * @author Leslie
 	 */
 	public int runBlocks(){
 		int success=compileBlocks();
