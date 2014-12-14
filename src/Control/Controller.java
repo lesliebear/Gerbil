@@ -1477,7 +1477,7 @@ public class Controller {
 	
 	public Block getBlockByLineUserFunction(int lineS) {
 		for(int k: this.tempFunctionBlockInstructions.keySet()){
-			Block temp = this.gamePlaying.getBlocks().get(k);
+			Block temp = this.tempFunctionBlockInstructions.get(k);
 			if(lineS>=temp.getlineBegin()&& lineS <=temp.getlineEnd()){
 				return temp;
 			}
