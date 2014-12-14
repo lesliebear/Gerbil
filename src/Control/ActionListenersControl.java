@@ -282,7 +282,7 @@ public class ActionListenersControl {
 	}
 
 	/**
-	 * Add the event handlers for the error dialog screen's compoenents 
+	 * Add the event handlers for the error dialog screen's components 
 	 * @author Katiuska
 	 */
 	private void addErrorDialogEventHandlers() {
@@ -297,11 +297,9 @@ public class ActionListenersControl {
 	
 	/**
 	 * Finish Screen's event handlers added
-	 * @author Katiuska, Truong 
+	 * @author Katiuska, Truong
 	 */
 	private void addFinishEventHandlers(){
-		
-		
 		finish.addLoadGamesButtonListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parentScreen = 6;
@@ -318,7 +316,7 @@ public class ActionListenersControl {
 			}		
 		});
 		
-		finish.addSaveGamesButtonListener(new ActionListener() { // needs to be tested..
+		finish.addSaveGamesButtonListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Start.StartGerbil.controller.saveGame();
 

@@ -2,7 +2,6 @@ package Start;
 import Control.*;
 import Model.Backend;
 
-
 /**
  * Main program that runs the program
  * @author Amulya,Katiuska,Leslie,Truong
@@ -18,7 +17,6 @@ public class StartGerbil {
 	 */
 	public static void main(String[] args) {
 		backend = new Backend();
-		//alc = new ActionListenersControl();
 
 		try{
 			backend.setGameList(backend.loadSavedGames());
@@ -31,5 +29,4 @@ public class StartGerbil {
 		alc = new ActionListenersControl();
 
 	}
-
 }
