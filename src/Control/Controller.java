@@ -71,12 +71,13 @@ public class Controller {
 		for(Block p = this.userCodingNowFunction; p!=null; p=p.getParent()){
 			tempPar = p;
 		}//get to main nesting level
-		if(tempPar==null){
-			return ins.toArray(new String[ins.size()]);
-		}else{
+		
+		if(tempPar!=null){
 			printNotDoneBlock(0,tempPar.getNestedBlocks(), ins);
-			return ins.toArray(new String[ins.size()]);
 		}
+			
+		return ins.toArray(new String[ins.size()]);
+
 	}
 
 	public void printNotDoneBlock(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
@@ -1913,7 +1914,6 @@ public class Controller {
 	 */
 	public void createFunctionBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
-			this.userCodingNowFunction=null;//this is all that needs to be done here!
 			this.userCodingNowFunction=this.parentFunction;
 			return;
 		}else if((type=='e') && (this.userCodingNowFunction!=null)){//finished coding for the block so put into the correct spot
