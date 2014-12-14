@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import Model.Backend;
 import Model.Block;
 import Model.Game;
-import Model.Gerbil;
 import Start.StartGerbil;
 import View.Conditionals;
 import View.DeleteFunction;
@@ -159,7 +159,7 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 
 				if(parentScreen == PLAY){
-					String cond = (String)conditionals.conditionalscodeList.getSelectedValue();
+					String cond = (String)Conditionals.conditionalscodeList.getSelectedValue();
 					int begin = conditionals.getBegin()-2;
 
 					Start.StartGerbil.controller.createBlocks(8,begin,1,null);
@@ -168,7 +168,7 @@ public class ActionListenersControl {
 					conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
 
 				}else if(parentScreen == USERFUNCTION){
-					String cond = (String)conditionals.conditionalscodeList.getSelectedValue();
+					String cond = (String)Conditionals.conditionalscodeList.getSelectedValue();
 					int begin = conditionals.getBegin()-2;
 
 					Start.StartGerbil.controller.createFunctionBlocks(8,begin,1,null);
@@ -188,7 +188,7 @@ public class ActionListenersControl {
 
 				if(parentScreen == PLAY){
 					Start.StartGerbil.controller.createBlocks('e', begin, numLines, cond);
-					playScreen.refreshCodeList();
+					Play.refreshCodeList();
 				}else if(parentScreen == USERFUNCTION){
 					Start.StartGerbil.controller.createFunctionBlocks('e', begin, numLines, cond);
 					userFunction.refreshCodeList();
@@ -364,12 +364,12 @@ public class ActionListenersControl {
 	private void addNewGameEventHandlers() {
 		newGame.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String text = newGame.textF.getText(); 
+				String text = NewGame.textF.getText(); 
 
 				if(!text.isEmpty()){
-					newGame.textF.setText(""); //must reset the text line
+					NewGame.textF.setText(""); //must reset the text line
 
-					if(Start.StartGerbil.backend.gameExists(text)){
+					if(Backend.gameExists(text)){
 						errorDialog.errorL.setText("Please enter a Game name that doesn't already exist.");
 						newGame.hide();
 						errorDialog.show();
@@ -379,7 +379,7 @@ public class ActionListenersControl {
 						initGrid();
 						Play.refreshGrid();
 						playScreen.refreshUserFunctions();
-						playScreen.refreshCodeList();
+						Play.refreshCodeList();
 
 						newGame.hide();
 						playScreen.show();
@@ -397,7 +397,7 @@ public class ActionListenersControl {
 
 		newGame.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				newGame.textF.setText("");
+				NewGame.textF.setText("");
 				newGame.hide();
 				playOptions.show(); // will always be the parent...
 			}		
@@ -481,9 +481,9 @@ public class ActionListenersControl {
 				inserting = false;
 				deleting = false;
 
-				playScreen.editB.setBackground(Color.BLACK);
-				playScreen.insertB.setBackground(Color.BLACK);
-				playScreen.deleteB.setBackground(Color.BLACK);
+				Play.editB.setBackground(Color.BLACK);
+				Play.insertB.setBackground(Color.BLACK);
+				Play.deleteB.setBackground(Color.BLACK);
 
 
 				playScreen.hide();
@@ -520,7 +520,7 @@ public class ActionListenersControl {
 								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
 								error=i;
 								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
-								playScreen.setSelectedIndexColor(lineNumbers.get(i), 'b');
+								Play.setSelectedIndexColor(lineNumbers.get(i), 'b');
 							}
 							else if(instructions.get(i).equals("Move Forward")) {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
@@ -530,13 +530,13 @@ public class ActionListenersControl {
 								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getCompass(), oldGridSpotType);
 								error=i;
 								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
-								playScreen.setSelectedIndexColor(lineNumbers.get(i), 'b');
+								Play.setSelectedIndexColor(lineNumbers.get(i), 'b');
 							}
 							else if(instructions.get(i).equals("Eat")) {
 								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
 								error=i;
 								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
-								playScreen.setSelectedIndexColor(lineNumbers.get(i), 'b');
+								Play.setSelectedIndexColor(lineNumbers.get(i), 'b');
 								fruitCount++;
 							}
 							try {
@@ -666,9 +666,9 @@ public class ActionListenersControl {
 				inserting = false;
 				deleting = false;
 
-				playScreen.editB.setBackground(Color.BLACK);
-				playScreen.insertB.setBackground(Color.BLACK);
-				playScreen.deleteB.setBackground(Color.BLACK);
+				Play.editB.setBackground(Color.BLACK);
+				Play.insertB.setBackground(Color.BLACK);
+				Play.deleteB.setBackground(Color.BLACK);
 
 				userFunction.refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 				userFunction.refreshCodeList();
@@ -778,7 +778,7 @@ public class ActionListenersControl {
 						selectedIndexPlayCodeList = bTemp.getlineBegin();
 					}
 
-					String term = (String) playScreen.givenFunctionsDD.getSelectedItem();
+					String term = (String) Play.givenFunctionsDD.getSelectedItem();
 					int type = -1;
 					if(term.equals("Move Forward")){
 						type = 2;
@@ -807,10 +807,10 @@ public class ActionListenersControl {
 					}else{ //get the block's line begin
 						selectedIndexPlayCodeList = bTemp.getlineBegin();
 					}
-					String funcName = (String) playScreen.userFunctionsDD.getSelectedItem();
+					String funcName = (String) Play.userFunctionsDD.getSelectedItem();
 					Start.StartGerbil.controller.createBlocks(8,selectedIndexPlayCodeList,1, null); // should it be using createFunctions Block? - kat 
 					Start.StartGerbil.controller.createBlocks('e',selectedIndexPlayCodeList,1,funcName);
-					playScreen.refreshCodeList();
+					Play.refreshCodeList();
 				}
 			}	
 		});
@@ -829,13 +829,13 @@ public class ActionListenersControl {
 						selectedIndexPlayCodeList = 0;
 					//	Start.StartGerbil.controller.deleteBlock(bTemp);
 						deleting = false;
-						playScreen.deleteB.setBackground(Color.BLACK);
+						Play.deleteB.setBackground(Color.BLACK);
 						Play.refreshCodeList(); // refreshes the code list in Play screen
 					}else{ //get the block's line begin
 						selectedIndexPlayCodeList = bTemp.getlineBegin();
 						Start.StartGerbil.controller.deleteBlock(bTemp);
 						deleting = false;
-						playScreen.deleteB.setBackground(Color.BLACK);
+						Play.deleteB.setBackground(Color.BLACK);
 						Play.refreshCodeList(); // refreshes the code list in Play screen
 					}										
 				}else if(inserting==true){
@@ -855,7 +855,7 @@ public class ActionListenersControl {
 					errorDialog.show();
 				}else{
 					Game temp = Start.StartGerbil.controller.loadGame(oGame);
-					playScreen.refreshCodeList();
+					Play.refreshCodeList();
 					playScreen.refreshUserFunctions();
 
 					playScreen.show();
