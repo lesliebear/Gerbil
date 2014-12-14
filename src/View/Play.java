@@ -792,71 +792,13 @@ public class Play extends Screen{
 		}
 	}
 
-	/*
-	public static boolean beforeIsConditional(){
-		if(Start.StartGerbil.control.instructions.get(Play.playcodeList.getSelectedIndex()) == "If"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Else if"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Else"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "While"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Repeat"){
-			return true;
-		}
-
-		return false;
-	}
-
-	//want to do the substring of this
-	public static boolean conditionalSelected(){ 
-		if(Play.instructions.get(Play.playcodeList.getSelectedIndex()).substring(0,1) == "If"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Else if"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Else"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "While"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Repeat"){
-			return true;
-		}
-
-		return false;
-	}
-
-
-	public static boolean givenFunctionSelected(){
-		if(Play.instructions.get(Play.playcodeList.getSelectedIndex()).substring(0,1) == "Move Forward"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Turn Left"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Eat"){
-			return true;
-		}
-
-		return false;
-	}
-
-	public static boolean userFunctionFunctionSelected(){
-
-
-		for(int i=0; i< instructions.size(); i++){
-
-		}
-
-		return false;
-	} */
-
-
-	public void initialPlayScreen(){//only insert, save, menu should be active
+	public void initialPlayScreen(){//only insert, save, menu, createFunction, deleteFunction should be active
 		playB.setEnabled(false);
 		stopB.setEnabled(false);
 		editB.setEnabled(false);
 		deleteB.setEnabled(false);
-		clearAllB.setEnabled(false);
-		createFunctionB.setEnabled(false);
+		clearAllB.setEnabled(true);
+		createFunctionB.setEnabled(true);
 
 		conditionalsDD.setEnabled(false);
 		givenFunctionsDD.setEnabled(false);
