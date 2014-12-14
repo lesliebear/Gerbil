@@ -15,37 +15,61 @@ import Model.*;
  * Controller class will make all necessary modifications to data in order to send it to the control. 
  * It will concern itself with the data of one user and one game at any given point, provided
  *  by the Backend.
+ *  @author Amulya,Leslie
+ */
+/**
+ * @author Amulya
+ *
  */
 public class Controller {
 	/**Holds the current game being played */
 	public Game gamePlaying;
-	
 	/**Final list of blocks to run to play animation */
 	ArrayList<String> finalblocks= new ArrayList<String>();
+	/**Line Numbers to display for the final blocks when play is clicked */
 	ArrayList<Integer> finalblocksLineNumbers= new ArrayList<Integer>();
-	//HashMap<Integer,Boolean> visited;
+	/**Holds the function blocks when they are still being created */
 	HashMap<Integer,Block> tempFunctionBlockInstructions= new HashMap<Integer,Block>();
+	/**Used for create blocks since only one nesting level and it's the parent */
 	Block parent = null;
+	/**Used for create blocks since it is only one nesting level and it is the child*/
 	Block userCodingNow = null;
-	Block userCodingNowEdit= null;
-	Block parentEdit = null;
+	/**Used for creating Function blocks for nesting levels and it's the parent */
 	Block parentFunction = null;
+	/**Used for creating Function blocks for nesting levels and it's the child*/
 	Block userCodingNowFunction = null;
 
 
+	/**Temporary grid used to check for parsing/compiling*/
 	char[][] tempgrid= new char[17][17];
+	/**Temporary gerbil used to check for parsing/compiling*/
 	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
+	/**is it a function or not*/
 	boolean isFunction=false;
 
+	/**block counting*/
 	int countblocks=1;
 
-	/**assumes, returns, exceptions**/
 
-	public void testingStuff() { // not sure what this is for.. Kat
+	/**
+	 * Method used for testing parser/compiler only 
+	 * So not part of code 
+	 * @author Leslie
+	 */
+	public void testingStuff() { 
 		tempgerbil = gamePlaying.getGerbil();
 		initTempGrid();
 	}
 
+	/**
+	 * Returns string array of the un-finished isntructions to display in the Jlist for the conditionals screen
+	 * 
+	 * @assumes There may or may not be unfinished insertions
+	 * @exception none
+	 * @postcondition none
+	 * @return String array of unfinished instructions returned
+	 * @author Amulya
+	 */
 	public String[] getUnFinIns(){ // unfinished insertion
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
@@ -61,6 +85,15 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Returns string array of the un-finished functions to display in the Jlist for the userFunctions screen
+	 * 
+	 * @assumes There may or may not be unfinished functions insertions
+	 * @exception none
+	 * @postcondition none
+	 * @return String array of unfinished functions returned
+	 * @author Amulya
+	 */
 	public String[] userFunctionShowJList(){
 		ArrayList<String> temp = new ArrayList<String>(); 
 		getJList(0,this.tempFunctionBlockInstructions,temp);
@@ -74,6 +107,16 @@ public class Controller {
 		
 	}
 	
+	/**
+	 * Returns string array of the un-finished functions's inside code to display in the Jlist for the conditionals screen from the
+	 * user functions screen
+	 * 
+	 * @assumes There may or may not be unfinished functions insertions
+	 * @exception none
+	 * @postcondition none
+	 * @return String array of unfinished functions returned
+	 * @author Amulya
+	 */
 	public String[] FunctionUnFin(){
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
@@ -87,7 +130,19 @@ public class Controller {
 			
 		return ins.toArray(new String[ins.size()]);
 	}
-
+	
+	
+	/**
+	 * Returns string arraylist of the hashmap of blocks provided
+	 * 
+	 * @assumes tab starts as 0
+	 * @exception none
+	 * @postcondition Modifies the list to inclue the block's info in string form
+	 * @param tab Given as 0 so we start from the inner most nesting level when it is printing as a string
+	 * @param blocks Blocks you want to turn into readable strings
+	 * @param list List you want to insert the instrings into so this is the final answer
+	 * @author Amulya
+	 */
 	public void printNotDoneBlock(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
 		int type;
 		String tabStr="";
@@ -186,6 +241,14 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Returns string array of the hashmap of the blocks to display on the play screen
+	 * 
+	 * @assumes game playing's blocks may or may not have things to print
+	 * @exception none
+	 * @postcondition none
+	 * @author Amulya
+	 */
 	public String[] JListString(){
 		ArrayList<String> temp = new ArrayList<String>(); 
 		getJList(0,this.gamePlaying.getBlocks(),temp);
@@ -198,6 +261,14 @@ public class Controller {
 		return toReturn;
 	}
 	
+	/**
+	 * Returns string array of functions created by user
+	 * 
+	 * @assumes User defined functions may or may not exist
+	 * @exception none
+	 * @postcondition none
+	 * @author Amulya
+	 */
 	public String[] JListFunctions(){ 
 		String [] toReturn = new String[this.gamePlaying.functions.size()];
 
@@ -208,22 +279,17 @@ public class Controller {
 		return toReturn;
 	}
 
-	/*public ArrayList<String> getUserDefinedFunctionsStringArray(){
-		ArrayList<String> toReturn = new ArrayList<String>(); 
-
-		for(int i=0; i<functions.size(); i++){
-			toReturn.add(i, functions.get(i).getName());
-		}
-
-		return toReturn;
-	}*/
 
 	/**
-	 * Prints the hashmap of the blocks based on the indentation level(nesting level)
-	 * @param tab The indentation level of the block to be printed out
-	 * @param blocks Takes hashmap to print out the contents of the hashmap
-	 * @return String array of instructions from the blocks to display in view
-	 *  
+	 * modifies the list to be a string arraylist of the hashmap of blocks provided
+	 * 
+	 * @assumes tab starts as 0
+	 * @exception none
+	 * @postcondition Modifies the list to inclue the block's info in string form
+	 * @param tab Given as 0 so we start from the inner most nesting level when it is printing as a string
+	 * @param blocks Blocks you want to turn into readable strings
+	 * @param list List you want to insert the instrings into so this is the final answer
+	 * @author Amulya
 	 */
 	public int getJList(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
 		int type;
@@ -568,7 +634,7 @@ public class Controller {
 							if(parent.getNestedBlocks().get(begin)==null){ //nothing there put
 								parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 							}else{ 
-								HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
+								
 								cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks(), true); //cascade first then put into it!!
 								parent.getNestedBlocks().put(begin, b);
 							}
@@ -587,7 +653,7 @@ public class Controller {
 						if(parent.getNestedBlocks().get(begin)==null){ //nothing there put
 							parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 						}else{ 
-							HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
+							
 							cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks(), true); //cascade first then put into it!!
 							parent.getNestedBlocks().put(begin, b);
 						}
@@ -606,28 +672,6 @@ public class Controller {
 		gamePlaying.getBlocks().clear();
 	}
 
-	/**
-	 * Goes through the userCodingTemp blocks to find the parent by finding the innermost block
-	 * that does not have a line end. 
-	 * @param begin line number of the current block we are trying to insert into the parent we are looking for
-	 * @return the parent block to search through for nesting purposes
-	 */
-	private Block findCurrParent(int begin, Block parent) {
-		if(parent==null || parent.getNestedBlocks().isEmpty()){//case when there is no parent
-			return null;
-		}else if(parent.getNestedBlocks().isEmpty() ==false){ //go through nested blocks to see if b is the nested block
-			for(int b: parent.getNestedBlocks().keySet()){
-				if (b==begin){
-					return parent;
-				}
-			}
-		}else{ //recurse on each nested block
-			for(int b: parent.getNestedBlocks().keySet()){
-				return findCurrParent(begin,parent.getNestedBlocks().get(b));
-			}
-		}
-		return null;
-	}
 
 	/**
 	 * initializes temp grid by copying values of game grid
@@ -640,49 +684,6 @@ public class Controller {
 		}
 	}
 
-
-	/**Creates and initializes built in functions
-	 * 
-	 * @assumes nothing
-	 * @return nothing
-	 * @exception none
-	 * @postcondition initializes built in functions into the program
-	 * 
-	 * */
-	/*public void initBuiltIn (){
-		Function moveAhead= new Function("Move Forward");
-		Block moveAheadBlock= new Block();
-		moveAheadBlock.setType(2);
-		moveAhead.getBlockInstructions().put(2, moveAheadBlock);
-
-		Function eat= new Function("Eat");
-		Block eatBlock= new Block();
-		eatBlock.setType(0);
-		eat.getBlockInstructions().put(0, eatBlock);
-
-		Function turnLeft= new Function("Turn Left");
-		Block turnLeftBlock= new Block();
-		turnLeftBlock.setType(1);
-		turnLeft.getBlockInstructions().put(1, turnLeftBlock);
-	}*/
-
-
-
-	/**
-	 * Creates and stores the builtIn functions in the controller
-	 * 
-	 * @assumes nothing
-	 * @return nothing
-	 * @exception none
-	 * @postcondition stores built in functions in the controller
-	 * 
-	 */
-	/*public void createBuiltIn(){
-		if(this.functions.isEmpty()){
-			this.functions = new ArrayList<Function>();
-			initBuiltIn();
-		}
-	}*/
 
 	/**
 	 * Creates a new Game object
@@ -1390,99 +1391,6 @@ public class Controller {
 		//ERROR block does not have a valid type
 	}	
 
-	/**
-	 * Will edit a block at a given index/position selected by the user with a new
-	 * HashMap containing blocks of newly provided instruction 
-	 * 
-	 * @assumes Newly entered data must be valid/nested block instructions must be valid
-	 * 			based on guiding system
-	 * @exception none
-	 * @postcondition Will edit a block of data
-	 * 
-	 * @param type Type of block = same as create blocks = can be 'e','c' or enumeration
-	 * @param begin line that was selected via highlighting for editing = can be terminal 
-	 * or non terminal => that is the block that will be found and added to!!
-	 * @param numLines Lines modified so it is line end - line begin +1 so ex. terminals are 1
-	 * @param cond conditional if if,while,else if stuff inserted, else it is integer for repeat 
-	 */
-	public char editBlock(int type, int begin, int numLines, String cond){
-		Block par = searchForBlock(begin, gamePlaying.getBlocks()); //gets the block we want to edit/insert into
-
-		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
-			this.userCodingNowEdit=null;//this is all that needs to be done here!
-			this.userCodingNowEdit=this.parentEdit;
-			return 'g';
-		}else if(type=='e'){//finished coding for the block so put into the correct spot
-			this.userCodingNowEdit.setLineEnd(begin+numLines-1);	
-			int currType= this.userCodingNowEdit.getType();
-			if(currType==7){//repeat block so turn cond into int and store in repeat
-				int repeat=-1;
-				if(cond==null){
-					///////////////////ERROR: Number of repetitions was not selected!//////////////
-					return 'n';
-				}else{ //no need to check if cond is int or not since view will provide int for it 
-					repeat =Integer.valueOf(cond);
-				}
-				this.userCodingNowEdit.setRepeat(repeat);
-
-			}else if(currType==3 || currType==6){ //if and while loops
-				this.userCodingNowEdit.setCond(cond);
-			}else if(currType==4){ //for else if, we need to check if parent == if => parent cannot be null
-				if(parentEdit==null || this.userCodingNowEdit.getParent().getType()!=3){
-					//////////////ERROR: Illegal Else if entered. If statement has to exist for else if to exist////////
-					return 'n';
-				}
-			}else if(currType== 5){ //for else, we need to check if parent==if or else if! else error
-				if(parentEdit==null || (this.userCodingNowEdit.getParent().getType()!=3)){
-					//////////////ERROR: Illegal Else if entered. If statement has to exist for else if to exist////////
-					return 'n';
-				}
-			}
-
-			if(parentEdit.equals(par)){ //insert into gamePlaying.blocks and cascade!!!
-				/*So insert only happens to main, the rest are edit and delete so 
-				we first check if the begin line we are given already exsits in the 
-				main, if it does, we cascade, then insert to not delete the current 
-				block at that number. else we simply add = works for both between lines 
-				and end of code.*/
-				for (int key: this.gamePlaying.getBlocks().keySet()){
-					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNowEdit.getlineEnd()-this.userCodingNowEdit.getlineBegin()+1, this.userCodingNowEdit, gamePlaying.getBlocks(), true);
-						this.gamePlaying.getBlocks().put(begin, this.userCodingNowEdit);
-						this.userCodingNowEdit=null;
-						return 'g';
-					}
-				}//get past this means, end of lines!
-				this.gamePlaying.getBlocks().put(begin, this.userCodingNowEdit);
-			} //we ended this so parent is now the currBlock coded
-			this.userCodingNowEdit=parentEdit;
-			if(parentEdit!=null){
-				this.parentEdit=this.userCodingNowEdit.getParent();
-			}
-
-			return 'g';
-		}else{ //first time making a block
-			Block b = new Block();
-			b.setlineBegin(begin);
-			b.setType(type);
-			if((type==4 || type==5) && (this.parentEdit==null||this.parentEdit.getType()!=3)){
-				return 'n'; //not valid cuz the parent for else if and else has to be if!!! so tell them not valid code
-			}
-			if(this.userCodingNowEdit!=null){ //curr not null so we need to set current to user playing and parent to curr
-				b.setParent(this.userCodingNowEdit);
-				this.parentEdit=this.userCodingNowEdit;
-				this.userCodingNowEdit=b;
-				if(this.parentEdit!=null){ //inserting into parent's block
-					parentEdit.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
-				}
-			}else{
-				this.userCodingNowEdit=b;
-				this.parentEdit=par;
-			}
-			return 'g';
-
-		}
-	}
 	public Block getBlockByLineMain(int line){
 		for(int k: this.gamePlaying.getBlocks().keySet()){
 			Block temp = this.gamePlaying.getBlocks().get(k);
@@ -1539,87 +1447,7 @@ public class Controller {
 		}
 		
 	}
-	
-	/**
-	 * Will delete a block of code at a given index/position selected by the user 
-	 * 
-	 * @assumes Block to delete exists
-	 * @exception none
-	 * @postcondition Deletes block of data
-	 * 
-	 * @param pos index/position of block to be deleted by user = line number in the play screen
-	 * @return true/false; false if failure to delete, true if deletion succeeds
-	 
-	public boolean deleteBlock(Block b){
-		//Block b = searchForBlock(pos, gamePlaying.getBlocks()); //gets the block we want to delete
-		
-		if(b==null){
-			return false; //failure to find block
-		}
-		int currDiff = b.getlineEnd()-b.getlineBegin()+1;
-		Block pare = b.getParent();
-		HashMap<Integer,Block> nested = null;
-		//UPDATE: new cascade method updates line numbers, and creates new hashmap for each
-		//    level based on all existing blocks(before and after pos), so should delete first, then cascade
 
-		if(pare==null){ //no nesting level
-			nested = gamePlaying.getBlocks();
-		}else{ 
-			nested = pare.getNestedBlocks();
-		}
-		nested.remove(b.getlineBegin());
-		cascadeNumberingChanges(b.getlineBegin(),-1*currDiff, b, gamePlaying.getBlocks());//MAKE SURE -1*currDIFF!!!!!
-		if(b.getType()==3){//if statement so remove all subsequent ifs and elses
-			java.util.Iterator<Integer> it =nested.keySet().iterator();
-			int k;
-			while(it.hasNext()){
-				k = it.next();
-				Block temB = nested.get(k);
-				int temTp =temB.getType(); 
-				if((temTp==4) || (temTp==5)){
-					deleteBlock(temB); 
-				}else {///if(temTp==3){//different if block so exit loop
-					break;
-				}
-			}
-		}
-
-		return true;
-		//Will call parseBlock - must reparse the block to see if deletion invalidates a block - i.e. if statement
-		//Question: should we have something that asks them if they want to delete = view asks for sure or not
-		//if invalidates = do not delete code...
-	}*/
-
-
-
-	/**
-	 * Will insert instruction to an already created Block of code
-	 * 
-	 * @assumes Block to insert to exists and has been validated. 
-	 * @exception none
-	 * @postcondition Inserts instruction to Block
-	 * 
-	 * @param key id/key/linebegin of Block to add instruction to
-	 * @param instruction nested block instructions to add to block with key
-	 * 
-	 */
-
-	//ISN'T THIS THE SAME AS EDIT BLOCK??? USER CAN ONLY INSERT INSTRUCTION BY EDITING BLOCK
-	/*public boolean insertInstructionToBlock(int key, HashMap<Integer,Block> instruction){
-		//find the block that has the line begin = key and inserts instruction in the right place
-		//cascades the changes in line numbers 
-		Block b = searchForBlock(key, gamePlaying.getBlocks()); //gets the block we want
-
-
-		int currdiff= keylist.get(keylist.size()-1)  -  keylist.get(0);
-		Block tempblock= gamePlaying.getBlocks().get(key);
-		cascadeNumberingChanges(key, currdiff, tempblock);
-
-		//gamePlaying.getBlocks().put(key, instruction);
-
-
-		return false;
-	}*/
 
 	/**
 	 * Will insert a NEW block of code into a user specified index/position
@@ -1635,13 +1463,10 @@ public class Controller {
 	public void insertBlockToMain(int id, Block b){
 		//Block parent = findParentInMain(id); = parent is null! => cannot find parent
 		Block reference = null;
-		int temp;
 		if(b.getParent()==null){//no parents, parent is MAIN => can insert to main 
 			for(int key: gamePlaying.getBlocks().keySet()){
 				if(id<key){ //if key is bigger than id 
 					reference = gamePlaying.getBlocks().get(key);//find sibling block as reference when cascade
-					temp = key;
-					//break;
 				}
 			}
 		}else{ //parent block not null
@@ -1852,31 +1677,6 @@ public class Controller {
 		b.getParent().setNestedBlocks(tempnb);
 	}
 
-	//original cascadeNumberingChanges
-	/**
-	 * Cascades the line number changes to the rest of the code after insert, delete or edit
-	 * @param lineBegin The block that was changed, inserted, deleted etc's line begin. 
-	 * @param currDiff Current/new difference in end - start
-	 * @param b Block that the change occured in
-	 * @assumes have checked if prevDiff==currDiff to make sure we don't use this method if it is
-	 */
-	/*	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b){
-		if(b.getParent()==null){
-			return; //no more higher level to get to
-		}
-		HashMap<Integer,Block> nb = b.getParent().getNestedBlocks();//get hashmap containing b and sister blocks
-		Block temp=null;
-		int tempDiff =0;
-		for(int key: nb.keySet()){
-			if (key>lineBegin){ //cascade the difference to the blocks after b!
-				temp=nb.get(key); //get the object
-				tempDiff=temp.getlineEnd()-temp.getlineBegin(); //calculate the difference before hand
-				temp.setlineBegin(temp.getlineBegin()+currDiff); //change line begin with the difference
-				temp.setLineEnd(temp.getlineBegin()+tempDiff); //did this with temp diff just in case
-			}
-		}
-		cascadeNumberingChanges(lineBegin,currDiff,b.getParent()); //recurse to go higher
-	}*/
 
 	/**
 	 * Searches for a Block by id field
@@ -1892,7 +1692,6 @@ public class Controller {
 		if(blocks.keySet().isEmpty()){ //no more nesting
 			return null;
 		}
-		int tempCurr=0; //its ok if set to 0 because the check for is empty is already done.
 		for (int curr: blocks.keySet()){
 			if(curr==id){
 				return blocks.get(curr);
@@ -2091,7 +1890,7 @@ public class Controller {
 							if(parentFunction.getNestedBlocks().get(begin)==null){ //nothing there put
 								parentFunction.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 							}else{ 
-								HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
+								
 								cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, false); //cascade first then put into it!!
 								parentFunction.getNestedBlocks().put(begin, b);
 							}
@@ -2110,7 +1909,7 @@ public class Controller {
 						if(parentFunction.getNestedBlocks().get(begin)==null){ //nothing there put
 							parentFunction.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 						}else{ 
-							HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
+
 							cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, false); //cascade first then put into it!!
 							parentFunction.getNestedBlocks().put(begin, b);
 						}
@@ -2453,45 +2252,6 @@ public class Controller {
 	}
 
 
-	/**
-	 * This method will add a function to current block
-	 * @param function
-	 * @return True if add is successful, otherwise False
-	 */
-	/*public boolean addFunctionToBlock(int begin, Function function, Block block) {
-		//Note: A function is a one liner!! thus i set currDifference in cascadeNumbering Changes to 1
-		Block functionblock= new Block();
-		functionblock.setType(8); 
-		functionblock.setlineBegin(begin);
-		functionblock.setLineEnd(begin);
-		functionblock.setParent(block);
-		int funcNum = findFunction(function.getName());
-		functionblock.setFunctionNum(funcNum);
-		gamePlaying.getBlocks().get(block.getlineBegin()).getNestedBlocks().put(begin, functionblock);
-		cascadeNumberingChanges(begin,1,functionblock);
-		return true;
-
-	}*/
-
-	/**
-	 * Finds functions in array list of functions. First built in functions exist in that arraylist
-	 * then user built functions so search through via name.
-	 * 
-	 * @assumes The function exists in arraylist of functions
-	 * @exception none
-	 * @postcondition none
-	 *  
-	 * @param name Name of the function we are searching for. 
-	 * @return The index of the function.
-	 */
-	private int findFunction(String name) {
-		for (int i =0; i<gamePlaying.functions.size(); i++){
-			if (gamePlaying.functions.get(i).getName().equals(name)){
-				return i;
-			}
-		}
-		return -1;
-	}
 
 	public void setCurrentGame(Game g) {
 		this.gamePlaying=g;
