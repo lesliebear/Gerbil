@@ -896,6 +896,12 @@ public class Play extends Screen{
 	public void setSeclectedIndex(int index) {
 		playcodeList.setSelectedIndex(index);
 	}
+	/**
+	 * Highlights line during run/animation green, and red for error.Line corresponds to each gerbil action
+	 * @param index line of code to select
+	 * @param c 'e' determines the line to be where error occurs
+	 * @author Leslie
+	 */
 	public static void setSelectedIndexColor(int index, char c){
 		playcodeList.setSelectedIndex(index);
 		if(c=='e'){
@@ -905,6 +911,10 @@ public class Play extends Screen{
 		}
 		playcodeList.setSelectionForeground(Color.BLACK);
 	}
+	/**
+	 * sets selected line back to last blank line in blue
+	 * @author Leslie
+	 */
 	public static void deselectIndexColor(){
 		playcodeList.clearSelection();
 		playcodeList.setSelectionBackground(Color.BLUE);
