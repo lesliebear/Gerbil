@@ -1623,7 +1623,12 @@ public class Controller {
 
 	/**
 	 * Search for possible parent of block to insert in MAIN
+	 * 
+	 * @assumes valid number value given
+	 * @exception none
+	 * @postcondition none
 	 * @param pos line number of block whose parent we are finding
+	 * @author Leslie
 	 */
 	public Block findParentInMain(int pos){
 		int n=pos+1;
@@ -1652,6 +1657,7 @@ public class Controller {
 	 * @param pos index/position of block to insert = it is the line number 
 	 * @param b block to be inserted
 	 * @return false/ true; false if inserting the Block fails, true if it succeeds
+	 * @author Amulya
 	 */
 	public void insertToBlock(int id, Block b){
 		Block parent = searchForBlock(id, gamePlaying.getBlocks()); //get parent since we know parent's line number
@@ -1670,6 +1676,15 @@ public class Controller {
 		cascadeNumberingChanges(b.getlineBegin(),currDiff,b, gamePlaying.getBlocks(), true);
 	}
 
+	/**
+	 * Calls highlighting function to get the begin and end numbers in array form for the block we are searching for 
+	 * @assumes valid line number entered
+	 * @exception none
+	 * @postcondition none
+	 * @param line Line to search for and find the block that line is in.
+	 * @return Int array of begin and end numbers of the block we find at that line.
+	 * @author Amulya
+	 */
 	public int[] callHighlight(int line){
 		int[] bInfo;
 		Block b = getHighlighting(line,this.gamePlaying.getBlocks());
@@ -1685,8 +1700,11 @@ public class Controller {
 	 * Figures out the given line number's parent block's line number = good for highlighting
 	 * 
 	 * @assumes the line number exists so we search for it and then see the type to return parent or current block
+	 * @exception none
+	 * @postcondition none
 	 * @param b the hashmap of blocks to search for the parent block
 	 * @return the parent block is returned
+	 * @author Amulya
 	 */
 	public Block getHighlighting(int line, HashMap<Integer,Block> blocks){
 		Block b = searchForBlock(line, blocks); //gets the block the line is in
@@ -1714,11 +1732,16 @@ public class Controller {
 
 	/**
 	 * Cascades the line number changes to the rest of the code after insert, delete or edit
+	 * @assumes valid parameters provided
+	 * @exception none
+	 * @postcondition All the lines after the block provided are incremented by the block's line difference
+	 * 
 	 * @param lineBegin The block that was changed, inserted, deleted etc's line begin. 
 	 * 			/IMPORTANT: lineBegin is the line number above SELECTED line number in view
 	 * @param currDiff Current/new difference in end - start
 	 * @param b Block that the change occurred in
-	 * @assumes have checked if prevDiff==currDiff to make sure we don't use this method if it is
+	 * @param mainmap differentiates between the user functions hashmap(false) and the game playings blocks hashmap(true)
+	 * @author Leslie
 	 */
 	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b, HashMap<Integer,Block> mainblocks, boolean mainmap){
 		if(b.getParent()!=null){
@@ -1763,15 +1786,17 @@ public class Controller {
 		b.getParent().setNestedBlocks(tempnb); //replace original nested hashmap with new/updated nested hashmap
 		cascadeNumberingChanges(lineBegin,currDiff,b.getParent(),mainblocks,mainmap); //recurse to go higher
 	}
-	
-	
-
+		
 	/**
 	 * cascadesNumberingChanges Inward to nested blocks
+	 * @assumes valid parameters provided
+	 * @exception none
+	 * @postcondition All the lines after the block provided are incremented by the block's line difference
 	 * @param lineBegin The block that was changed, inserted, deleted etc's line begin. 
 	 * 			/IMPORTANT: lineBegin is the line number above SELECTED line number in view
 	 * @param currDiff Current/new difference in end - start
 	 * @param b Block that the change occurred in
+	 * @author Leslie
 	 */
 	public void cascadeInward(int lineBegin, int currDiff, Block b){
 		HashMap<Integer,Block> nb;
@@ -1806,7 +1831,9 @@ public class Controller {
 	 * @postcondition Finds block being searched for
 	 * 
 	 * @param id id of Block to be searched for so it is the line number 
+	 * @param blocks Hashamp of blocks to look for the block that has that id
 	 * @return Block with the given id if found, else returns null
+	 * @author Amulya
 	 */
 	public Block searchForBlock(int id, HashMap<Integer,Block> blocks){
 		if(blocks.keySet().isEmpty()){ //no more nesting
@@ -1837,6 +1864,7 @@ public class Controller {
 	 * @param x X position in the grid to check if there is food, regardless of food type
 	 * @param y Y position in the grid to check if there is food, regardless of food type
 	 * @return false/true; false if there is no food in the given (x,y) coordinates, true if there is food in the selected coordinates
+	 * @author Leslie
 	 */
 	public boolean isthereFood(int x, int y){ //checks if square has food or not
 		if(gamePlaying.getGrid().getSquareContent(y, x)=='k'
@@ -1857,6 +1885,7 @@ public class Controller {
 	 * @param x X position in the grid to check if there is a wall
 	 * @param y Y position in the grid to check if there is a wall
 	 * @return false/true; false if there is no wall in the given (x,y) coordinates, true if there is a wall in the selected coordinates
+	 * @author Leslie
 	 */
 	public boolean isthereWall(int x, int y){
 		if(gamePlaying.getGrid().getSquareContent(y, x)=='w'){
@@ -1875,6 +1904,7 @@ public class Controller {
 	 * @param x X position in the grid to check if the water container is there
 	 * @param y Y position int the grid to check if the water container is there
 	 * @return false/true; false if water container not found at (x,y), true if water container found at (x,y)
+	 * @author Leslie
 	 */
 	public boolean isthereWater(int x, int y){
 		if(gamePlaying.getGrid().getSquareContent(y, x)=='t'){
@@ -1889,18 +1919,19 @@ public class Controller {
 	 * Will create a function to be added to list of functions
 	 * 	 * First View calls this, and then when user has entered the information, they will call
 	 * finishCreateBlocks method if the user clicks ok, otherwise, click cancelBlock, if user clicks cancel
-	 * @param type Enumerated type of the object
-	 * @param begin The beginLine fo the object so the line number it starts at
-	 * @param numLines is the number of lines of the code entered since this method is called several times
-	 * @param cond This is for while and if statements AND it also sends the integer for Repeat!!
+	 * 
 	 * @assumes if same function is called with c, the function was cancelled at some point so we ignore what we have currently 
-	 * @assuems if same function is called with e, the function was finished so we add to the list
+	 * @assumes if same function is called with e, the function was finished so we add to the list
 	 * @assumes function name may not be unique
 	 * @exception none
 	 * @postcondition Creates function iff function name is unique
 	 * 
-	 * @param name User provided function name, must be unique/valid
+	 * @param type Enumerated type of the object
+	 * @param begin The beginLine fo the object so the line number it starts at
+	 * @param numLines is the number of lines of the code entered since this method is called several times
+	 * @param cond This is for while and if statements AND it also sends the integer for Repeat!! 
 	 * @return newly instantiated Function object
+	 * @author Amulya
 	 */
 	public int createFunctionBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
@@ -2044,7 +2075,12 @@ public class Controller {
 	
 
 	/**
-	 * Creates a new Function object, stores createdFunctionBlocks in this function, and adds it to functions list
+	 * Creates a new Function object, stores createdFunctionBlocks in this function, and adds it to functions list 
+	 * @assumes valid function names are checked since they must be unique
+	 * @exception none
+	 * @postcondition Creates function iff function name is unique
+	 * @param name Name of the function we are creating
+	 * @author Leslie
 	 */
 	public int createFunction(String name){
 		int temp = validFunctionName(name);
@@ -2061,8 +2097,13 @@ public class Controller {
 		addFunction(newfunction); //add to this.functions list
 		return 0;
 	}
+	
 	/**
 	 * Deletes the tempFunctionBlockInstructions
+	 * @assumes we are done using the funciton block temp instructions storage since we have created the function or cancelled it's creation
+	 * @exception none
+	 * @postcondition no more instructions are in the function creation hashmap
+	 * @author Leslie
 	 */
 	public void clearTempFunctionBlockInstructions(){
 		this.tempFunctionBlockInstructions= new HashMap<Integer,Block>();
@@ -2077,6 +2118,7 @@ public class Controller {
 	 * 
 	 * @param name User provided name for function
 	 * @return int; 1 if function name does not consist of letters or digits, 2 if the function name is not unique && valid, 3 if unique && valid
+	 * @author Leslie
 	 */
 	public int validFunctionName(String name){
 		for(int i=0; i<name.length(); i++){
@@ -2104,6 +2146,7 @@ public class Controller {
 	 * @postcondition Will add function to function list
 	 * 
 	 * @param functionToAdd function to be added to function list
+	 * @author Leslie
 	 */
 	public void addFunction(Function functionToAdd){
 		gamePlaying.functions.add(functionToAdd); // +kat
@@ -2117,9 +2160,9 @@ public class Controller {
 	 * @exception none
 	 * @postcondition Deletes function from function list
 	 * 
-	 * @param g Game to delete the function from
 	 * @param name User selected function to delete
 	 * @return false/true, false if deletion could not be performed, true if deletion performed
+	 * @author Leslie
 	 */
 	public boolean deleteFunction(String name){
 		//Will not call any functions/classes
@@ -2134,13 +2177,14 @@ public class Controller {
 
 
 	/**
-	 * Will return an alphabetically sorted functions list in order to display in drop down menu of GUI
+	 * Will return an functions list in order to display in drop down menu of GUI
 	 * 
 	 * @assumes User and built in functions exist
 	 * @exception none
 	 * @postcondition Provides string list of all functions in a game
 	 * 
 	 * @return ArrayList of strings with all functions that have been created in the program
+	 * @author Leslie
 	 */
 	public String[] getFunctions(){
 		ArrayList<String> functionnames= new ArrayList<String>();
@@ -2160,6 +2204,10 @@ public class Controller {
 	/**
 	 * Returns the functions of the current game being played
 	 * 
+	 * @assumes we want to see the functions created by users
+	 * @exception none
+	 * @postcondition Arraylist of the functions array list is returned
+	 * @author Leslie
 	 */
 	public ArrayList<String> getFunctionsArrayList(){
 		ArrayList<String> functionnames= new ArrayList<String>();
@@ -2182,6 +2230,7 @@ public class Controller {
 	 * 
 	 * @param toSort ArrayList of strings to be sorted for the menu items
 	 * @return Alphabetically sorted araryList of strings upon success, null upon failure
+	 * @author Leslie
 	 */
 	public ArrayList<String> sortAlphabetical(ArrayList<String> toSort){
 
@@ -2204,21 +2253,6 @@ public class Controller {
 
 	/*Movement stuff*/
 	//////go through array list that consists move, eat, or turn left and see after each movement if valid or not!!!!
-	/**
-	 * Determines if a path of a given set of instructions is clear of walls
-	 * 
-	 * @assumes provided set of instructions must be validated
-	 * @exception none
-	 * @postcondition Determines if path of instructions leads to running into a wall
-	 * 
-	 * @param instructions instructions to be executed 
-	 * @return false/true; false if there is no wall in the instructions to be executed, 
-	 * 						true if there is a wall in the path of instructions to be executed
-	 */
-	public boolean pathclearofWalls(LinkedList<Block> instructions){
-		//Will use grid from Grid.java
-		return false;
-	}
 
 	/**
 	 * Will change the position of the gerbil to one cell forward
@@ -2228,6 +2262,7 @@ public class Controller {
 	 * @postcondition Makes move iff move is valid
 	 * @param gerbil the gerbil object to move forward
 	 * @return false/true; false if the move was unsuccessful, true if the move was successful 
+	 * @author Leslie
 	 */
 	public boolean moveForward(Gerbil gerbil){
 		if(gamePlaying.getGrid().getSquareContent(gerbil.getFrontY(), gerbil.getFrontX())=='w'){
@@ -2251,6 +2286,7 @@ public class Controller {
 	 * @postcondition Orientation of the Gerbil will be changed
 	 * @param gerbil the gerbil object to turn left
 	 * @return false/true; false if the Gerbil orientation was not changed, true otherwise
+	 * @author Leslie, Amulya
 	 */
 	public boolean turnLeft(Gerbil gerbil){
 
@@ -2296,7 +2332,8 @@ public class Controller {
 	 * 
 	 * @param x pos of food to eat
 	 * @param y pos of food to eat
-	 * @return
+	 * @return boolean if there is food else return false
+	 * @author Leslie
 	 */
 	public boolean eat(int x, int y, char[][] grid){
 		//create pointer to grid
@@ -2313,8 +2350,12 @@ public class Controller {
 
 	/**
 	 * This method will delete a given game
+	 * @assumes valid game nameare checked since they must be unique
+	 * @exception none
+	 * @postcondition deletes the game permenentely
 	 * @param gameName Name of the game to delete
 	 * @return True if deletion is successful, otherwise False
+	 * @author Leslie
 	 */
 	public boolean deleteGame(String gameName) {
 		return Start.StartGerbil.backend.deleteGame(gameName);
@@ -2323,22 +2364,30 @@ public class Controller {
 
 	/**
 	 * This method will load a given game
+	 * @assumes valid function names are checked since they must be unique
+	 * @exception none
+	 * @postcondition Creates function iff function name is unique
 	 * @param gameName Name of the game to load
 	 * @return True if loading is successful, otherwise False
+	 * @author Leslie, Katiuska
 	 */
 	public Game loadGame(String gameName) {
 		this.gamePlaying= Start.StartGerbil.backend.getGame(gameName);
 		if(gamePlaying == null) {
 			return null;
 		}
-		Start.StartGerbil.backend.deleteGame(gameName); // why is this deleting the game??? kat
+		Start.StartGerbil.backend.deleteGame(gameName); //delete game so ther is only one isntance at a time
 
 		return this.gamePlaying;
 	}
 
 	/**
 	 * Save current game
-	 * @return True if save is successful, otherwise False 
+	 * @assumes valid games are loaded into backend
+	 * @exception none
+	 * @postcondition saves the games to the backend
+	 * @return True if save is successful, otherwise False
+	 * @author Leslie, Katiuska 
 	 */
 	public boolean saveGame() {
 
@@ -2355,7 +2404,11 @@ public class Controller {
 
 	/**
 	 * This method will return a list of instructions of the current game
+	 * @assumes all valid instructions
+	 * @exception none
+	 * @postcondition none
 	 * @return List of instructions
+	 * @author Leslie
 	 */
 	public ArrayList<Block> getInstructions() {
 		ArrayList<Block> blocklist= new ArrayList<Block>();
@@ -2373,6 +2426,14 @@ public class Controller {
 
 
 
+	/**
+	 * Sets the current game to the parameter
+	 * @assumes valid game
+	 * @exception none
+	 * @postcondition current game is set
+	 * @param g Game to set the current game to
+	 * @author Leslie
+	 */
 	public void setCurrentGame(Game g) {
 		this.gamePlaying=g;
 
