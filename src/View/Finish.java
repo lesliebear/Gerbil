@@ -88,8 +88,7 @@ public class Finish extends Screen {
 		reachedTheEnd.setFont(new Font(null, Font.BOLD, 48));
 		reachedTheEnd.setForeground(Color.WHITE);
 		
-		fruitCounter = new JLabel("Fruits Eaten: "+this.fruitCount+"/"+"30"); // PUT NUMBERS HERE!
-		System.out.println("this.fruitCount"+this.fruitCount);
+		fruitCounter = new JLabel(); // PUT NUMBERS HERE!
 		fruitCounter.setFont(new Font(null, Font.BOLD, 32));
 		fruitCounter.setForeground(Color.WHITE);
 		
@@ -245,7 +244,6 @@ public class Finish extends Screen {
 	
 	public void setFruitCount(int i){
 		this.fruitCount=i;
-		System.out.println(this.fruitCount);
+		fruitCounter.setText("Fruits Eaten: " + i);	
 	}
-	
 }

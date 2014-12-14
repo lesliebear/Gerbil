@@ -577,7 +577,6 @@ public class ActionListenersControl {
 						}else if(errortype==0){
 							//WIN THE GAME
 							finish.setFruitCount(fruitCount);
-							System.out.println(fruitCount);
 							finish.show();
 						}
 					}
