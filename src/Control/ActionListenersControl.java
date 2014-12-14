@@ -1074,14 +1074,14 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				Start.StartGerbil.controller.createFunctionBlocks(2, userFunction.getSelectedLineNumber(),1, null);
 				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(),1, null);
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.userFunctionShowJList());
 			}});
 
 		userFunction.addEatEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Start.StartGerbil.controller.createFunctionBlocks(0, userFunction.getSelectedLineNumber(), 1, null);
 				Start.StartGerbil.controller.createFunctionBlocks('e', userFunction.getSelectedLineNumber(), 1, null);
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.userFunctionShowJList());
 			}
 		});
 
@@ -1089,7 +1089,7 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				Start.StartGerbil.controller.createFunctionBlocks(1,userFunction.getSelectedLineNumber(),1, null);
 				Start.StartGerbil.controller.createFunctionBlocks('e',userFunction.getSelectedLineNumber(),1, null);
-				userFunction.updateInstructionsList(Start.StartGerbil.controller.FunctionUnFin());
+				userFunction.updateInstructionsList(Start.StartGerbil.controller.userFunctionShowJList());
 
 			}});
 	}

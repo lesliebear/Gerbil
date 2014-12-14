@@ -591,7 +591,7 @@ public class UserFunction extends Screen{
 	public void refreshCodeList(){
 		listModel.clear();
 	
-		String [] temp = Start.StartGerbil.controller.FunctionUnFin();
+		String [] temp = Start.StartGerbil.controller.userFunctionShowJList();
 		listModel.add(0, " ");
 		for(int i=0; i< temp.length;i++){
 			String test = temp[i];
