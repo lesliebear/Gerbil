@@ -1,5 +1,8 @@
 package View;
  
+/**
+ * @author Truong Pham
+ */
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -43,7 +46,6 @@ public class Instructions extends Screen{
 	 * Constructor that creates all necessary GUI components.
 	 * 
 	 */
- 
 	public Instructions() {
 		 
 		frame = new JFrame("Instructions");
@@ -154,6 +156,10 @@ public class Instructions extends Screen{
 		frame.setEnabled(false);
 	}
 	
+	/**
+	 * Add event listner for back button
+	 * @param listener ActionListner 
+	 */
 	public void addBackEventHandler(ActionListener listener) {
 		
 		back.addActionListener(listener);
