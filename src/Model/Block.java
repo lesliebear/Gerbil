@@ -32,6 +32,11 @@ public class Block implements Serializable{
 	int repeat=-1;
 
 	/**Sets the function number to indicate that the instructions are refering to a function
+	 * 
+	 * @assumes none
+	 * @exception none
+	 * @postcondition none
+	 * 
 	 * @param numOfFunction The index number of the function in the arraylist of functions
 	 */
 	public void setFunctionNum(int numOfFunction){ 
@@ -39,18 +44,28 @@ public class Block implements Serializable{
 	}
 	
 	/**
-	 * Gets the function number of the current block so this block refers to a function. 
+	 * Gets the function number of the current block so this block refers to a function.
+	 * @assumes function number is initialized
+	 * @exception none
+	 * @postcondition none
+	 * @return The function number (same as the index in the array list of funcitons in game)
+	 *  
 	 */
 	public int getFunctionNum(){
 		return this.functionNum;
 	}
 	/**
 	 * Sets the parent block of this object
+	 * @assumes Valid parameter given
+	 * @exception none
+	 * @postcondition Parent of the object is changed to the parameter
+	 * 
 	 * @param b Parent block to set for this object
 	 */
 	public void setParent(Block b){
 		this.parent=b;
 	}
+	
 	/**
 	 * Gets the parent of the current node that holds it in the nesting
 	 * 
@@ -65,12 +80,20 @@ public class Block implements Serializable{
 	
 	/**
 	 * Gets the repeat number of block
+	 * @assumes none
+	 * @exception none
+	 * @postcondition none
+	 * 
+	 * @return The number of times it repeats, if it's a repeat conditional
 	 */
 	public int getRepeat(){
 		return repeat;
 	}
 	/**
 	 * Sets the repeat number of block
+	 * @assumes this is a repeat block and valid repeat number given
+	 * @exception none
+	 * @postcondition The repeat number of the block is changed so it is a repeat block
 	 */
 	public void setRepeat(int repeat){
 		this.repeat=repeat;
@@ -93,7 +116,6 @@ public class Block implements Serializable{
 	 * @assumes block properly created
 	 * @postcondition block will have lineBegin of line
 	 * @param line int of line to set lineBegin for block
-	 * @return nothing
 	 */
 	public void setlineBegin(int line){
 		this.lineBegin=line;
@@ -115,7 +137,7 @@ public class Block implements Serializable{
 	/**
 	 * Sets the line number where this block ends at
 	 * 
-	 * @assumes block was properly created
+	 * @assumes block was properly created and valid parameter entered
 	 * @postcondition new lineEnd of block will be set to line
 	 * @param line int of line to set lineEnd for block
 	 * @return nothing
@@ -127,7 +149,7 @@ public class Block implements Serializable{
 	/**
 	 * Gets the block's type based on innumeration
 	 *
-	 * @assumes assumes block was properly created
+	 * @assumes assumes block was properly created and type was initialized
 	 * @exception none
 	 * @postcondition none
 	 * 
@@ -140,7 +162,7 @@ public class Block implements Serializable{
 	/**
 	 * Sets the block's type based on enumeration
 	 * 
-	 * @assumes block properly created, does not have type
+	 * @assumes block properly created and assumes parameter is valid
 	 * @param type Type to set to the block
 	 * @return nothing
 	 */
@@ -163,10 +185,11 @@ public class Block implements Serializable{
 	/**
 	 * Sets the conditional
 	 * 
-	 * @assumes block has no conditional so far
+	 * @assumes block has no conditional so far and valid conditional entered
 	 * @exception none
 	 * @postcondition none
-	 * @param conditonal The conditional to set to this Block
+	 * 
+	 * @param conditonal The conditional to set for this Block
 	 * @return nothing
 	 */
 	public void setCond(String conditional){
