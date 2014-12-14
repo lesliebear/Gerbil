@@ -17,10 +17,6 @@ import Model.*;
  *  by the Backend.
  *  @author Amulya,Leslie
  */
-/**
- * @author Amulya
- *
- */
 public class Controller {
 	/**Holds the current game being played */
 	public Game gamePlaying;
@@ -392,23 +388,37 @@ public class Controller {
 
 	//////////////////////////////////DEBUGGIN METHODS BEGIN/////////////////////////////////////
 	/**
-	 * returns finalblocks arraylist
+	 * returns finalblocks arraylist for parse/compiling
+	 * 
+	 * @assumes none
+	 * @exception none
+	 * @postcondition none
+	 * @return String arraylsit of final blocks
+	 * @author Leslie
 	 */
 	public ArrayList<String> getFinalBlocks(){
 		return this.finalblocks;
 	}
+	
 	/**
-	 * returns finalblocksLineNumbers arraylist
+	 * returns integer arraylist for parse/compiling to show highlighting
+	 * 
+	 * @assumes none
+	 * @exception none
+	 * @postcondition none
+	 * @return String arraylsit of final blocks line numbers
+	 * @author Leslie
 	 */
 	public ArrayList<Integer> getFinalBlocksLineNumbers(){
 		return this.finalblocksLineNumbers;
 	}
 	/**
-	 * Prints the tempgrid 
+	 * Prints the tempgrid in console to see values
 	 * 
 	 * @assumes debugging reasons
 	 * @exception none
 	 * @postcondition nothing
+	 * @author Leslie
 	 */
 	public void printTempGrid(){
 		for (int i =0; i<tempgrid.length;i++){
@@ -420,16 +430,29 @@ public class Controller {
 	}
 
 
+	/**
+	 * Gets the current game that is playing for debugging reasons
+	 * @assumes game playing is initialized properly
+	 * @exception none
+	 * @postcondition none
+	 * @return Current Game playing
+	 * @author Amulya
+	 */
 	public Game getCurrGame(){
 		return this.gamePlaying;
 	}
 
-
 	/**
-	 * Prints the hashmap of the blocks based on the indentation level(nesting level)
+	 * prints string of the hashmap of blocks provided
+	 * 
+	 * @assumes tab starts as 0
+	 * @exception none
+	 * @postcondition none
+	 * 
 	 * @param tab The indentation level of the block to be printed out
 	 * @param blocks Takes hashmap to print out the contents of the hashmap
 	 * eat(0),turnleft(1),move(2),if(3),elseif(4),else(5),while(6),repeat(7), function(8)
+	 * @author Amulya
 	 */
 	public void printBlocks(int tab, HashMap<Integer,Block> blocks){
 		int type;
@@ -512,13 +535,17 @@ public class Controller {
 	/**
 	 * First View calls this, and then when user has entered the information, they will call
 	 * finishCreateBlocks method if the user clicks ok, otherwise, click cancelBlock, if user clicks cancel
+	 * 
+	 * @assumes if same function is called with c, the function was cancelled at some point so we ignore what we have currently 
+	 * @assuems if same function is called with e, the function was finished so we add to the list
+	 * @exception none
+	 * @postcondition creates blocks if valid. 
+	 * 
 	 * @param type Enumerated type of the object
 	 * @param begin The beginLine fo the object so the line number it starts at
 	 * @param numLines is the number of lines of the code entered since this method is called several times
 	 * @param cond This is for while and if statements AND it also sends the integer for Repeat!!
-	 * @assumes if same function is called with c, the function was cancelled at some point so we ignore what we have currently 
-	 * @assuems if same function is called with e, the function was finished so we add to the list
-	 * 
+	 * @return integer to indicate error or went as planned if 0. See below for values. 
 	 * 0 is good
 	 * 1 is ///////////////////ERROR: Number of repetitions was not selected!//////////////
 	 * 2 is ///////////ERROR: Function not selected////////////////////////////
@@ -665,16 +692,25 @@ public class Controller {
 			return 0;
 		}
 	}
+	
 	/**
-	 * Deletes/clears all blocks in the main
+	 * Deletes/clears all blocks in the game
+	 * @assumes We want to clear all
+	 * @exception none
+	 * @postcondition game playing's blocks are all destroyed
+	 * @author Amulya
 	 */
 	public void clearBlocks(){
 		gamePlaying.getBlocks().clear();
 	}
 
-
 	/**
 	 * initializes temp grid by copying values of game grid
+	 * 
+	 * @assumes We want to use temp grid to show the animation and test it out
+	 * @exception none
+	 * @postcondition temp grid has all values that real grid has
+	 * @author Leslie
 	 */
 	public void initTempGrid(){
 		for(int i=0; i<17; i++){
@@ -694,6 +730,7 @@ public class Controller {
 	 * 
 	 * @param name User provided game name, must be unique/valid
 	 * @return newly created and instantiated Game object
+	 * @author Leslie
 	 */
 	public void createGame(String name){
 		this.gamePlaying = new Game(name);
@@ -708,6 +745,7 @@ public class Controller {
 	 * 
 	 * @param name user provided game name
 	 * @return false/true; false if invalid game name, true if valid game name
+	 * @author Leslie
 	 */
 	public int validGameName(String name){
 		for(int i=0; i<name.length(); i++){
