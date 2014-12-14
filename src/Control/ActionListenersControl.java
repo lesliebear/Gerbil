@@ -280,8 +280,10 @@ public class ActionListenersControl {
 		});
 	}
 
-
-
+	/**
+	 * Add the event handlers for the error dialog screen's compoenents 
+	 * @author Katiuska
+	 */
 	private void addErrorDialogEventHandlers() {
 		errorDialog.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -292,6 +294,10 @@ public class ActionListenersControl {
 	}
 	
 	
+	/**
+	 * Finish Screen's event handlers added
+	 * @author Katiuska, Truong 
+	 */
 	private void addFinishEventHandlers(){
 		
 		
@@ -326,6 +332,10 @@ public class ActionListenersControl {
 	}
 	
 
+	/**
+	 * Add the event handlers for the instructions screen's compoenents 
+	 * @author Katiuska
+	 */
 	private void addInstructionsEventHandlers() {
 		instructionsScreen.addBackEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -338,6 +348,7 @@ public class ActionListenersControl {
 
 	/**
 	 * Add event handlers for the Main screen
+	 * @author Katiuska
 	 */
 	private void addMainEventHandlers() {
 
@@ -363,6 +374,10 @@ public class ActionListenersControl {
 	}
 
 
+	/**
+	 * Add event handlers for new game screen
+	 * @author Katiuska 
+	 */
 	private void addNewGameEventHandlers() {
 		newGame.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -406,6 +421,10 @@ public class ActionListenersControl {
 		});
 	}
 
+	/**
+	 * Add event handlers for yes no dialog 
+	 * @author Katiuska 
+	 */
 	private void addOkYesDialogEventHandlers(){
 		okNoDialog.addNoEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -433,6 +452,7 @@ public class ActionListenersControl {
 
 	/**
 	 * Add event handlers for the PlayOptions screen
+	 * @author Katiuska
 	 */
 	private void addPlayOptionsEventHandlers() {
 		playOptions.addLoadGameEventHandler(new ActionListener() {
@@ -470,6 +490,7 @@ public class ActionListenersControl {
 
 	/**
 	 * Add event handlers for the Play screen
+	 * @author Amulya, Katiuska, Truong, Leslie
 	 */
 	private void addPlayEventHandlers() {
 		/**Button Listeners**/
@@ -847,6 +868,10 @@ public class ActionListenersControl {
 		});
 	}
 
+	/**
+	 * Add event handlers for saved games screen
+	 * @author Katiuska
+	 */
 	private void addSavedGamesEventHandlers(){
 		savedGames.addOpenGameEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -887,6 +912,10 @@ public class ActionListenersControl {
 		});
 	}
 
+	/**
+	 * Add event handlers for user functions screen
+	 * @author Amulya, Katiuska
+	 */
 	private void addUserFunctionEventHandlers(){
 		userFunction.addFunctionListListener(new ActionListener() {
 			@Override
@@ -1118,6 +1147,10 @@ public class ActionListenersControl {
 			}});
 	}
 
+	/**
+	 * Add delete functions screen event handlers
+	 * @author Katiuska 
+	 */
 	private void addDeleteFunctionEventHandlers() {
 
 		deleteFunction.addDeleteEventHandler(new ActionListener() {
@@ -1147,6 +1180,8 @@ public class ActionListenersControl {
 	 * PlayOptions 5
 	 * SavedGame 6
 	 * UserFunction 7
+	 * Show parent method to make it easier to go back a screen using enumeration
+	 * @author Katiuska
 	 */
 	private  void showParent(){ 
 		switch(parentScreen){
