@@ -24,6 +24,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * @author Katiuska Nunez
+ */
 public class SavedGames extends Screen{
 
 	private JFrame frame;

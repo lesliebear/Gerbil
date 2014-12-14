@@ -19,6 +19,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * @author Katiuska Nunez
+ *
+ */
 public class OkYesDialog extends Screen{
 
 
