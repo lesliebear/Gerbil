@@ -192,18 +192,18 @@ public class ActionListenersControl {
 		conditionals.addMoveEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int lineSelect  = conditionals.getSelectedLineNumber()+conditionals.getBegin();
-				//System.out.println("lineSelect: "+lineSelect);
-				Start.StartGerbil.controller.createBlocks(2,lineSelect,1, null);
-				Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
-
-				/*System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT NOW!!!");
-				String[] temp = Start.StartGerbil.controller.getUnFinIns();
-				for(int i =0 ;i<temp.length;i++){
-					System.out.println(temp[i]);
+				
+				if(parentScreen == 4){
+					Start.StartGerbil.controller.createBlocks(2,lineSelect,1, null);
+					Start.StartGerbil.controller.createBlocks('e',lineSelect,1,null);
+					conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());					
+										
+				}else if(parentScreen == 7){
+		
+					Start.StartGerbil.controller.createFunctionBlocks(2,lineSelect,1, null);
+					Start.StartGerbil.controller.createFunctionBlocks('e',lineSelect,1,null);
+					conditionals.refreshConditionalsJList(Start.StartGerbil.controller.FunctionUnFin());
 				}
-				System.out.println("MOVE AHEAD BUTTON CLICKED SO PRINT DONE!!!!!");*/
-
-				conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
 			}	
 		});
 
@@ -713,15 +713,7 @@ public class ActionListenersControl {
 						deleting = false;
 						playScreen.deleteB.setBackground(Color.BLACK);
 						Play.refreshCodeList(); // refreshes the code list in Play screen
-					}					
-					//Block blockToDel= Start.StartGerbil.controller.getBlockByLine(selectedIndexPlayCodeList);
-				//	int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
-			//		playScreen.setMultipleSelectionMode();
-				//	Play.playcodeList.setSelectedIndices(highLight);
-					
-
-					
-					
+					}										
 				}else if(inserting==true){
 					playScreen.setSingleSelectionMode();
 				}
