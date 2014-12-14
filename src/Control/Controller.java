@@ -935,6 +935,11 @@ public class Controller {
 	 * goes through user coded blocks and stores commands in arraylist finalblocks in the order and
 	 * number of times they will be executed for play
 	 * (compiles blocks)
+	 * @assumes Provided data must be validated and sees if there are errors in code/ what gerbil does
+	 * @exception none
+	 * @postconditions runs user written code by compiling
+	 * @return int if there is an error
+	 * @author Leslie
 	 */
 	public int compileBlocks(){
 		//clears finalblocks arraylist in case it's not empty
@@ -962,11 +967,11 @@ public class Controller {
 			Block block= blocklist.get(sortedkeys.get(i));
 			int success=parseBlock(block);
 			if(success==-1){
-				System.out.println("error in parsing");
+				//System.out.println("error in parsing");
 				return -1;   //error in parsing
 			}
 			if(success==-2){//infinite loop error
-				System.out.println("infinite loop error");
+				//System.out.println("infinite loop error");
 				return -2;
 			}
 			if(success==1){//if or else if so skip rest of else if or else statements
@@ -995,7 +1000,8 @@ public class Controller {
 	 * @exception none
 	 * @postcondition stored ArrayList of order of commands "move,eat,turnleft"
 	 * 
-	 * @return false/true; false if parsing fails, true if parsing succeeds
+	 * @return integer for the error parse block encounters
+	 * @author Leslie
 	 */
 	public int parseBlock(Block block){
 		if(this.finalblocks.size()>1000){
@@ -1469,6 +1475,16 @@ public class Controller {
 		//ERROR block does not have a valid type
 	}	
 
+	
+	/**
+	 * Gets the block from the main's nesting level
+	 * @assumes Block is present
+	 * @exception none
+	 * @postcondition none
+	 * @param line Line number to search for the block
+	 * @return the block if we find the block we are looking for based on line, else null
+	 * @author Amulya
+	 */
 	public Block getBlockByLineMain(int line){
 		for(int k: this.gamePlaying.getBlocks().keySet()){
 			Block temp = this.gamePlaying.getBlocks().get(k);
@@ -1479,6 +1495,15 @@ public class Controller {
 		return null;
 	}
 	
+	/**
+	 * Gets the block from the user Function screen's nesting level
+	 * @assumes Block is present
+	 * @exception none
+	 * @postcondition none
+	 * @param lineS Line number to search for the block
+	 * @return the block if we find the block we are looking for based on line, else null
+	 * @author Amulya
+	 */
 	public Block getBlockByLineUserFunction(int lineS) {
 		for(int k: this.tempFunctionBlockInstructions.keySet()){
 			Block temp = this.tempFunctionBlockInstructions.get(k);
@@ -1491,9 +1516,13 @@ public class Controller {
 
 	
 	/**
-	 * For any line number selected, it will return the block in that position
+	 * For any line number selected, it will return the block in that position inside main. gets inner most block
+	 * @assumes Block is present and if end or begin from the block are clicked, you want the entire block
+	 * @exception none
+	 * @postcondition none
 	 * @param line Line Number
-	 * @return Block at that line Number in the main
+	 * @return Block at that line Number in the main, else null
+	 * @author Amulya
 	 */
 	public Block getBlockByLine(int line){
 		for(int k: this.gamePlaying.getBlocks().keySet()){
@@ -1511,6 +1540,14 @@ public class Controller {
 		return null;
 	}
 	
+	/**
+	 * Deletes theblock you give it to delete
+	 * @assumes Block is present
+	 * @exception none
+	 * @postcondition removes the parameter block from the game
+	 * @param toDel Block to be deleted
+	 * @author Amulya
+	 */
 	public void deleteBlock(Block toDel) {
 		
 		if(toDel.getParent()==null){ //in main nesting 
@@ -1528,7 +1565,7 @@ public class Controller {
 
 
 	/**
-	 * Will insert a NEW block of code into a user specified index/position
+	 * Will insert a NEW block of code into a user specified index/position in main
 	 *
 	 * @assumes Index to insert block is valid
 	 * @exception none
@@ -1537,6 +1574,7 @@ public class Controller {
 	 * @param pos index/position of block to insert = it is the line number 
 	 * @param b block to be inserted
 	 * @return false/ true; false if inserting the Block fails, true if it succeeds
+	 * @author Amulya
 	 */
 	public void insertBlockToMain(int id, Block b){
 		//Block parent = findParentInMain(id); = parent is null! => cannot find parent
@@ -1568,6 +1606,10 @@ public class Controller {
 
 	/**
 	 * counts the total number of lines(blocks) in a block (including nested blocks)
+	 * @assumes Block is present
+	 * @exception none
+	 * @postcondition none
+	 * @author Leslie
 	 */
 	public void countBlocks(Block b){
 		if(b.getNestedBlocks().isEmpty()){
