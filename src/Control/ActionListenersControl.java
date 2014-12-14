@@ -39,6 +39,7 @@ public class ActionListenersControl {
 	static UserFunction userFunction;
 	static Conditionals conditionals;
 	static OkYesDialog okNoDialog;
+	static ErrorDialog errorDialogRun;
 
 	int selectedIndexPlayScreen; /*Code list in Play Screen*/
 	static int selectedIndexPlayCodeList;
@@ -64,6 +65,7 @@ public class ActionListenersControl {
 		newGame = new NewGame();
 		deleteFunction = new DeleteFunction();
 		errorDialog = new ErrorDialog();
+		errorDialogRun = new ErrorDialog();
 		finish = new Finish();
 		instructionsScreen = new Instructions();
 		main = new Main(); 
@@ -114,6 +116,7 @@ public class ActionListenersControl {
 		addNewGameEventHandlers();
 		addPlayOptionsEventHandlers();
 		addInstructionsEventHandlers();
+		addErrorDialogRunEventHandlers();
 		addErrorDialogEventHandlers();
 		addPlayEventHandlers();
 		addUserFunctionEventHandlers();
@@ -227,7 +230,16 @@ public class ActionListenersControl {
 		});
 	}
 	
-	
+	private void addErrorDialogRunEventHandlers() {
+		errorDialogRun.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				errorDialogRun.hide();
+				Play.setGridIcons();
+				Start.StartGerbil.controller.resetTempGrid();
+				showParent();
+			}
+		});
+	}
 	private void addErrorDialogEventHandlers() {
 		errorDialog.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -437,29 +449,29 @@ public class ActionListenersControl {
 						}
 						if(errortype==1){
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
-							errorDialog.errorL.setText("Cannot Eat: there is no food at square");
-							errorDialog.show();
-							Play.setGridIcons();
+							errorDialogRun.errorL.setText("Cannot Eat: there is no food at square");
+							errorDialogRun.show();
+							parentScreen = 4; 
 						}else if(errortype==2){
 							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
-							errorDialog.errorL.setText("Cannot Move Forward: there is a wall ahead");
-							errorDialog.show();
-							Play.setGridIcons();
+							errorDialogRun.errorL.setText("Cannot Move Forward: there is a wall ahead");
+							errorDialogRun.show();
+							parentScreen = 4; 
 						}else if(errortype==3){
 							//miscellaneous error, could not compile code(this shouldn't happen)
 						}else if(errortype==4){
 							//ERROR: insert Dialogue BoxDid not reach water/goal
-							errorDialog.errorL.setText("Did not reach water, Try Again!");
-							errorDialog.show();
-							Play.setGridIcons();
+							errorDialogRun.errorL.setText("Did not reach water, Try Again!");
+							errorDialogRun.show();
+							parentScreen = 4; 
 						}else if(errortype==-1){
 							//parsing error(this shouldn't happen)
 						}else if(errortype==-2){
 							//ERROR: insert Dialogue BoxInfiniteLoop was created, cannot run code
 							//this does not run/animate the gerbil
-							errorDialog.errorL.setText("Infinite Loop was created, please edit your code");
-							errorDialog.show();
-							Play.setGridIcons();
+							errorDialogRun.errorL.setText("Infinite Loop was created, please edit your code");
+							errorDialogRun.show();
+							parentScreen = 4; 
 						}
 					}
 				};
