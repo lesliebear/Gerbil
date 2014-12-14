@@ -27,8 +27,8 @@ import javax.swing.JPanel;
  
 
 /**
+ * @author Truong Pham
  * This class create the GUI for Delete Function Screen.
- *
  */
 public class DeleteFunction extends Screen{
 

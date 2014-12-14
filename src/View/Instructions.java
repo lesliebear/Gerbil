@@ -1,8 +1,4 @@
 package View;
- 
-/**
- * @author Truong Pham
- */
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -31,7 +27,7 @@ import javax.swing.JScrollPane;
 
 /**
  * This class creates a GUI for the Instruction Screen (Help screen).
- *
+ *@author Truong Pham
  */
 public class Instructions extends Screen{
 
