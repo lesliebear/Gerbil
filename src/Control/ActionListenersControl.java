@@ -823,7 +823,7 @@ public class ActionListenersControl {
 
 					}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
 						selectedIndexPlayCodeList = 0;
-						Start.StartGerbil.controller.deleteBlock(bTemp);
+					//	Start.StartGerbil.controller.deleteBlock(bTemp);
 						deleting = false;
 						playScreen.deleteB.setBackground(Color.BLACK);
 						Play.refreshCodeList(); // refreshes the code list in Play screen
