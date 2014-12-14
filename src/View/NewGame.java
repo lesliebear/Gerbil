@@ -21,7 +21,6 @@ import javax.swing.JTextField;
 
 
 /**
- * 
  * @author Katiuska Nunez
  * This class creates a GUI for the Confirmation screen.
  */

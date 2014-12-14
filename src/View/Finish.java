@@ -42,7 +42,6 @@ public class Finish extends Screen {
 	
 	/**
 	 * Constructor that creates all necessary GUI components.
-	 * 
 	 */
 	public Finish() {
 		createAndShowGUI(); 

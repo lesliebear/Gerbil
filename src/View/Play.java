@@ -16,7 +16,6 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.ImageProducer;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -33,8 +32,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import Model.Block;
 
 /**
  * @author Katiuska Nunez 
@@ -322,19 +319,6 @@ public class Play extends Screen{
 		upperPanel.add(saveB, gc);
 	}
 
-	/*
-	 * Kat: 
-	 * 
-	 * Testing: Vertical Scrollbar
-	 * Input: list longer than screen (Vertical)
-	 * Expected Output: Vertical Scrollbar should pop up
-	 * Output: Vertical Scrollbar pops up
-	 * 
-	 * Testing: Horizontal Scrollbar
-	 * Input: Word longer than screen (Horizontal)
-	 * Expected Output: Horizontal Scrollbar should pop up
-	 * Output: Horizontal Scrollbar pops up
-	 * */
 	public static void setLeftComponents(){
 		Dimension size= leftPanel.getPreferredSize();
 		size.width =250;
@@ -453,8 +437,6 @@ public class Play extends Screen{
 		conditionalsDD = new JComboBox(conditionals);
 		givenFunctionsDD = new JComboBox(functions);
 
-		//userFunctionsDD = new JComboBox();
-		//userFunctionsDD.setModel(new DefaultComboBoxModel(arrayList.toArray()));
 		userFunctionsDD = new JComboBox(Start.StartGerbil.controller.getFunctions()); // changed: getUserDefinedFunctionsStringArray().toArray()); kat
 		checksDD = new JComboBox(checks);
 		numsDD = new JComboBox(nums);
@@ -498,8 +480,6 @@ public class Play extends Screen{
 		gc.gridy=0;
 		lowerPanel.add(userDefinedFunctionsL, gc);
 
-
-		//gc.insets = new Insets(0,30,0,80);
 		/*Dropdowns*/
 		gc.gridx=1;
 		gc.gridy=1;

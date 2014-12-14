@@ -1,7 +1,6 @@
 package Model;
  
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,15 +8,13 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
  
-
-
 /**
  * Kernel/Standard version of backend. 
  * The backend contains the way to save information once a user 
  * exits the program but does not wish to loose his/her work.
  * In the fancy system, users would be the arraylist<user> 
  * since each user's games would be stored in their object.
- * @author Amulya 
+ * @author Amulya, Katiuska 
  * */
 @SuppressWarnings("serial")
 public class Backend implements Serializable {

@@ -25,10 +25,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import Start.StartGerbil;
 
 /**
  * @author Katiuska Nunez
@@ -100,6 +96,9 @@ public class Conditionals {
 		createAndShowGUI();
 	}
 
+	/**
+	 * Creates all buttons for Conditionals Screen
+	 */
 	void createButtons(){
 		/**Right side panel**/
 		moveForwardB= new JButton("Move Forward"){
@@ -214,6 +213,9 @@ public class Conditionals {
 		}; 
 	}
 
+	/**
+	 * Sets right components on Conditionals frame 
+	 */
 	public void setRightComponents(){
 		rightPanel.setLayout(new GridBagLayout());
 		rightPanel.setOpaque(true);
@@ -229,14 +231,9 @@ public class Conditionals {
 		givenFunctionsL.setFont(new Font("Serif", Font.BOLD, 18)); 
 		userDefinedL.setFont(new Font("Serif", Font.BOLD, 18));
 
-		//String[] drop = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"}; // EDIT : should come from somewhere else
 		userDefinedFunctions = new JComboBox();
-	//	userDefinedFunctions.setModel(model);
-
-		//top, left, botton, right <- insets
+	
 		gc.insets = new Insets(5,0,10,5);
-
-		//gc.anchor = GridBagConstraints.WEST;
 
 		gc.gridx = 0;
 		gc.gridy = 1;
@@ -264,6 +261,9 @@ public class Conditionals {
 		rightPanel.add(userDefinedFunctions, gc); //placeholder */
 	}
 
+	/**
+	 * Sets left components on Conditionals frame
+	 */
 	public void setLeftComponents(){
 		leftPanel.setLayout(new GridBagLayout());
 		leftPanel.setOpaque(true);
@@ -357,7 +357,6 @@ public class Conditionals {
 	 * Creates the screen by putting the GUI components together.
 	 */
 	protected static void createAndShowGUI() { 
-		//conditionals = new Conditionals("Repeat");
 		frame = new JFrame(type);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -380,14 +379,29 @@ public class Conditionals {
 		frame.setVisible(false);
 	}
 
+	/**
+	 * Gets the left panel
+	 * @assumes  leftPanel exists
+	 * @return leftPanel component gets returned to the caller
+	 */
 	public JComponent getLeftComponent() {
 		return leftPanel;
 	}
 
+	/**
+	 *  Gets the right panel
+	 * @assumes rightPanel exists
+	 * @return rightPanel component gets returned to the caller
+	 */
 	public JComponent getRightComponent(){
 		return rightPanel;
 	}
-	//"If", "Else", "Else if", "While", "Repeat"
+	
+	/**
+	 * Creates a condtionals window based on conditional type
+	 * @assumes type being sent in is correct
+	 * @param type Type of conditional window to be created
+	 */
 	public void setText(String type){
 		String [] conditions = {"There'sWall?", "There'sNoWall", "There'sFood","There'sNoFood"};
 	
@@ -424,18 +438,14 @@ public class Conditionals {
 		}
 	}
 	
+	/**
+	 * Gets the conditional check string
+	 * @return conditional check string
+	 */
 	public String getText(){
 		return label.getText();
 	}
-	/*
-	public void refreshUserFunctionsList(String[] newFunctions){
-		userDefinedFunctions.removeAllItems();
-		for(int i = 0; i < newFunctions.length; i++) {
-			userDefinedFunctions.addItem(newFunctions[i]);
-		}
-	}
-	*/
-	
+
 	public void refreshUserFunctionsList(String [] newList){ 
 		model=new DefaultComboBoxModel(newList);
 		userDefinedFunctions.setModel(model);
