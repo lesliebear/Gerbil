@@ -1441,6 +1441,17 @@ public class Controller {
 		return null;
 	}
 	
+	public Block getBlockByLineUserFunction(int lineS) {
+		for(int k: this.tempFunctionBlockInstructions.keySet()){
+			Block temp = this.gamePlaying.getBlocks().get(k);
+			if(lineS>=temp.getlineBegin()&& lineS <=temp.getlineEnd()){
+				return temp;
+			}
+		}
+		return null;
+	}
+
+	
 	/**
 	 * For any line number selected, it will return the block in that position
 	 * @param line Line Number
@@ -2435,7 +2446,6 @@ public class Controller {
 		this.gamePlaying=g;
 
 	}
-
 	
 
 }
