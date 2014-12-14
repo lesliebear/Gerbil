@@ -266,7 +266,7 @@ public class ActionListenersControl {
 
 	/**
 	 * Add the event handlers for the error dialog screen's compoenents during running
-	 * @author 
+	 * @author Truong, Leslie
 	 */
 	private void addErrorDialogRunEventHandlers() {
 		errorDialogRun.addOkEventHandler(new ActionListener() {
