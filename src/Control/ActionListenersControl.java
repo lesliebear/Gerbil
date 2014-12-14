@@ -545,6 +545,9 @@ public class ActionListenersControl {
 								e.printStackTrace();
 							}
 						}
+						if(error==0){
+							error=-1;
+						}
 						if(errortype==1){
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
 							//HIGHLIGHT the error block using lineNumbers.get(error+1);

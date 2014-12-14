@@ -786,6 +786,9 @@ public class Controller {
 				if(eat==false){
 					//errorEat() dialogue box??;
 					int error=0;
+					if(i==0){
+						error=-1;
+					}
 					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
 						templistLineNumbers.add(finalblocksLineNumbers.get(j));
@@ -801,6 +804,9 @@ public class Controller {
 				if(turnleft==false){
 					//error turning left, this shouldn't ever happen
 					int error=0;
+					if(i==0){
+						error=-1;
+					}
 					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
 						templistLineNumbers.add(finalblocksLineNumbers.get(j));
@@ -816,6 +822,9 @@ public class Controller {
 				if(moveforward==false){
 					//errorWall() dialogue box??
 					int error=0;
+					if(i==0){
+						error=-1;
+					}
 					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
 						templistLineNumbers.add(finalblocksLineNumbers.get(j));
@@ -839,6 +848,9 @@ public class Controller {
 				}
 			}else{
 				int error=0;
+				if(i==0){
+					error=-1;
+				}
 				for(int j=0; j<i; j++){
 					templist.add(finalblocks.get(j));
 					templistLineNumbers.add(finalblocksLineNumbers.get(j));
