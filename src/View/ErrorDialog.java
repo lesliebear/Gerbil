@@ -23,7 +23,7 @@ public class ErrorDialog extends Screen{
 	private JFrame frame;
 	private JPanel panel;
 	private JButton backB;
-	public static JLabel errorL= new JLabel();
+	public  JLabel errorL= new JLabel();
 	
 	public ErrorDialog() {
 		frame = new JFrame("Error");

@@ -37,7 +37,6 @@ public class Conditionals {
 	/**Type of conditional frame**/
 	public static String type= "";
 
-	
 	/**LHS and RHS panels**/
 	static JPanel leftPanel = new JPanel(); 
 	static JPanel rightPanel = new JPanel();

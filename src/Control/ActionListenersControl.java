@@ -45,11 +45,11 @@ public class ActionListenersControl {
 	static int funcListSelect;
 	boolean selectedCreateFunctionFirst;
 
-	boolean inserting;
-	boolean deleting;
-	boolean editing;
-	boolean stop;
-	boolean play;
+	public boolean inserting;
+	public boolean deleting;
+	public boolean editing;
+	public boolean stop;
+	public boolean play;
 
 	boolean deleteCurrGame;
 
@@ -86,8 +86,9 @@ public class ActionListenersControl {
 
 		initEventHandlers();
 		initBooleans();
-		main.show();
+		//main.show();
 		//userFunction.show();
+		finish.show();
 	}
 
 	private void initGrid() {
@@ -270,6 +271,41 @@ public class ActionListenersControl {
 			}		
 		});
 	}
+	
+	
+	private void addFinishEventHandlers(){
+		
+		
+		finish.addLoadGamesButtonListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}		
+		});
+		
+		finish.addNewGamesButtonListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}		
+		});
+		
+		finish.addSaveGamesButtonListener(new ActionListener() { // needs to be tested..
+			public void actionPerformed(ActionEvent e) {
+				Start.StartGerbil.controller.saveGame();
+
+				try{
+					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
+				}catch(Exception es){
+					System.out.println("Unable to save game.");
+				}
+				
+				finish.hide();
+				main.show();
+				
+			}		
+		});
+		
+	}
+	
 
 	private void addInstructionsEventHandlers() {
 		instructionsScreen.addBackEventHandler(new ActionListener() {
@@ -423,6 +459,16 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent e) {
 				deleteFunction.updateFunctionsList(StartGerbil.controller.getFunctions());
 				deleteFunction.show();
+
+				editing = false;
+				inserting = false;
+				deleting = false;
+
+				playScreen.editB.setBackground(Color.BLACK);
+				playScreen.insertB.setBackground(Color.BLACK);
+				playScreen.deleteB.setBackground(Color.BLACK);
+
+
 				playScreen.hide();
 				parentScreen = 4;
 			}
@@ -441,6 +487,13 @@ public class ActionListenersControl {
 
 		playScreen.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				editing = false;
+				inserting = false;
+				deleting = false;
+
+				playScreen.setPlaySelected();
+
+
 				Thread thread = new Thread() {
 					public void run() {
 						parentScreen=4;	
@@ -505,6 +558,10 @@ public class ActionListenersControl {
 		playScreen.addStopEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
+				editing = false;
+				inserting = false;
+				deleting = false;
+
 				playScreen.setStopSelected();
 			}	
 		});
@@ -526,6 +583,10 @@ public class ActionListenersControl {
 				editing = true;
 				inserting = false;
 				deleting = false;
+
+				parentScreen = 4; 
+				errorDialogRun.errorL.setText("Edit is for fancy system.");
+				errorDialogRun.show();
 
 				playScreen.setEditSelected();
 			}	
@@ -571,6 +632,14 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedCreateFunctionFirst=true;
 				parentScreen = 4; 
+
+				editing = false;
+				inserting = false;
+				deleting = false;
+
+				playScreen.editB.setBackground(Color.BLACK);
+				playScreen.insertB.setBackground(Color.BLACK);
+				playScreen.deleteB.setBackground(Color.BLACK);
 
 				userFunction.refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
 				userFunction.refreshCodeList();
@@ -722,8 +791,9 @@ public class ActionListenersControl {
 			public void valueChanged(ListSelectionEvent e) {
 				if(deleting == true){
 					int lineS = Play.playcodeList.getSelectedIndex();
+
 					Block bTemp = Start.StartGerbil.controller.getBlockByLine(lineS);
-					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+					if(lineS <=Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line; fixed to fix delete -> clearall error
 						//selectedIndexPlayCodeList = lineS;
 
 					}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
