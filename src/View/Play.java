@@ -16,7 +16,9 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.ImageProducer;
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
@@ -39,7 +41,7 @@ import Model.Block;
  */
 public class Play extends Screen{
 	static DefaultListModel model;
-
+	
 	private static JFrame frame;
 
 	/**Panels**/
@@ -54,7 +56,7 @@ public class Play extends Screen{
 	private static JButton stopB; 
 	private static JButton insertB; 
 	private static JButton editB; 
-	private static JButton deleteB;
+	public static JButton deleteB;
 	private static JButton clearAllB; 
 	private static JButton saveB;
 
@@ -95,6 +97,7 @@ public class Play extends Screen{
 	 */
 	public Play() {
 		try {
+			
 			imageApple = new ImageIcon(ImageIO.read(new File("pics/apple icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));
 			imagePear = new ImageIcon(ImageIO.read(new File("pics/pear icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
 			imageGrass = new ImageIcon(ImageIO.read(new File("pics/grass icon.png")).getScaledInstance(42, 34, Image.SCALE_SMOOTH));;
@@ -465,6 +468,8 @@ public class Play extends Screen{
 		}
 	} */
 
+	
+	
 	public static void setGridComponents(){
 		gridPanel.setLayout(new GridLayout(grid.length, grid[0].length));	
 		Dimension size= gridPanel.getPreferredSize();
@@ -475,24 +480,10 @@ public class Play extends Screen{
 		for(int i = 0; i < grid.length; i++) {
 			for(int j = 0; j < grid[0].length; j++) {
 				gridBoxes[i][j] = new JLabel();
-				switch(grid[i][j]) {
-				case'0':gridBoxes[i][j].setIcon(imageGrass);
-				break;
-				case'w':gridBoxes[i][j].setIcon(imageWall);
-				break;
-				case'a':gridBoxes[i][j].setIcon(imageApple);
-				break;
-				case'k':gridBoxes[i][j].setIcon(imagePumpkin);
-				break;
-				case'p':gridBoxes[i][j].setIcon(imagePear);
-				break;
-				case't':gridBoxes[i][j].setIcon(imageWater);
-				break;
-				}
 				gridPanel.add(gridBoxes[i][j]);
 			}
 		}
-		gridBoxes[row][column].setIcon(imageGerbilNorth);
+		setGridIcons();
 	}
 
 	public static void setLowerComponents(){
@@ -604,13 +595,6 @@ public class Play extends Screen{
 		gc.gridy=0;
 		lowerPanel.add(userDefinedFunctionsL, gc);
 
-		gc.gridx=4;
-		gc.gridy=0;
-		lowerPanel.add(checksL, gc);
-
-		gc.gridx=5;
-		gc.gridy=0;
-		lowerPanel.add(numsL, gc);
 
 		//gc.insets = new Insets(0,30,0,80);
 		/*Dropdowns*/
@@ -626,19 +610,72 @@ public class Play extends Screen{
 		gc.gridy=1;
 		lowerPanel.add(userFunctionsDD, gc);
 
-		gc.gridx=4;
-		gc.gridy=1;
-		lowerPanel.add(checksDD, gc);
 
-		gc.gridx=5;
-		gc.gridy=1;
-		lowerPanel.add(numsDD, gc);
+	}
+	
+	public static void setGridIcons() {
+		for(int i = 0; i < grid.length; i++) {
+			for(int j = 0; j < grid[0].length; j++) {
+				switch(grid[i][j]) {
+				case'0':gridBoxes[i][j].setIcon(imageGrass);
+				break;
+				case'w':gridBoxes[i][j].setIcon(imageWall);
+				break;
+				case'a':gridBoxes[i][j].setIcon(imageApple);
+				break;
+				case'k':gridBoxes[i][j].setIcon(imagePumpkin);
+				break;
+				case'p':gridBoxes[i][j].setIcon(imagePear);
+				break;
+				case't':gridBoxes[i][j].setIcon(imageWater);
+				break;
+				}
+			}
+		}
+		gridBoxes[row][column].setIcon(imageGerbilNorth);
+	}
+	
 
+	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass, char oldGridSpotType) {
+
+		switch(oldGridSpotType) {
+		case '0': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageGrass);
+		break;
+		case 'p': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePear);
+		break;
+		case 'k': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imagePumpkin);
+		break;
+		case 'a': gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageApple);
+		break;
+		}
+		switch(compass) {
+		case'n':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilNorth);
+		break;
+		case's':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilSouth);
+		break;
+		case'w':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilWest);
+		break;
+		case'e':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilEast);
+		break;
+		}
+	}
+
+	public void showTurnLeft(char compass, int gerbilX, int gerbilY) {
+
+		switch(compass) {
+		case'n':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilNorth);
+		break;
+		case's':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilSouth);
+		break;
+		case'w':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilWest);
+		break;
+		case'e':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilEast);
+		break;
+		}
 	}
 
 	/**
 	 * Creates the screen by putting the GUI components together.
-	 * 
 	 */
 	protected void createScreen() {	
 
@@ -672,7 +709,6 @@ public class Play extends Screen{
 
 	/**
 	 * Shows the screen.
-	 * 
 	 */
 	public void show() {
 		frame.setVisible(true);
@@ -680,7 +716,6 @@ public class Play extends Screen{
 
 	/**
 	 * Hides the screen.
-	 * 
 	 */
 	public void hide() {
 		frame.setVisible(false);
@@ -758,109 +793,22 @@ public class Play extends Screen{
 
 	}
 
-	public void showMove(int gerbilCurrX, int gerbilCurrY, int gerbilNewX, int gerbilNewY, char compass) {
-
-		gridBoxes[gerbilCurrY][gerbilCurrX].setIcon(imageGrass);
-		switch(compass) {
-		case'n':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilNorth);
-		break;
-		case's':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilSouth);
-		break;
-		case'w':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilWest);
-		break;
-		case'e':gridBoxes[gerbilNewY][gerbilNewX].setIcon(imageGerbilEast);
-		break;
-		}
-	}
-
-	public void showTurnLeft(char compass, int gerbilX, int gerbilY) {
-
-		switch(compass) {
-		case'n':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilNorth);
-		break;
-		case's':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilSouth);
-		break;
-		case'w':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilWest);
-		break;
-		case'e':gridBoxes[gerbilY][gerbilX].setIcon(imageGerbilEast);
-		break;
-		}
-	}
-
-
 	public void refreshUserFunctions(){
 		userFunctionsDD.removeAllItems();
-
-		for(String s: Start.StartGerbil.controller.getFunctionsArrayList()){
-			userFunctionsDD.addItem(s);
+		ArrayList<String> temp = Start.StartGerbil.controller.getFunctionsArrayList();
+		
+		for(int i=0; i<temp.size(); i++){
+			userFunctionsDD.addItem(temp.get(i));
 		}
 	}
 
-	/*
-	public static boolean beforeIsConditional(){
-		if(Start.StartGerbil.control.instructions.get(Play.playcodeList.getSelectedIndex()) == "If"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Else if"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Else"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "While"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Repeat"){
-			return true;
-		}
-
-		return false;
-	}
-
-	//want to do the substring of this
-	public static boolean conditionalSelected(){ 
-		if(Play.instructions.get(Play.playcodeList.getSelectedIndex()).substring(0,1) == "If"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Else if"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Else"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "While"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Repeat"){
-			return true;
-		}
-
-		return false;
-	}
-
-
-	public static boolean givenFunctionSelected(){
-		if(Play.instructions.get(Play.playcodeList.getSelectedIndex()).substring(0,1) == "Move Forward"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Turn Left"){
-			return true;
-		}else if(Play.instructions.get(Play.playcodeList.getSelectedIndex()) == "Eat"){
-			return true;
-		}
-
-		return false;
-	}
-
-	public static boolean userFunctionFunctionSelected(){
-
-
-		for(int i=0; i< instructions.size(); i++){
-
-		}
-
-		return false;
-	} */
-
-
-	public void initialPlayScreen(){//only insert, save, menu should be active
+	public void initialPlayScreen(){//only insert, save, menu, createFunction, deleteFunction should be active
 		playB.setEnabled(false);
 		stopB.setEnabled(false);
 		editB.setEnabled(false);
 		deleteB.setEnabled(false);
-		clearAllB.setEnabled(false);
-		createFunctionB.setEnabled(false);
+		clearAllB.setEnabled(true);
+		createFunctionB.setEnabled(true);
 
 		conditionalsDD.setEnabled(false);
 		givenFunctionsDD.setEnabled(false);
@@ -868,7 +816,22 @@ public class Play extends Screen{
 		checksDD.setEnabled(false);
 		numsDD.setEnabled(false);
 	}
+	
+	public void inUsePlayScreen(){//only insert, save, menu should be active
+		playB.setEnabled(true);
+		stopB.setEnabled(true);
+		editB.setEnabled(true);
+		deleteB.setEnabled(true);
+		clearAllB.setEnabled(true);
+		createFunctionB.setEnabled(true);
 
+		conditionalsDD.setEnabled(true);
+		givenFunctionsDD.setEnabled(true);
+		userFunctionsDD.setEnabled(true);
+		checksDD.setEnabled(true);
+		numsDD.setEnabled(true);
+	}
+	
 	public void enableAllButtons(){
 		menuB.setEnabled(true);
 		playB.setEnabled(true);
@@ -1034,17 +997,10 @@ public class Play extends Screen{
 		saveB.setBackground(Color.yellow);
 	}
 
-	public  void clearAll(){
-		//Start.StartGerbil.controller.gamePlaying.instructions.clear();
-		//Start.StartGerbil.controller.gamePlaying.instructions.add(new Block(" ", false, false,1));
-
+	public void clearAll(){
+		Start.StartGerbil.controller.clearBlocks();
 		model.clear();
-
-		//for(int i =0; i< Start.StartGerbil.controller.gamePlaying.instructions.size(); i++){
-		//String test = Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction;
-		//model.addElement( Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction);
-		//}
-
+		Play.refreshCodeList();
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
 	}
 }
