@@ -524,7 +524,10 @@ public class ActionListenersControl {
 				playScreen.hide();
 			}	
 		});
-
+		
+		/**
+		 * @author Leslie, Truong
+		 */
 		playScreen.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				stop = false;
@@ -939,6 +942,9 @@ public class ActionListenersControl {
 			}		
 		});
 
+		/**
+		 * @author Leslie
+		 */
 		userFunction.addOkEventHandler(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
