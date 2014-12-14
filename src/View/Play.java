@@ -360,6 +360,7 @@ public class Play extends Screen{
 
 			}
 		});
+		deselectIndexColor();
 
 		scrollpane = new JScrollPane(playcodeList);
 
@@ -895,7 +896,7 @@ public class Play extends Screen{
 	public void setSeclectedIndex(int index) {
 		playcodeList.setSelectedIndex(index);
 	}
-	public void setSelectedIndexColor(int index, char c){
+	public static void setSelectedIndexColor(int index, char c){
 		playcodeList.setSelectedIndex(index);
 		if(c=='e'){
 			playcodeList.setSelectionBackground(Color.RED);
@@ -904,7 +905,7 @@ public class Play extends Screen{
 		}
 		playcodeList.setSelectionForeground(Color.BLACK);
 	}
-	public void deselectIndexColor(){
+	public static void deselectIndexColor(){
 		playcodeList.clearSelection();
 		playcodeList.setSelectionBackground(Color.BLUE);
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
