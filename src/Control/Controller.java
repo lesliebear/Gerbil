@@ -1770,9 +1770,10 @@ public class Controller {
 			if(mainmap){
 				gamePlaying.setBlocks(tempnb);
 				return;
+			}else{
+				this.tempFunctionBlockInstructions=tempnb; //replace original MAIN hashmap with new/updated MAIN hashmap
+				return; //no more higher level to get to
 			}
-			mainblocks=tempnb; //replace original MAIN hashmap with new/updated MAIN hashmap
-			return; //no more higher level to get to
 		}
 		b.getParent().setNestedBlocks(tempnb); //replace original nested hashmap with new/updated nested hashmap
 		cascadeNumberingChanges(lineBegin,currDiff,b.getParent(),mainblocks,mainmap); //recurse to go higher
@@ -1996,7 +1997,7 @@ public class Controller {
 				and end of code.*/
 				for (int key: this.tempFunctionBlockInstructions.keySet()){
 					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction, this.tempFunctionBlockInstructions,true);
+						cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction, this.tempFunctionBlockInstructions,false);
 						this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);
 						this.userCodingNowFunction=null;
 						return 0;
@@ -2053,7 +2054,7 @@ public class Controller {
 								parentFunction.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 							}else{ 
 								HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
-								cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, true); //cascade first then put into it!!
+								cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, false); //cascade first then put into it!!
 								parentFunction.getNestedBlocks().put(begin, b);
 							}
 						}
@@ -2072,7 +2073,7 @@ public class Controller {
 							parentFunction.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 						}else{ 
 							HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
-							cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, true); //cascade first then put into it!!
+							cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, false); //cascade first then put into it!!
 							parentFunction.getNestedBlocks().put(begin, b);
 						}
 					}
