@@ -399,16 +399,19 @@ public class ActionListenersControl {
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
 							errorDialog.errorL.setText("Cannot Eat: there is no food at square");
 							errorDialog.show();
+							Play.setGridIcons();
 						}else if(errortype==2){
 							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
 							errorDialog.errorL.setText("Cannot Move Forward: there is a wall ahead");
 							errorDialog.show();
+							Play.setGridIcons();
 						}else if(errortype==3){
 							//miscellaneous error, could not compile code(this shouldn't happen)
 						}else if(errortype==4){
 							//ERROR: insert Dialogue BoxDid not reach water/goal
 							errorDialog.errorL.setText("Did not reach water, Try Again!");
 							errorDialog.show();
+							Play.setGridIcons();
 						}else if(errortype==-1){
 							//parsing error(this shouldn't happen)
 						}else if(errortype==-2){
@@ -416,6 +419,7 @@ public class ActionListenersControl {
 							//this does not run/animate the gerbil
 							errorDialog.errorL.setText("Infinite Loop was created, please edit your code");
 							errorDialog.show();
+							Play.setGridIcons();
 						}
 					}
 				};
