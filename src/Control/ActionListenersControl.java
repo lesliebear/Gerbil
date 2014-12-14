@@ -424,6 +424,7 @@ public class ActionListenersControl {
 								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
 								error=i;
 								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
+								playScreen.setSeclectedIndex(lineNumbers.get(i));
 							}
 							else if(instructions.get(i).equals("Move Forward")) {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
@@ -433,11 +434,13 @@ public class ActionListenersControl {
 								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getCompass(), oldGridSpotType);
 								error=i;
 								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
+								playScreen.setSeclectedIndex(lineNumbers.get(i));
 							}
 							else if(instructions.get(i).equals("Eat")) {
 								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
 								error=i;
 								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
+								playScreen.setSeclectedIndex(lineNumbers.get(i));
 							}
 							try {
 								sleep(500);
@@ -449,11 +452,13 @@ public class ActionListenersControl {
 						if(errortype==1){
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
 							//HIGHLIGHT the error block using lineNumbers.get(error+1);
+							playScreen.setSeclectedIndex(lineNumbers.get(error+1));
 							errorDialogRun.setErrorText("Cannot Eat: there is no food at square");
 							errorDialogRun.show();
 						}else if(errortype==2){
 							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
 							//HIGHLIGHT the error block using lineNumbers.get(error+1);
+							playScreen.setSeclectedIndex(lineNumbers.get(error+1));
 							errorDialogRun.setErrorText("Cannot Move Forward: there is a wall ahead");
 							errorDialogRun.show();
 						}else if(errortype==3){
