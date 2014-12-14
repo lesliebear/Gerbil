@@ -30,6 +30,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ListSelectionListener;
 
 /**
+ * @author Truong Pham, Katiuska Nunez
  * This class creates a GUI for the Function Screen.
  */
 public class UserFunction extends Screen{

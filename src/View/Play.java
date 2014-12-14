@@ -37,6 +37,9 @@ import javax.swing.event.ListSelectionListener;
 import Model.Block;
 
 /**
+ * @author Katiuska Nunez 
+ * @author Truong Pham: (Grid related components)- setGridComponents, setGridIcons, showMove, showTurnLeft
+ * 
  * This class creates a GUI for the Play screen.
  */
 public class Play extends Screen{
@@ -369,107 +372,6 @@ public class Play extends Screen{
 		leftPanel.add(endL,BorderLayout.SOUTH);
 	}
 
-	/*public static class TestPane extends JPanel {
-
-		public TestPane() {
-			setLayout(new GridBagLayout());
-			setPreferredSize(new Dimension(600,600));
-
-			GridBagConstraints gbc = new GridBagConstraints();
-			for (int row = 0; row < 17; row++) {
-				for (int col = 0; col <17; col++) {
-					gbc.gridx = col;
-					gbc.gridy = row;
-
-					//CellPane cellPane = new CellPane();
-					CellPane cellPane = null;
-
-					switch(grid[row][col]) {
-					case'0':
-						cellPane = new CellPane("pics/grass icon.png");
-						break;
-					case'w':
-						cellPane = new CellPane("pics/wall icon.png");
-						break;
-					case'a':
-						cellPane = new CellPane("pics/apple icon.png");
-						break;
-					case'k':
-						cellPane = new CellPane("pics/pumpkin.png");
-						break;
-					case'p':
-						cellPane = new CellPane("pics/pear icon.png");
-						break;
-					case't':
-						cellPane = new CellPane("pics/waterBottle.jpg");
-						break;
-					}
-
-					Border border = null;
-					if (row < 4) {
-						if (col < 4) {
-							border = new MatteBorder(1, 1, 0, 0, Color.GRAY);
-						} else {
-							border = new MatteBorder(1, 1, 0, 1, Color.GRAY);
-						}
-					} else {
-						if (col < 4) {
-							border = new MatteBorder(1, 1, 1, 0, Color.GRAY);
-						} else {
-							border = new MatteBorder(1, 1, 1, 1, Color.GRAY);
-						}
-					}
-					cellPane.setBorder(border);
-
-					add(cellPane, gbc);
-				}
-			}
-		}
-	}
-
-
-	public static class CellPane extends JPanel {
-
-		private Color defaultBackground;
-		private Image img;
-
-		public CellPane(String img_in) {
-
-			 try {                
-				 img = ImageIO.read(new File(img_in));
-				 img = img.getScaledInstance(42, 34, Image.SCALE_SMOOTH);
-		       } catch (IOException ex) {
-		            System.out.println("Could not load image. - CellPane");
-		       }
-
-			addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					defaultBackground = getBackground();
-					setBackground(Color.WHITE);
-				}
-
-				@Override
-				public void mouseExited(MouseEvent e) {
-					setBackground(defaultBackground);
-				}
-			});
-		}
-
-		@Override
-		protected void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			g.drawImage(img, 0, 0, null); // see javadoc for more info on the parameters            
-		}
-
-		@Override
-		public Dimension getPreferredSize() {
-			return new Dimension(35,35);
-		}
-	} */
-
-	
-	
 	public static void setGridComponents(){
 		gridPanel.setLayout(new GridLayout(grid.length, grid[0].length));	
 		Dimension size= gridPanel.getPreferredSize();
@@ -884,23 +786,7 @@ public class Play extends Screen{
 	public  void disableDeleteFunction(){
 		deleteFunctionB.setEnabled(false);
 	}
-
-	/*public static void clearAll(){
-		Start.StartGerbil.controller.gamePlaying.instructions.clear();
-		Start.StartGerbil.controller.gamePlaying.instructions.add(new Block(" ", false, false,1));
-
-		model.clear();
-
-		for(int i =0; i< Start.StartGerbil.controller.gamePlaying.instructions.size(); i++){
-			String test = Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction;
-			model.addElement( Start.StartGerbil.controller.gamePlaying.instructions.get(i).instruction);
-		}
-
-		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
-	} */
-
 	
-
 	public  void setPlaySelected(){
 		stopB.setBackground(Color.black);
 		insertB.setBackground(Color.black);

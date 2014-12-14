@@ -23,6 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
+ * @author Katiuska Nunez
  * This class creates a GUI for the Finish Screen.
  */
 public class Finish extends Screen {
