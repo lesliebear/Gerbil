@@ -628,7 +628,7 @@ public class ActionListenersControl {
 		playScreen.addClearAllEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				playScreen.clearAll();
-
+				inserting=false;
 				playScreen.setClearAllSelected();
 
 				Start.StartGerbil.controller.clearBlocks();
