@@ -91,7 +91,7 @@ public class Backend implements Serializable {
 	 * @return True if successful, else false 
 	 * @throws IOException If error encountered with the serialized file
 	 * @throws ClassNotFoundException If error encountered with class not found
-	 */
+	 
 	@SuppressWarnings({ "unchecked", "resource" })
 	public boolean loadSavedGames(){
 		ObjectInputStream ois;
@@ -109,9 +109,9 @@ public class Backend implements Serializable {
 		}
 		return false;
 		//creates arraylist of games to store here in backend.	
-	} 
+	}  */
 
-	/*@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public ArrayList<Game> loadSavedGames() // kat
 			throws IOException, ClassNotFoundException { 
 		@SuppressWarnings("resource")
@@ -127,7 +127,7 @@ public class Backend implements Serializable {
 				new FileOutputStream(storeFile)); 
 		oos.writeObject(users); 
 		return;
-	} */
+	} 
 	
 	/**
 	 * Saves the games array list from backend to a serialized file for the single user (in kernel/standard)
@@ -139,7 +139,7 @@ public class Backend implements Serializable {
 	 * @return True if successful in saving games else false
 	 * @throws IOException If error encountered with the serialized file
 	 * @throws FileNotFoundException If file to store the file could not been found.
-	 */
+	 
 	@SuppressWarnings("resource")
 	public boolean saveGames() { 
 		ObjectOutputStream oos;
@@ -148,7 +148,7 @@ public class Backend implements Serializable {
 			oos.writeObject(games);
 			return true;
 		} catch (Exception e) {return false;} 
-	}
+	}*/
 	
 
 	/**
@@ -208,4 +208,5 @@ public class Backend implements Serializable {
 		
 		return toReturn;
 	}
+	
 }

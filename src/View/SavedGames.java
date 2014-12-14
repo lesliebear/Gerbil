@@ -237,4 +237,15 @@ public class SavedGames extends Screen{
 
 		cancel.addActionListener(listener);
 	}
+	
+	
+	public void refreshGamesList(){
+		//ArrayList<String>  games = Start.StartGerbil.backend.getGamesStringArray();
+		String [] temp =  Start.StartGerbil.backend.getGamesStringArray().toArray(new String[ Start.StartGerbil.backend.getGamesStringArray().size()]);
+				
+		gamesList.removeAllItems();
+		for(int i = 0; i < temp.length; i++) {
+			gamesList.addItem(temp[i]);
+		}
+	}
 }

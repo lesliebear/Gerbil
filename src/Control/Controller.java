@@ -19,12 +19,13 @@ import Model.*;
 public class Controller {
 	/**Holds the current game being played */
 	public Game gamePlaying;
+	
 	/**Holds the list of built in functions = eat move, turn left
 	 * And user created are added to the end of this arraylist when game is initialized first
 	 * and then reloaded to the backend when finished game*/
-	public ArrayList<Function> functions = new ArrayList<Function>();
+	//public ArrayList<Function> functions = new ArrayList<Function>();
 	//Note eat fruit must be for that fruit only!! else error popup.
-	Backend backend= new Backend();
+	//Backend backend= new Backend();
 
 	ArrayList<String> finalblocks= new ArrayList<String>();
 	//HashMap<Integer,Boolean> visited;
@@ -65,20 +66,19 @@ public class Controller {
 		}
 	}
 
-
-
 	public String[] FunctionUnFin(){
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
 		for(Block p = this.userCodingNowFunction; p!=null; p=p.getParent()){
 			tempPar = p;
 		}//get to main nesting level
-		if(tempPar==null){
-			return ins.toArray(new String[ins.size()]);
-		}else{
+		
+		if(tempPar!=null){
 			printNotDoneBlock(0,tempPar.getNestedBlocks(), ins);
-			return ins.toArray(new String[ins.size()]);
 		}
+			
+		return ins.toArray(new String[ins.size()]);
+
 	}
 
 	public void printNotDoneBlock(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
@@ -169,7 +169,7 @@ public class Controller {
 					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
-				Function f = this.functions.get(block.getFunctionNum());
+				Function f = gamePlaying.functions.get(block.getFunctionNum());
 				list.add(lBeg +" "+tabStr+f.getName());
 			}	
 			tabStr="";
@@ -186,6 +186,16 @@ public class Controller {
 
 		for(int i=0; i< toReturn.length; i++){
 			toReturn[i] = temp.get(i);
+		}
+
+		return toReturn;
+	}
+	
+	public String[] JListFunctions(){ 
+		String [] toReturn = new String[this.gamePlaying.functions.size()];
+
+		for(int i=0; i< this.gamePlaying.functions.size(); i++){
+			toReturn[i] = this.gamePlaying.functions.get(i).getName();
 		}
 
 		return toReturn;
@@ -296,7 +306,7 @@ public class Controller {
 					list.add(block.getlineEnd()+" "+tabStr+"end");
 				}
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
-				Function f = this.functions.get(block.getFunctionNum());
+				Function f = gamePlaying.functions.get(block.getFunctionNum());
 				list.add(lBeg+" "+tabStr+f.getName());
 			}	
 			tabStr="";
@@ -409,7 +419,7 @@ public class Controller {
 				}
 				System.out.println(block.getlineEnd()+tabStr+"end");
 			}else if(type==8){//function = CANNOT HAVE NESTED BLOCKS!!!
-				Function f = this.functions.get(block.getFunctionNum());
+				Function f = gamePlaying.functions.get(block.getFunctionNum());
 				System.out.println(tabStr+f.getName());
 			}	
 			tabStr="";
@@ -436,12 +446,9 @@ public class Controller {
 	 * 3 is ///////////////ERROR: Illegal funciton entered!!!!!/////////////
 	 * 4 is //////////////////////////Error: "If" has to exist in order to use "Else If" or "Else"////////
 	 * 5 is ////////////////////////////Error: Need to insert "Else If" or "Else" after an "If" statement
-	 * 
-	 * 
 	 */
 	public int createBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
-			this.userCodingNow=null;//this is all that needs to be done here!
 			this.userCodingNow=this.parent;
 			return 0;
 		}else if((type=='e') && (this.userCodingNow!=null)){//finished coding for the block so put into the correct spot
@@ -465,8 +472,8 @@ public class Controller {
 					///////////ERROR: Function not selected////////////////////////////
 					return 2;
 				}else{
-					for(int i=0; i<this.functions.size(); i++){
-						if(functions.get(i).getName().equals(cond)){
+					for(int i=0; i<gamePlaying.functions.size(); i++){
+						if(gamePlaying.functions.get(i).getName().equals(cond)){
 							functionNum= i;
 							break;
 						}
@@ -492,7 +499,7 @@ public class Controller {
 				and end of code.*/
 				for (int key: this.gamePlaying.getBlocks().keySet()){
 					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow, gamePlaying.getBlocks());
+						cascadeNumberingChanges(begin, this.userCodingNow.getlineEnd()-this.userCodingNow.getlineBegin()+1, this.userCodingNow, gamePlaying.getBlocks(),true);
 						this.gamePlaying.getBlocks().put(begin, this.userCodingNow);
 						this.userCodingNow=null;
 						return 0;
@@ -549,7 +556,7 @@ public class Controller {
 								parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 							}else{ 
 								HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
-								cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks()); //cascade first then put into it!!
+								cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks(), true); //cascade first then put into it!!
 								parent.getNestedBlocks().put(begin, b);
 							}
 						}
@@ -568,7 +575,7 @@ public class Controller {
 							parent.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 						}else{ 
 							HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
-							cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks()); //cascade first then put into it!!
+							cascadeNumberingChanges(begin, 1, b, gamePlaying.getBlocks(), true); //cascade first then put into it!!
 							parent.getNestedBlocks().put(begin, b);
 						}
 					}
@@ -697,7 +704,7 @@ public class Controller {
 
 			}
 		}
-		ArrayList<Game> gamelist= backend.getGameList();
+		ArrayList<Game> gamelist= Start.StartGerbil.backend.getGameList();
 		for(int j=0; j<gamelist.size();j++){
 			if(gamelist.get(j).getName().equals(name)){
 				return 2;
@@ -720,7 +727,7 @@ public class Controller {
 	 */
 	public void resetTempGrid(){
 		initTempGrid();
-		this.tempgerbil= new Gerbil();
+		this.tempgerbil = new Gerbil();
 	}
 	/**
 	 * returns tempgerbil
@@ -759,46 +766,46 @@ public class Controller {
 				boolean eat= eat(tempgerbil.getX(), tempgerbil.getY(),tempgrid);
 				if(eat==false){
 					//errorEat() dialogue box??;
-					for(int j=0; j<=i; j++){
+					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
-						finalblocks= templist;
 					}
+					finalblocks= templist;
 					return 1;
 				}
 			}else if(command.equals("Turn Left")){
 				boolean turnleft= turnLeft(tempgerbil);
 				if(turnleft==false){
 					//error turning left, this shouldn't ever happen
-					for(int j=0; j<=i; j++){
+					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
-						finalblocks= templist;
 					}
+					finalblocks= templist;
 					return 3;
 				}
 			}else if(command.equals("Move Forward")){
 				boolean moveforward= moveForward(tempgerbil);
 				if(moveforward==false){
 					//errorWall() dialogue box??
-					for(int j=0; j<=i; j++){
+					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
-						finalblocks= templist;
 					}
+					finalblocks= templist;
 					return 2;
 				}else{
 					if(isthereWater(tempgerbil.getX(), tempgerbil.getY())){
 						//YOU WIN THE GAME dialogue box??
 						for(int j=0; j<=i; j++){
 							templist.add(finalblocks.get(j));
-							finalblocks= templist;
 						}
+						finalblocks= templist;
 						return 0;
 					}
 				}
 			}else{
-				for(int j=0; j<=i; j++){
+				for(int j=0; j<i; j++){
 					templist.add(finalblocks.get(j));
-					finalblocks= templist;
 				}
+				finalblocks= templist;
 				return 3;
 			}
 		}
@@ -1295,7 +1302,7 @@ public class Controller {
 			moveForward(tempgerbil);
 			return 0;
 		}else if(block.getType()==8){//user defined function
-			ArrayList<Function> functionlist= functions;
+			ArrayList<Function> functionlist= gamePlaying.functions;
 			Function function= functionlist.get(block.getFunctionNum());
 			HashMap<Integer,Block> fnestedblocklist= function.getBlockInstructions();
 			ArrayList<Integer> fnestedkeylist= new ArrayList<Integer>();
@@ -1389,7 +1396,7 @@ public class Controller {
 				and end of code.*/
 				for (int key: this.gamePlaying.getBlocks().keySet()){
 					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNowEdit.getlineEnd()-this.userCodingNowEdit.getlineBegin()+1, this.userCodingNowEdit, gamePlaying.getBlocks());
+						cascadeNumberingChanges(begin, this.userCodingNowEdit.getlineEnd()-this.userCodingNowEdit.getlineBegin()+1, this.userCodingNowEdit, gamePlaying.getBlocks(), true);
 						this.gamePlaying.getBlocks().put(begin, this.userCodingNowEdit);
 						this.userCodingNowEdit=null;
 						return 'g';
@@ -1441,31 +1448,32 @@ public class Controller {
 	 * @return Block at that line Number in the main
 	 */
 	public Block getBlockByLine(int line){
-		Block ans;
 		for(int k: this.gamePlaying.getBlocks().keySet()){
 			Block temp = this.gamePlaying.getBlocks().get(k);
 			if(line>=temp.getlineBegin()&& line <=temp.getlineEnd()){
-				ans = temp.getNestedBlocks().get(line);
-				if(ans == null){
-					return temp;
-				}else{
-					return ans;
+				for(int z: temp.getNestedBlocks().keySet()){
+					Block b = temp.getNestedBlocks().get(z);
+					if(line>=b.getlineBegin() && line <=b.getlineEnd()){
+						return b;
+					}
 				}
+				return temp;
 			}
 		}
 		return null;
 	}
 	
 	public void deleteBlock(Block toDel) {
+		
 		if(toDel.getParent()==null){ //in main nesting 
 			int currDiff = toDel.getlineEnd()-toDel.getlineBegin()+1;
 			this.gamePlaying.getBlocks().remove(toDel.getlineBegin());
-			cascadeNumberingChanges(toDel.getlineBegin(),-1*currDiff, toDel, gamePlaying.getBlocks());//MAKE SURE -1*currDIFF!!!!!
+			cascadeNumberingChanges(toDel.getlineBegin(),-1*currDiff, toDel, gamePlaying.getBlocks(), true);//MAKE SURE -1*currDIFF!!!!!
 		}else{ //some other blocks's nesting
 			Block p = toDel.getParent();
 			p.getNestedBlocks().remove(toDel.getlineBegin());
 			int currDiff = toDel.getlineEnd()-toDel.getlineBegin()+1;
-			cascadeNumberingChanges(toDel.getlineBegin(),-1*currDiff, toDel, gamePlaying.getBlocks());//MAKE SURE -1*currDIFF!!!!!
+			cascadeNumberingChanges(toDel.getlineBegin(),-1*currDiff, toDel, gamePlaying.getBlocks(), true);//MAKE SURE -1*currDIFF!!!!!
 		}
 		
 	}
@@ -1587,7 +1595,7 @@ public class Controller {
 		}
 		int currdiff= this.countblocks; //number of blocks/lines in block to insert
 		this.countblocks=1; //reset countblocks
-		cascadeNumberingChanges(id,currdiff, reference, gamePlaying.getBlocks());
+		cascadeNumberingChanges(id,currdiff, reference, gamePlaying.getBlocks(), true);
 		//after cascade, should have a free spot in hashmap with key=id since moved original id block down to diff key
 		parent.getNestedBlocks().put(id, b);
 
@@ -1646,13 +1654,13 @@ public class Controller {
 			parent.getNestedBlocks().put(b.getlineBegin(), b); 
 			//Will call searchForBlock to find block of the given id and insert insert b to it
 			int currDiff = b.getlineEnd()-b.getlineBegin();
-			cascadeNumberingChanges(b.getlineBegin(),currDiff,b, gamePlaying.getBlocks());
+			cascadeNumberingChanges(b.getlineBegin(),currDiff,b, gamePlaying.getBlocks(), true);
 			insertBlockToMain(b.getlineBegin()+b.getlineEnd(), temp);
 		}
 		parent.getNestedBlocks().put(b.getlineBegin(), b); 
 		//Will call searchForBlock to find block of the given id and insert insert b to it
 		int currDiff = b.getlineEnd()-b.getlineBegin();
-		cascadeNumberingChanges(b.getlineBegin(),currDiff,b, gamePlaying.getBlocks());
+		cascadeNumberingChanges(b.getlineBegin(),currDiff,b, gamePlaying.getBlocks(), true);
 	}
 
 	public int[] callHighlight(int line){
@@ -1705,7 +1713,7 @@ public class Controller {
 	 * @param b Block that the change occurred in
 	 * @assumes have checked if prevDiff==currDiff to make sure we don't use this method if it is
 	 */
-	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b, HashMap<Integer,Block> mainblocks){
+	public void cascadeNumberingChanges(int lineBegin, int currDiff, Block b, HashMap<Integer,Block> mainblocks, boolean mainmap){
 		if(b.getParent()!=null){
 			b.getParent().setLineEnd(b.getParent().getlineEnd()+currDiff);
 		}
@@ -1737,11 +1745,15 @@ public class Controller {
 			}
 		} 
 		if(lastBlocks==true){
+			if(mainmap){
+				gamePlaying.setBlocks(tempnb);
+				return;
+			}
 			mainblocks=tempnb; //replace original MAIN hashmap with new/updated MAIN hashmap
 			return; //no more higher level to get to
 		}
 		b.getParent().setNestedBlocks(tempnb); //replace original nested hashmap with new/updated nested hashmap
-		cascadeNumberingChanges(lineBegin,currDiff,b.getParent(),mainblocks); //recurse to go higher
+		cascadeNumberingChanges(lineBegin,currDiff,b.getParent(),mainblocks,mainmap); //recurse to go higher
 	}
 	
 	
@@ -1912,7 +1924,6 @@ public class Controller {
 	 */
 	public void createFunctionBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
-			this.userCodingNowFunction=null;//this is all that needs to be done here!
 			this.userCodingNowFunction=this.parentFunction;
 			return;
 		}else if((type=='e') && (this.userCodingNowFunction!=null)){//finished coding for the block so put into the correct spot
@@ -1934,8 +1945,8 @@ public class Controller {
 					///////////ERROR: Function not selected////////////////////////////
 					return;
 				}else{
-					for(int i=0; i<this.functions.size(); i++){
-						if(functions.get(i).equals(cond)){
+					for(int i=0; i<gamePlaying.functions.size(); i++){
+						if(gamePlaying.functions.get(i).equals(cond)){
 							functionNum= i;
 							break;
 						}
@@ -1961,7 +1972,7 @@ public class Controller {
 
 				for (int key: this.tempFunctionBlockInstructions.keySet()){
 					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction, this.tempFunctionBlockInstructions);
+						cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction, this.tempFunctionBlockInstructions, false);
 						this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);
 						this.userCodingNowFunction=null;
 						return;
@@ -2075,8 +2086,8 @@ public class Controller {
 				return 1;
 			}
 		}
-		for(int j=0; j<functions.size(); j++){
-			if(functions.get(j).getName().equals(name)){
+		for(int j=0; j<gamePlaying.functions.size(); j++){
+			if(gamePlaying.functions.get(j).getName().equals(name)){
 				return 2;
 			}
 		}
@@ -2096,7 +2107,7 @@ public class Controller {
 	 * @param functionToAdd function to be added to function list
 	 */
 	public void addFunction(Function functionToAdd){
-		functions.add(functionToAdd);
+		gamePlaying.functions.add(functionToAdd); // +kat
 	}
 
 
@@ -2113,9 +2124,9 @@ public class Controller {
 	 */
 	public boolean deleteFunction(String name){
 		//Will not call any functions/classes
-		for(int i=0; i<functions.size(); i++){
-			if(functions.get(i).getName().equals(name)){
-				functions.remove(i);
+		for(int i=0; i<gamePlaying.functions.size(); i++){
+			if(gamePlaying.functions.get(i).getName().equals(name)){
+				gamePlaying.functions.remove(i);
 				return true;
 			}
 		}
@@ -2134,22 +2145,29 @@ public class Controller {
 	 */
 	public String[] getFunctions(){
 		ArrayList<String> functionnames= new ArrayList<String>();
-		for(int i=0; i<functions.size(); i++){
-			functionnames.add(functions.get(i).getName());
+
+		ArrayList<Function> gameFunctions= gamePlaying.getfunction();
+		for(int i=0; i<gameFunctions.size(); i++){
+			functionnames.add(gameFunctions.get(i).getName());
 		}
 		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
-		String[] returnstring= new String[functions.size()];
-		for(int j=0; j<functions.size(); j++){
+		String[] returnstring= new String[gamePlaying.functions.size()];
+		for(int j=0; j<gamePlaying.functions.size(); j++){
 			returnstring[j]= sortedfunctions.get(j);
 		}
 		return returnstring;
 	}
 	
-	
+	/**
+	 * Returns the functions of the current game being played
+	 * 
+	 */
 	public ArrayList<String> getFunctionsArrayList(){
 		ArrayList<String> functionnames= new ArrayList<String>();
-		for(int i=0; i<functions.size(); i++){
-			functionnames.add(functions.get(i).getName());
+		
+		ArrayList<Function> gameFunctions= gamePlaying.getfunction();
+		for(int i=0; i<gameFunctions.size(); i++){
+			functionnames.add(gameFunctions.get(i).getName());
 		}
 		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
 		
@@ -2300,7 +2318,7 @@ public class Controller {
 	 * @return True if deletion is successful, otherwise False
 	 */
 	public boolean deleteGame(String gameName) {
-		return backend.deleteGame(gameName);
+		return Start.StartGerbil.backend.deleteGame(gameName);
 	}
 
 
@@ -2309,19 +2327,14 @@ public class Controller {
 	 * @param gameName Name of the game to load
 	 * @return True if loading is successful, otherwise False
 	 */
-	public boolean loadGame(String gameName) {
-		this.gamePlaying= backend.getGame(gameName);
+	public Game loadGame(String gameName) {
+		this.gamePlaying= Start.StartGerbil.backend.getGame(gameName);
 		if(gamePlaying == null) {
-			return false;
+			return null;
 		}
-		backend.deleteGame(gameName);
-		if(!gamePlaying.getfunction().isEmpty()){
-			ArrayList<Integer> keylist= new ArrayList<Integer>();
-			for(int i=0; i<keylist.size(); i++){
-				this.functions.add(gamePlaying.getfunction().get(i));
-			}
-		}
-		return true;
+		Start.StartGerbil.backend.deleteGame(gameName); // why is this deleting the game??? kat
+
+		return this.gamePlaying;
 	}
 
 	/**
@@ -2330,16 +2343,13 @@ public class Controller {
 	 */
 	public boolean saveGame() {
 
-		for(int i=0; i<functions.size();i++){
-			gamePlaying.getfunction().add(functions.get(i));
-		}
-		for(int j=0; j<backend.getGameList().size(); j++){
-			if(backend.getGameList().get(j).getName().equals(this.gamePlaying.getName())){
+		for(int j=0; j<Start.StartGerbil.backend.getGameList().size(); j++){
+			if(Start.StartGerbil.backend.getGameList().get(j).getName().equals(this.gamePlaying.getName())){
 				//skip adding the game to backend bc already exists
 				return true;
 			}
 		}
-		backend.addGame(this.gamePlaying);
+		Start.StartGerbil.backend.addGame(this.gamePlaying);
 		return true;
 	}
 
@@ -2395,8 +2405,8 @@ public class Controller {
 	 * @return The index of the function.
 	 */
 	private int findFunction(String name) {
-		for (int i =0; i<functions.size(); i++){
-			if (functions.get(i).getName().equals(name)){
+		for (int i =0; i<gamePlaying.functions.size(); i++){
+			if (gamePlaying.functions.get(i).getName().equals(name)){
 				return i;
 			}
 		}
