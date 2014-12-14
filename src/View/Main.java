@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 
 /**
  * This class creates a GUI for the Gerbil Screen (Opening Screen).
+ * @author Truong Pham
  */
 public class Main extends Screen {
 

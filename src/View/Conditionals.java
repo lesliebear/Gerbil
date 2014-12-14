@@ -31,6 +31,8 @@ import javax.swing.event.ListSelectionListener;
 import Start.StartGerbil;
 
 /**
+ * @author Katiuska Nunez
+ * 
  * This screen creates a GUI for the Conditional Screen. 
  */
 public class Conditionals {

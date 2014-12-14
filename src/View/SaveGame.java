@@ -19,6 +19,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 
+/**
+ * @author Katiuska Nunez
+ */
 public class SaveGame extends Screen{
 
 	private JFrame frame;
