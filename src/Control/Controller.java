@@ -66,19 +66,31 @@ public class Controller {
 		}
 	}
 
+	public String[] userFunctionShowJList(){
+		ArrayList<String> temp = new ArrayList<String>(); 
+		getJList(0,this.tempFunctionBlockInstructions,temp);
+		String [] toReturn = new String[temp.size()];
+
+		for(int i=0; i< toReturn.length; i++){
+			toReturn[i] = temp.get(i);
+		}
+
+		return toReturn;
+		
+	}
+	
 	public String[] FunctionUnFin(){
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
 		for(Block p = this.userCodingNowFunction; p!=null; p=p.getParent()){
 			tempPar = p;
 		}//get to main nesting level
-		
+
 		if(tempPar!=null){
 			printNotDoneBlock(0,tempPar.getNestedBlocks(), ins);
 		}
 			
 		return ins.toArray(new String[ins.size()]);
-
 	}
 
 	public void printNotDoneBlock(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
@@ -590,7 +602,7 @@ public class Controller {
 	 * Deletes/clears all blocks in the main
 	 */
 	public void clearBlocks(){
-		gamePlaying.setBlocks(new HashMap<Integer,Block>());
+		gamePlaying.getBlocks().clear();
 	}
 
 	/**
@@ -1443,7 +1455,7 @@ public class Controller {
 	
 	public Block getBlockByLineUserFunction(int lineS) {
 		for(int k: this.tempFunctionBlockInstructions.keySet()){
-			Block temp = this.gamePlaying.getBlocks().get(k);
+			Block temp = this.tempFunctionBlockInstructions.get(k);
 			if(lineS>=temp.getlineBegin()&& lineS <=temp.getlineEnd()){
 				return temp;
 			}
@@ -1758,9 +1770,10 @@ public class Controller {
 			if(mainmap){
 				gamePlaying.setBlocks(tempnb);
 				return;
+			}else{
+				this.tempFunctionBlockInstructions=tempnb; //replace original MAIN hashmap with new/updated MAIN hashmap
+				return; //no more higher level to get to
 			}
-			mainblocks=tempnb; //replace original MAIN hashmap with new/updated MAIN hashmap
-			return; //no more higher level to get to
 		}
 		b.getParent().setNestedBlocks(tempnb); //replace original nested hashmap with new/updated nested hashmap
 		cascadeNumberingChanges(lineBegin,currDiff,b.getParent(),mainblocks,mainmap); //recurse to go higher
@@ -1929,6 +1942,8 @@ public class Controller {
 	 * 
 	 * @param name User provided function name, must be unique/valid
 	 * @return newly instantiated Function object
+	 * 
+	 * 
 	 */
 	public int createFunctionBlocks(int type, int begin, int numLines, String cond){
 		if(type=='c'){//tried to create block but canceled so cancel the block we have currently
@@ -1982,7 +1997,7 @@ public class Controller {
 				and end of code.*/
 				for (int key: this.tempFunctionBlockInstructions.keySet()){
 					if(key==begin){
-						cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction, this.tempFunctionBlockInstructions,true);
+						cascadeNumberingChanges(begin, this.userCodingNowFunction.getlineEnd()-this.userCodingNowFunction.getlineBegin()+1, this.userCodingNowFunction, this.tempFunctionBlockInstructions,false);
 						this.tempFunctionBlockInstructions.put(begin, this.userCodingNowFunction);
 						this.userCodingNowFunction=null;
 						return 0;
@@ -2039,7 +2054,7 @@ public class Controller {
 								parentFunction.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 							}else{ 
 								HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
-								cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, true); //cascade first then put into it!!
+								cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, false); //cascade first then put into it!!
 								parentFunction.getNestedBlocks().put(begin, b);
 							}
 						}
@@ -2051,14 +2066,14 @@ public class Controller {
 			}else{
 				if(this.userCodingNowFunction!=null){ //curr not null so we need to set current to user playing and parent to curr
 					b.setParent(this.userCodingNowFunction);
-					this.parent=this.userCodingNowFunction;
+					this.parentFunction=this.userCodingNowFunction;
 					this.userCodingNowFunction=b;
 					if(parentFunction!=null){ //insert into parent's block
 						if(parentFunction.getNestedBlocks().get(begin)==null){ //nothing there put
 							parentFunction.getNestedBlocks().put(begin, b);//put into parent's nesting blocks
 						}else{ 
 							HashMap<Integer,Block> tempHash = new HashMap<Integer,Block>();
-							cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, true); //cascade first then put into it!!
+							cascadeNumberingChanges(begin, 1, b, this.tempFunctionBlockInstructions, false); //cascade first then put into it!!
 							parentFunction.getNestedBlocks().put(begin, b);
 						}
 					}
@@ -2177,7 +2192,7 @@ public class Controller {
 		for(int i=0; i<gameFunctions.size(); i++){
 			functionnames.add(gameFunctions.get(i).getName());
 		}
-		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
+		ArrayList<String> sortedfunctions= functionnames;
 		String[] returnstring= new String[gamePlaying.functions.size()];
 		for(int j=0; j<gamePlaying.functions.size(); j++){
 			returnstring[j]= sortedfunctions.get(j);
@@ -2196,7 +2211,7 @@ public class Controller {
 		for(int i=0; i<gameFunctions.size(); i++){
 			functionnames.add(gameFunctions.get(i).getName());
 		}
-		ArrayList<String> sortedfunctions= sortAlphabetical(functionnames);
+		ArrayList<String> sortedfunctions= functionnames;
 		
 		return sortedfunctions;
 	}
@@ -2444,8 +2459,6 @@ public class Controller {
 		this.gamePlaying=g;
 
 	}
-
-
 	
 
 }

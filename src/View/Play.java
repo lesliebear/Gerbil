@@ -51,14 +51,14 @@ public class Play extends Screen{
 	private static JPanel lowerPanel = new JPanel();
 
 	/**Upper Panel Components**/
-	private static JButton menuB;
-	private static JButton playB;
-	private static JButton stopB; 
-	private static JButton insertB; 
-	private static JButton editB; 
+	public static JButton menuB;
+	public static JButton playB;
+	public static JButton stopB; 
+	public static JButton insertB; 
+	public static JButton editB; 
 	public static JButton deleteB;
-	private static JButton clearAllB; 
-	private static JButton saveB;
+	public static JButton clearAllB; 
+	public static JButton saveB;
 
 	/**Left Panel Components**/
 	public static JList playcodeList;
@@ -899,6 +899,8 @@ public class Play extends Screen{
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
 	} */
 
+	
+
 	public  void setPlaySelected(){
 		stopB.setBackground(Color.black);
 		insertB.setBackground(Color.black);
@@ -966,7 +968,7 @@ public class Play extends Screen{
 		insertB.setBackground(Color.black);
 		saveB.setBackground(Color.black);
 
-		clearAllB.setBackground(Color.yellow);
+		clearAllB.setBackground(Color.black);
 	}
 
 	public  void setSaveSelected(){
