@@ -66,6 +66,19 @@ public class Controller {
 		}
 	}
 
+	public String[] userFunctionShowJList(){
+		ArrayList<String> temp = new ArrayList<String>(); 
+		getJList(0,this.tempFunctionBlockInstructions,temp);
+		String [] toReturn = new String[temp.size()];
+
+		for(int i=0; i< toReturn.length; i++){
+			toReturn[i] = temp.get(i);
+		}
+
+		return toReturn;
+		
+	}
+	
 	public String[] FunctionUnFin(){
 		Block tempPar=null;
 		ArrayList<String> ins = new ArrayList<String>();
