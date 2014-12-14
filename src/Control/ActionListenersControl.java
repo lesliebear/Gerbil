@@ -630,7 +630,19 @@ public class ActionListenersControl {
 			public void actionPerformed(ActionEvent arg0) {
 				selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
 				if(inserting == true){
-					int begin = selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
+					int lineS = Play.playcodeList.getSelectedIndex();
+					Block bTemp = Start.StartGerbil.controller.getBlockByLineMain(lineS);
+					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
+						selectedIndexPlayCodeList = lineS;
+					}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
+						selectedIndexPlayCodeList = 0;
+					}else{ //get the block's line begin
+						selectedIndexPlayCodeList = bTemp.getlineBegin();
+					}
+					
+					
+					
+					//int begin = selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
 					String term = (String) playScreen.givenFunctionsDD.getSelectedItem();
 					int type = -1;
 					if(term.equals("Move Forward")){
@@ -641,8 +653,8 @@ public class ActionListenersControl {
 						type = 0;
 
 					}
-					Start.StartGerbil.controller.createBlocks(type, begin,0, null);
-					Start.StartGerbil.controller.createBlocks('e', begin,1, null);
+					Start.StartGerbil.controller.createBlocks(type, selectedIndexPlayCodeList,0, null);
+					Start.StartGerbil.controller.createBlocks('e', selectedIndexPlayCodeList,1, null);
 					Play.refreshCodeList();
 					/*	}else if(editing == true){
 					if(Play.conditionalSelected()){
@@ -687,21 +699,27 @@ public class ActionListenersControl {
 					int lineS = Play.playcodeList.getSelectedIndex();
 					Block bTemp = Start.StartGerbil.controller.getBlockByLine(lineS);
 					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
-						selectedIndexPlayCodeList = lineS;
+						//selectedIndexPlayCodeList = lineS;
+
 					}else if(bTemp==null){ //if null then nothing inside array so set the selected line to 0
 						selectedIndexPlayCodeList = 0;
+						Start.StartGerbil.controller.deleteBlock(bTemp);
+						deleting = false;
+						playScreen.deleteB.setBackground(Color.BLACK);
+						Play.refreshCodeList(); // refreshes the code list in Play screen
 					}else{ //get the block's line begin
 						selectedIndexPlayCodeList = bTemp.getlineBegin();
+						Start.StartGerbil.controller.deleteBlock(bTemp);
+						deleting = false;
+						playScreen.deleteB.setBackground(Color.BLACK);
+						Play.refreshCodeList(); // refreshes the code list in Play screen
 					}					
 					//Block blockToDel= Start.StartGerbil.controller.getBlockByLine(selectedIndexPlayCodeList);
 				//	int[] highLight = Start.StartGerbil.controller.callHighlight(selectedIndexPlayCodeList);
 			//		playScreen.setMultipleSelectionMode();
 				//	Play.playcodeList.setSelectedIndices(highLight);
-					Start.StartGerbil.controller.deleteBlock(bTemp);
-					deleting = false;
-					playScreen.deleteB.setBackground(Color.BLACK);
-					//playScreen.deleteB.setEnabled(b);(false);
-					Play.refreshCodeList(); // refreshes the code list in Play screen
+					
+
 					
 					
 				}else if(inserting==true){
