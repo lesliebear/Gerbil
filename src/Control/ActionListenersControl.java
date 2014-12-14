@@ -30,6 +30,7 @@ public class ActionListenersControl {
 	static NewGame newGame;
 	static DeleteFunction deleteFunction;
 	static ErrorDialog errorDialog;
+	static ErrorDialog errorDialogRun;
 	static Finish finish;
 	static Instructions instructionsScreen;
 	static Main main; 
@@ -39,7 +40,6 @@ public class ActionListenersControl {
 	static UserFunction userFunction;
 	static Conditionals conditionals;
 	static OkYesDialog okNoDialog;
-	static ErrorDialog errorDialogRun;
 
 	int selectedIndexPlayScreen; /*Code list in Play Screen*/
 	static int selectedIndexPlayCodeList;
@@ -64,8 +64,8 @@ public class ActionListenersControl {
 
 		newGame = new NewGame();
 		deleteFunction = new DeleteFunction();
-		errorDialog = new ErrorDialog();
 		errorDialogRun = new ErrorDialog();
+		errorDialog = new ErrorDialog();
 		finish = new Finish();
 		instructionsScreen = new Instructions();
 		main = new Main(); 
@@ -116,7 +116,6 @@ public class ActionListenersControl {
 		addNewGameEventHandlers();
 		addPlayOptionsEventHandlers();
 		addInstructionsEventHandlers();
-		addErrorDialogRunEventHandlers();
 		addErrorDialogEventHandlers();
 		addPlayEventHandlers();
 		addUserFunctionEventHandlers();
@@ -230,16 +229,7 @@ public class ActionListenersControl {
 		});
 	}
 	
-	private void addErrorDialogRunEventHandlers() {
-		errorDialogRun.addOkEventHandler(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				errorDialogRun.hide();
-				Play.setGridIcons();
-				Start.StartGerbil.controller.resetTempGrid();
-				showParent();
-			}
-		});
-	}
+	
 	private void addErrorDialogEventHandlers() {
 		errorDialog.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -424,11 +414,15 @@ public class ActionListenersControl {
 						parentScreen=4;	
 						int errortype= Start.StartGerbil.controller.runBlocks();
 						ArrayList<String> instructions = Start.StartGerbil.controller.getFinalBlocks();
+						ArrayList<Integer> lineNumbers= Start.StartGerbil.controller.getFinalBlocksLineNumbers();
 						Start.StartGerbil.controller.resetTempGrid();//just in case, resetting grid and gerbil object
+						int error=0;
 						for(int i = 0; i < instructions.size(); i++) {
 							if(instructions.get(i).equals("Turn Left")) {
 								Start.StartGerbil.controller.turnLeft(Start.StartGerbil.controller.getTempGerbil());
 								playScreen.showTurnLeft(Start.StartGerbil.controller.getTempGerbil().getCompass(), Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY());
+								error=i;
+								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
 							}
 							else if(instructions.get(i).equals("Move Forward")) {
 								int currX = Start.StartGerbil.controller.getTempGerbil().getX();
@@ -436,9 +430,13 @@ public class ActionListenersControl {
 								char oldGridSpotType = Start.StartGerbil.controller.tempgrid[currY][currX];
 								Start.StartGerbil.controller.moveForward(Start.StartGerbil.controller.getTempGerbil());
 								playScreen.showMove(currX, currY, Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.getTempGerbil().getCompass(), oldGridSpotType);
+								error=i;
+								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
 							}
 							else if(instructions.get(i).equals("Eat")) {
 								Start.StartGerbil.controller.eat(Start.StartGerbil.controller.getTempGerbil().getX(), Start.StartGerbil.controller.getTempGerbil().getY(), Start.StartGerbil.controller.tempgrid);
+								error=i;
+								//HIGHLIGHT show highlighted line here using lineNumbers.get(i)
 							}
 							try {
 								sleep(500);
@@ -449,21 +447,20 @@ public class ActionListenersControl {
 						}
 						if(errortype==1){
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
+							//HIGHLIGHT the error block using lineNumbers.get(error+1);
 							errorDialogRun.errorL.setText("Cannot Eat: there is no food at square");
 							errorDialogRun.show();
-							parentScreen = 4; 
 						}else if(errortype==2){
 							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
+							//HIGHLIGHT the error block using lineNumbers.get(error+1);
 							errorDialogRun.errorL.setText("Cannot Move Forward: there is a wall ahead");
 							errorDialogRun.show();
-							parentScreen = 4; 
 						}else if(errortype==3){
 							//miscellaneous error, could not compile code(this shouldn't happen)
 						}else if(errortype==4){
 							//ERROR: insert Dialogue BoxDid not reach water/goal
 							errorDialogRun.errorL.setText("Did not reach water, Try Again!");
 							errorDialogRun.show();
-							parentScreen = 4; 
 						}else if(errortype==-1){
 							//parsing error(this shouldn't happen)
 						}else if(errortype==-2){
@@ -471,7 +468,6 @@ public class ActionListenersControl {
 							//this does not run/animate the gerbil
 							errorDialogRun.errorL.setText("Infinite Loop was created, please edit your code");
 							errorDialogRun.show();
-							parentScreen = 4; 
 						}
 					}
 				};
@@ -591,6 +587,7 @@ public class ActionListenersControl {
 							errorDialog.show();
 							
 						}else{
+							parentScreen = 4;
 							conditionals.setText("Else");
 							int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 							conditionals.setBegin(tempLine);
@@ -608,6 +605,7 @@ public class ActionListenersControl {
 							errorDialog.errorL.setText("Error: Need to insert 'Else If' or 'Else' after an 'If' statement");
 							errorDialog.show();
 						}else{
+							parentScreen = 4;
 							conditionals.setText("Else if");
 							int tempLine = selectedIndexPlayCodeList+2; //for the current statement and begin
 							conditionals.setBegin(tempLine);
@@ -615,6 +613,7 @@ public class ActionListenersControl {
 							playScreen.hide();
 						}
 					}else if(newType.equals("While")){
+						parentScreen = 4;
 						Start.StartGerbil.controller.createBlocks(6,selectedIndexPlayCodeList, 0, null);
 
 						conditionals.setText("While");
@@ -623,6 +622,7 @@ public class ActionListenersControl {
 						conditionals.show();
 						playScreen.hide();
 					}else {//if(newType.equals("Repeat")){
+						parentScreen = 4;
 						Start.StartGerbil.controller.createBlocks(7,selectedIndexPlayCodeList, 0, null);
 
 						conditionals.setText("Repeat");
@@ -649,10 +649,7 @@ public class ActionListenersControl {
 					}else{ //get the block's line begin
 						selectedIndexPlayCodeList = bTemp.getlineBegin();
 					}
-					
-					
-					
-					//int begin = selectedIndexPlayCodeList = Play.playcodeList.getSelectedIndex();
+							
 					String term = (String) playScreen.givenFunctionsDD.getSelectedItem();
 					int type = -1;
 					if(term.equals("Move Forward")){
@@ -666,17 +663,6 @@ public class ActionListenersControl {
 					Start.StartGerbil.controller.createBlocks(type, selectedIndexPlayCodeList,0, null);
 					Start.StartGerbil.controller.createBlocks('e', selectedIndexPlayCodeList,1, null);
 					Play.refreshCodeList();
-					/*	}else if(editing == true){
-					if(Play.conditionalSelected()){
-						System.out.println(Play.instructions.get(selectedIndexPlayCodeList).substring(0,6));
-						if(Play.instructions.get(selectedIndexPlayCodeList).substring(0,6) == "Repeat"){
-
-						}
-
-					}else if(){
-
-					}
-				}*/
 				}
 			}});
 		
@@ -705,7 +691,6 @@ public class ActionListenersControl {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(deleting == true){
-					
 					int lineS = Play.playcodeList.getSelectedIndex();
 					Block bTemp = Start.StartGerbil.controller.getBlockByLine(lineS);
 					if(lineS ==Play.playcodeList.getModel().getSize()-1){ //last line => keep the insert line as last line
@@ -731,6 +716,16 @@ public class ActionListenersControl {
 		});
 	}
 
+	private void addErrorDialogRunEventHandlers() {
+		errorDialogRun.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				errorDialogRun.hide();
+				Play.setGridIcons();
+				Start.StartGerbil.controller.resetTempGrid();
+				showParent();
+			}	
+		});
+	}
 	private void addSavedGamesEventHandlers(){
 		savedGames.addOpenGameEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

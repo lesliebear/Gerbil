@@ -28,6 +28,7 @@ public class Controller {
 	//Backend backend= new Backend();
 
 	ArrayList<String> finalblocks= new ArrayList<String>();
+	ArrayList<Integer> finalblocksLineNumbers= new ArrayList<Integer>();
 	//HashMap<Integer,Boolean> visited;
 	HashMap<Integer,Block> tempFunctionBlockInstructions= new HashMap<Integer,Block>();
 	Block parent = null;
@@ -323,6 +324,12 @@ public class Controller {
 	 */
 	public ArrayList<String> getFinalBlocks(){
 		return this.finalblocks;
+	}
+	/**
+	 * returns finalblocksLineNumbers arraylist
+	 */
+	public ArrayList<Integer> getFinalBlocksLineNumbers(){
+		return this.finalblocksLineNumbers;
 	}
 	/**
 	 * Prints the tempgrid 
@@ -758,6 +765,7 @@ public class Controller {
 			return -2;
 		}
 		ArrayList<String> templist= new ArrayList<String>();
+		ArrayList<Integer> templistLineNumbers= new ArrayList<Integer>();
 		String command;
 		for(int i=0; i<finalblocks.size(); i++){
 			command=finalblocks.get(i);
@@ -765,54 +773,76 @@ public class Controller {
 				boolean eat= eat(tempgerbil.getX(), tempgerbil.getY(),tempgrid);
 				if(eat==false){
 					//errorEat() dialogue box??;
+					int error=0;
 					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
+						templistLineNumbers.add(finalblocksLineNumbers.get(j));
+						error=j;
 					}
+					templistLineNumbers.add(finalblocksLineNumbers.get(error+1));
 					finalblocks= templist;
+					finalblocksLineNumbers= templistLineNumbers;
 					return 1;
 				}
 			}else if(command.equals("Turn Left")){
 				boolean turnleft= turnLeft(tempgerbil);
 				if(turnleft==false){
 					//error turning left, this shouldn't ever happen
+					int error=0;
 					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
+						templistLineNumbers.add(finalblocksLineNumbers.get(j));
+						error=j;
 					}
+					templistLineNumbers.add(finalblocksLineNumbers.get(error+1));
 					finalblocks= templist;
+					finalblocksLineNumbers= templistLineNumbers;
 					return 3;
 				}
 			}else if(command.equals("Move Forward")){
 				boolean moveforward= moveForward(tempgerbil);
 				if(moveforward==false){
 					//errorWall() dialogue box??
+					int error=0;
 					for(int j=0; j<i; j++){
 						templist.add(finalblocks.get(j));
+						templistLineNumbers.add(finalblocksLineNumbers.get(j));
+						error=j;
 					}
+					templistLineNumbers.add(finalblocksLineNumbers.get(error+1));
 					finalblocks= templist;
+					finalblocksLineNumbers= templistLineNumbers;
 					return 2;
 				}else{
 					if(isthereWater(tempgerbil.getX(), tempgerbil.getY())){
 						//YOU WIN THE GAME dialogue box??
 						for(int j=0; j<=i; j++){
 							templist.add(finalblocks.get(j));
+							templistLineNumbers.add(finalblocksLineNumbers.get(j));
 						}
 						finalblocks= templist;
+						finalblocksLineNumbers= templistLineNumbers;
 						return 0;
 					}
 				}
 			}else{
+				int error=0;
 				for(int j=0; j<i; j++){
 					templist.add(finalblocks.get(j));
+					templistLineNumbers.add(finalblocksLineNumbers.get(j));
+					error=j;
 				}
+				templistLineNumbers.add(error+1);
 				finalblocks= templist;
+				finalblocksLineNumbers= templistLineNumbers;
 				return 3;
 			}
 		}
 		//error Did not reach water
 		return 4;
-
 	}
 
+	
 	/**
 	 * goes through user coded blocks and stores commands in arraylist finalblocks in the order and
 	 * number of times they will be executed for play
@@ -821,6 +851,7 @@ public class Controller {
 	public int compileBlocks(){
 		//clears finalblocks arraylist in case it's not empty
 		finalblocks.clear();
+		finalblocksLineNumbers.clear();
 		//resets tempgrid and tempgerbil to original states
 		resetTempGrid();
 		HashMap<Integer,Block> blocklist= gamePlaying.getBlocks();
@@ -1290,14 +1321,17 @@ public class Controller {
 			return 0;	
 		}else if(block.getType()==0){//"eat"
 			finalblocks.add("Eat");
+			finalblocksLineNumbers.add(block.getlineBegin());
 			eat(tempgerbil.getX(),tempgerbil.getY(),tempgrid);
 			return 0;
 		}else if(block.getType()==1){//"turn left"
 			finalblocks.add("Turn Left");
+			finalblocksLineNumbers.add(block.getlineBegin());
 			turnLeft(tempgerbil);
 			return 0;
 		}else if(block.getType()==2){//"move forward"
 			finalblocks.add("Move Forward");
+			finalblocksLineNumbers.add(block.getlineBegin());
 			moveForward(tempgerbil);
 			return 0;
 		}else if(block.getType()==8){//user defined function

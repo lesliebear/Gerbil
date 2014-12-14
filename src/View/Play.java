@@ -1003,4 +1003,8 @@ public class Play extends Screen{
 		Play.refreshCodeList();
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
 	}
+	
+	public void setSeclectedIndex(int index) {
+		playcodeList.setSelectedIndex(index);
+	}
 }
