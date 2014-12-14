@@ -572,6 +572,9 @@ public class ActionListenersControl {
 				selectedCreateFunctionFirst=true;
 				parentScreen = 4; 
 
+				userFunction.refreshUserFunctionsList(Start.StartGerbil.controller.getFunctions());
+				userFunction.refreshCodeList();
+
 				userFunction.show();
 				playScreen.hide();
 
