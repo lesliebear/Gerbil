@@ -30,6 +30,7 @@ public class ActionListenersControl {
 	static NewGame newGame;
 	static DeleteFunction deleteFunction;
 	static ErrorDialog errorDialog;
+	static ErrorDialog errorDialogRun;
 	static Finish finish;
 	static Instructions instructionsScreen;
 	static Main main; 
@@ -63,6 +64,7 @@ public class ActionListenersControl {
 
 		newGame = new NewGame();
 		deleteFunction = new DeleteFunction();
+		errorDialogRun = new ErrorDialog();
 		errorDialog = new ErrorDialog();
 		finish = new Finish();
 		instructionsScreen = new Instructions();
@@ -446,30 +448,26 @@ public class ActionListenersControl {
 						if(errortype==1){
 							//ERROR: insert Dialogue BoxCannot Eat because no food here
 							//HIGHLIGHT the error block using lineNumbers.get(error+1);
-							errorDialog.errorL.setText("Cannot Eat: there is no food at square");
-							errorDialog.show();
-							Play.setGridIcons();
+							errorDialogRun.errorL.setText("Cannot Eat: there is no food at square");
+							errorDialogRun.show();
 						}else if(errortype==2){
 							//ERROR: insert Dialogue BoxCannot Move Forward bc there is WALL
 							//HIGHLIGHT the error block using lineNumbers.get(error+1);
-							errorDialog.errorL.setText("Cannot Move Forward: there is a wall ahead");
-							errorDialog.show();
-							Play.setGridIcons();
+							errorDialogRun.errorL.setText("Cannot Move Forward: there is a wall ahead");
+							errorDialogRun.show();
 						}else if(errortype==3){
 							//miscellaneous error, could not compile code(this shouldn't happen)
 						}else if(errortype==4){
 							//ERROR: insert Dialogue BoxDid not reach water/goal
-							errorDialog.errorL.setText("Did not reach water, Try Again!");
-							errorDialog.show();
-							Play.setGridIcons();
+							errorDialogRun.errorL.setText("Did not reach water, Try Again!");
+							errorDialogRun.show();
 						}else if(errortype==-1){
 							//parsing error(this shouldn't happen)
 						}else if(errortype==-2){
 							//ERROR: insert Dialogue BoxInfiniteLoop was created, cannot run code
 							//this does not run/animate the gerbil
-							errorDialog.errorL.setText("Infinite Loop was created, please edit your code");
-							errorDialog.show();
-							Play.setGridIcons();
+							errorDialogRun.errorL.setText("Infinite Loop was created, please edit your code");
+							errorDialogRun.show();
 						}
 					}
 				};
@@ -718,6 +716,16 @@ public class ActionListenersControl {
 		});
 	}
 
+	private void addErrorDialogRunEventHandlers() {
+		errorDialogRun.addOkEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				errorDialogRun.hide();
+				Play.setGridIcons();
+				Start.StartGerbil.controller.resetTempGrid();
+				showParent();
+			}	
+		});
+	}
 	private void addSavedGamesEventHandlers(){
 		savedGames.addOpenGameEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
