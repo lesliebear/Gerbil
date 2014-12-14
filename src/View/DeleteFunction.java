@@ -203,6 +203,16 @@ public class DeleteFunction extends Screen{
 	 * Updates the list of functions in combo box
 	 * @param newFunctions Name of all user defined functions
 	 */
+	public void setNewSelection() {
+		
+		if(functionsList.getItemCount() > 0) {
+			functionsList.setSelectedIndex(0);
+		}
+		else {
+			functionsList.setSelectedIndex(-1);
+		}
+	}
+	
 	public void updateFunctionsList(String[] newFunctions){
 		
 		functionsList.removeAllItems();

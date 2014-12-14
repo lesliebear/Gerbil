@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionListener;
 import Model.Block;
 import Model.Game;
 import Model.Gerbil;
+import Start.StartGerbil;
 import View.Conditionals;
 import View.DeleteFunction;
 import View.ErrorDialog;
@@ -118,6 +119,7 @@ public class ActionListenersControl {
 		addOkYesDialogEventHandlers();
 		addSavedGamesEventHandlers();
 		addConditionalsEventHandlers();
+		addDeleteFunctionEventHandlers();
 	}
 
 	public void addConditionalsEventHandlers(){
@@ -340,7 +342,15 @@ public class ActionListenersControl {
 	private void addPlayEventHandlers() {
 		/**Button Listeners**/
 
-
+		playScreen.addDeleteFunctionEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteFunction.updateFunctionsList(StartGerbil.controller.getFunctions());
+				deleteFunction.show();
+				playScreen.hide();
+				parentScreen = 4;
+			}
+		});
+		
 		playScreen.addMenuEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				parentScreen = 4; 
@@ -930,7 +940,26 @@ public class ActionListenersControl {
 		}});
 	}
 
-
+	private void addDeleteFunctionEventHandlers() {
+		
+		deleteFunction.addDeleteEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String function = deleteFunction.getSelectedFunction();
+				if(function != null) {
+					StartGerbil.controller.deleteFunction(function);	
+					deleteFunction.updateFunctionsList(StartGerbil.controller.getFunctions());
+					deleteFunction.setNewSelection();
+				}
+			}
+		});
+		
+		deleteFunction.addDoneEventHandler(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				showParent();
+				deleteFunction.hide();
+			}
+		});
+	}
 
 	/**
 	 * DeleteFunction 1
