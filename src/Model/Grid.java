@@ -18,7 +18,7 @@ import java.util.HashMap;
  * case as to not lose data for the fruit's location
  * 
  * Note: In Java, for 2d Arrays (0,0) is in the top left of array.
- * @author Amulya
+ * @author Amulya,Truong
  * */
 public class Grid implements Serializable{
 
@@ -41,13 +41,13 @@ public class Grid implements Serializable{
 	 * @assumes random grid needs to be created
 	 * @exception none
 	 * @postcondition creates a grid we can access and can still play
-	 *  
+	 *  @author Amulya
 	 */
 	public Grid(int rows, int columns){	
 		grid = new char[rows][columns];
 		visited = new int[rows][columns];
 		initGrid();
-		//printGrid();
+		//printGrid(); //testing method
 	}
 
 	/**
@@ -58,7 +58,7 @@ public class Grid implements Serializable{
 	 * @exception none
 	 * @postcondition populates the grid object with walls, fruits, and water can placed
 	 * in random location with a valid path to them making the grid playable
-	 * 
+	 * @author Amulya
 	 */
 	private void initGrid(){
 		do{//put walls all around and init 0s = empty grid area.
@@ -72,6 +72,14 @@ public class Grid implements Serializable{
 			 || (fruitCoordinates.size()!=0)); //reach all fruit
 	}
 	
+	/**
+	 * Creates the grid and makes sure it is empty but has walls around it before we try to randomize it.
+	 * 
+	 * @assumes none
+	 * @exception none
+	 * @postcondition clear grid except for walls in the four sides of walls and gerbil temporarily placed as 'g'
+	 * @author Truong
+	 */
 	private void createEmptyGrid() {
 		for (int i = 0; i<grid.length;i++){ //have to clear the grid before randomizing it
 			for (int j = 0; j<grid[0].length;j++){ 
@@ -93,6 +101,7 @@ public class Grid implements Serializable{
 	 * @assumes random grid is needed and just changes the field
 	 * @exception none
 	 * @postcondition returns randomized grid with food and walls and water placed and water can at top left
+	 * @author Amulya
 	 */
 	private void randomGrid(){
 		grid[1][grid[0].length-2]='t'; //place water can
@@ -120,7 +129,9 @@ public class Grid implements Serializable{
 	 * @assumes Valid character is entered and there are empty locations on grid
 	 * @exception none
 	 * @postcondition grid now has fruits placed onto it with character c representing the fruit
+	 * 
 	 * @param c The character representing the fruit to place onto the grid.
+	 * @author Amulya 
 	 */
 	private void placeFruitsRandomly(char c){
 		int numberOfFruit = (int)((2.0*(grid.length-2.0)/3.0));
@@ -146,6 +157,7 @@ public class Grid implements Serializable{
 	 * @param y the row specified
 	 * @param x the column specified
 	 * @return the character at the location if special, else returns " "
+	 * @author Amulya
 	 */
 	public char getSquareContent(int y, int x){
 		return grid[y][x]; //y is row and x is column!
@@ -160,6 +172,7 @@ public class Grid implements Serializable{
 	 * 
 	 * @param Y The row where we start at (Avatar's row)
 	 * @param X The column where we start at (Avatar's column)
+	 * @author Truong, Tested by Amulya
 	 * 
 	 */
 	private void checkValidFruits(int Y, int X) {
@@ -183,6 +196,7 @@ public class Grid implements Serializable{
 	 * @exception none
 	 * @param Y The row where fruit to be removed is located
 	 * @param X The column where fruit to be removed is located
+	 * @author Amulya
 	 */
 	public void removeFruit(int Y, int X){
 		grid[Y][X]='0';
@@ -199,6 +213,7 @@ public class Grid implements Serializable{
 	 * @param Y The Row to check 
 	 * @param X The Column to check
 	 * @return True if the grid created does have a runnable/completable course, else false
+	 * @author Truong, Tested by Amulya
 	 */
 	private boolean hasValidPath(int Y, int X){
 		if (grid[Y][X]=='w' || visited[Y][X] == 1) { //wall so cannot move more in that direction
@@ -220,6 +235,7 @@ public class Grid implements Serializable{
 	 * @assumes debugging reasons
 	 * @exception none
 	 * @postcondition nothing
+	 * @author Amulya
 	 */
 	public void printGrid(){
 		for (int i =0; i<grid.length;i++){
@@ -235,6 +251,7 @@ public class Grid implements Serializable{
 	 * @assumes Visited Array was used and modified to not be 0 at all locations
 	 * @exception none
 	 * @postcondition Visited array is empty
+	 * @author Truong
 	 */
 	private void resetVisited() {
 		for (int i = 0; i < visited.length; i++) {
@@ -246,7 +263,13 @@ public class Grid implements Serializable{
 	
 	/**
 	 * Returns Grid to caller
+	 * 
+	 * @assumes none
+	 * @exception none
+	 * @postcondition none
+	 * 
 	 * @return Grid 
+	 * @author Amulya
 	 */
 	public char[][] getGridRepresentation() {
 		return grid;

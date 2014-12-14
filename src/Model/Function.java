@@ -22,12 +22,11 @@ public class Function implements Serializable{
 	/**
 	 * Creates the user created function
 	 * 
-	 * @assumes valid name and blocks of instructions. name must be verified to not exist
+	 * @assumes valid name and name must be verified to not exist for other functions
 	 * @exception none
-	 * @postcondition creates function object that has code.
+	 * @postcondition name of the function object is changed
 	 * 
 	 * @param name Name of the function
-	 * @param instruction Instructions in the function so the function body
 	 */
 	public Function(String name){
 		this.name=name;
@@ -36,7 +35,7 @@ public class Function implements Serializable{
 	/**
 	 * Gets the name of the function that the user gave to create it
 	 * 
-	 * @assumes name of function exists
+	 * @assumes name of function exists and is unique
 	 * @exception none
 	 * @postcondition returns function name that is unique
 	 * 
@@ -59,7 +58,11 @@ public class Function implements Serializable{
 		return this.blockInstructions;
 	}
 	/**
-	 * Sets the BlockInstructions
+	 * Sets the Block's Instructions to the parameter
+	 * 
+	 * @assumes Valid parameter provided
+	 * @exception none
+	 * @postcondition Block's instructions changed
 	 */
 	public void setBlockInstructions(HashMap<Integer,Block> blockinstructions){
 		this.blockInstructions= blockinstructions;

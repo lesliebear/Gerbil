@@ -212,6 +212,10 @@ public class Block implements Serializable{
 
 	/**
 	 * Sets the nested blocks field
+	 * 
+	 * @assuems parameters are valid block
+	 * @exception none
+	 * @postcondition Changes the nested blocks of the object
 	 * @param instructionblocks Nested blocks to set the object's field to
 	 */
 	public void setNestedBlocks(HashMap<Integer, Block> instructionblocks) {

@@ -44,7 +44,7 @@ public class Gerbil implements Serializable{
 	 * 
 	 * @assumes assumes it is 'n','s','e',or 'w' only
 	 * @exception none
-	 * @postcondition none
+	 * @postcondition compass is set to the parameter
 	 * @param c Character to set the compass to = must be 'n','s','e', or 'w'
 	 */
 	public char setCompass(char c){
@@ -132,6 +132,7 @@ public class Gerbil implements Serializable{
 	 * @assumes assumes valid value is given so it has been varified
 	 * @exception none
 	 * @postcondition changes y value of gerbil that is valid
+	 * 
 	 * @param i The integer to set Gerbil's Y current location
 	 */
 	public void setY(int i){
@@ -144,7 +145,6 @@ public class Gerbil implements Serializable{
 	 * @assumes assumes valid value is given so it has been varified
 	 * @exception none
 	 * @postcondition changes frontx value of gerbil that is valid
-	 * 
 	 * 
 	 * @param i The integer to set Gerbil's front block's X value
 	 */

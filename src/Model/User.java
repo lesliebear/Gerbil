@@ -6,6 +6,7 @@ import java.util.ArrayList;
    
 /**
  * User class that holds information about the users including the games they have played, saved or made
+ * THIS CLASS WAS FOR FANCY SYSTEM NOT IMPLEMENTED!
  *@author Amulya
  */
 @SuppressWarnings("serial")

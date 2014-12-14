@@ -4,9 +4,8 @@ import Model.Backend;
 
 
 /**
- * Main program.
- * 
- * 
+ * Main program that runs the program
+ * @author Amulya,Katiuska,Leslie,Truong
  */
 public class StartGerbil {
 	public static Backend backend;
@@ -14,8 +13,8 @@ public class StartGerbil {
 	public static ActionListenersControl alc;
 	
 	/** 
-	 * Main method.
-	 * @param args
+	 * Main method to run the program
+	 * @param args Command line arguments are not necessary
 	 */
 	public static void main(String[] args) {
 		backend = new Backend();
@@ -33,10 +32,4 @@ public class StartGerbil {
 
 	}
 
-	/**
-	 * Creates all screens necessary for the program.
-	 */
-	public void CreateAllScreens() {
-
-	}
 }

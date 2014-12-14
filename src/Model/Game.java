@@ -73,6 +73,9 @@ public class Game implements Serializable{
 	}
 	/**
 	 * Sets the hashmap of blocks in main code
+	 * @assumes assumes valid parameters given
+	 * @exception none
+	 * @postcondition the blocks' blocks are changed to the parameter 
 	 */
 	public void setBlocks(HashMap<Integer,Block> newBlocks){
 		this.blocks=newBlocks;
@@ -82,7 +85,7 @@ public class Game implements Serializable{
 	 * 
 	 * @assumes assumes grid object exists
 	 * @exception none
-	 * @postcondition returns grid object that has been instantiated.
+	 * @postcondition none
 	 * 
 	 * @return The Grid with fruit, water can, and wall placements
 	 */
@@ -94,7 +97,7 @@ public class Game implements Serializable{
 	 * SEts the name of the Game
 	 * @param gameName Name of the game 
 	 * 
-	 * @assumes game exist
+	 * @assumes game exist and unique name assumed
 	 * @exception none
 	 * @postcondition name of the game gets set/ changed
 	 */
@@ -106,7 +109,7 @@ public class Game implements Serializable{
 	 * 
 	 * @assumes assumes unique name exists
 	 * @exception none
-	 * @postcondition returns unique name that has been instantiated.
+	 * @postcondition none
 	 * 
 	 * @return Name of the name as entered by the user
 	 */
@@ -118,7 +121,7 @@ public class Game implements Serializable{
 	 * 
 	 * @assumes assumes user can create functions
 	 * @exception none
-	 * @postcondition returns user created functions
+	 * @postcondition none
 	 * 
 	 * @return User defined functions arraylist
 	 */
@@ -134,9 +137,10 @@ public class Game implements Serializable{
 	 * @exception none
 	 * @postcondition Adds function to function list
 	 * 
+	 * @param functionToAdd function to be added to Functions list 
 	 * @return boolean: true if successful add, false otherwise
 	 * 
-	 * @param functionToAdd function to be added to Functions list
+
 	 */
 	public void addFunction(Function functionToAdd){
 		this.functions.add(functionToAdd);//means index 0 +

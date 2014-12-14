@@ -20,13 +20,7 @@ public class Controller {
 	/**Holds the current game being played */
 	public Game gamePlaying;
 	
-	/**Holds the list of built in functions = eat move, turn left
-	 * And user created are added to the end of this arraylist when game is initialized first
-	 * and then reloaded to the backend when finished game*/
-	//public ArrayList<Function> functions = new ArrayList<Function>();
-	//Note eat fruit must be for that fruit only!! else error popup.
-	//Backend backend= new Backend();
-
+	/**Final list of blocks to run to play animation */
 	ArrayList<String> finalblocks= new ArrayList<String>();
 	ArrayList<Integer> finalblocksLineNumbers= new ArrayList<Integer>();
 	//HashMap<Integer,Boolean> visited;
