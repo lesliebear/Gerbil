@@ -67,16 +67,23 @@ public class ActionListenersControl {
 	 * UserFunction 7
 	 */
 	
+	/**Enumeration for delete function screen*/
 	int DELETEFUNCTION = 1; 
+	/**Enumeration for main screen*/
 	int MAIN = 2; 
+	/**Enumeration for new game screen*/
 	int NEWGAME=3;
+	/**Enumeration for play screen*/
 	int PLAY= 4;
+	/**Enumeration for play options screen*/
 	int PLAYOPTIONS = 5;
+	/**Enumeration for saved games screen*/
 	int SAVEDGAME = 6; 
+	/**Enumeration for user functions screen*/
 	int USERFUNCTION = 7;
 
+	/**Sets up the screens and actions listeners for components*/
 	public ActionListenersControl(){
-		//Set up GAME - idk...need so screen models aren't null...
 		Start.StartGerbil.controller.setCurrentGame(new Game("setUpGame")); // DO NOT remove. kthx.
 		initGrid();
 
@@ -106,15 +113,15 @@ public class ActionListenersControl {
 		initEventHandlers();
 		initBooleans();
 		main.show();
-		//userFunction.show();
-		//finish.show();
 	}
 
+	/**Initializes the grid to Play screen */
 	private void initGrid() {
 		Play.setNewGrid(Start.StartGerbil.controller.gamePlaying.getGrid().getGridRepresentation());
 		Play.setGerbilLocation(Start.StartGerbil.controller.gamePlaying.getGerbil().getY(), Start.StartGerbil.controller.gamePlaying.getGerbil().getX());
 	}
 
+	/**Initializes the boolean used for various states such as inserting, deleting...etc */
 	private void initBooleans(){
 		selectedCreateFunctionFirst = false;
 		inserting = false;
@@ -124,9 +131,7 @@ public class ActionListenersControl {
 		deleteCurrGame = false;
 	}
 
-	/**
-	 * Sets up event handlers for each screen
-	 */
+	/**Sets up event handlers for each screen*/
 	private void initEventHandlers() {
 		addMainEventHandlers();
 		addNewGameEventHandlers();
@@ -142,16 +147,9 @@ public class ActionListenersControl {
 		addDeleteFunctionEventHandlers();
 	}
 
-	/**
-	 * DeleteFunction 1
-	 * Main 2
-	 * NewGame 3
-	 * Play 4
-	 * PlayOptions 5
-	 * SavedGame 6
-	 * UserFunction 7
-	 */
 
+	/**add the event handlers for the conditionals screen's components
+	 * @author Amulya,Katiuska*/
 	public void addConditionalsEventHandlers(){
 
 		conditionals.addFunctionsEventHandler(new ActionListener() {
@@ -266,6 +264,10 @@ public class ActionListenersControl {
 		});
 	}
 
+	/**
+	 * Add the event handlers for the error dialog screen's compoenents during running
+	 * @author 
+	 */
 	private void addErrorDialogRunEventHandlers() {
 		errorDialogRun.addOkEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
