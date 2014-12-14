@@ -36,12 +36,15 @@ public class Controller {
 	Block userCodingNowFunction = null;
 
 
+
 	/**Temporary grid used to check for parsing/compiling*/
 	char[][] tempgrid= new char[17][17];
 	/**Temporary gerbil used to check for parsing/compiling*/
 	Gerbil tempgerbil= new Gerbil(); //Gerbil used only for "parsing/compiling"
 	/**is it a function or not*/
 	boolean isFunction=false;
+	boolean isFunctionLine=false;
+	int parseFunctionLine;
 
 	/**block counting*/
 	int countblocks=1;
@@ -412,6 +415,7 @@ public class Controller {
 	public ArrayList<Integer> getFinalBlocksLineNumbers(){
 		return this.finalblocksLineNumbers;
 	}
+	
 	/**
 	 * Prints the tempgrid in console to see values
 	 * 
@@ -967,11 +971,6 @@ public class Controller {
 	 * @return false/true; false if parsing fails, true if parsing succeeds
 	 */
 	public int parseBlock(Block block){
-		//if(!isFunction){
-		//int num= block.getlineBegin();
-		//visited.remove(block.getlineBegin());
-		//visited.put(num,true);
-		//}
 		if(this.finalblocks.size()>1000){
 			boolean loop=true;
 			String command= finalblocks.get(finalblocks.size()-1);
@@ -1378,17 +1377,29 @@ public class Controller {
 			return 0;	
 		}else if(block.getType()==0){//"eat"
 			finalblocks.add("Eat");
-			finalblocksLineNumbers.add(block.getlineBegin());
+			if(this.isFunctionLine){
+				finalblocksLineNumbers.add(this.parseFunctionLine);
+			}else{
+				finalblocksLineNumbers.add(block.getlineBegin());
+			}
 			eat(tempgerbil.getX(),tempgerbil.getY(),tempgrid);
 			return 0;
 		}else if(block.getType()==1){//"turn left"
 			finalblocks.add("Turn Left");
-			finalblocksLineNumbers.add(block.getlineBegin());
+			if(this.isFunctionLine){
+				finalblocksLineNumbers.add(this.parseFunctionLine);
+			}else{
+				finalblocksLineNumbers.add(block.getlineBegin());
+			}
 			turnLeft(tempgerbil);
 			return 0;
 		}else if(block.getType()==2){//"move forward"
 			finalblocks.add("Move Forward");
-			finalblocksLineNumbers.add(block.getlineBegin());
+			if(this.isFunctionLine){
+				finalblocksLineNumbers.add(this.parseFunctionLine);
+			}else{
+				finalblocksLineNumbers.add(block.getlineBegin());
+			}
 			moveForward(tempgerbil);
 			return 0;
 		}else if(block.getType()==8){//user defined function
@@ -1402,8 +1413,10 @@ public class Controller {
 			ArrayList<Integer> fnestedsortedkeys= sortKeys(fnestedkeylist);				
 			for(int i=0; i<fnestedsortedkeys.size(); i++){
 				Block fnestedblock= fnestedblocklist.get(fnestedsortedkeys.get(i));
-				//this.isFunction=true;
+				this.isFunctionLine=true;
+				this.parseFunctionLine= block.getlineBegin();
 				int success=parseBlock(fnestedblock);
+				this.isFunctionLine=false;
 				if(success==-1){
 					return -1;
 				}
