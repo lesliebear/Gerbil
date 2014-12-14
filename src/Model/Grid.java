@@ -82,6 +82,7 @@ public class Grid implements Serializable{
 				}
 			}
 		}
+		grid[grid.length-2][1] = 'g';
 	}
 
 	/**
@@ -109,6 +110,7 @@ public class Grid implements Serializable{
 		placeFruitsRandomly('k');//pumpkin
 		placeFruitsRandomly('p'); //pear
 		placeFruitsRandomly('a'); //apple
+		grid[grid.length-2][1] = '0';
 	}
 
 	/**
