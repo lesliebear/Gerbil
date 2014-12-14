@@ -463,6 +463,7 @@ public class ActionListenersControl {
 							errorDialogRun.show();
 							
 						}else if(errortype==3){
+							
 							//miscellaneous error, could not compile code(this shouldn't happen)
 						}else if(errortype==4){
 							//ERROR: insert Dialogue BoxDid not reach water/goal
