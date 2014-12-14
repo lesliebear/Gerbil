@@ -78,7 +78,6 @@ public class Controller {
 		}
 			
 		return ins.toArray(new String[ins.size()]);
-
 	}
 
 	public void printNotDoneBlock(int tab, HashMap<Integer,Block> blocks, ArrayList<String> list){
