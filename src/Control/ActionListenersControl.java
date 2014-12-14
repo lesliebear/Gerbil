@@ -999,7 +999,7 @@ public class ActionListenersControl {
 					}else{
 						parentScreen=PLAY;
 						userFunction.clearLabels();
-						userFunction.userDefinedFunctions.addItem(functionName); // don't think this is needed?
+						//userFunction.userDefinedFunctions.addItem(functionName); // don't think this is needed?
 						userFunction.hide();
 						userFunction.dontAddToMain(true);
 						inserting=false;
