@@ -61,7 +61,6 @@ public class UserFunction extends Screen{
 	JButton turnLeftB;
 	JButton eatB;
 	
-	//DefaultComboBoxModel model = new DefaultComboBoxModel();
 	public JComboBox<String> userDefinedFunctions; /*get from control*/ 
 	
 	/**Left side panel: labels, buttons, other**/
@@ -74,10 +73,9 @@ public class UserFunction extends Screen{
 	JButton okB;
 	JButton cancelB; 
 	
-	JTextField functionName; /*get from control*/ 
+	JTextField functionName; 
 	
 	public static JList functionsCodeList;
-	//private static JList<ArrayList<String>> functionsCodeList;
 	private static JScrollPane scrollpane;
 	
 	/** Repeat stuff **/
@@ -95,6 +93,9 @@ public class UserFunction extends Screen{
 		
 	}
 	
+	/**
+	 * Create buttons for Screen
+	 */
 	void createButtons(){
 		/**Right side panel**/
 		ifB= new JButton("If"){
@@ -316,7 +317,9 @@ public class UserFunction extends Screen{
 		}; 
 	}
 	
-	
+	/**
+	 * Sets right component of screen
+	 */
 	public void setRightComponents(){
 		rightPanel.setLayout(new GridBagLayout());
 		rightPanel.setOpaque(true);
@@ -391,6 +394,9 @@ public class UserFunction extends Screen{
 		rightPanel.add(userDefinedFunctions, gc); //placeholder */
 	}
 	
+	/**
+	 * Sets left component of screen
+	 */
 	public void setLeftComponents(){
 		leftPanel.setLayout(new GridBagLayout());
 		leftPanel.setOpaque(true);
@@ -515,8 +521,6 @@ public class UserFunction extends Screen{
 
 	@Override
 	protected void createScreen() {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	/**
@@ -535,12 +539,16 @@ public class UserFunction extends Screen{
 		frame.setVisible(false);
 	}
 
-	@Override
+	/**
+	 * Enable Screen
+	 */
 	public void enable() {
 		frame.setEnabled(true);
 	}
 
-	@Override
+	/**
+	 * Disable Screen
+	 */
 	public void disable() {
 		frame.setEnabled(false);
 	}
@@ -556,28 +564,35 @@ public class UserFunction extends Screen{
 		this.functionName.setText("");;
 	}
 	
+	/**
+	 * Reset line number of JList
+	 */
 	public void resetLineNumber() {
 		startLineNumber = 0;
 	}
 
+	/**
+	 * Get end line number of JList
+	 * @return End line number of JList
+	 */
 	public int getEndLineNumber() {
 		endLineNumber = listModel.size() + 1;
 		return endLineNumber;
 	}
 	
+	/**
+	 * Return selected index in JList
+	 * @return
+	 */
 	public int getSelectedLineNumber() {
 		
 		return functionsCodeList.getSelectedIndex();
 	}
 	
-	/* public void refreshUserFunctionsList(String[] newFunctions){
-		
-		userDefinedFunctions.removeAllItems();
-		for(int i = 0; i < newFunctions.length; i++) {
-			userDefinedFunctions.addItem(newFunctions[i]);
-		}
-	} */
-	
+	/**
+	 * Refresh the combobox of function names
+	 * @param newList
+	 */
 	public void refreshUserFunctionsList(String [] newList){ 
 		model=new DefaultComboBoxModel(newList);
 		userDefinedFunctions.setModel(model);
@@ -594,8 +609,9 @@ public class UserFunction extends Screen{
 		functionsCodeList.setSelectedIndex(functionsCodeList.getModel().getSize()-1);
 	}
 	
-	
-	
+	/**
+	 * Refresh JList that outputs code
+	 */
 	public void refreshCodeList(){
 		listModel.clear();
 	
