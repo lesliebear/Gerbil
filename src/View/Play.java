@@ -115,19 +115,35 @@ public class Play extends Screen{
 		createAndShowGUI();
 	}
 
+	/**
+	 * Gets the play frame
+	 * @return play frame
+	 */
 	public final JFrame getPlayFrame(){
 		return frame;
 	}
 
+	/**
+	 * Sets new grid
+	 * @param newGrid grid to be set
+	 */
 	public static void setNewGrid(char[][] newGrid) {
 		grid = newGrid;
 	}
 
+	/**
+	 * Sets the gerbil location in the grid
+	 * @param x x coordinate in grid of gerbil
+	 * @param y y coordinate in grid of gerbil
+	 */
 	public static void setGerbilLocation(int x, int y) {
 		row = x;
 		column = y;
 	}
 
+	/**
+	 * Deletes all grid components
+	 */
 	public static  void deleteGridComponents(){
 		for(int i = 0; i < grid.length; i++) {
 			for(int j = 0; j < grid[0].length; j++) {
@@ -137,6 +153,9 @@ public class Play extends Screen{
 		}
 	}
 
+	/**
+	 * Refreshes the grid
+	 */
 	public static  void refreshGrid(){
 		deleteGridComponents();
 		setGridComponents();
@@ -186,6 +205,9 @@ public class Play extends Screen{
 		frame.setLocationRelativeTo(null);
 	}
 
+	/**
+	 * Sets upper components of the play screen
+	 */
 	public static void setUpperComponents(){
 		upperPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
@@ -319,6 +341,9 @@ public class Play extends Screen{
 		upperPanel.add(saveB, gc);
 	}
 
+	/**
+	 * Sets the left components of the play screen
+	 */
 	public static void setLeftComponents(){
 		Dimension size= leftPanel.getPreferredSize();
 		size.width =250;
@@ -357,6 +382,9 @@ public class Play extends Screen{
 		leftPanel.add(endL,BorderLayout.SOUTH);
 	}
 
+	/**
+	 * Sets the grid components of the play screen
+	 */
 	public static void setGridComponents(){
 		gridPanel.setLayout(new GridLayout(grid.length, grid[0].length));	
 		Dimension size= gridPanel.getPreferredSize();
@@ -373,6 +401,10 @@ public class Play extends Screen{
 		setGridIcons();
 	}
 
+
+	/**
+	 * Sets the lower components of the play screen
+	 */
 	public static void setLowerComponents(){
 		lowerPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gc = new GridBagConstraints();
@@ -564,6 +596,9 @@ public class Play extends Screen{
 
 	}	
 
+	/**
+	 * Refreshes the code list
+	 */
 	public static void refreshCodeList(){
 		model.clear();
 
@@ -579,6 +614,7 @@ public class Play extends Screen{
 		playcodeList.setSelectedIndex(playcodeList.getModel().getSize()-1);
 	}
 
+	
 	public void setSingleSelectionMode(){
 		playcodeList.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 	}
@@ -615,43 +651,83 @@ public class Play extends Screen{
 	}
 
 	/**Button Listeners**/
-
+	
+	/**
+	 * Listener for menu button
+	 * @param listener Listens for menu button being clicked
+	 */
 	public void addMenuEventHandler(ActionListener listener) {
 		menuB.addActionListener(listener);
 	}
 
+	/**
+	 * Listener for play button
+	 * @param listener Listens for play button being clicked
+	 */
 	public void addPlayEventHandler(ActionListener listener) {
 		playB.addActionListener(listener);
 	}
-
+	
+	/**
+	 * Listener for stop button
+	 * @param listener Listens for stop button being clicked
+	 */
 	public void addStopEventHandler(ActionListener listener) {
 		stopB.addActionListener(listener);
 	}
 
+	/**
+	 * Listener for insert button
+	 * @param listener Listens for insert button being clicked
+	 */
 	public void addInsertEventHandler(ActionListener listener) {
 		insertB.addActionListener(listener);
 	}
 
+	/**
+	 * Listener for edit button
+	 * @param listener Listens for edit button being clicked
+	 */
 	public void addEditEventHandler(ActionListener listener) {
 		editB.addActionListener(listener);
 	}
 
+	/**
+	 * Listener for delete button
+	 * @param listener Listens for delete button being clicked
+	 */
 	public void addDeleteEventHandler(ActionListener listener) {
 		deleteB.addActionListener(listener);
 	}
 
+	/**
+	 * Listener for clear button
+	 * @param listener Listens for clear button being clicked
+	 */
 	public void addClearAllEventHandler(ActionListener listener) {
 		clearAllB.addActionListener(listener);
 	}
 
+	/**
+	 * Listener for save button
+	 * @param listener Listens for save button being clicked
+	 */
 	public void addSaveEventHandler(ActionListener listener) {
 		saveB.addActionListener(listener);
 	}
-
+	
+	/**
+	 * Listener for delete function button
+	 * @param listener Listens for delete function button being clicked
+	 */
 	public void addDeleteFunctionEventHandler(ActionListener listener) {
 		deleteFunctionB.addActionListener(listener);
 	}
 
+	/**
+	 * Listener for create function button
+	 * @param listener Listens for create function button being clicked
+	 */
 	public void addCreateFunctionEventHandler(ActionListener listener) {
 		createFunctionB.addActionListener(listener);
 	}

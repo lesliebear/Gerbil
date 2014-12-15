@@ -78,6 +78,7 @@ public class ErrorDialog extends Screen{
 		frame.setVisible(false);
 	}
 	
+
 	@Override
 	public void show() {
 		frame.setVisible(true);
@@ -100,6 +101,10 @@ public class ErrorDialog extends Screen{
 		
 	}
 	
+	/**
+	 * Listener for Ok Button
+	 * @param listener listens for Ok button being clicked
+	 */
 	public void addOkEventHandler(ActionListener listener) {
 		backB.addActionListener(listener);
 	}
