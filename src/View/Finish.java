@@ -31,7 +31,6 @@ public class Finish extends Screen {
 	private JFrame frame;
 	private JPanel panel;
 	private BufferedImage image;
-	private JButton saveGame;
 	private JButton newGame;
 	private JButton loadGame;
 	private JLabel reachedTheEnd;
@@ -116,16 +115,14 @@ public class Finish extends Screen {
 		gc.gridy = 1; 
 		panel.add(fruitCounter, gc);
 		
-		gc.gridx = 0;
-		gc.gridy = 2; 
-		panel.add(saveGame, gc);
+		
 		
 		gc.gridx = 0;
-		gc.gridy = 3; 
+		gc.gridy = 2; 
 		panel.add(newGame, gc);
 		
 		gc.gridx = 0;
-		gc.gridy = 4; 
+		gc.gridy = 3; 
 		panel.add(loadGame, gc);
 	}
 	
@@ -133,27 +130,7 @@ public class Finish extends Screen {
 	 * Creates all buttons
 	 */
 	public void createButtons(){
-		saveGame= new JButton("Save Game"){
-			public void paint(Graphics g) {
-				saveGame.setFont(new Font("Serif", Font.PLAIN, 18)); 
-				this.setContentAreaFilled(false);
-				this.setBorderPainted(false);
-				Graphics2D g2d = (Graphics2D)g;
-				g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-				g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-				super.paint(g);
-				g2d.setColor(Color.WHITE);
-				g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 18, 18);
-				g2d.setColor(Color.BLACK);
-				g2d.setStroke(new BasicStroke(2));
-				g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 18, 18);
-				FontRenderContext frc = new FontRenderContext(null, false, false);
-				Rectangle2D r = getFont().getStringBounds(getText(), frc);
-				float xMargin = (float)(getWidth() - r.getWidth()) / 2;
-				float yMargin = (float)(getHeight() - getFont().getSize()) / 2;
-				g2d.drawString(getText(), xMargin, (float)getFont().getSize() + yMargin);
-			}
-		};
+		
 		
 		newGame= new JButton("New Game"){
 			public void paint(Graphics g) {
@@ -235,13 +212,6 @@ public class Finish extends Screen {
 	}
 	
 
-	/**
-	 * @param listener
-	 */
-	public void addSaveGamesButtonListener(ActionListener listener) {
-		saveGame.addActionListener(listener);
-	}
-	
 	/**
 	 * Listener for new game button
 	 * @param listener Listens for NewGames button being clicked

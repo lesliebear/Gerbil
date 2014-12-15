@@ -29,9 +29,9 @@ public class Controller {
 	/**Holds the function blocks when they are still being created */
 	HashMap<Integer,Block> tempFunctionBlockInstructions= new HashMap<Integer,Block>();
 	/**Used for create blocks since only one nesting level and it's the parent */
-	Block parent = null;
+	public Block parent = null;
 	/**Used for create blocks since it is only one nesting level and it is the child*/
-	Block userCodingNow = null;
+	public Block userCodingNow = null;
 	/**Used for creating Function blocks for nesting levels and it's the parent */
 	Block parentFunction = null;
 	/**Used for creating Function blocks for nesting levels and it's the child*/
