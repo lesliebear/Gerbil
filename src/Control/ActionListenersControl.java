@@ -185,10 +185,9 @@ public class ActionListenersControl {
 		conditionals.addFunctionsEventHandler(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				String cond = (String)Conditionals.userDefinedFunctions.getSelectedItem();
+				int begin = conditionals.getBegin()-2;
 				if(parentScreen == PLAY){
-					String cond = (String)Conditionals.conditionalscodeList.getSelectedValue();
-					int begin = conditionals.getBegin()-2;
 
 					Start.StartGerbil.controller.createBlocks(8,begin,1,null);
 					Start.StartGerbil.controller.createBlocks('e', begin, 1, cond);
@@ -196,8 +195,6 @@ public class ActionListenersControl {
 					conditionals.refreshConditionalsJList(Start.StartGerbil.controller.getUnFinIns());
 
 				}else if(parentScreen == USERFUNCTION){
-					String cond = (String)Conditionals.conditionalscodeList.getSelectedValue();
-					int begin = conditionals.getBegin()-2;
 
 					Start.StartGerbil.controller.createFunctionBlocks(8,begin,1,null);
 					Start.StartGerbil.controller.createFunctionBlocks('e', begin, 1, cond);
