@@ -342,21 +342,6 @@ public class ActionListenersControl {
 				finish.hide();
 			}		
 		});
-		
-		finish.addSaveGamesButtonListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Start.StartGerbil.controller.saveGame();
-
-				try{
-					Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
-				}catch(Exception es){
-					System.out.println("Unable to save game.");
-				}
-				
-				finish.hide();
-				main.show();
-			}		
-		});	
 	}
 	
 	/**
@@ -413,29 +398,32 @@ public class ActionListenersControl {
 					NewGame.textF.setText(""); //must reset the text line
 
 					if(Backend.gameExists(text)){
+						parentScreen = NEWGAME;
 						errorDialog.errorL.setText("Please enter a Game name that doesn't already exist.");
 						newGame.hide();
 						errorDialog.show();
 					}else{
 						Start.StartGerbil.controller.createGame(text);
-
+						parentScreen = PLAY;
 						Start.StartGerbil.controller.resetTempGrid();
 						Play.setNewGrid(Start.StartGerbil.controller.getCurrGame().getGrid().getGridRepresentation());
 						Play.setGridIcons();
 						playScreen.refreshUserFunctions();
 						Play.refreshCodeList();
+						playScreen.initialPlayScreen();
 
 						newGame.hide();
 						playScreen.show();
 						playScreen.enableCreateFunction();
 					}
 				}else{
+					parentScreen = NEWGAME;
 					errorDialog.errorL.setText("Please enter a valid Game name");
 					newGame.hide();
 					errorDialog.show();
 				}
 
-				parentScreen = NEWGAME;
+			
 			}
 		});
 
@@ -557,7 +545,7 @@ public class ActionListenersControl {
 		 */
 		playScreen.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				playScreen.insertB.setBackground(Color.black);
 				stop = false;
 				Thread thread = new Thread() {
 					public void run() {
@@ -632,6 +620,15 @@ public class ActionListenersControl {
 							//WIN THE GAME
 							Start.StartGerbil.controller.resetTempGrid();
 							Play.setGridIcons();
+							
+							Start.StartGerbil.controller.saveGame();
+							
+							try{
+								Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
+							}catch(Exception es){
+								System.out.println("Unable to save game.");
+							}
+							
 							finish.setFruitCount(fruitCount);
 							finish.show();
 							playScreen.hide();

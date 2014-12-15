@@ -768,12 +768,17 @@ public class Play extends Screen{
 		deleteB.setEnabled(false);
 		clearAllB.setEnabled(true);
 		createFunctionB.setEnabled(true);
+		insertB.setBackground(Color.black);
+		playcodeList.setSelectionBackground(Color.white);
 
 		conditionalsDD.setEnabled(false);
 		givenFunctionsDD.setEnabled(false);
 		userFunctionsDD.setEnabled(false);
 		checksDD.setEnabled(false);
 		numsDD.setEnabled(false);
+		Start.StartGerbil.controller.clearBlocks();
+		Start.StartGerbil.controller.userCodingNow = null;
+		Start.StartGerbil.controller.parent = null;
 	}
 	
 	public void inUsePlayScreen(){//only insert, save, menu should be active
