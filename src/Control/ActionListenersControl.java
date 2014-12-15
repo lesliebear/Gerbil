@@ -27,7 +27,7 @@ import View.UserFunction;
 
 
 /**
- * @author Amulya
+ * @author Truong Pham, Amulya
  *
  */
 public class ActionListenersControl {
@@ -357,13 +357,10 @@ public class ActionListenersControl {
 				
 				finish.hide();
 				main.show();
-				
 			}		
-		});
-		
+		});	
 	}
 	
-
 	/**
 	 * Add the event handlers for the instructions screen's compoenents 
 	 * @author Katiuska
@@ -376,7 +373,6 @@ public class ActionListenersControl {
 			}		
 		});
 	}
-
 
 	/**
 	 * Add event handlers for the Main screen
