@@ -218,7 +218,7 @@ public class ActionListenersControl {
 					Start.StartGerbil.controller.createFunctionBlocks('e', begin, numLines, cond);
 					userFunction.refreshCodeList();
 				}
-
+				
 				conditionals.hide();	
 				showParent();
 			}	
@@ -717,7 +717,7 @@ public class ActionListenersControl {
 				parentScreen = PLAY; 
 
 				editing = false;
-				inserting = false;
+				//inserting = false;
 				deleting = false;
 
 				Play.editB.setBackground(Color.BLACK);
@@ -932,6 +932,12 @@ public class ActionListenersControl {
 					errorDialog.show();
 				}else{
 					Start.StartGerbil.controller.deleteGame(dGame);
+					
+					try{ // just in case they exit the window - kat
+						Start.StartGerbil.backend.saveGames(Start.StartGerbil.backend.getGameList());
+					}catch(Exception es){
+					}
+				
 					savedGames.refreshGamesList();
 				}
 			}		
