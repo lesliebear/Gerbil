@@ -557,6 +557,7 @@ public class ActionListenersControl {
 		 */
 		playScreen.addPlayEventHandler(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 				stop = false;
 				Thread thread = new Thread() {
 					public void run() {
