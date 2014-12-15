@@ -963,17 +963,12 @@ public class Controller {
 		ArrayList<Integer> sortedkeys= sortKeys(keylist);
 		//parse unvisited blocks
 		for(int i=0; i<sortedkeys.size(); i++){
-			//if(visited.get(sortedkeys.get(i))){
-			//continue;
-			//}else{
 			Block block= blocklist.get(sortedkeys.get(i));
 			int success=parseBlock(block);
 			if(success==-1){
-				//System.out.println("error in parsing");
 				return -1;   //error in parsing
 			}
 			if(success==-2){//infinite loop error
-				//System.out.println("infinite loop error");
 				return -2;
 			}
 			if(success==1){//if or else if so skip rest of else if or else statements
@@ -981,6 +976,7 @@ public class Controller {
 					int j;
 					for(j=i+1; j<sortedkeys.size(); j++){
 						if(blocklist.get(sortedkeys.get(j)).getType()!=4 || blocklist.get(sortedkeys.get(j)).getType()!=5){
+							j=j-1;
 							break;
 						}
 					}
