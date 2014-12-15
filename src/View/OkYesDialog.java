@@ -30,6 +30,9 @@ public class OkYesDialog extends Screen{
 	public static JButton noB;
 	public JLabel okNoDialogL; 
 	
+	 /**
+	 * Constructor for OkYes dialog
+	 */
 	public OkYesDialog() {
 		frame = new JFrame("Confirm");
 		panel = new JPanel();
@@ -135,10 +138,18 @@ public class OkYesDialog extends Screen{
 		
 	}
 	
+	/**
+	 * Listener for no button
+	 * @param listener Listens for no button being clicked
+	 */
 	public void addNoEventHandler(ActionListener listener) {
 		noB.addActionListener(listener);
 	}
 	
+	/**
+	 * Listener for ok button
+	 * @param listener Listens for ok button being clicked
+	 */
 	public void addOkEventHandler(ActionListener listener) {
 		yesB.addActionListener(listener);
 	}

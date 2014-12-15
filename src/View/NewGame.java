@@ -34,6 +34,9 @@ public class NewGame extends Screen {
 	private JLabel newGameNameL; 
 	public static JTextField textF;
 	
+	/**
+	 * New Game screen constructor
+	 */
 	public NewGame() {
 		frame = new JFrame("New Game");
 		panel = new JPanel();
@@ -85,6 +88,9 @@ public class NewGame extends Screen {
 		createScreen();
 	}
 	
+	/* (non-Javadoc)
+	 * @see View.Screen#createScreen()
+	 */
 	@Override
 	protected void createScreen() {
 		Dimension dimension = new Dimension(500, 200);
@@ -142,10 +148,18 @@ public class NewGame extends Screen {
 		frame.setEnabled(false);
 	}
 	
+	/**
+	 * Listener for back button
+	 * @param listener Listens for back button being clicked
+	 */
 	public void addBackEventHandler(ActionListener listener) {
 		cancelB.addActionListener(listener);
 	}
 	
+	/**
+	 * Listener for ok button
+	 * @param listener Listens for ok button being clicked
+	 */
 	public void addOkEventHandler(ActionListener listener) {
 		okB.addActionListener(listener);
 	}

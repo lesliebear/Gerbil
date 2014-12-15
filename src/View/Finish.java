@@ -48,6 +48,9 @@ public class Finish extends Screen {
 	}
 	
 	
+	/**
+	 * Creates and shows the GUI
+	 */
 	protected void createAndShowGUI() { 
 		frame = new JFrame("Finish");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -73,6 +76,9 @@ public class Finish extends Screen {
 		frame.setVisible(false);
 	}
 	
+	/**
+	 * Sets Finish panel
+	 */
 	public void setPanel(){
 		panel.setLayout(new GridBagLayout());
 		panel.setOpaque(true);
@@ -123,6 +129,9 @@ public class Finish extends Screen {
 		panel.add(loadGame, gc);
 	}
 	
+	/**
+	 * Creates all buttons
+	 */
 	public void createButtons(){
 		saveGame= new JButton("Save Game"){
 			public void paint(Graphics g) {
@@ -193,7 +202,6 @@ public class Finish extends Screen {
 
 	/**
 	 * Creates the screen by putting the GUI components together.
-	 * 
 	 */
 	protected void createScreen() {	
 		
@@ -227,20 +235,35 @@ public class Finish extends Screen {
 	}
 	
 
+	/**
+	 * @param listener
+	 */
 	public void addSaveGamesButtonListener(ActionListener listener) {
 		saveGame.addActionListener(listener);
 	}
 	
+	/**
+	 * Listener for new game button
+	 * @param listener Listens for NewGames button being clicked
+	 */
 	public void addNewGamesButtonListener(ActionListener listener) {
 		// TODO Auto-generated method stub
 		newGame.addActionListener(listener);
 	}
 	
+	/**
+	 * Listener for load button
+	 * @param listener Listens for load button being clicked
+	 */
 	public void addLoadGamesButtonListener(ActionListener listener) {
 		// TODO Auto-generated method stub
 		loadGame.addActionListener(listener);
 	}
 	
+	/**
+	 * Sets the number of eaten fruits in the game
+	 * @param i Number of fruits eaten in the game
+	 */
 	public void setFruitCount(int i){
 		this.fruitCount=i;
 		fruitCounter.setText("Fruits Eaten: " + i);	

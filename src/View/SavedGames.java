@@ -220,28 +220,44 @@ public class SavedGames extends Screen{
 	}
 
 	/*List Selection Handler*/
+	/**
+	 * Listener for drop down in saved games scren
+	 * @param listener Listens for actions in the games list drop down
+	 */
 	public void addGameListSelectionListener(ActionListener listener) {
 		gamesList.addActionListener(listener);
 	}
 
 	/*Button Handlers*/
-
+	/**
+	 * Listener for open button
+	 * @param listener Listens for open button being clicked
+	 */
 	public void addOpenGameEventHandler(ActionListener listener) {
 
 		openGame.addActionListener(listener);
 	}
-
+	/**
+	 * Listener for delete button
+	 * @param listener Listens for delete button being clicked
+	 */
 	public void addDeleteGameEventHandler(ActionListener listener) {
 
 		deleteGame.addActionListener(listener);
 	}
 
+	/**
+	 * Listener for cancel button
+	 * @param listener Listens for cancel button being clicked
+	 */
 	public void addCancelEventHandler(ActionListener listener) {
 
 		cancel.addActionListener(listener);
 	}
 	
-	
+	/**
+	 * Refreshes the game list
+	 */
 	public void refreshGamesList(){
 		//ArrayList<String>  games = Start.StartGerbil.backend.getGamesStringArray();
 		String [] temp =  Start.StartGerbil.backend.getGamesStringArray().toArray(new String[ Start.StartGerbil.backend.getGamesStringArray().size()]);
