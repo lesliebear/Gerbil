@@ -59,7 +59,7 @@ public class Conditionals {
 	static DefaultComboBoxModel model;
 	static DefaultListModel listModel;
 
-	JComboBox userDefinedFunctions; /*get from control*/ 
+	public static JComboBox userDefinedFunctions; /*get from control*/ 
 
 	/**Left side panel: labels, buttons, other**/
 
