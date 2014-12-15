@@ -21,7 +21,7 @@ import Model.Gerbil;
  */
 public class Controller {
 	/**Holds the current game being played */
-	public Game gamePlaying;
+	private Game gamePlaying;
 	/**Final list of blocks to run to play animation */
 	ArrayList<String> finalblocks= new ArrayList<String>();
 	/**Line Numbers to display for the final blocks when play is clicked */
@@ -445,7 +445,7 @@ public class Controller {
 	 * @author Amulya
 	 */
 	public Game getCurrGame(){
-		return this.gamePlaying;
+		return gamePlaying;
 	}
 
 	/**

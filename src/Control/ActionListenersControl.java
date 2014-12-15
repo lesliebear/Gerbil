@@ -146,8 +146,8 @@ public class ActionListenersControl {
 
 	/**Initializes the grid to Play screen */
 	private void initGrid() {
-		Play.setNewGrid(Start.StartGerbil.controller.gamePlaying.getGrid().getGridRepresentation());
-		Play.setGerbilLocation(Start.StartGerbil.controller.gamePlaying.getGerbil().getY(), Start.StartGerbil.controller.gamePlaying.getGerbil().getX());
+		Play.setNewGrid(Start.StartGerbil.controller.getCurrGame().getGrid().getGridRepresentation());
+		Play.setGerbilLocation(Start.StartGerbil.controller.getCurrGame().getGerbil().getY(), Start.StartGerbil.controller.getCurrGame().getGerbil().getX());
 	}
 
 	/**Initializes the boolean used for various states such as inserting, deleting...etc */
@@ -916,6 +916,7 @@ public class ActionListenersControl {
 					errorDialog.show();
 				}else{
 					Game temp = Start.StartGerbil.controller.loadGame(oGame);
+					Play.setNewGrid(Start.StartGerbil.controller.getCurrGame().getGrid().getGridRepresentation());
 					Play.refreshCodeList();
 					playScreen.refreshUserFunctions();
 
