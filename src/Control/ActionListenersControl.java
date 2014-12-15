@@ -935,6 +935,7 @@ public class ActionListenersControl {
 					errorDialog.show();
 				}else{
 					Start.StartGerbil.controller.deleteGame(dGame);
+					savedGames.refreshGamesList();
 				}
 			}		
 		});
