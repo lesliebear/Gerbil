@@ -328,6 +328,7 @@ public class ActionListenersControl {
 		finish.addLoadGamesButtonListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				parentScreen = 6;
+				savedGames.refreshGamesList();
 				savedGames.show();
 				finish.hide();
 			}		
@@ -417,7 +418,7 @@ public class ActionListenersControl {
 					}else{
 						Start.StartGerbil.controller.createGame(text);
 
-						initGrid();
+						Start.StartGerbil.controller.resetTempGrid();
 						Play.setNewGrid(Start.StartGerbil.controller.getCurrGame().getGrid().getGridRepresentation());
 						Play.setGridIcons();
 						playScreen.refreshUserFunctions();

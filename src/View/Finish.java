@@ -249,6 +249,7 @@ public class Finish extends Screen {
 	public void addNewGamesButtonListener(ActionListener listener) {
 		// TODO Auto-generated method stub
 		newGame.addActionListener(listener);
+		
 	}
 	
 	/**
