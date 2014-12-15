@@ -917,9 +917,9 @@ public class ActionListenersControl {
 				}else{
 					Game temp = Start.StartGerbil.controller.loadGame(oGame);
 					Play.setNewGrid(Start.StartGerbil.controller.getCurrGame().getGrid().getGridRepresentation());
+					Play.setGridIcons();
 					Play.refreshCodeList();
 					playScreen.refreshUserFunctions();
-
 					playScreen.show();
 					savedGames.hide();
 				}
