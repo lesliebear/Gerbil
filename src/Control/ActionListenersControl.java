@@ -26,34 +26,63 @@ import View.SavedGames;
 import View.UserFunction;
 
 
+/**
+ * @author Amulya
+ *
+ */
 public class ActionListenersControl {
+	/**New Game screen */
 	static NewGame newGame;
+	/**Delete function scren */
 	static DeleteFunction deleteFunction;
+	/**Error dialog screen*/
 	static ErrorDialog errorDialog;
+	/**Finish screen */
 	static Finish finish;
+	/**Instructions screen */
 	static Instructions instructionsScreen;
+	/**Main screen */
 	static Main main; 
+	/**Play Screen	 */
 	static Play playScreen;
+	/**Play options screen */
 	static PlayOptions playOptions;
+	/**Saved games screen */
 	static SavedGames savedGames;
+	/**User functions screen */
 	static UserFunction userFunction;
+	/**Conditionals screen	 */
 	static Conditionals conditionals;
+	/**Ok or back Dialog screen	 */
 	static OkYesDialog okNoDialog;
+	/**erorr dialog screen	 */
 	static ErrorDialog errorDialogRun;
+	/**Index for the select in play screen */
 	int selectedIndexPlayScreen; /*Code list in Play Screen*/
+	/**	Index for selection in play screen jlist*/
 	static int selectedIndexPlayCodeList;
+	/**Index for selection in function lsit screen */
 	static int funcListSelect;
+	/**If we are creating function first*/
 	boolean selectedCreateFunctionFirst;
 
+	/**Inserting mode on or not */
 	public boolean inserting;
+	/**Deleting mode on or not */
 	public boolean deleting;
+	/**Editing mode on or not */
 	public boolean editing;
+	/**Stop animation mode on or not */
 	public boolean stop;
+	/**Play mode on or not */
 	public boolean play;
 
+	/**Delete the current game or not */
 	boolean deleteCurrGame;
 
+	/**Parent screen determined by enumerated type*/
 	static int parentScreen;
+	/**Variable for backslash T */
 	String backT="     ";
 	
 	
