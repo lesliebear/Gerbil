@@ -27,8 +27,7 @@ import View.UserFunction;
 
 
 /**
- * @author Truong Pham, Amulya
- *
+ * @author Truong Pham, Katiuska, Amulya
  */
 public class ActionListenersControl {
 	/**New Game screen */
